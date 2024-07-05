@@ -21,3 +21,4 @@ create table reservation(
  constraint res_fk2 foreign key (doc_num) references member (mem_num)
 );
        
+--깃허브 테스트
