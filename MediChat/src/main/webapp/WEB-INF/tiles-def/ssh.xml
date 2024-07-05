@@ -5,10 +5,12 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-	<definition name="khc" template="/WEB-INF/views/template/layout_basic.jsp">
+	<definition name="diseaseMain" template="/WEB-INF/views/template/layout_basic.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/>
 		<put-attribute name="title" value="SpringPage"/>
-		<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>
-		<put-attribute name="body" value="/WEB-INF/views/main/main.jsp"/>
+		<put-attribute name="css" value="/WEB-INF/views/disease/diseaseCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/disease/disease_main.jsp"/>
 	</definition>
 </tiles-definitions>
 

@@ -15,6 +15,7 @@
 	<a href="${pageContext.request.contextPath}/member/login">로그인</a>
 	</c:if>	
 	<a href="${pageContext.request.contextPath}/main/main">홈으로</a>
+	<a href="${pageContext.request.contextPath}/disease/diseasemain">질병메인</a>
 </div>
 <!-- 상단 끝 -->
 
