@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="kr.spring.hospital.dao.HospitalMapper">
+	<!-- Insert -->
+	<insert id="insertHp" parameterType="hospitalVO">
+		INSERT INTO hospital (
+								HOS_NUM,
+								DUTYADDR,
+								DUTYDIV,
+								DUTYDIVNAME,
+								DUTYEMCLS,
+								DUTYEMCLSNAME,
+								DUTYERYN,
+								DUTYETC,
+								DUTYMAPIMG,
+								DUTYNAME,
+								DUTYTEL1,
+								DUTYTEL3,
+								DUTYTIME1C,
+								DUTYTIME2C,
+								DUTYTIME3C,
+								DUTYTIME4C,
+								DUTYTIME5C,
+								DUTYTIME6C,
+								DUTYTIME7C,
+								DUTYTIME8C,
+								DUTYTIME1S,
+								DUTYTIME2S,
+								DUTYTIME3S,
+								DUTYTIME4S,
+								DUTYTIME5S,
+								DUTYTIME6S,
+								DUTYTIME7S,
+								DUTYTIME8S,
+								HPID,
+								POSTCDN1,
+								POSTCDN2,
+								DUTYINF,
+								LON,
+								LAT,
+								X,
+								Y,
+								DUTYWEEKENDAT
+					)
+					VALUES (
+							#{HOS_NUM},
+							#{DUTYADDR},
+							#{DUTYDIV},
+							#{DUTYDIVNAME},
+							#{DUTYEMCLS},
+							#{DUTYEMCLSNAME},
+							#{DUTYERYN},
+							#{DUTYETC},
+							#{DUTYMAPIMG},
+							#{DUTYNAME},
+							#{DUTYTEL1},
+							#{DUTYTEL3},
+							#{DUTYTIMEC},
+							#{DUTYTIME2C},
+							#{DUTYTIME3C},
+							#{DUTYTIME4C},
+							#{DUTYTIME5C},
+							#{DUTYTIME6C},
+							#{DUTYTIME7C},
+							#{DUTYTIME8C},
+							#{DUTYTIME1S},
+							#{DUTYTIME2S},
+							#{DUTYTIME3S},
+							#{DUTYTIME4S},
+							#{DUTYTIME5S},
+							#{DUTYTIME6S},
+							#{DUTYTIME7S},
+							#{DUTYTIME8S},
+							#{HPID},
+							#{POSTCDN1},
+							#{POSTCDN2},
+							#{DUTYINF},
+							#{LON},           
+							#{LAT},           
+							#{X},             
+							#{Y},             
+							#{DUTYWEEKENDAT}
+					)              
+	</insert>
+
+
+</mapper>

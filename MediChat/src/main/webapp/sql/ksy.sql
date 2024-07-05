@@ -1,0 +1,97 @@
+--KSY--
+--constraint reply_spboard_fk1 foreign key (board_num) references spboard(board_num),
+CREATE TABLE HOSPITAL(
+    HOS_NUM NUMBER NOT NULL,                 -- 일련번호
+    DUTYADDR VARCHAR2(200),     -- 주소
+    DUTYDIV VARCHAR2(1),        -- 병원분류
+    DUTYDIVNAME VARCHAR2(50),	-- 병원분류명
+	DUTYEMCLS VARCHAR2(4),		-- 응급의료기관코드
+    DUTYEMCLSNAME VARCHAR2(50),	-- 응급의료기관코드명
+    DUTYERYN VARCHAR2(1),		-- 응급실운영여부(1/2)
+    DUTYETC VARCHAR2(1500),		-- 비고
+    DUTYMAPIMG VARCHAR2(100),	-- 간이약도
+    DUTYNAME VARCHAR2(100),		-- 기관명
+    DUTYTEL1 VARCHAR2(20),		-- 대표전화
+    DUTYTEL3 VARCHAR2(20),		-- 응급실전화
+    DUTYTIME1C VARCHAR2(500),	-- 진료종료시간(월요일)
+    DUTYTIME2C VARCHAR2(500),	-- 진료종료시간(화요일)
+    DUTYTIME3C VARCHAR2(500),	-- 진료종료시간(수요일)
+    DUTYTIME4C VARCHAR2(500),	-- 진료종료시간(목요일)
+    DUTYTIME5C VARCHAR2(500),	-- 진료종료시간(금요일)
+    DUTYTIME6C VARCHAR2(500),	-- 진료종료시간(토요일)
+    DUTYTIME7C VARCHAR2(10),	-- 진료종료시간(일요일)
+    DUTYTIME8C VARCHAR2(10),	-- 진료종료시간(공휴일)
+    DUTYTIME1S VARCHAR2(500),	-- 진료시작시간(월요일)
+    DUTYTIME2S VARCHAR2(500),	-- 진료시작시간(화요일)
+    DUTYTIME3S VARCHAR2(500),	-- 진료시작시간(수요일)
+    DUTYTIME4S VARCHAR2(500),	-- 진료시작시간(목요일)
+    DUTYTIME5S VARCHAR2(500),	-- 진료시작시간(금요일)
+    DUTYTIME6S VARCHAR2(500),	-- 진료시작시간(토요일)
+    DUTYTIME7S VARCHAR2(10),	-- 진료시작시간(일요일)
+    DUTYTIME8S VARCHAR2(10),	-- 진료시작시간(공휴일)
+    HPID VARCHAR2(500),			-- 기관ID
+    POSTCDN1 VARCHAR2(500),		-- 우편번호1
+    POSTCDN2 VARCHAR2(500),		-- 우편번호2
+    DUTYINF VARCHAR2(30),		-- 기관설명상세
+    LON VARCHAR2(30),			-- 경도
+    LAT VARCHAR2(30),			-- 위도
+    X VARCHAR2(30),				-- X좌표
+    Y VARCHAR2(30),				-- Y좌표
+    DUTYWEEKENDAT VARCHAR2(2),	-- 주말진료여부
+    CONSTRAINT HOSPITAL_PK PRIMARY KEY (HOS_NUM)
+);
+CREATE SEQUENCE HOSPITAL_SEQ;
+
+CREATE TABLE PHARMACY(
+    PHA_NUM NUMBER NOT NULL,                 -- 일련번호
+    DUTYADDR VARCHAR2(200),     -- 주소
+    DUTYETC VARCHAR2(1500),		-- 비고
+    DUTYINF VARCHAR2(30),		-- 기관설명상세
+    DUTYMAPIMG VARCHAR2(100),	-- 간이약도
+    DUTYNAME VARCHAR2(100),		-- 기관명
+    DUTYTEL1 VARCHAR2(20),		-- 대표전화
+    DUTYTIME1C VARCHAR2(500),	-- 진료종료시간(월요일)
+    DUTYTIME2C VARCHAR2(500),	-- 진료종료시간(화요일)
+    DUTYTIME3C VARCHAR2(500),	-- 진료종료시간(수요일)
+    DUTYTIME4C VARCHAR2(500),	-- 진료종료시간(목요일)
+    DUTYTIME5C VARCHAR2(500),	-- 진료종료시간(금요일)
+    DUTYTIME6C VARCHAR2(500),	-- 진료종료시간(토요일)
+    DUTYTIME7C VARCHAR2(10),	-- 진료종료시간(일요일)
+    DUTYTIME8C VARCHAR2(10),	-- 진료종료시간(공휴일)
+    DUTYTIME1S VARCHAR2(500),	-- 진료시작시간(월요일)
+    DUTYTIME2S VARCHAR2(500),	-- 진료시작시간(화요일)
+    DUTYTIME3S VARCHAR2(500),	-- 진료시작시간(수요일)
+    DUTYTIME4S VARCHAR2(500),	-- 진료시작시간(목요일)
+    DUTYTIME5S VARCHAR2(500),	-- 진료시작시간(금요일)
+    DUTYTIME6S VARCHAR2(500),	-- 진료시작시간(토요일)
+    DUTYTIME7S VARCHAR2(10),	-- 진료시작시간(일요일)
+    DUTYTIME8S VARCHAR2(10),	-- 진료시작시간(공휴일)
+    HPID VARCHAR2(500),			-- 기관ID
+    POSTCDN1 VARCHAR2(500),		-- 우편번호1
+    POSTCDN2 VARCHAR2(500),		-- 우편번호2
+    LON VARCHAR2(30),			-- 경도
+    LAT VARCHAR2(30),			-- 위도
+    X VARCHAR2(30),				-- X좌표
+    Y VARCHAR2(30),				-- Y좌표
+    DUTYWEEKENDAT VARCHAR2(2),	-- 주말진료여부
+    CONSTRAINT PHARMACY_PK PRIMARY KEY (PHA_NUM)
+);
+CREATE SEQUENCE PHARMACY_SEQ;
+
+
+CREATE TABLE NOTIFICATION(
+	NOTI_NUM NUMBER NOT NULL,						-- 알림식별자
+	MEM_NUM NUMBER NOT NULL,						-- 회원식별자
+	NOTI_CATEGORY NUMBER NOT NULL,					-- 카테고리
+	NOTI_CATEGORY_NUM NUMBER NOT NULL,				-- 카테고리 식별자
+	NOTI_MESSAGE VARCHAR2(100) NOT NULL,			-- 메시지
+	NOTI_ISREAD NUMBER(1) DEFAULT 0 NOT NULL,		-- 읽음처리
+	NOTI_READEDATE DATE,							-- 읽은 날짜
+	NOTI_CREATEDDATE DATE DEFAULT SYSDATE NOT NULL,	-- 생성 날짜
+	NOTI_LINK VARCHAR2(50),							-- 관련 URL
+	NOTI_TYPE VARCHAR2(15) DEFAULT 'PUSH' NOT NULL,	-- 타입
+	NOTI_PRIORITY NUMBER(1) DEFAULT 0 NOT NULL,		-- 우선순위
+	CONSTRAINT NOTIFICATION_PK PRIMARY KEY (NOTI_NUM),
+	CONSTRAINT MEM_NUM FOREIGN KEY (MEM_NUM) REFERENCES MEMBER(MEM_NUM)
+);
+CREATE SEQUENCE NOTIFICATION_SEQ;
