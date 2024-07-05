@@ -20,3 +20,4 @@ create table reservation(
  constraint res_fk1 foreign key (mem_num) references member (mem_num),
  constraint res_fk2 foreign key (doc_num) references member (mem_num)
 );
+       
