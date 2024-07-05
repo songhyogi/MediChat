@@ -5,12 +5,18 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-	<definition name="yhl" template="/WEB-INF/views/template/layout_basic.jsp">
+	<definition name="kcy" template="/WEB-INF/views/template/layout_basic.jsp">
 		<put-attribute name="title" value="SpringPage"/>
 		<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/main/main.jsp"/>
 	</definition>
+	<definition name="memberRegister" extends="main">
+		<put-attribute name="title" value="회원가입"/>
+		<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/member/memberRegister.jsp"/>
+	</definition>
 </tiles-definitions>
+
 
 
 
