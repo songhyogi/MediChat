@@ -46,7 +46,7 @@ public class AppConfig implements WebMvcConfigurer{
 				"/WEB-INF/tiles-def/kyj.xml",
 				"/WEB-INF/tiles-def/shg.xml",
 				"/WEB-INF/tiles-def/ssh.xml",
-				"/WEB-INF/tiles-def/whl.xml",
+				"/WEB-INF/tiles-def/whr.xml",
 				"/WEB-INF/tiles-def/ych.xml"
 		});
 		configurer.setCheckRefresh(true);
