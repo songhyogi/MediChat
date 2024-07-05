@@ -5,7 +5,7 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-	<definition name="kbr" template="/WEB-INF/views/template/layout_basic.jsp">
+	<definition name="shg" template="/WEB-INF/views/template/layout_basic.jsp">
 		<put-attribute name="title" value="SpringPage"/>
 		<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/main/main.jsp"/>
