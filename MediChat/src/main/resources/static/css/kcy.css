@@ -1,0 +1,99 @@
+@charset "UTF-8";
+
+/* 회원가입 등록, 수정, 삭제 폼
+---------------------*/
+#member_register{
+	width:800px;
+}
+#member_register ul,#member_modify ul{
+	padding-left:120px;
+}
+#member_register input[id="id"]{
+	width:236px;
+}
+#member_register input[id="zipcode"],
+                         #member_modify input[id="zipcode"]{
+	width:220px;
+}
+#member_modify{
+	width:96%;
+}
+#member_delete input[id="id"],
+                         #member_delete input[id="passwd"]{
+	width:240px;
+}
+
+/* 로그인
+---------------------*/
+#member_login{
+	width:320px;
+	margin:0 auto;
+	padding:0;
+	border:none;
+}
+#member_login ul{
+	padding:0;
+}
+.floating-label{/*floating label 설정*/
+	position:relative;
+}
+.floating-label > .form-input{
+	width:300px;
+	height:32px;
+	padding:0.55rem 0.55rem;
+}
+.floating-label > label{
+	position:absolute;
+	top:0;
+	left:0;
+	padding:1.05rem 0.75rem;
+	transition:all 0.25s;
+}
+.floating-label > .form-input::placeholder{
+	color:transparent;
+}
+.floating-label > .form-input:focus, 
+ .floating-label > .form-input:not(:placeholder-shown){
+	padding-top:1.125rem;
+	padding-bottom:0.125rem;      
+}
+
+.floating-label > .form-input:focus + label, 
+ .floating-label > .form-input:not(:placeholder-shown) + label{
+	opacity:0.65;
+	transform:scale(0.85) translateY(-0.5rem) translateX(-0.5rem);      
+}
+#member_login .login-btn{
+	width:320px;
+}
+#member_login label[for="auto"]{
+	width:200px;
+	padding:0 0 5px 0;
+}
+/* MY페이지
+---------------------*/
+.camera{
+	width:50px;
+	height:50px;
+	border-radius:100%;
+	background-color:#d3bb72;
+	position:relative;
+	top:-60px;
+	left:140px;
+	border:2px solid #fff;
+	cursor:pointer;
+	padding:13px 0 0 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

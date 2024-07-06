@@ -54,40 +54,22 @@
 				<form:label path="mem_address2">상세주소</form:label>
 				<form:input path="mem_address2"/>
 				<form:errors path="mem_address2" cssClass="error-color"/>
+				<hr size="1" width="80%" noshade="noshade">
 			</li>
-		</ul>
-		<hr size="1" width="80%" noshade="noshade">
 		<!-- 캡챠 시작 -->
-		<%-- <h2>인증문자 입력</h2>
-		<ul>
 			<li>
+				<h2>인증문자 입력</h2>
 				<div id="captcha_div">
 					<img src="getCaptcha" id="captcha_img" width="200" height="90">
 					<input type="button" value="새로고침" id="reload_btn">
 				</div>
-				<script>
-					$(function(){
-						$('#reload_btn').click(function(){
-							$.ajax({
-								url:'getCaptcha',
-								type:'get',
-								success:function(){
-									$('#captcha_div').load(location.href + ' #captcha_div');
-								},
-								error:function(){
-									alert('네트워크 오류 발생');
-								}
-							});
-						});
-					});
-				</script>
 			</li>
 			<li>
 				<form:label path="captcha_chars" >인증문자 확인</form:label>
 				<form:input path="captcha_chars" placeholder="인증문자를 입력하세요."/>
 				<form:errors path="captcha_chars" cssClass="error-color"/>
 			</li>
-		</ul> --%>
+		</ul>
 		<!-- 캡챠 끝 -->
 		<hr size="1" width="80%" noshade="noshade">
 		<div class="align-center">
@@ -97,9 +79,24 @@
 	</form:form>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/member.register.js"></script>
-
-	<!-- 우편번호 시작 -->
-	<!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
+<script>
+	$(function(){
+		$('#reload_btn').click(function(){
+			$.ajax({
+				url:'getCaptcha',
+				type:'get',
+				success:function(){
+					$('#captcha_div').load(location.href + ' #captcha_div');
+				},
+				error:function(){
+					alert('네트워크 오류 발생');
+				}
+			});
+		});
+	});
+</script>
+<!-- 우편번호 시작 -->
+<!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
 <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
 <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
 </div>
