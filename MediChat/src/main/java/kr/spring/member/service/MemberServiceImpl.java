@@ -22,26 +22,23 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public MemberVO selectMember(Long mem_num) {
-		// TODO Auto-generated method stub
-		return null;
+		return memberMapper.selectMember(mem_num);
 	}
 
 	@Override
 	public void updateMember(MemberVO member) {
-		// TODO Auto-generated method stub
-		
+		memberMapper.updateMember(member);
+		memberMapper.updateMember_detail(member);
 	}
 
 	@Override
 	public void updatePasswd(MemberVO member) {
-		// TODO Auto-generated method stub
-		
+		memberMapper.updatePasswd(member);
 	}
 
 	@Override
 	public void updateProfile(MemberVO member) {
-		// TODO Auto-generated method stub
-		
+		memberMapper.updateProfile(member);
 	}
 
 	@Override
@@ -84,6 +81,11 @@ public class MemberServiceImpl implements MemberService{
 	public void updateAuth(MemberVO member) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public MemberVO checkId(String mem_id) {
+		return memberMapper.checkId(mem_id);
 	}
 
 }
