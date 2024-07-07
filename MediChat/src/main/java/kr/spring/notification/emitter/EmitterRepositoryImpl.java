@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import lombok.RequiredArgsConstructor;
+
 public class EmitterRepositoryImpl implements EmitterRepository{
 	private final Map<String, SseEmitter> emitters = new ConcurrentHashMap<>();
     private final Map<String, Object> eventCache = new ConcurrentHashMap<>();

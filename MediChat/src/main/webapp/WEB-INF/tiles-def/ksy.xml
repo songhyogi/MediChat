@@ -5,18 +5,13 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-	<definition name="ksy" extends="main">
-		<put-attribute name="title" value="게시판 목록"/>
-		<put-attribute name="css" value="/WEB-INF/views/board/boardCSS.jsp"/>
-		<put-attribute name="body" value="/WEB-INF/views/board/boardList.jsp"/>
+	<definition name="notification" extends="main">
+		<put-attribute name="title" value="알림 연습"/>
+		<put-attribute name="body" value="/WEB-INF/views/notification/noti.jsp"/>
+	</definition>
+	
+	<definition name="hospitals" extends="main">
+		<put-attribute name="title" value="병원 찾기"/>
+		<put-attribute name="body" value="/WEB-INF/views/hospital/hospitals.jsp"/>
 	</definition>
 </tiles-definitions>
-
-
-
-
-
-
-
-
-
