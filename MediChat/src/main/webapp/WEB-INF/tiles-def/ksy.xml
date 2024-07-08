@@ -10,8 +10,15 @@
 		<put-attribute name="body" value="/WEB-INF/views/notification/noti.jsp"/>
 	</definition>
 	
-	<definition name="hospitals" extends="main">
+	<definition name="hospitals" extends="ksy">
 		<put-attribute name="title" value="병원 찾기"/>
 		<put-attribute name="body" value="/WEB-INF/views/hospital/hospitals.jsp"/>
+		<put-attribute name="right_nav" value="/WEB-INF/views/common/right_nav.jsp"/>
+	</definition>
+	
+	<definition name="search" extends="ksy">
+		<put-attribute name="title" value="검색 결과"/>
+		<put-attribute name="body" value="/WEB-INF/views/hospital/search.jsp"/>
+		<put-attribute name="right_nav" value="/WEB-INF/views/common/right_nav.jsp"/>
 	</definition>
 </tiles-definitions>

@@ -1,1 +1,36 @@
-  
+/* .container{
+	width:1200px;
+	max-width:none !important;
+} */
+.custom-container {
+            width: 1200px; /* 원하는 고정 너비 */
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+/* 배경 색 */
+.bg-color {
+	background-color: rgb(230, 244, 244);	
+}
+
+/* 버튼 색 */
+.btn-color{
+	background-color: rgb(68, 207, 195);
+}
+
+/* 연한 카테고리 */
+.category-color{
+	background-color: rgb(226, 236, 228);
+}
+
+/* 진한 카테고리 */
+.category-color-bold{
+	background-color: rgba(57, 174, 164, 0.63);
+}
+
+/* 푸터 배경 */
+.footer-color{
+	background-color: rgba(57, 174, 164, 0.21);
+}

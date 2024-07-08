@@ -151,8 +151,8 @@ public class HospitalsCrawling {
                 hospital.setHos_postCdn1(getElementValue(element, "POSTCDN1"));
                 hospital.setHos_postCdn2(getElementValue(element, "POSTCDN2"));
                 hospital.setHos_info(getElementValue(element, "DUTYINF"));
-                hospital.setHos_lon(getElementValue(element, "LON"));
-                hospital.setHos_lat(getElementValue(element, "LAT"));
+                hospital.setHos_lon(Double.parseDouble(getElementValue(element, "LON")));
+                hospital.setHos_lat(Double.parseDouble(getElementValue(element, "LAT")));
                 hospital.setHos_x(getElementValue(element, "X"));
                 hospital.setHos_y(getElementValue(element, "Y"));
                 hospital.setHos_weekendAt(getElementValue(element, "DUTYWEEKENDAT"));

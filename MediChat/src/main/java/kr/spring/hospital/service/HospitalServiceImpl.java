@@ -1,6 +1,7 @@
 package kr.spring.hospital.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,6 @@ public class HospitalServiceImpl implements HospitalService{
 
 	@Override
 	public void updateHospital(HospitalVO hospitalVO) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -45,8 +45,12 @@ public class HospitalServiceImpl implements HospitalService{
 	}
 
 	@Override
-	public List<HospitalVO> selectListHospital() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<HospitalVO> selectListHospital(Map<String,Object> map) {
+		return hospitalMapper.selectListHospital(map);
+	}
+	
+	@Override
+	public int selectListCntHospital(Map<String,Object> map) {
+		return hospitalMapper.selectListCntHospital(map);
 	}
 }

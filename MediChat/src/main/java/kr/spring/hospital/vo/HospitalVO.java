@@ -40,8 +40,8 @@ public class HospitalVO {
 	private String hos_postCdn1;        //우편번호1
 	private String hos_postCdn2;        //우편번호2
 	private String hos_info;            //기관설명상세
-	private String hos_lon;             //경도
-	private String hos_lat;             //위도
+	private Double hos_lon;             //경도
+	private Double hos_lat;             //위도
 	private String hos_x;               //X좌표
 	private String hos_y;               //Y좌표
 	private String hos_weekendAt;       //주말진료여부
