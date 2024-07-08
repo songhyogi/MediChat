@@ -6,9 +6,7 @@ import java.sql.Date;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,36 +16,29 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString(exclude = {"mem_photo"})
-public class MemberVO {
+@ToString(exclude = {"mem_photo","doc_license"})
+public class DoctorVO {
 	private long mem_num;
 	@Pattern(regexp="^[A-Za-z0-9]{4,12}$")
 	private String mem_id;
 	@NotBlank
 	private String mem_name;
+	@NotEmpty
 	private byte[] mem_photo;		//프로필 사진
 	private String mem_photoname;	//프로필 사진명
 	private int mem_auth;			//권한 등급(0:탈퇴,1:정지,2:일반,3:의사,9:관리자)
-	private String au_id;			//자동로그인ID
+	private long doc_num;
+	private long hos_num;
 	@Pattern(regexp="^[A-Za-z0-9]{4,12}$")
-	//영문자와 숫자의 조합이며 길이가 4에서 12 사이
-	/* @Pattern(regexp="^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{4,12}$") */
-	private	String mem_passwd;
-	@NotNull
-	private Date mem_birth;
+	private String doc_passwd;
 	@Email
 	@NotBlank
-	private String mem_email;
-	@NotBlank
-	private String mem_phone;
-	@Size(min=5,max=5)
-	private String mem_zipcode;
-	@NotBlank
-	private String mem_address1;
+	private String doc_email;
+	private Date dec_reg;
 	@NotEmpty
-	private String mem_address2;
-	private Date mem_reg;
-	private Date mem_modify;
+	private String doc_license;
+	private String doc_history;
+	private int doc_treat;
 	
 	//비밀번호 변경시 현재 비밀번호를 저장하는 용도로 사용
 	@Pattern(regexp="^[A-Za-z0-9]{4,12}$")
@@ -59,7 +50,7 @@ public class MemberVO {
 	
 	//비밀번호 일치 여부 체크
 	public boolean checkPasswd(String userPasswd) {
-		if(mem_auth > 1 && mem_passwd.equals(userPasswd)) {
+		if(mem_auth > 1 && doc_passwd.equals(userPasswd)) {
 			return true;
 		}
 		return false;
