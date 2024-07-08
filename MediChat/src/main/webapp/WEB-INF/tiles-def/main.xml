@@ -6,18 +6,18 @@
 
 <tiles-definitions>
 	<definition name="main" template="/WEB-INF/views/template/layout_basic.jsp">
-		<put-attribute name="title" value="SpringPage"/>
+		<put-attribute name="css" value="/WEB-INF/views/template/bootStrap.jsp"/>
+		<put-attribute name="title" value="MediChat"/>
 		<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/main/main.jsp"/>
 		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/>
 	</definition>
+	<definition name="ksy" template="/WEB-INF/views/template/layout_ksy.jsp">
+		<put-attribute name="css" value="/WEB-INF/views/template/bootStrap.jsp"/>
+		<put-attribute name="title" value="ksy"/>
+		<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"/>
+		<put-attribute name="body" value=""/>
+		<put-attribute name="right_nav" value="/WEB-INF/views/common/right_nav.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/>
+	</definition>
 </tiles-definitions>
-
-
-
-
-
-
-
-
-
