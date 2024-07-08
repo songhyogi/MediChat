@@ -1,99 +1,164 @@
 @charset "UTF-8";
 
-/* 회원가입 등록, 수정, 삭제 폼
----------------------*/
-#member_register{
-	width:800px;
-}
-#member_register ul,#member_modify ul{
-	padding-left:120px;
-}
-#member_register input[id="id"]{
-	width:236px;
-}
-#member_register input[id="zipcode"],
-                         #member_modify input[id="zipcode"]{
-	width:220px;
-}
-#member_modify{
-	width:96%;
-}
-#member_delete input[id="id"],
-                         #member_delete input[id="passwd"]{
-	width:240px;
+/* 회원가입 등록, 수정, 삭제 폼 */
+#member_register {
+    width: 800px;
 }
 
-/* 로그인
----------------------*/
-#member_login{
-	width:320px;
-	margin:0 auto;
-	padding:0;
-	border:none;
-}
-#member_login ul{
-	padding:0;
-}
-.floating-label{/*floating label 설정*/
-	position:relative;
-}
-.floating-label > .form-input{
-	width:300px;
-	height:32px;
-	padding:0.55rem 0.55rem;
-}
-.floating-label > label{
-	position:absolute;
-	top:0;
-	left:0;
-	padding:1.05rem 0.75rem;
-	transition:all 0.25s;
-}
-.floating-label > .form-input::placeholder{
-	color:transparent;
-}
-.floating-label > .form-input:focus, 
- .floating-label > .form-input:not(:placeholder-shown){
-	padding-top:1.125rem;
-	padding-bottom:0.125rem;      
+#member_register ul,
+#member_modify ul {
+    padding-left: 120px;
 }
 
-.floating-label > .form-input:focus + label, 
- .floating-label > .form-input:not(:placeholder-shown) + label{
-	opacity:0.65;
-	transform:scale(0.85) translateY(-0.5rem) translateX(-0.5rem);      
+#member_register input[id="mem_id"] {
+    width: 236px;
 }
-#member_login .login-btn{
-	width:320px;
+
+#member_register input[id="mem_zipcode"],
+#member_modify input[id="mem_zipcode"] {
+    width: 50px;
 }
-#member_login label[for="auto"]{
-	width:200px;
-	padding:0 0 5px 0;
+
+#member_modify {
+    width: 96%;
 }
-/* MY페이지
----------------------*/
-.camera{
-	width:50px;
-	height:50px;
-	border-radius:100%;
-	background-color:#d3bb72;
-	position:relative;
-	top:-60px;
-	left:140px;
-	border:2px solid #fff;
+
+#member_delete input[id="mem_id"],
+#member_delete input[id="mem_passwd"] {
+    width: 240px;
+}
+.mem_zipcode-container {
+    display: flex;
+    align-items: center;
+    width: 100%; /* 부모 요소의 너비를 100%로 설정 */
+}
+.mem_zipcode-container label,
+.mem_zipcode-container input {
+    margin-right: 10px; /* 레이블과 입력 필드 사이의 간격 설정 */
+}
+.mem_zipcode-container .default-btn {
+    margin-left: 5px; /* 우편번호 버튼 왼쪽 마진 설정 */
+}
+input#mem_zipcode {
+    width: 80px; /* 우편번호 입력 필드 너비를 조정합니다. */
+}
+input#mem_address1 {
+    flex: 1; /* 남은 공간을 모두 차지하도록 설정합니다. */
+    margin-left: 5px; /* 상세주소 입력 필드 왼쪽 마진을 줄입니다. */
+}
+.ui-datepicker {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#datepickerContainer {
+    position: relative;
+    display: inline-block;
+    width: 236px;
+}
+
+#mem_birth {
+    width: 292px;
+    padding-right: 30px;
+}
+
+#calendarButton {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 30px;
+    height: 100%;
+    border: none;
+    background: url('../images/calendar.jpg') no-repeat center center;
+    background-size: 24px 24px;
+    cursor: pointer;
+}
+
+.ui-datepicker-header {
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ccc;
+}
+
+.ui-datepicker-title {
+    color: #333;
+}
+
+.ui-datepicker-calendar {
+    color: #333;
+}
+
+.ui-datepicker-current {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.ui-datepicker-trigger {
+    margin-left: 5px;
+    background-image: url('../images/calendar.jpg');
+    background-size: 30px 30px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+}
+
+/* 로그인 */
+#member_login {
+    width: 320px;
+    margin: 0 auto;
+    padding: 0;
+    border: none;
+}
+
+#member_login ul {
+    padding: 0;
+}
+
+.floating-label {
+    position: relative;
+}
+
+.floating-label > .form-input {
+    width: 300px;
+    height: 32px;
+    padding: 0.55rem 0.55rem;
+}
+
+.floating-label > label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 1.05rem 0.75rem;
+    transition: all 0.25s;
+}
+
+.floating-label > .form-input::placeholder {
+    color: transparent;
+}
+
+.floating-label > .form-input:focus,
+.floating-label > .form-input:not(:placeholder-shown) {
+    padding-top: 1.125rem;
+    padding-bottom: 0.125rem;
+}
+
+.floating-label > .form-input:focus + label,
+.floating-label > .form-input:not(:placeholder-shown) + label {
+    opacity: 0.65;
+    transform: scale(0.85) translateY(-0.5rem) translateX(-0.5rem);
+}
+
+#member_login .login-btn {
+    width: 320px;
+}
+
+#member_login label[for="auto"] {
+    width: 200px;
+    padding: 0 0 5px 0;
+}
+
+.profile{
+	margin-top:10px;
 	cursor:pointer;
-	padding:13px 0 0 10px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

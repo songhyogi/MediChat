@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,7 +28,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class MemberController {
-	@Autowired MemberService memberService;
+	@Autowired 
+	MemberService memberService;
+	
+	@Value("${API.KCY.X-Naver-Client-Id}")
+	private String X_Naver_Client_Id;
+	@Value("${API.KCY.X-Naver-Client-Secret}")
+	private String X_Naver_Client_Secret;
+	
 	//로그 처리
 	private static final Logger log = LoggerFactory.getLogger(MemberController.class);
 	//===========회원가입===========
@@ -60,8 +68,8 @@ public class MemberController {
 		
 		Map<String, String> requestHeaders = new HashMap<String, String>();
 		
-		requestHeaders.put("X-Naver-Client-Id", "j_ESN5fWGldw8kKhuSyo");
-		requestHeaders.put("X-Naver-Client-Secret", "rCzbCfedgU");
+		requestHeaders.put("X-Naver-Client-Id", X_Naver_Client_Id);
+		requestHeaders.put("X-Naver-Client-Secret", X_Naver_Client_Secret);
 		
 		String responseBody = CaptchaUtil.get(apiURL, requestHeaders);
 		
@@ -132,7 +140,7 @@ public class MemberController {
 	 * 로그아웃
 	 ============================*/
 	@GetMapping("/member/logout")
-	public String processLogout(HttpSession session) {
+	public String processLogout(HttpSession session) {	
 		//로그아웃
 		session.invalidate();
 		//====== 자동로그인 체크 시작 =======//
@@ -140,6 +148,42 @@ public class MemberController {
 		
 		return "redirect:/main/main";
 	}
+	/*=============================
+	 * 회원정보 수정
+	 ============================*/
+	//회정정보 수정 폼 호출
+	@GetMapping("/member/modifyUser")
+	public String updateForm(HttpSession session,Model model) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		MemberVO memberVO = memberService.selectMember(user.getMem_num());
+		
+		model.addAttribute("memberVO",memberVO);
+		
+		return "memberModify";
+	}
+	//회정정보 수정 폼에서 전송된 데이터 처리
+	@PostMapping("member/modifyUser")
+	public String updateSubmit(@Valid MemberVO memberVO,BindingResult result,HttpSession session) {
+		log.debug("<회원정보 수정> : " + memberVO);
+		//유효성 체크
+		if(result.hasErrors()) {
+			return "memberModify";
+		}
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		memberVO.setMem_num(user.getMem_num());
+		//회원정보 수정
+		memberService.updateMember(memberVO);
+		
+		return "redirect:/member/login";
+	}
+	
+	/*=============================
+	 * 비밀번호 변경
+	 ============================*/
+	
+	/*=============================
+	 * 회원탈퇴
+	 ============================*/
 	/*=============================
 	 * 캡챠 API
 	 ============================*/
@@ -151,8 +195,10 @@ public class MemberController {
 		
 		Map<String, String> requestHeaders = new HashMap<String, String>();
 		
-		requestHeaders.put("X-Naver-Client-Id", "j_ESN5fWGldw8kKhuSyo");
-		requestHeaders.put("X-Naver-Client-Secret", "rCzbCfedgU");
+		
+		requestHeaders.put("X-Naver-Client-Id", X_Naver_Client_Id);
+		requestHeaders.put("X-Naver-Client-Secret", X_Naver_Client_Secret);
+		
 		String responseBody = CaptchaUtil.get(key_apiURL, requestHeaders);
 		
 		log.debug("<<responseBody>> : " + responseBody);
