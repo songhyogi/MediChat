@@ -2,47 +2,33 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<!-- 회원가입 시작 -->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
-<div>
-	<h2>회원가입</h2>
-	<hr size="1" width="80%" noshade="noshade">
-	<h3>정보입력</h3>
-	<span>회원가입에 필요한 정보를 입력합니다.</span>
-	<form:form action="registerUser" id="member_register" modelAttribute="memberVO">
+<!-- 회원정보 수정 시작 -->
+<div class="page-main">
+	<h2>회원정보 수정</h2>
+	<form:form action="modifyUser" id="member_modify" modelAttribute="memberVO">
+		<form:hidden path="mem_num"/>
 		<ul>
 			<li>
-				<form:label path="mem_id">아이디</form:label>
-				<form:input path="mem_id" placeholder="영문or숫자사용하여 4~12자 입력하세요." autocomplete="off"/>
-				<input type="button" id="confirmId" value="중복확인" class="default-btn"><br>
-				<span id="message_id"></span>
-				<form:errors path="mem_id" cssClass="error-color"/>
-			</li>
-			<li>
-				<form:label path="mem_passwd">비밀번호</form:label>
-				<form:password path="mem_passwd" placeholder="영문,숫자 조합하여 4~12자 입력하세요."/>
-				<form:errors path="mem_passwd" cssClass="error-color"/>
-			</li>
-			<li>
 				<form:label path="mem_name">이름</form:label>
-				<form:input path="mem_name" placeholder="이름"/>
+				<form:input path="mem_name"/>
 				<form:errors path="mem_name" cssClass="error-color"/>
 			</li>
 			<li>
 				<form:label path="mem_birth">생년월일</form:label>
-				<form:input path="mem_birth" placeholder="년-월-일"/>
+				<form:input path="mem_birth"/>
 			</li>
 			<li>
 				<form:label path="mem_email">이메일</form:label>
-				<form:input path="mem_email" placeholder="test@test.com 형식으로 입력하세요."/>
+				<form:input path="mem_email"/>
 				<form:errors path="mem_email" cssClass="error-color"/>
 			</li>
 			<li>
 				<form:label path="mem_phone">전화번호</form:label>
-				<form:input path="mem_phone" placeholder="'-' 를 제외하고 입력하세요."/>
+				<form:input path="mem_phone"/>
 				<form:errors path="mem_phone" cssClass="error-color"/>
 			</li>
-			<li>
+			<li >
 				<form:label path="mem_zipcode">주소</form:label>
 				<form:input path="mem_zipcode"/>
 				<input type="button" onclick="execDaumPostcode()" value="우편번호" class="default-btn">
@@ -57,52 +43,20 @@
 				<form:errors path="mem_address2" cssClass="error-color"/>
 				<hr size="1" width="80%" noshade="noshade">
 			</li>
-		<!-- 캡챠 시작 -->
-			<li>
-				<h2>인증문자 입력</h2>
-				<div id="captcha_div">
-					<img src="getCaptcha" id="captcha_img" width="200" height="90">
-					<input type="button" value="새로고침" id="reload_btn">
-				</div>
-			</li>
-			<li>
-				<form:label path="captcha_chars" >인증문자 확인</form:label>
-				<form:input path="captcha_chars" placeholder="인증문자를 입력하세요."/>
-				<form:errors path="captcha_chars" cssClass="error-color"/>
-			</li>
 		</ul>
-		<!-- 캡챠 끝 -->
-		<hr size="1" width="80%" noshade="noshade">
 		<div class="align-center">
-			<input type="button" value="홈으로" class="default-btn" onclick="location.href='${pageContext.request.contextPath}/main/main'">
-			<form:button class="default-btn">가입완료</form:button>
+			<form:button class="default-btn">수정</form:button>
+			<input type="button" value="MY페이지" class="default-btn" onclick="location.href='myPage'">
 		</div>
 	</form:form>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/member.register.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker.js"></script>
-<script>
-	$(function(){
-		$('#reload_btn').click(function(){
-			$.ajax({
-				url:'getCaptcha',
-				type:'get',
-				success:function(){
-					$('#captcha_div').load(location.href + ' #captcha_div');
-				},
-				error:function(){
-					alert('네트워크 오류 발생');
-				}
-			});
-		});
-	});
-</script>
-<!-- 우편번호 시작 -->
-<!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
+
+	<!-- 우편번호 시작 -->
+	<!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
 <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
 <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
 </div>
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     // 우편번호 찾기 화면을 넣을 element
@@ -155,11 +109,11 @@
                 //(수정) }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('mem_zipcode').value = data.zonecode;
+                document.getElementById('zipcode').value = data.zonecode;
                 //(수정) + extraAddr를 추가해서 address1에 참고항목이 보여지도록 수정
-                document.getElementById("mem_address1").value = addr + extraAddr;
+                document.getElementById("address1").value = addr + extraAddr;
                 // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("mem_address2").focus();
+                document.getElementById("address2").focus();
 
                 // iframe을 넣은 element를 안보이게 한다.
                 // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
@@ -196,4 +150,4 @@
 </script>
 	<!-- 우편번호 끝 -->
 </div>
-<!-- 회원가입 끝 -->
+<!-- 회원정보 수정 끝 -->

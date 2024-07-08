@@ -46,13 +46,13 @@ $(function(){
 	});//end of click
 	
 	//아이디 중복 안내 메시지 초기화 및 아이디 중복 값 초기화
-	$('#member_register #mem_id').keydown(function(){
+	$('#doctor_register #mem_id').keydown(function(){
 		checkId=0;
 		$('#message_id').text('');
 	});//end of keydown
 	
 	//submit 이벤트 발생시 아이디 중복 체크 여부 확인
-	$('#member_register').submit(function(){
+	$('#doctor_register').submit(function(){
 		if(checkId=0){
 			$('#message_id').css('color','red').text('ID 중복 체크 필수!');
 			if($('#mem_id').val().trim()==''){
