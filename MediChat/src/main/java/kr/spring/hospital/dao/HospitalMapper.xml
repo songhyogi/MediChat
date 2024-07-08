@@ -48,33 +48,65 @@
 	</insert>
 	
 	<sql id="searchHospitalByKeyword">
-		<where>
-			<if test="keyword!=null and keyword!=''">
-				hos_addr LIKE '%' || #{keyword} || '%' OR
-				hos_name LIKE '%' || #{keyword} || '%' OR
-				hos_info LIKE '%' || #{keyword} || '%'
-			</if>
-		</where>
+		<if test="keyword!=null and keyword!=''">
+			AND (hos_addr LIKE '%' || #{keyword} || '%' OR
+				 hos_name LIKE '%' || #{keyword} || '%' OR
+				 hos_info LIKE '%' || #{keyword} || '%')
+		</if>
+	</sql>
+	<sql id="searchHospitalByCommonFilter">
+		<if test="commonFilter=='NONFACE'">
+			AND doctor_cnt > 0
+		</if>
+		<if test="commonFilter=='CONRES'">
+			AND doctor_cnt > 0
+		</if>
+		<if test="commonFilter=='ING'">
+			AND 
+		</if>
+		<if test="commonFilter=='NIGHTTIME'">
+			AND 
+		</if>
+		<if test="commonFilter=='WEEKEND'">
+			AND hos_weekendat == 'Y'
+		</if>
 	</sql>
 	<sql id="searchHospitalBySortType">
 		<if test="sortType=='NEAR'">
-			ORDER BY 
+			ORDER BY distance
 		</if>
 		<if test="sortType=='REVIEW'">
-			ORDER BY 
+			ORDER BY review_cnt DESC
 		</if>
 		<if test="sortType=='SCORE'">
-			ORDER BY hos_score
+			ORDER BY hos_score DESC
+		</if>
+		<if test="sortType=='HIT'">
+			ORDER BY hos_hit DESC
 		</if>
 	</sql>
 	
+	<!-- selectListHospital -->
 	<select id="selectListHospital" parameterType="map" resultType="hospitalVO">
-		SELECT * FROM HOSPITAL
+		SELECT h.*, 
+			   (POWER((h.hos_lat - #{hos_lat}), 2) + POWER((h.hos_lon - #{hos_lon}), 2)) AS distance, 
+			   COALESCE(r.review_cnt, 0) AS review_cnt,
+			   COALESCE(d.doctor_cnt, 0) AS doctor_cnt
+		FROM hospital h 
+						LEFT JOIN (SELECT hos_num, COUNT(*) AS review_cnt
+			     				   FROM review
+			     				   GROUP BY hos_num) d ON h.hos_num = r.hos_num
+			     		LEFT JOIN (SELECT hos_num, COUNT(*) AS doctor_cnt
+								   FROM doctor_detail
+								   GROUP BY hos_num) d ON h.hos_num = d.hos_num
+		WHERE 1=1;
+        <include refid="searchHospitalByKeyword"/>
+        <include refid="searchHospitalByCommonFilter"/>
+        <include refid="searchHospitalBySortType"/>
 	</select>
 	
+	<!-- selectListCntHospital -->
 	<select id="selectListCntHospital" parameterType="map" resultType="integer">
 		SELECT COUNT(*) FROM HOSPITAL
 	</select>
-	
-
 </mapper>
