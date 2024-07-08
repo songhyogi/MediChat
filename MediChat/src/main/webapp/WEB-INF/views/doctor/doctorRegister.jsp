@@ -33,15 +33,15 @@
 				<form:errors path="doc_email" cssClass="error-color"/>
 			</li>
 			<%-- <li>
-                <form:label path="hos_num">병원정보</form:label>
-                <form:select path="hos_num" id="hos_num">
-                    <form:option value="">병원을 선택하세요</form:option>
-                    <c:forEach items="${hospitalList}" var="hospital">
-                        <form:option value="${hospital.hos_num}">${hospital.hos_name}</form:option>
-                    </c:forEach>
-                </form:select>
-                <form:errors path="hos_num" cssClass="error-color"/>
-            </li> --%>
+		        <form:label path="hos_num">병원정보</form:label>
+		        <form:select path="hos_num" id="hos_num">
+		            <form:option value="">병원을 선택하세요</form:option>
+		            <c:forEach items="${list}" var="hospital">
+		                <form:option value="${hospital.hos_num}">${hospital.hos_name}</form:option>
+		            </c:forEach>
+		        </form:select>
+		        <form:errors path="hos_num" cssClass="error-color"/>
+		    </li> --%>
 			<li>
 				<form:label path="doc_history">연혁</form:label>
 				<form:textarea path="doc_history" placeholder="연혁을 입력해주세요." style="width: 300px; height: 150px;"/>

@@ -173,8 +173,10 @@ public class MemberController {
 		memberVO.setMem_num(user.getMem_num());
 		//회원정보 수정
 		memberService.updateMember(memberVO);
+		//세선에 저장된 정보 변경
+		user.setMem_email(memberVO.getMem_email());
 		
-		return "redirect:/member/login";
+		return "myPage";
 	}
 	
 	/*=============================

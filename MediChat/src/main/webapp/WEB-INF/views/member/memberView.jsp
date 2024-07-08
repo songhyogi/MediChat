@@ -42,7 +42,7 @@
 										</c:if>
 									</ul>
 									<div class="align-center">
-									<input type="button" value="회원정보 수정" onclick="location.href='memberModify.jsp'">
+									<input type="button" value="회원정보 수정" onclick="location.href='modifyUser'">
 									<input type="button" value="비밀번호 변경" onclick="location.href='memberModify.jsp'">
 									</div>
 								</div>
