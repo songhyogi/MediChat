@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="kr.spring.pharmacy.dao.PharmacyMapper">
+	<!-- Insert -->
+	<insert id="insertPharmacy" parameterType="pharmacyVO">
+		INSERT INTO pharmacy VALUES (
+									  #{pha_num},
+									  #{pha_addr},
+									  #{pha_etc},
+									  #{pha_info},
+									  #{pha_mapImg},
+									  #{pha_name},
+									  #{pha_tell1},
+									  #{pha_time1C},
+									  #{pha_time2C},
+									  #{pha_time3C},
+									  #{pha_time4C},
+									  #{pha_time5C},
+									  #{pha_time6C},
+									  #{pha_time7C},
+									  #{pha_time8C},
+									  #{pha_time1S},
+									  #{pha_time2S},
+									  #{pha_time3S},
+									  #{pha_time4S},
+									  #{pha_time5S},
+									  #{pha_time6S},
+									  #{pha_time7S},
+									  #{pha_time8S},
+									  #{pha_hpId},
+									  #{pha_postCdn1},
+									  #{pha_postCdn2},
+									  #{pha_lon},
+									  #{pha_lat},
+									  #{pha_x},
+									  #{pha_y},
+									  #{pha_weekendAt}
+									  )
+	</insert>
+	
+
+</mapper>
