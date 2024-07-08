@@ -1,6 +1,7 @@
 package kr.spring.member.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +19,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.spring.hospital.service.HospitalService;
+import kr.spring.hospital.vo.HospitalVO;
 import kr.spring.member.service.DoctorService;
 import kr.spring.member.vo.DoctorVO;
 import kr.spring.member.vo.MemberVO;
@@ -31,6 +35,8 @@ import lombok.extern.slf4j.Slf4j;
 public class DoctorController {
 	@Autowired
 	DoctorService doctorService;
+	@Autowired
+	HospitalService hospitalService;
 	
 	@Value("${API.KCY.X-Naver-Client-Id}")
 	private String X_Naver_Client_Id;
@@ -46,15 +52,31 @@ public class DoctorController {
 	}
 	//의사회원가입 폼 호출
 	@GetMapping("doctor/registerDoc")
-	public String form() {
+	public String form(/* Model model,String hos_name */) {
+		/*
+		 * Map<String, String> map = new HashMap<String, String>();
+		 * 
+		 * map.put("hos_name", hos_name); List<HospitalVO> list =
+		 * doctorService.getHosList(map);
+		 * 
+		 * System.out.println(list);
+		 * 
+		 * model.addAttribute("list",list);
+		 */
+		
 		return "doctorRegister";
 	}
 	//의사회원가입 처리
 	@PostMapping("doctor/registerDoc")
-	public String submit(@Valid DoctorVO doctor,BindingResult result,HttpSession session,
-			Model model) {
+	public String submit(@Valid @ModelAttribute("doctor") DoctorVO doctor,BindingResult result,
+									HttpSession session,Model model) {
 		if(result.hasErrors()) {
-			return form();
+			/*
+			 * Map<String, String> map = new HashMap<String, String>(); List<HospitalVO>
+			 * list = doctorService.getHosList(map); model.addAttribute("list", list);
+			 */
+            
+            return "doctorRegister";
 		}
 		//========캡챠 시작=============//
 		String code = "1";//키 발급 0, 캡챠 이미지 비교시 1로 세팅
@@ -78,15 +100,14 @@ public class DoctorController {
 		boolean captcha_result = jObject.getBoolean("result");
 		if(!captcha_result) {
 			result.rejectValue("captcha_chars", "invalidCaptcha");
-			return form();
+			return "doctorRegister";
 		}
 		//========캡챠 끝=============//
 		//회원가입 처리
 		doctorService.insertDoctor(doctor);
 		
 		return "redirect:/main/main";
-	}
-	
+	}	
 	/*=============================
 	 * 캡챠 API
 	 ============================*/

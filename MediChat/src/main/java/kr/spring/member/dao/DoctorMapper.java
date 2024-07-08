@@ -1,9 +1,13 @@
 package kr.spring.member.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import kr.spring.hospital.vo.HospitalVO;
 import kr.spring.member.vo.DoctorVO;
 
 @Mapper
@@ -15,6 +19,8 @@ public interface DoctorMapper {
 	@Insert("INSERT INTO member(mem_num,mem_id,mem_name,mem_photo) VALUES(#{mem_num},#{mem_id},#{mem_name},#{mem_photo})")
 	public void insertDoctor(DoctorVO doctor);
 	public void insertDoctor_detail(DoctorVO doctor);
+	//병원 리스트
+	public List<HospitalVO> getHosList(Map<String, String> map);
 	//회원상세정보
 	public DoctorVO selectDoctor(Long doc_num);
 	//회원정보 수정
@@ -28,7 +34,7 @@ public interface DoctorMapper {
 	//회원탈퇴
 	public void deleteDoctor(Long doc_num);
 	public void deleteDoctor_detail(DoctorVO doctor);
-
+	
 	//아이디 중복확인
 	public DoctorVO checkId(String mem_id);
 	//아이디 찾기

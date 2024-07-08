@@ -1,9 +1,14 @@
 package kr.spring.member.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.spring.hospital.dao.HospitalMapper;
+import kr.spring.hospital.vo.HospitalVO;
 import kr.spring.member.dao.DoctorMapper;
 import kr.spring.member.vo.DoctorVO;
 
@@ -13,7 +18,7 @@ public class DoctorServiceImpl implements DoctorService{
 	
 	@Autowired
 	DoctorMapper doctorMapper;
-
+	
 	@Override
 	public void insertDoctor(DoctorVO doctor) {
 		doctor.setMem_num(doctorMapper.selectDoc_num());
@@ -65,6 +70,11 @@ public class DoctorServiceImpl implements DoctorService{
 	public void findPasswd(DoctorVO doctor) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<HospitalVO> getHosList(Map<String, String> map) {
+		return doctorMapper.getHosList(map);
 	}
 
 }

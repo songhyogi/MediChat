@@ -1,11 +1,17 @@
 package kr.spring.member.service;
 
+import java.util.List;
+import java.util.Map;
+
+import kr.spring.hospital.vo.HospitalVO;
 import kr.spring.member.vo.DoctorVO;
 
 public interface DoctorService {
 	//==========의사 회원============
 	//회원가입
 	public void insertDoctor(DoctorVO doctor);
+	//병원 목록
+	public List<HospitalVO> getHosList(Map<String,String> map);
 	//회원상세정보
 	public DoctorVO selectDoctor(Long doc_num);
 	//회원정보 수정
