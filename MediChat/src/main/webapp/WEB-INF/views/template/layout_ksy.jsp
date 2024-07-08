@@ -10,8 +10,8 @@
 <tiles:insertAttribute name="css" ignore="true"/>
 </head>
 <body>
-<div id="main">
-	<div id="main_header">
+<div>
+	<div>
 		<tiles:insertAttribute name="header"/>
 	</div>
 	<div class="custom-container p-5 border">
@@ -24,7 +24,7 @@
 			</div>
 		</div>
 	</div>
-	<div id="main_footer">
+	<div>
 		<tiles:insertAttribute name="footer"/>
 	</div>
 </div>
