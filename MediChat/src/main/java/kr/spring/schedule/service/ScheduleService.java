@@ -6,5 +6,6 @@ import java.util.Map;
 import kr.spring.schedule.vo.DayoffVO;
 
 public interface ScheduleService {
-	public List<DayoffVO> selectList(Map<String,Object> map);
+	public List<String> getDayoffTimes(Long doc_num, String doff_date);
+	
 }
