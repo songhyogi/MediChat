@@ -18,10 +18,8 @@ public class ScheduleServiceImpl implements ScheduleService{
 	private ScheduleMapper scheduleMapper;
 
 	@Override
-	public List<DayoffVO> selectList(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<String> getDayoffTimes(Long doc_num, String doff_date) {
+		return scheduleMapper.getDayoffTimes(doc_num, doff_date);
 	}
-
 	
 }

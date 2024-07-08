@@ -10,7 +10,8 @@ import kr.spring.schedule.vo.DayoffVO;
 
 @Mapper
 public interface ScheduleMapper {
-    //휴무일
+	//휴무시간 가져오기
+	@Select("SELECT doff_time FROM dayoff WHERE doc_num=#{doc_num} AND doff_date=#{doff_date}")
+	public List<String> getDayoffTimes(Long doc_num, String doff_date);
 	
-	public List<DayoffVO> selectList(Map<String,Object> map);
 }
