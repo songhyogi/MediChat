@@ -13,13 +13,11 @@ import kr.spring.reservation.vo.ReservationVO;
 
 @Mapper
 public interface ChatMapper {
-	//예약번호를 통해 의사 이름 구하기
-	@Select("SELECT mem_name FROM member m JOIN reservation r ON (m.mem_num = r.doc_num) WHERE mem_auth=3")
-	public String selectDoctorName(long res_num);
+	//해당 회원의 생성된 채팅 내역 목록 불러오기 - 일반회원
+	public List<ChatVO> selectChatListForMem(long mem_num);
 	
-	//해당 회원 예약 내역 목록 불러오기
-	@Select("SELECT * FROM reservation WHERE mem_num=#{mem_num} AND res_type=0")
-	public List<ReservationVO> selectReservation(long mem_num);
+	//해당 회원의 생성된 채팅 내역 목록 불러오기 - 의사회원
+	public List<ChatVO> selectChatListForDoc(long doc_num);
 	
 	//예약 내역을 기반으로 채팅방 만들기
 	public void createChat(ReservationVO reservationVO);

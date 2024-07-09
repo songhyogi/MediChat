@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import kr.spring.chat.service.ChatService;
 import kr.spring.chat.vo.ChatVO;
 import kr.spring.member.vo.MemberVO;
-import kr.spring.reservation.vo.ReservationVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -34,16 +33,12 @@ public class ChatController {
 	public String setNav(HttpSession session, Model model){
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		Map<String,Object> map= new HashMap<String,Object>();
-		
-		List<ReservationVO> reservation = chatService.selectReservation(user.getMem_num());
-		
-		
-		//map.put(,)
-		
-		
-		model.addAttribute(reservation);
-		
+		if(user.getMem_auth()==2) {
+			//List<ChatVO> chat = chatService.selectChatListForMem(user.getMem_num());
+		}else if(user.getMem_auth()==3) {
+			
+		}
+		//model.addAttribute("chat",chat);
 		
 		return "chatView";
 	}
