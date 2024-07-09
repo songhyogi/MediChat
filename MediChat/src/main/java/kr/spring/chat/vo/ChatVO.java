@@ -10,9 +10,9 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ChatVO {
-	private int chat_num;
-	private int mem_num;
-	private int doc_num;
+	private long chat_num;
+	private long mem_num;
+	private long doc_num;
 	private Date chat_reg_date;
-	private int chat_status;
+	private long chat_status;
 }
