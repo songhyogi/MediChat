@@ -38,7 +38,9 @@ public class MemberController {
 	
 	//로그 처리
 	private static final Logger log = LoggerFactory.getLogger(MemberController.class);
-	//===========회원가입===========
+	/*=============================
+	 * 회원가입
+	 ============================*/
 	@ModelAttribute
 	public MemberVO initCommand() {
 		return new MemberVO();
@@ -89,7 +91,9 @@ public class MemberController {
 		
 		return "redirect:/main/main";
 	}
-	//===========로그인===========
+	/*=============================
+	 * 로그인
+	 ============================*/
 	@GetMapping("/member/login")
 	public String loginForm() {
 		return "memberLogin";
@@ -131,7 +135,7 @@ public class MemberController {
 //				log.debug(lat," ", lon);
 				
 				
-				log.debug("<인증 성공> : "+ member);
+				log.debug("<로그인 인증 성공> : "+ member);
 				
 				return "redirect:/main/main";
 			}
@@ -162,7 +166,7 @@ public class MemberController {
 		return "redirect:/main/main";
 	}
 	/*=============================
-	 * 회원정보 수정
+	 * 일반회원정보 수정
 	 ============================*/
 	//회정정보 수정 폼 호출
 	@GetMapping("/member/modifyUser")
@@ -197,8 +201,10 @@ public class MemberController {
 	 ============================*/
 	
 	/*=============================
-	 * 회원탈퇴
+	 * 일반회원 탈퇴
 	 ============================*/
+	
+	
 	/*=============================
 	 * 캡챠 API
 	 ============================*/

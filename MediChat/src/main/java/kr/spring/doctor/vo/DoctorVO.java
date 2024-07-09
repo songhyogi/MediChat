@@ -1,4 +1,5 @@
-package kr.spring.member.vo;
+package kr.spring.doctor.vo;
+
 
 import java.io.IOException;
 import java.sql.Date;
@@ -41,6 +42,8 @@ public class DoctorVO {
 	private int doc_treat;
 	private int doc_off;
 	private String doc_time;
+	private int doc_agree;
+
 	@NotBlank(message = "비밀번호를 입력해주세요.")
     private String password; // 사용자가 입력한 비밀번호
 	
@@ -59,6 +62,15 @@ public class DoctorVO {
 		}
 		return false;
 	}
+  
+	//관리자 승인 여부 체크
+	public boolean checkAgree(int adminAgree) {
+		if(doc_agree == 1) {
+			return true;
+		}
+		return false;
+	}
+
 	//이미지 BLOB 처리
 	public void setUpload(MultipartFile upload)throws IOException {
 		//MultipartFile > byte[]

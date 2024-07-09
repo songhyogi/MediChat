@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import kr.spring.doctor.service.DoctorService;
 import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.hospital.service.HospitalService;
+import kr.spring.util.AuthCheckException;
 import kr.spring.util.CaptchaUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -88,7 +89,85 @@ public class DoctorController {
 		doctorService.insertDoctor(doctor);
 		
 		return "redirect:/main/main";
-	}	
+	}
+	/*=============================
+	 * 로그인
+	 ============================*/
+	@GetMapping("/doctor/login")
+	public String loginForm() {
+		return "doctorLogin";
+	}
+	//로그인 폼에서 전송된 데이터 처리
+	@PostMapping("/doctor/login")
+	public String loginSubmit(@Valid DoctorVO doctorVO,BindingResult result,HttpServletRequest request,
+									HttpSession session) {
+		log.debug("<로그인 정보> : " + doctorVO);
+		
+		//아이디와 비밀번호만 유효성 체크
+		if(result.hasFieldErrors("mem_id")||result.hasFieldErrors("doc_passwd")) {
+			return loginForm();
+		}
+		DoctorVO doctor = null;
+		try {
+			doctor = doctorService.checkId(doctorVO.getMem_id());
+			boolean check = false;
+			if(doctor!=null) {
+				//비밀번호 확인
+				check = doctor.checkPasswd(doctorVO.getDoc_passwd());
+			}
+			if(doctor!=null) {
+				//관리자 승인 여부 확인
+				check = doctor.checkAgree(doctorVO.getDoc_agree());
+			}
+			if(check) {
+				//=====자동 로그인 할까말까=====
+				//=====자동 로그인 끝=====
+				//로그인 처리
+				session.setAttribute("user", doctor);
+				
+				log.debug("<로그인 인증 성공> : "+doctor);
+				
+				return "redirect:/main/main";
+			}
+			//인증 실패
+			throw new AuthCheckException();
+		}catch(AuthCheckException e) {
+			//인증 실패
+			if(doctor!=null && doctor.getMem_auth() == 1) {
+				result.reject("noAuthority");
+			}else if(doctor.getDoc_agree() == 0) {
+				result.reject("noAgree");
+			}else {
+				result.reject("invalidIdOrPassword");
+			}
+		}
+		log.debug("<인증 실패>");
+		
+		return loginForm();
+	}
+	/*=============================
+	 * 로그아웃
+	 ============================*/
+	@GetMapping("/doctor/logout")
+	public String processLogout(HttpSession session) {
+		session.invalidate();
+		//====== 자동로그인 체크 시작 =======//
+		//====== 자동로그인 체크 끝 =======//
+		
+		return "redirect:/main/main";
+	}
+	/*=============================
+	 * 의사회원정보 수정
+	 ============================*/
+	
+	
+	/*=============================
+	 * 비밀번호 변경
+	 ============================*/
+	/*=============================
+	 * 의사회원 탈퇴
+	 ============================*/
+	
 	/*=============================
 	 * 캡챠 API
 	 ============================*/
