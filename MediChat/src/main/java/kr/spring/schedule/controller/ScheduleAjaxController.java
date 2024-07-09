@@ -9,9 +9,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.spring.member.vo.DoctorVO;
+import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.schedule.service.ScheduleService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,6 +36,24 @@ public class ScheduleAjaxController {
             List<String> times = scheduleService.getDayoffTimes(doc_num,doff_date);
             map.put("result", "success");
             map.put("times", times);
+        }
+        return map;
+    }
+	
+
+    @PostMapping("/schedule/update")
+    @ResponseBody
+    public Map<String, Object> updateDayoffTimes(HttpSession session,Long doc_num,String doff_date,List<String> timesToAdd,List<String> timesToRemove) {
+        Map<String, Object> map = new HashMap<>();
+        DoctorVO user = (DoctorVO) session.getAttribute("user");
+
+        if (user == null) {
+            map.put("result", "logout");
+        } else if (user.getMem_num()!=doc_num) {
+            map.put("result", "wrongAccess");
+        } else {
+            scheduleService.updateDayoffTimes(doc_num, doff_date, timesToAdd, timesToRemove);
+            map.put("result", "success");
         }
         return map;
     }

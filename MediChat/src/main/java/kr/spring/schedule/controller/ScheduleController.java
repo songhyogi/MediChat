@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import kr.spring.member.vo.DoctorVO;
+import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.schedule.service.ScheduleService;
 import kr.spring.schedule.vo.DayoffVO;
