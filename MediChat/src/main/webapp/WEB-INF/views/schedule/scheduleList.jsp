@@ -1,8 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/index.global.min.js"></script>
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
+		<c:if test="${!empty message}">
+			alert('${message}');
+		</c:if>
+		
+		//모델에서 doc_num 가져오기
+		const doc_num = ${doc_num};
+		
 		var calendarEl = document.getElementById('calendar');
 		
 		var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -23,23 +32,28 @@
 	        },
 			fixedWeekCount:false, //다음 달의 날짜가 보여지지 않게
 			dateClick:function(info){//날짜를 클릭했을 때 호출될 함수
-				fetchDayoffTimes(info.date);
+				fetchDayoffTimes(doc_num,info.dateStr);
 			}
 		});
 		calendar.render();
 		
-		//모델에서 doc_num 가져오기
-		//const doc_num = ${doc_num};
-		
-		function fetchDayoffTimes(date) {
+		function fetchDayoffTimes(doc_num,doff_date) {
 		    $.ajax({
 		        url:'/schedule/dayoffTimes',
-		        data:{doff_date: date},
+		        type:'get',
+		        data:{
+		        	doc_num:doc_num,
+		        	doff_date:doff_date
+		        },
 		        success:function(param) {
 		            if(param.result == 'logout'){
 		            	alert('로그인 후 이용하세요');
+		            	location.href='/member/login';
 		            }else if(param.result == 'success'){
-		            	displayTimes(date, param.times);
+		            	displayTimes(doff_date, param.times);
+		            }else if(param.result == 'wrongAccess'){
+		            	alert('잘못된 접근입니다.');
+		            	history.go(-1);
 		            }else{
 		            	alert('스케줄 휴무 오류 발생');
 		            }
@@ -52,7 +66,7 @@
 
 		function displayTimes(date, dayoffTimes) {
 			$('#time-buttons').empty(); //기존 버튼들을 지우고 새로 시작
-		    const allTimes = generateTimesForDay(date);  // 9:00 to 18:00, excluding lunch time
+		    const allTimes = generateTimesForDay(selectedDate);  // 9:00 to 18:00, excluding lunch time
 		    allTimes.forEach(time => {
 		        const button = $('<button>')
 		            .addClass(dayoffTimes.includes(time) ? 'time-off' : 'working-time')
@@ -93,3 +107,4 @@
 </style>
 <div id='calendar'></div>
 <div id="time-buttons"></div>
+<div><input type="button" value="수정"></div>

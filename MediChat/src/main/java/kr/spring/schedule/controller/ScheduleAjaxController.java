@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.spring.member.vo.MemberVO;
+import kr.spring.member.vo.DoctorVO;
 import kr.spring.schedule.service.ScheduleService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,7 +25,7 @@ public class ScheduleAjaxController {
     @ResponseBody
     public Map<String, Object> getDayoffs(HttpSession session,Long doc_num,String doff_date) {
 		Map<String,Object> map = new HashMap<String,Object>();
-        MemberVO user = (MemberVO) session.getAttribute("user");
+        DoctorVO user = (DoctorVO)session.getAttribute("user");//DoctorController.java 확인 필요
 
         if(user == null) {
             map.put("result", "logout");
