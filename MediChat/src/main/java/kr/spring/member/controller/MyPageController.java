@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import kr.spring.member.service.MemberService;
+import kr.spring.member.vo.DoctorVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.AuthCheckException;
 import kr.spring.util.CaptchaUtil;
@@ -112,27 +113,46 @@ public class MyPageController {
 			private static final Logger log = LoggerFactory.getLogger(MemberController.class);
 			
 			@ModelAttribute
-			public MemberVO initCommand() {
-				return new MemberVO();
+			public DoctorVO doctorVO() {
+				return new DoctorVO();
 			}
-			//폼 호출
-			@GetMapping("/member/registerTreat")
-			public String form() {
-				return "registerTreat";
-			}
+			 // 비대면 진료 신청 폼 호출
+		    @GetMapping("/member/registerTreat")
+		    public String form(Model model, HttpSession session) {
+		        MemberVO user = (MemberVO) session.getAttribute("user");
+		        DoctorVO doctorVO = new DoctorVO();
+		        if (user != null) {
+		            doctorVO.setMem_name(user.getMem_name());
+		            doctorVO.setDoc_email(user.getMem_email());
+		        }
+		        model.addAttribute("doctorVO", doctorVO);
+		        return "registerTreat";
+		    }
 			@PostMapping("/member/registerTreat")
-			public String submit(@Valid MemberVO member,BindingResult result,HttpServletRequest request,Model model,
-											HttpSession session) {
-				log.debug("<비대면 진료 신청>" + member);
-				
-				//유효성 체크 결과 오류가 있다면 다시 폼으로
-				if(result.hasErrors()) {
-					return form();
-				}
-				
-				return "redirect:/member/detail";
-			}
+			public String submit(@Valid DoctorVO doctorVO, BindingResult result, HttpServletRequest request, Model model, HttpSession session) {
+			    log.debug("<비대면 진료 신청>" + doctorVO);
 
+			    // 유효성 체크 결과 오류가 있다면 다시 폼으로
+			    if (result.hasErrors()) {
+			        return form(model,session);
+			    }
+
+			    // 현재 로그인한 사용자의 정보 가져오기
+			    MemberVO user = (MemberVO) session.getAttribute("user");
+			    
+			    DoctorVO loggedInDoctor = doctorService.selectDoctor(user.getMem_num());
+			    
+
+			    // 입력한 비밀번호와 현재 로그인한 사용자의 비밀번호 비교
+			    if (!loggedInDoctor.getDoc_passwd().equals(doctorVO.getDoc_passwd())) {
+			        result.rejectValue("doc_passwd", "password.notMatch", "비밀번호가 일치하지 않습니다.");
+			        return form(model,session);
+			    }
+
+			    // 비밀번호가 일치하면 처리 로직 추가
+
+			    return "redirect:/member/docView"; // 성공적으로 처리된 경우 다른 페이지로 리다이렉트
+			}
 }
 
 
