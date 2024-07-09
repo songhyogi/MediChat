@@ -56,10 +56,7 @@
 	</sql>
 	<sql id="searchHospitalByCommonFilter">
 		<if test="commonFilter=='NONFACE'">
-			AND doctor_cnt > 0
-		</if>
-		<if test="commonFilter=='CONRES'">
-			AND doctor_cnt > 0
+			AND doc_cnt > 0
 		</if>
 		<if test="commonFilter=='ING'">
 			AND 
@@ -68,7 +65,7 @@
 			AND 
 		</if>
 		<if test="commonFilter=='WEEKEND'">
-			AND hos_weekendat == 'Y'
+			AND hos_weekendat = 'Y'
 		</if>
 	</sql>
 	<sql id="searchHospitalBySortType">
@@ -76,7 +73,7 @@
 			ORDER BY distance
 		</if>
 		<if test="sortType=='REVIEW'">
-			ORDER BY review_cnt DESC
+			ORDER BY rev_cnt DESC
 		</if>
 		<if test="sortType=='SCORE'">
 			ORDER BY hos_score DESC
@@ -88,21 +85,32 @@
 	
 	<!-- selectListHospital -->
 	<select id="selectListHospital" parameterType="map" resultType="hospitalVO">
-		SELECT h.*, 
-			   (POWER((h.hos_lat - #{hos_lat}), 2) + POWER((h.hos_lon - #{hos_lon}), 2)) AS distance, 
-			   COALESCE(r.review_cnt, 0) AS review_cnt,
-			   COALESCE(d.doctor_cnt, 0) AS doctor_cnt
-		FROM hospital h 
-						LEFT JOIN (SELECT hos_num, COUNT(*) AS review_cnt
-			     				   FROM review
-			     				   GROUP BY hos_num) d ON h.hos_num = r.hos_num
-			     		LEFT JOIN (SELECT hos_num, COUNT(*) AS doctor_cnt
-								   FROM doctor_detail
-								   GROUP BY hos_num) d ON h.hos_num = d.hos_num
-		WHERE 1=1;
-        <include refid="searchHospitalByKeyword"/>
-        <include refid="searchHospitalByCommonFilter"/>
-        <include refid="searchHospitalBySortType"/>
+		SELECT * 
+		FROM (
+		       SELECT h.*, ROWNUM
+		       FROM ( SELECT h.*, 
+		       			  (POWER((h.hos_lat - #{hos_lat}), 2) + POWER((h.hos_lon - #{hos_lon}), 2)) AS distance, 
+		       			   COALESCE(d.doc_cnt, 0) AS doc_cnt
+		              FROM hospital h 
+		              LEFT JOIN ( SELECT hos_num, COUNT(*) AS doc_cnt
+		                      	   FROM doctor_detail
+		                      	   WHERE doc_treat = 1
+		                      	   GROUP BY hos_num
+		                      	 ) d ON h.hos_num = d.hos_num
+		              LEFT JOIN (SELECT hos_num, COUNT(*) AS rev_cnt
+                      FROM review
+            			       GROUP BY hos_num) r ON h.hos_num = r.hos_num
+		          	   
+		          	  ORDER BY distance
+		            ) h
+		       WHERE <![CDATA[
+     				  ROWNUM <= #{pageNum} * #{pageItemNum} and hos_weekendat='N'
+       				 ]]>
+      				 <include refid="searchHospitalByKeyword"/>
+			         <include refid="searchHospitalByCommonFilter"/>
+			         <include refid="searchHospitalBySortType"/>
+		     )
+		WHERE ROWNUM > (#{pageNum} - 1) * #{pageItemNum};
 	</select>
 	
 	<!-- selectListCntHospital -->

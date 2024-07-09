@@ -27,24 +27,6 @@ public class HospitalServiceImpl implements HospitalService{
 	}
 
 	@Override
-	public HospitalVO selectHospitalByNum(Long hos_num) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public HospitalVO selectHospitalByName(String hos_name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public HospitalVO selectHospitalByPosition(String x, String y) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<HospitalVO> selectListHospital(Map<String,Object> map) {
 		return hospitalMapper.selectListHospital(map);
 	}

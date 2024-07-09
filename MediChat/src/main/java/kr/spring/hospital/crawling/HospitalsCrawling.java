@@ -28,14 +28,15 @@ public class HospitalsCrawling {
 	private String KSY_KEY; /* Service Key */
 	
 	final static String TYPE = "xml"; /* xml(기본값), JSON */
-	final static String DUTY_DIV = "C"; /* 병원 타입 B:병원, C:의원 */
-	final static String NUMSOFROWS = "150"; /* 한 페이지 결과 수 */
+	final static String DUTY_DIV = "W"; /* 병원 타입 B:병원, C:의원 */
+	final static String NUMSOFROWS = "100"; /* 한 페이지 결과 수 */
 	
 	//전체 병원 데이터를 담을 리스트
 	public static List<HospitalVO> list = new ArrayList<>();
 	public void main() {
-		// B: 10, C: 216
-		for(int i=1; i<=216; i++) {
+		// A:3, B:10, C:216, D:11, E:4, G:93, N:120, M:2 (150기준), W:1, O:보건소(안넣음)
+		// A:종합병원, B:병원, C:의원, D:요양병원, E:한방병원, G:한의원, N:치과의원, M:치과병원, W:응급의원 ,O:보건소(안넣음)
+		for(int i=1; i<=1; i++) {
 			System.out.println("<<PageNum>> : " + i);
 			try {
 				getHospitals(urlMaker(i));
@@ -45,6 +46,7 @@ public class HospitalsCrawling {
 	            } catch (InterruptedException e) {
 	                // 현재 스레드가 인터럽트되면, 인터럽트 상태를 복원하고 예외를 기록합니다.
 	                Thread.currentThread().interrupt();
+	                System.out.println("url을 파싱하는 과정에서 에러가 발생했습니다.");
 	            }
 			} catch(Exception e) {
 			}

@@ -12,9 +12,6 @@ public interface HospitalService {
 	
 	
 	// 실 사용
-	public HospitalVO selectHospitalByNum(Long hos_num);
-	public HospitalVO selectHospitalByName(String hos_name);
-	public HospitalVO selectHospitalByPosition(String x, String y);
 	public List<HospitalVO> selectListHospital(Map<String,Object> map);
 	public int selectListCntHospital(Map<String,Object> map);
 }
