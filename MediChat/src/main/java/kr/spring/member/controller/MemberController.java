@@ -117,16 +117,19 @@ public class MemberController {
 				//=====자동 로그인 끝=====
 				//로그인 처리
 				session.setAttribute("user", member);
-				//위도 경도 값 세팅
-				//위도
-				String lat = (String)request.getAttribute("user_lat");
-				//경도
-				String lon = (String)request.getAttribute("user_lon");
 				
-				session.setAttribute("user_lat", lat);
-				session.setAttribute("user_lon", lon);
 				
-				log.debug(lat," ", lon);
+//				위도 경도 값 세팅
+//				위도
+//				String lat = (String)request.getAttribute("user_lat");
+//				//경도
+//				String lon = (String)request.getAttribute("user_lon");
+//				
+//				session.setAttribute("user_lat", lat);
+//				session.setAttribute("user_lon", lon);
+//				
+//				log.debug(lat," ", lon);
+				
 				
 				log.debug("<인증 성공> : "+ member);
 				

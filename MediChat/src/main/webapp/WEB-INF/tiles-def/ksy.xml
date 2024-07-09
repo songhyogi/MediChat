@@ -5,20 +5,23 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-	<definition name="notification" extends="main">
-		<put-attribute name="title" value="알림 연습"/>
-		<put-attribute name="body" value="/WEB-INF/views/notification/noti.jsp"/>
+	<definition name="ksy" template="/WEB-INF/views/template/layout_ksy.jsp">
+		<put-attribute name="bootstrap" value="/WEB-INF/views/template/bootStrap.jsp"/>
+		<put-attribute name="css" value="/WEB-INF/views/template/css.jsp"/>
+		<put-attribute name="font" value="/WEB-INF/views/template/font.jsp"/>
+		<put-attribute name="bootstrap" value="/WEB-INF/views/template/bootStrap.jsp"/>
+		<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"/>
+		<put-attribute name="right_nav" value="/WEB-INF/views/common/right_nav.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/>
 	</definition>
 	
 	<definition name="hospitals" extends="ksy">
 		<put-attribute name="title" value="병원 찾기"/>
 		<put-attribute name="body" value="/WEB-INF/views/hospital/hospitals.jsp"/>
-		<put-attribute name="right_nav" value="/WEB-INF/views/common/right_nav.jsp"/>
 	</definition>
 	
 	<definition name="search" extends="ksy">
 		<put-attribute name="title" value="검색 결과"/>
 		<put-attribute name="body" value="/WEB-INF/views/hospital/search.jsp"/>
-		<put-attribute name="right_nav" value="/WEB-INF/views/common/right_nav.jsp"/>
 	</definition>
 </tiles-definitions>
