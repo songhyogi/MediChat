@@ -17,7 +17,7 @@
 	<div id="main_header">
 		<tiles:insertAttribute name="header"/>
 	</div>
-	<div class="custom-container px-5 border">
+	<div class="custom-container pt-4 border">
 		<div id="main_body" class="row">
 			<div class="col-9 border-end">
 				<tiles:insertAttribute name="body"/>
@@ -26,10 +26,11 @@
 				<tiles:insertAttribute name="right_nav"/>
 			</div>
 		</div>
-	</div>
-	<div id="main_footer">
+			<div id="main_footer">
 		<tiles:insertAttribute name="footer"/>
 	</div>
+	</div>
+
 </div>
 </body>
 </html>

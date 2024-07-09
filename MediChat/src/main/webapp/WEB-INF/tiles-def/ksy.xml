@@ -7,9 +7,8 @@
 <tiles-definitions>
 	<definition name="ksy" template="/WEB-INF/views/template/layout_ksy.jsp">
 		<put-attribute name="bootstrap" value="/WEB-INF/views/template/bootStrap.jsp"/>
-		<put-attribute name="css" value="/WEB-INF/views/template/css.jsp"/>
-		<put-attribute name="font" value="/WEB-INF/views/template/font.jsp"/>
-		<put-attribute name="bootstrap" value="/WEB-INF/views/template/bootStrap.jsp"/>
+		<put-attribute name="css" value="/WEB-INF/views/common/css.jsp"/>
+		<put-attribute name="bootstrap" value="/WEB-INF/views/common/bootStrap.jsp"/>
 		<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"/>
 		<put-attribute name="right_nav" value="/WEB-INF/views/common/right_nav.jsp"/>
 		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/>

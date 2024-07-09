@@ -6,9 +6,8 @@
 
 <tiles-definitions>
 	<definition name="main" template="/WEB-INF/views/template/layout_basic.jsp">
-		<put-attribute name="bootstrap" value="/WEB-INF/views/template/bootStrap.jsp"/>
-		<put-attribute name="css" value="/WEB-INF/views/template/css.jsp"/>
-		<put-attribute name="font" value="/WEB-INF/views/template/font.jsp"/>
+		<put-attribute name="bootstrap" value="/WEB-INF/views/common/bootStrap.jsp"/>
+		<put-attribute name="css" value="/WEB-INF/views/common/css.jsp"/>
 		<put-attribute name="title" value="MediChat"/>
 		<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/main/main.jsp"/>
