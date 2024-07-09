@@ -1,4 +1,4 @@
-package kr.spring.member.service;
+package kr.spring.doctor.service;
 
 import java.util.List;
 import java.util.Map;
@@ -7,10 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kr.spring.hospital.dao.HospitalMapper;
+import kr.spring.doctor.dao.DoctorMapper;
+import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.hospital.vo.HospitalVO;
-import kr.spring.member.dao.DoctorMapper;
-import kr.spring.member.vo.DoctorVO;
 
 @Service
 @Transactional
@@ -21,7 +20,7 @@ public class DoctorServiceImpl implements DoctorService{
 	
 	@Override
 	public void insertDoctor(DoctorVO doctor) {
-		doctor.setMem_num(doctorMapper.selectDoc_num());
+		doctor.setMem_num(doctorMapper.selectMem_num());
 		doctorMapper.insertDoctor(doctor);
 		doctorMapper.insertDoctor_detail(doctor);
 	}
@@ -80,6 +79,11 @@ public class DoctorServiceImpl implements DoctorService{
 	@Override
 	public Integer selectRowCount(Map<String, Object> map) {
 		return doctorMapper.selectRowCount(map);
+	}
+
+	@Override
+	public List<HospitalVO> getHosListByKeyword(String keyword) {
+		return doctorMapper.getHosListByKeyword(keyword);
 	}
 
 }

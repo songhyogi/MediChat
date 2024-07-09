@@ -1,10 +1,11 @@
-package kr.spring.member.service;
+package kr.spring.doctor.service;
 
 import java.util.List;
 import java.util.Map;
 
+import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.hospital.vo.HospitalVO;
-import kr.spring.member.vo.DoctorVO;
+
 
 public interface DoctorService {
 	//==========의사 회원============
@@ -13,6 +14,7 @@ public interface DoctorService {
 	//병원 목록
 	public List<HospitalVO> getHosList(Map<String,Object> map);
 	public Integer selectRowCount(Map<String,Object> map);
+	public List<HospitalVO> getHosListByKeyword(String keyword);
 	//회원상세정보
 	public DoctorVO selectDoctor(Long doc_num);
 	//회원정보 수정

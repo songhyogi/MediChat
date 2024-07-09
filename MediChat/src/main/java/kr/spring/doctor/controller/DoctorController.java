@@ -1,7 +1,6 @@
-package kr.spring.member.controller;
+package kr.spring.doctor.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,18 +18,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
-
+import kr.spring.doctor.service.DoctorService;
+import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.hospital.service.HospitalService;
-import kr.spring.hospital.vo.HospitalVO;
-import kr.spring.member.service.DoctorService;
-import kr.spring.member.vo.DoctorVO;
-import kr.spring.member.vo.MemberVO;
 import kr.spring.util.CaptchaUtil;
-import kr.spring.util.FileUtil;
-import kr.spring.util.PagingUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -47,42 +39,23 @@ public class DoctorController {
 	private String X_Naver_Client_Secret;
 	
 	//로그 처리
-	private static final Logger log = LoggerFactory.getLogger(MemberController.class);
+	private static final Logger log = LoggerFactory.getLogger(DoctorController.class);
 	//===========회원가입===========
 	@ModelAttribute
 	public DoctorVO initCommand() {
 		return new DoctorVO();
 	}
 	//의사회원가입 폼 호출
-	@GetMapping("doctor/registerDoc")
-	public String form(/*
-						 * int pageNum,String keyfield,String keyword,Model model, HttpSession session
-						 */) {
-		/*
-		 * HospitalVO hos = (HospitalVO)session.getAttribute("hos"); Map<String, Object>
-		 * map = new HashMap<String, Object>();
-		 * 
-		 * map.put("hos_num", hos.getHos_num()); map.put("keyfield", keyfield);
-		 * map.put("keyword", keyword);
-		 * 
-		 * //총 개수 int count = doctorService.selectRowCount(map); //페이지 처리 PagingUtil
-		 * page = new PagingUtil(keyfield,keyword,pageNum,count,10,10,"list");
-		 * 
-		 * List<HospitalVO> list = null; if(count > 0) { map.put("start",
-		 * page.getStartRow()); map.put("end", page.getEndRow());
-		 * 
-		 * list = doctorService.getHosList(map); }
-		 * 
-		 * model.addAttribute("count",count); model.addAttribute("list",list);
-		 * model.addAttribute("page",page.getPage());
-		 */
-		
+	@GetMapping("/doctor/registerDoc")
+	public String form() {
 		return "doctorRegister";
 	}
 	//의사회원가입 처리
-	@PostMapping("doctor/registerDoc")
-	public String submit(@Valid DoctorVO doctor,BindingResult result,
+	@PostMapping("/doctor/registerDoc")
+	public String submit(@Valid DoctorVO doctor,BindingResult result,HttpServletRequest request,
 									HttpSession session,Model model) {
+		log.debug("<회원가입>" + doctor);
+		
 		if(result.hasErrors()) {
             return "doctorRegister";
 		}
