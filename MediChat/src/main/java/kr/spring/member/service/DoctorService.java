@@ -11,7 +11,8 @@ public interface DoctorService {
 	//회원가입
 	public void insertDoctor(DoctorVO doctor);
 	//병원 목록
-	public List<HospitalVO> getHosList(Map<String,String> map);
+	public List<HospitalVO> getHosList(Map<String,Object> map);
+	public Integer selectRowCount(Map<String,Object> map);
 	//회원상세정보
 	public DoctorVO selectDoctor(Long doc_num);
 	//회원정보 수정

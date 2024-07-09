@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+
 import kr.spring.hospital.service.HospitalService;
 import kr.spring.hospital.vo.HospitalVO;
 import kr.spring.member.service.DoctorService;
@@ -28,6 +30,7 @@ import kr.spring.member.vo.DoctorVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.CaptchaUtil;
 import kr.spring.util.FileUtil;
+import kr.spring.util.PagingUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -52,30 +55,35 @@ public class DoctorController {
 	}
 	//의사회원가입 폼 호출
 	@GetMapping("doctor/registerDoc")
-	public String form(/* Model model,String hos_name */) {
+	public String form(/*
+						 * int pageNum,String keyfield,String keyword,Model model, HttpSession session
+						 */) {
 		/*
-		 * Map<String, String> map = new HashMap<String, String>();
+		 * HospitalVO hos = (HospitalVO)session.getAttribute("hos"); Map<String, Object>
+		 * map = new HashMap<String, Object>();
 		 * 
-		 * map.put("hos_name", hos_name); List<HospitalVO> list =
-		 * doctorService.getHosList(map);
+		 * map.put("hos_num", hos.getHos_num()); map.put("keyfield", keyfield);
+		 * map.put("keyword", keyword);
 		 * 
-		 * System.out.println(list);
+		 * //총 개수 int count = doctorService.selectRowCount(map); //페이지 처리 PagingUtil
+		 * page = new PagingUtil(keyfield,keyword,pageNum,count,10,10,"list");
 		 * 
-		 * model.addAttribute("list",list);
+		 * List<HospitalVO> list = null; if(count > 0) { map.put("start",
+		 * page.getStartRow()); map.put("end", page.getEndRow());
+		 * 
+		 * list = doctorService.getHosList(map); }
+		 * 
+		 * model.addAttribute("count",count); model.addAttribute("list",list);
+		 * model.addAttribute("page",page.getPage());
 		 */
 		
 		return "doctorRegister";
 	}
 	//의사회원가입 처리
 	@PostMapping("doctor/registerDoc")
-	public String submit(@Valid @ModelAttribute("doctor") DoctorVO doctor,BindingResult result,
+	public String submit(@Valid DoctorVO doctor,BindingResult result,
 									HttpSession session,Model model) {
 		if(result.hasErrors()) {
-			/*
-			 * Map<String, String> map = new HashMap<String, String>(); List<HospitalVO>
-			 * list = doctorService.getHosList(map); model.addAttribute("list", list);
-			 */
-            
             return "doctorRegister";
 		}
 		//========캡챠 시작=============//
