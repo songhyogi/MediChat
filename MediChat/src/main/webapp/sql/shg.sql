@@ -1,3 +1,4 @@
+-- 휴무일
 create table dayoff(
  doff_num number not null,
  doc_num number not null,
@@ -6,6 +7,8 @@ create table dayoff(
  constraint doff_pk primary key (doff_num),
  constraint doff_fk foreign key (doc_num) references member (mem_num)
 );
+create sequence dayoff_seq;
+-- 예약내역
 create table reservation(
  res_num number not null,
  mem_num number not null,
@@ -20,5 +23,30 @@ create table reservation(
  constraint res_fk1 foreign key (mem_num) references member (mem_num),
  constraint res_fk2 foreign key (doc_num) references member (mem_num)
 );
-       
---깃허브 테스트
+create sequence reservation_seq;
+-- 진료후기
+create table review(
+ rev_num number not null,
+ res_num number not null,
+ mem_num number not null,
+ hos_num number not null,
+ rev_grade float not null,
+ rev_title varchar2(90) not null,
+ rev_content clob not null,
+ rev_reg date default sysdate not null,
+ reg_modify date,
+ reg_hit number(10) default 0 not null,
+ rev_report number default 0 not null,
+ constraint rev_pk primary key (rev_num),
+ constraint rev_fk1 foreign key (res_num) references reservation (res_num),
+ constraint rev_fk2 foreign key (mem_num) references member (mem_num),
+ constraint rev_fk3 foreign key (hos_num) references hospital (hos_num)
+);
+create sequence review_seq;
+--진료 후기 좋아요
+create table review_fav(
+ rev_num number not null,
+ mem_num number not null,
+ constraint rev_fav_fk1 foreign key (rev_num) references review (rev_num),
+ constraint rev_fav_fk2 foreign key (mem_num) references member (mem_num)
+);
