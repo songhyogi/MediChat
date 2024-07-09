@@ -10,6 +10,12 @@
 		<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/main/main.jsp"/>
 	</definition>
+	
+	<definition name="drugSearch" extends="main">
+		<put-attribute name="title" value="의약품 검색"/>
+		<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/drug/drugList.jsp"/>
+	</definition>
 </tiles-definitions>
 
 
