@@ -23,12 +23,12 @@ public class DoctorVO {
 	private String mem_id;
 	@NotBlank
 	private String mem_name;
-	@NotEmpty
 	private byte[] mem_photo;		//프로필 사진
 	private String mem_photoname;	//프로필 사진명
 	private int mem_auth;			//권한 등급(0:탈퇴,1:정지,2:일반,3:의사,9:관리자)
 	private long doc_num;
 	private long hos_num;
+	private String hos_name;
 	@Pattern(regexp="^[A-Za-z0-9]{4,12}$")
 	private String doc_passwd;
 	@Email
@@ -39,6 +39,10 @@ public class DoctorVO {
 	private String doc_license;
 	private String doc_history;
 	private int doc_treat;
+	private int doc_off;
+	private String doc_time;
+	@NotBlank(message = "비밀번호를 입력해주세요.")
+    private String password; // 사용자가 입력한 비밀번호
 	
 	//비밀번호 변경시 현재 비밀번호를 저장하는 용도로 사용
 	@Pattern(regexp="^[A-Za-z0-9]{4,12}$")

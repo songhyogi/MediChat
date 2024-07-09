@@ -53,11 +53,10 @@
 			</li>
 		</ul>
 	</div>
-</body>
 	<input type="button" value="약 복용 내역"><br>
 	<input type="button" value="후기내역"><br>
 	<input type="button" value="로그아웃">
-
+</body>
 </html>
 <!--end 모달 팝업-->
 <!-- 회원정보 끝 -->
