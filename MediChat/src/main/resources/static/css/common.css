@@ -1,11 +1,290 @@
+/* 글씨체 바꿀 때 변경 용 */
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* 글 두께 1~10 */
+.fw-1 {
+	font-weight: 100;
+}
+
+.fw-2 {
+	font-weight: 200;
+}
+
+.fw-3 {
+	font-weight: 300;
+}
+
+.fw-4 {
+	font-weight: 400;
+}
+
+.fw-5 {
+	font-weight: 500;
+}
+
+.fw-6 {
+	font-weight: 600;
+}
+
+.fw-7 {
+	font-weight: 700;
+}
+
+.fw-8 {
+	font-weight: 800;
+}
+
+.fw-9 {
+	font-weight: 900;
+}
+
+.fw-10 {
+	font-weight: 1000;
+}
+
+/* 글 크기 8 ~ 30*/
+.fs-8 {
+    font-size: 8px;
+}
+
+.fs-9 {
+    font-size: 9px;
+}
+
+.fs-10 {
+    font-size: 10px;
+}
+
+.fs-11 {
+    font-size: 11px;
+}
+
+.fs-12 {
+    font-size: 12px;
+}
+
+.fs-13 {
+    font-size: 13px;
+}
+
+.fs-14 {
+    font-size: 14px;
+}
+
+.fs-15 {
+    font-size: 15px;
+}
+
+.fs-16 {
+    font-size: 16px;
+}
+
+.fs-17 {
+    font-size: 17px;
+}
+
+.fs-18 {
+    font-size: 18px;
+}
+
+.fs-19 {
+    font-size: 19px;
+}
+
+.fs-20 {
+    font-size: 20px;
+}
+
+.fs-21 {
+    font-size: 21px;
+}
+
+.fs-22 {
+    font-size: 22px;
+}
+
+.fs-23 {
+    font-size: 23px;
+}
+
+.fs-24 {
+    font-size: 24px;
+}
+
+.fs-25 {
+    font-size: 25px;
+}
+
+.fs-26 {
+    font-size: 26px;
+}
+
+.fs-27 {
+    font-size: 27px;
+}
+
+.fs-28 {
+    font-size: 28px;
+}
+
+.fs-29 {
+    font-size: 29px;
+}
+
+.fs-30 {
+    font-size: 30px;
+}
+
+
+/* ================= 글 색상 ================= */
+/* 검은색 7단계 */
+.text-black-1 {
+    color: #333333; /* 연한 검은색 */
+}
+
+.text-black-2 {
+    color: #4a4a4a; /* 중간 연한 검은색 */
+}
+
+.text-black-3 {
+    color: #5f5f5f; /* 중간 검은색 */
+}
+
+.text-black-4 {
+    color: #757575; /* 중간 진한 검은색 */
+}
+
+.text-black-5 {
+    color: #8c8c8c; /* 진한 검은색 */
+}
+
+.text-black-6 {
+    color: #a3a3a3; /* 매우 진한 검은색 */
+}
+
+.text-black-7 {
+    color: #b9b9b9; /* 가장 진한 검은색 */
+}
+
+/* 회색 7단계 */
+.text-gray-1 {
+    color: #f2f2f2; /* 매우 연한 회색 */
+}
+
+.text-gray-2 {
+    color: #e0e0e0; /* 연한 회색 */
+}
+
+.text-gray-3 {
+    color: #cecece; /* 중간 회색 */
+}
+
+.text-gray-4 {
+    color: #bdbdbd; /* 중간 진한 회색 */
+}
+
+.text-gray-5 {
+    color: #adadad; /* 진한 회색 */
+}
+
+.text-gray-6 {
+    color: #9c9c9c; /* 매우 진한 회색 */
+}
+
+.text-gray-7 {
+    color: #8c8c8c; /* 가장 진한 회색 */
+}
+
+
+/* ================= 배경 색상 ================= */
+/* 회색 7단계 */
+.bg-gray-1 {
+    background-color: #f2f2f2; /* 매우 연한 회색 */
+}
+
+.bg-gray-2 {
+    background-color: #e0e0e0; /* 연한 회색 */
+}
+
+.bg-gray-3 {
+    background-color: #cecece; /* 중간 회색 */
+}
+
+.bg-gray-4 {
+    background-color: #bdbdbd; /* 중간 진한 회색 */
+}
+
+.bg-gray-5 {
+    background-color: #adadad; /* 진한 회색 */
+}
+
+.bg-gray-6 {
+    background-color: #9c9c9c; /* 매우 진한 회색 */
+}
+
+.bg-gray-7 {
+    background-color: #8c8c8c; /* 가장 진한 회색 */
+}
+/* 녹색 7단계 */
+.bg-green-1 {
+ 	background-color: rgb(230, 244, 244); /* 가장 연한 녹색 */
+}
+.bg-green-2 {
+ 	background-color: rgb(204, 231, 231);
+}
+.bg-green-3 {
+ 	background-color: rgb(179, 217, 217);
+}
+.bg-green-4 {
+ 	background-color: rgb(153, 204, 204);
+}
+.bg-green-5 {
+ 	background-color: rgb(128, 191, 191);
+}
+.bg-green-6 {
+ 	background-color: rgb(102, 178, 178);
+}
+.bg-green-7 {
+    background-color: rgb(76, 165, 165); /* 가장 진한 녹색 */
+}
+
 .custom-container {
             width: 1200px; /* 원하는 고정 너비 */
             margin-left: auto;
             margin-right: auto;
             padding-left: 15px;
             padding-right: 15px;
-        }
+}
 
+
+/* 버튼 색 */
+.btn-green {
+    background-color: rgb(102, 178, 178);
+    color: #fff; /* 버튼 텍스트를 하얀색으로 */
+    border: none; /* 기본 테두리 제거 */
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-green:hover {
+    background-color: rgb(76, 165, 165);
+    transform: scale(1.05);
+}
+
+/* 링크 제거용 */
+.a{
+	text-decoration: none;
+	color: black;
+}
+
+
+
+
+
+/* 일단 보류 */
 /* 배경 색 */
 .bg-color {
 	background-color: rgb(230, 244, 244);	

@@ -1,0 +1,103 @@
+@charset "UTF-8";
+
+.text-lightgray {
+	color: #71767A;
+}
+.text-gary {
+	color: #565C65;
+}
+.text-lightblack {
+	color: #3D4551;
+}
+.text-black {
+	color: #1C1D1F;
+}
+
+/* 진료과목 */
+.sub-icon {
+	padding: 0 0;
+	margin: 0 auto;
+	width:35px;
+	height:35px;
+	overflow: hidden;
+	
+}
+
+.sub-name {
+	font-size: 14px;
+	color: #555555;
+	font-weight: 700;
+	padding: 0 0;
+	margin: 0 auto;
+}
+
+.subject{
+	margin: 5px;
+	cursor: pointer;
+	width: 110px;
+	height: 70px;
+}
+.subject:hover{
+	background-color: rgb(210, 225, 215);
+	transform: scale(1.05);
+}
+
+/* 더보기 */
+#more{
+	height: 40px;
+	cursor: pointer;
+}
+#more h4{
+	margin: 0 auto;
+	font-size: 20px;
+}
+
+/* 어떻게 아프신가요 */
+.hs-item{
+	cursor: pointer;
+}
+.hs-item:hover {
+	background-color: rgb(47, 154, 144);
+	transform: scale(1.05);
+}
+.hs-item p {
+	color: rgb(29, 105, 98);
+	font-weight: 800;
+	font-size: 16px;
+	margin: 10px auto;
+}
+.hs-item p:hover {
+	color: white;
+	font-weight: 800;
+	font-size: 16px;
+	margin: 10px auto;
+}
+
+/* 검색창 + 인기 검색어 */
+#h-search-icon{
+	height: 50px;
+	font-size: 50px;
+}
+
+.hkw-item{
+	cursor: pointer;
+	height: 35px;
+	overflow: hidden;
+	align-content: center;
+	display: inline-block;
+	min-width: 75px;
+}
+.hkw-item:hover {
+	background-color: #cecece;
+}
+.hkw{
+	margin: auto auto;
+}
+
+/* 지도 */
+#mapDiv {
+	width:500px;
+	height: 600px;
+	margin: 0 auto;
+	text-align: center;
+}
