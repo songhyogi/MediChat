@@ -32,16 +32,20 @@
 				<form:input path="doc_email" placeholder="test@test.com 형식으로 입력하세요."/>
 				<form:errors path="doc_email" cssClass="error-color"/>
 			</li>
-			<%-- <li>
-		        <form:label path="hos_num">병원정보</form:label>
-		        <form:select path="hos_num" id="hos_num">
-		            <form:option value="">병원을 선택하세요</form:option>
-		            <c:forEach items="${list}" var="hospital">
-		                <form:option value="${hospital.hos_num}">${hospital.hos_name}</form:option>
-		            </c:forEach>
-		        </form:select>
-		        <form:errors path="hos_num" cssClass="error-color"/>
-		    </li> --%>
+			<li>
+				<!-- 병원 목록 검색 -->
+				<form:label path="hos_num1">병원</form:label>
+				<input type="search" name="keyword" id="keyword" value="${keyword}">
+                <input type="button" id="search_button" value="검색">
+            </li>
+            <li>
+            	<form:label path="hos_num2"></form:label>
+            	<select id="hos_num2" name="hos_num2" class="hos data form-select">
+            		<c:forEach var="hos" items="${hosList}">
+            			<option value="${hos_num}">${hos_name}/${hos_addr}/${hos_tell1}</option>
+            		</c:forEach>
+            	</select>
+		    </li>
 			<li>
 				<form:label path="doc_history">연혁</form:label>
 				<form:textarea path="doc_history" placeholder="연혁을 입력해주세요." style="width: 300px; height: 150px;"/>
@@ -49,19 +53,6 @@
 		</ul>
 			<hr size="1" width="100%" noshade="noshade">
 		<ul>
-<%-- 			<li>
-				<div class="profile" id="photo_btn">
-					<label>프로필 사진</label>
-					<img src="${pageContext.request.contextPath}/image_bundle/face.png" width="100" height="100" class="my-photo">
-				</div>
-			</li>
-			<li>
-				<div id="photo_choice" style="display:none;">
-					<input type="file" id="upload" accept="image/gif,image/png,image/jpeg"><br>
-					<input type="button" value="저장" id="photo_submit"> 
-					<input type="button" value="취소" id="photo_reset"> 
-				</div>
-			</li> --%>
 			<li>
 				<form:label path="doc_license">의사 면허증</form:label>
 				<input type="file" name="doc_license" id="doc_license" accept="image/gif,image/png,image/jpeg">
@@ -92,6 +83,5 @@
 	</form:form>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/doctor.register.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/doctor.profile.js"></script>
 </div>
 <!-- 의사회원가입 끝 -->

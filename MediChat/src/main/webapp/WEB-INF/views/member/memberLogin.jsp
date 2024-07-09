@@ -5,6 +5,8 @@
 <div>
 	<form:form action="login" id="member_login" modelAttribute="memberVO">
 		<form:errors element="div" cssClass="error-color"/>
+		<input type="hidden" id="lon" name="user_lon" value="" >
+		<input type="hidden" id="lat" name="user_lat" value="" >
 		<ul>
 			<li class="floating-label">
 				<form:input path="mem_id" placeholder="아이디" autocomplete="off" cssClass="form-input"/>
@@ -18,7 +20,7 @@
 			</li>
 		</ul>
 		<div>
-			<form:button class="login-btn">로그인</form:button>
+			<form:button path="login-btn">로그인</form:button>
 		</div>
 		<div>
 			<label for="auto">
@@ -35,3 +37,33 @@
 	<img src="${pageContext.request.contextPath}/images/naver_login.png" width="200">
 	<!--  네이버 로그인 끝 -->
 </div>
+<script>
+	window.onload = function(){
+		const log_btn = document.getElementById('login-btn');
+		log_btn.onsubmit= function(){
+			//기본값 설정
+			const defaultLat = 37.4981646510326;
+			const defaultLon = 127.028307900881;
+			
+			// 위치 정보 가져오기
+			if (navigator.geolocation) {
+			  navigator.geolocation.getCurrentPosition(
+			    function(position) {
+			      const lat = position.coords.latitude;
+			      const lon = position.coords.longitude;
+			    },
+			    function(error) {
+			      const lat = defaultLat;
+			      const lon = defaultLon;
+			    }
+			  );
+			} else {
+			  const lat = defaultLat;
+			  const lon = defaultLon;
+			}
+			document.getElementById('lat').value = lat;
+		    document.getElementById('lon').value = lon;
+		};
+	}
+		
+</script>

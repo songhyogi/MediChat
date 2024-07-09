@@ -73,8 +73,13 @@ public class DoctorServiceImpl implements DoctorService{
 	}
 
 	@Override
-	public List<HospitalVO> getHosList(Map<String, String> map) {
+	public List<HospitalVO> getHosList(Map<String,Object> map) {
 		return doctorMapper.getHosList(map);
+	}
+
+	@Override
+	public Integer selectRowCount(Map<String, Object> map) {
+		return doctorMapper.selectRowCount(map);
 	}
 
 }

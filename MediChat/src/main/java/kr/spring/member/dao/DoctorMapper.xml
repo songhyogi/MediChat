@@ -16,12 +16,31 @@
 		ON m.mem_num = d.doc_num
 		WHERE mem_id=#{mem_id}
 	</select>
-	<!-- <select id="getHosList" parameterType="map" resultType="hospitalVO">
-	    SELECT hos_num,hos_name,hos_addr,hos_tell1
-	    FROM hospital
-	    WHERE hos_name LIKE '%' || #{hos_name} || '%'
-	    ORDER BY hos_name;
-	</select> -->
+	<!-- 병원 목록(검색) -->
+	<sql id="hosSearch">
+		<where>
+			<if test="keyword!=null and keyword != ''">
+				<if test="keyfield == 1">
+					hos_name LIKE '%' || #{keyword} || '%'
+				</if>
+			</if>
+		</where>
+	</sql>
+	<!-- 병원 목록 총 레코드수/검색 레코드 수 -->
+	<select id="selectRowCount" parameterType="map" resultType="integer">
+		SELECT COUNT(*) FROM hospital
+		<include refid="hosSearch"></include>
+	</select>
+	<!-- 병원 목록 전체/검색 -->
+	<select id="hosList" parameterType="map" resultType="hospitalVO">
+		SELECT * FROM (SELECT a.*, rownum rnum FROM 
+		(SELECT hos_num,hos_name,hos_addr FROM hospital 
+		<include refid="hosSearch"></include>
+		)a)
+		<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= #{end}
+		]]>
+	</select>
 
 </mapper>
 
