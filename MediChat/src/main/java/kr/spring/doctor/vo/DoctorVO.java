@@ -1,4 +1,4 @@
-package kr.spring.member.vo;
+package kr.spring.doctor.vo;
 
 import java.io.IOException;
 import java.sql.Date;
