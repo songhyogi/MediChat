@@ -34,18 +34,17 @@
 			</li>
 			<li>
 				<!-- 병원 목록 검색 -->
-				<form:label path="hos_num1">병원</form:label>
+				<form:label path="hos_num">병원</form:label>
 				<input type="search" name="keyword" id="keyword" value="${keyword}">
                 <input type="button" id="search_button" value="검색">
             </li>
             <li>
-            	<form:label path="hos_num2"></form:label>
-            	<select id="hos_num2" name="hos_num2" class="hos data form-select">
-            		<c:forEach var="hos" items="${hosList}">
-            			<option value="${hos_num}">${hos_name}/${hos_addr}/${hos_tell1}</option>
+            	<form:select path="hos_num">
+              	 	<c:forEach var="hos" items="${hosList}">
+            			<option value="${hos.hos_num}">${hos.hos_name}/${hos.hos_addr}/${hos.hos_tell1}</option>
             		</c:forEach>
-            	</select>
-		    </li>
+                </form:select>
+            </li>
 			<li>
 				<form:label path="doc_history">연혁</form:label>
 				<form:textarea path="doc_history" placeholder="연혁을 입력해주세요." style="width: 300px; height: 150px;"/>
@@ -60,7 +59,7 @@
 		</ul>
 		<!-- 캡챠 시작 -->
 		<hr size="1" width="100%" noshade="noshade">
-		<%-- <ul>
+		<ul>
 			<li>
 				<h2>인증문자 입력</h2>
 				<div id="captcha_div">
@@ -73,7 +72,7 @@
 				<form:input path="captcha_chars" placeholder="인증문자를 입력하세요."/>
 				<form:errors path="captcha_chars" cssClass="error-color"/>
 			</li>
-		</ul> --%>
+		</ul>
 		<!-- 캡챠 끝 -->
 		<hr size="1" width="80%" noshade="noshade">
 		<div class="align-center">
@@ -81,7 +80,61 @@
 			<form:button class="default-btn">가입신청</form:button>
 		</div>
 	</form:form>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/doctor.register.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/doctor.register.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+	    $('#search_button').on('click', function() {
+	        var keyword = $('#keyword').val();
+	
+	        $.ajax({
+	            url:'${pageContext.request.contextPath}/doctor/hosList',
+	            type:'post',
+	            dataType:'json',
+	            data:{keyword:keyword},
+	            success:function(data){
+	                if(data.success){
+	                   var hosList = data.hosList;
+	                   var options = '';
+	                   // 기존 옵션 초기화
+	                    $('form').find('select[name="hos_num"]').empty();
+
+	                   $.each(hosList, function(index, hospital) {
+	                       options += '<option value="' + hospital.hos_num + '">' 
+	                                + hospital.hos_name + '/' + hospital.hos_addr + '/' + hospital.hos_tell1 + '</option>';
+	                   });
+	                   $('form').find('select[name="hos_num"]').append(options);
+	                }else{
+	                   alert('병원 목록을 가져오는 중에 오류가 발생하였습니다.');
+	                }
+	            },
+	            error:function(){
+	               alert('서버 통신 중 오류가 발생하였습니다.');
+	            }
+	        });
+	    });
+	 	// select 태그 값 변경 시
+	    $('form').on('change', 'select[name="hos_num"]', function() {
+	        var selectedHosNum = $(this).val();
+	        $('form').find('input[name="hos_num"]').val(selectedHosNum); // 숨겨진 input 태그에 선택한 값 할당
+	    });
+	});
+</script>
+<script>
+	$(function(){
+		$('#reload_btn').click(function(){
+			$.ajax({
+				url:'getCaptcha',
+				type:'get',
+				success:function(){
+					$('#captcha_div').load(location.href + ' #captcha_div');
+				},
+				error:function(){
+					alert('네트워크 오류 발생');
+				}
+			});
+		});
+	});
+</script>
 </div>
 <!-- 의사회원가입 끝 -->

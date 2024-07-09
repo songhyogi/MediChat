@@ -42,3 +42,4 @@ create table doctor_detail(
 	CONSTRAINT doctor_detail_fk1 FOREIGN KEY (doc_num) REFERENCES member(mem_num),
 	CONSTRAINT doctor_detail_fk2 FOREIGN KEY (hos_num) REFERENCES hospital(hos_num)
 ); 
+create sequence doctor_detail_seq;
