@@ -1,4 +1,7 @@
 $(function(){
+	let rowCount = 10;
+	let currentPage;
+	let count;
 	/*------------------
 			회원가입
 	--------------------*/
@@ -61,5 +64,68 @@ $(function(){
 			return false;
 		}
 	});//end of submit
+	
+	/*------------------
+        병원 목록
+    --------------------*/
+    
+    
+    
+    /*function hosList(pageNum){
+        currentPage = pageNum;
+        let hos_num = $('#hos_num').val();
+        $.ajax({
+            url: 'hosList',
+            type: 'get',
+            data: {hos_num:hos_num,pageNum:pageNum,rowCount:rowCount},
+            dataType: 'json',
+            success: function(param){
+                let count = param.count;
+                
+                $(param.list).each(function(index, item){
+                    let output = '<div>';
+                    output += '<select id="hos_num" name="hos_num">';
+                    output += '<option value="">병원을 선택하세요</option>';
+                    output += '<option value="' + hospital.hos_num + '">' + hospital.hos_name + '</option>';
+                    output += '</select>';
+                    output += '</div>';
+                    output += '<div>';
+                    output += '<ul>';
+                    output += '<li>'+item.hos_name+'</li>';
+                    output += '</ul>';
+                    output += '</div>';
+                    
+                    $('#hospital-list').append(output);
+                });
+
+                // 병원 선택 시 처리
+                $('#hospital-list').on('click', 'li', function(){
+                    let selectedHospital = $(this).text();
+
+                    $.ajax({
+                        url: '${pageContext.request.contextPath}/registerDoc',
+                        type: 'post',
+                        data: {selectedHospital: selectedHospital},
+                        success: function(response){
+                            alert('회원가입이 완료되었습니다.');
+
+                            window.location.href = '${pageContext.request.contextPath}/main/main';
+                        },
+                        error: function(){
+                            alert('회원가입 처리 중 오류가 발생했습니다.');
+                        }
+                    });
+                });
+            },
+            error: function(){
+                alert('네트워크 오류 발생');
+            }
+        });
+    }*/
 
 });
+
+
+
+
+
