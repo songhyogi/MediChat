@@ -25,6 +25,7 @@ public interface DoctorMapper {
 	public Integer selectRowCount(Map<String,Object> map);
 	public List<HospitalVO> getHosListByKeyword(String keyword);
 	//회원상세정보
+	@Select("SELECT * FROM member m JOIN doctor_detail d ON m.mem_num=d.doc_num WHERE mem_num=#{mem_num}")
 	public DoctorVO selectDoctor(Long doc_num);
 	//회원정보 수정
 	public void updateDoctor(DoctorVO doctor);
