@@ -7,8 +7,8 @@
 	<div class="chat-header">
 		<!-- 예약내역을 클릭한 경우에만 예약번호와 진료일시, 의사 표시 -->
 		<div id="chat_title">
-			예약번호: ${chat.chat_num}
-			${chat.reg_date}
+			예약번호: ${reservation.res_num}
+			${reservation.res_date} ${reservation.res_time}
 		</div>
 		<!-- 채팅창 표시 시작 -->
 	</div>
