@@ -8,7 +8,7 @@
 <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${apiKey}&libraries=services"></script>
 </head>
 <body>
-<div id="map" style="width:500px; height:500px;"></div>
+<div id="map" style="width:700px; height:500px;" class="rounded-4"></div>
 <script>
 kakao.maps.load(function(){
 	// 카카오맵 API
