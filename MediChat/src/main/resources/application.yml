@@ -4,7 +4,7 @@ spring:
   profiles:
     active: local #local,dev,real
     include: API-KEY
-    
+   
   mvc:
     view: #view 경로 및 확장자 지정
       prefix: /WEB-INF/views/
@@ -51,7 +51,10 @@ server:
     encoding:
       charset: UTF-8
       enabled: true #http 인코딩 지원을 활성활지 여부
-      force: true    
+      force: true 
+  error:
+    whitelabel:
+      enabled: false       
   tomcat:
     max-http-form-post-size: 200MB #톰캣에서 허용하는 파일 업로드 사이즈    
     

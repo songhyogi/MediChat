@@ -2,15 +2,15 @@
 <!DOCTYPE mapper   
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
-<mapper namespace="kr.spring.member.dao.DoctorMapper">
+<mapper namespace="kr.spring.doctor.dao.DoctorMapper">
 	<!-- 회원가입 -->
 	<insert id="insertDoctor_detail" parameterType="doctorVO">
 		INSERT INTO doctor_detail (doc_num,hos_num,doc_passwd,doc_email,doc_license,doc_history) 
-		VALUES (#{doc_num},#{hos_num},#{doc_passwd},#{doc_email},#{doc_license},#{doc_history})
+		VALUES (#{mem_num},#{hos_num},#{doc_passwd},#{doc_email},#{doc_license},#{doc_history})
 	</insert>
 	<!-- 아이디 중복확인 -->
 	<select id="checkId" parameterType="string" resultType="doctorVO">
-		SELECT m.mem_num,d.doc_num,m.mem_id,m.mem_auth,m.mem_name,d.doc_passwd,d.doc_email 
+		SELECT m.mem_num,d.doc_num,m.mem_id,m.mem_auth,m.mem_name,d.doc_passwd,d.doc_email,d.doc_agree 
 		FROM member m
 		LEFT OUTER JOIN doctor_detail d 
 		ON m.mem_num = d.doc_num
@@ -20,9 +20,7 @@
 	<sql id="hosSearch">
 		<where>
 			<if test="keyword!=null and keyword != ''">
-				<if test="keyfield == 1">
 					hos_name LIKE '%' || #{keyword} || '%'
-				</if>
 			</if>
 		</where>
 	</sql>
@@ -32,16 +30,10 @@
 		<include refid="hosSearch"></include>
 	</select>
 	<!-- 병원 목록 전체/검색 -->
-	<select id="hosList" parameterType="map" resultType="hospitalVO">
-		SELECT * FROM (SELECT a.*, rownum rnum FROM 
-		(SELECT hos_num,hos_name,hos_addr FROM hospital 
+	<select id="getHosListByKeyword" parameterType="map" resultType="hospitalVO">
+		SELECT hos_num,hos_name,hos_addr FROM hospital 
 		<include refid="hosSearch"></include>
-		)a)
-		<![CDATA[
-		WHERE rnum >= #{start} AND rnum <= #{end}
-		]]>
 	</select>
-
 </mapper>
 
 

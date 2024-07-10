@@ -7,7 +7,6 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!-- 회원정보 시작 -->
 <div class="page-main">
 	<ul>
@@ -53,11 +52,11 @@
 			</li>
 		</ul>
 	</div>
-</body>
 	<input type="button" value="약 복용 내역"><br>
 	<input type="button" value="후기내역"><br>
+	<input type="button" value="비대면 진료"><br>
 	<input type="button" value="로그아웃">
-
+</body>
 </html>
 <!--end 모달 팝업-->
 <!-- 회원정보 끝 -->
