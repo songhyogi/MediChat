@@ -86,4 +86,14 @@ public class DoctorServiceImpl implements DoctorService{
 		return doctorMapper.getHosListByKeyword(keyword);
 	}
 
+	@Override
+	public void updateAgree(DoctorVO doctor) {
+		doctorMapper.updateAgree(doctor);
+	}
+
+	@Override
+	public List<DoctorVO> docList(Map<String, Object> map) {
+		return doctorMapper.docList(map);
+	}
+
 }

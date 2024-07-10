@@ -35,7 +35,7 @@ public class DoctorVO {
 	@Email
 	@NotBlank
 	private String doc_email;
-	private Date dec_reg;
+	private Date doc_reg;
 	@NotEmpty
 	private String doc_license;
 	private String doc_history;

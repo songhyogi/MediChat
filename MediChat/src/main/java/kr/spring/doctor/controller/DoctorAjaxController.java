@@ -83,21 +83,20 @@ public class DoctorAjaxController {
 	    }
 	    return mapJson;
 	}
-
+	/*===================
+	  의사회원가입 관리자 승인
+	===================*/
+	@PostMapping("/updateAgree")
+	@ResponseBody
+	public Map<String, String> updateAgree(DoctorVO doctor,HttpSession session){
 		
-		/*
-		 * Map<String, Object> map = new HashMap<String, Object>();
-		 * 
-		 * map.put("hos_num", hos_num); map.put("keyfield", keyfield);
-		 * map.put("keyword", keyword);
-		 * 
-		 * int count = doctorService.selectRowCount(map);
-		 * 
-		 * List<HospitalVO> list = null; if(count > 0) { list =
-		 * doctorService.getHosList(map); } Map<String, Object> mapJson = new
-		 * HashMap<String, Object>();
-		 * 
-		 * mapJson.put("count", count); mapJson.put("list", list);
-		 */
+		Map<String, String> mapJson = new HashMap<String, String>();
+		
+		doctorService.updateAgree(doctor);
+		
+		mapJson.put("result", "success");
+		
+		return mapJson;
+	}
 
 }

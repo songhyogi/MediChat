@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.hospital.vo.HospitalVO;
@@ -27,6 +28,10 @@ public interface DoctorMapper {
 	//회원상세정보
 	@Select("SELECT * FROM member m JOIN doctor_detail d ON m.mem_num=d.doc_num WHERE mem_num=#{mem_num}")
 	public DoctorVO selectDoctor(Long doc_num);
+	//회원 목록
+	@Select("SELECT * FROM member m JOIN doctor_detail d ON m.mem_num=d.doc_num WHERE doc_agree=0")
+	public List<DoctorVO> docList(Map<String, Object> map);
+	
 	//회원정보 수정
 	public void updateDoctor(DoctorVO doctor);
 	public void updateDoctor_detail(DoctorVO doctor);
@@ -45,4 +50,8 @@ public interface DoctorMapper {
 	public void findId(DoctorVO doctor);
 	//비밀번호 찾기
 	public void findPasswd(DoctorVO doctor);
+	
+	//==========관리자============
+	@Update("UPDATE doctor_detail SET doc_agree=1 WHERE doc_num=#{doc_num}")
+	public void updateAgree(DoctorVO doctor);
 }
