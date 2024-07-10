@@ -78,41 +78,48 @@ public class HospitalController {
 	// 병원 > 검색 결과
 	@GetMapping("/hospitals/search")
 	public String search(Model model,HttpSession session,@RequestParam(defaultValue="1") int pageNum,
-							@RequestParam(defaultValue="10") int pageItemNum, @RequestParam("") String keyword,
-							@RequestParam String commonFilter, @RequestParam(defaultValue="NEAR") String sortType) {
+							@RequestParam(defaultValue="10") int pageItemNum, @RequestParam(defaultValue="") String keyword,
+							@RequestParam(defaultValue="") String commonFilter, @RequestParam(defaultValue="NEAR") String sortType,
+							@RequestParam(defaultValue="37.4981646510326") String user_lat, @RequestParam(defaultValue="127.028307900881") String user_lon) {
 		Map<String, Object> map = new HashMap<>();
 
 		// 접속할 때 내 위도 경도 값 담아서 받아오기
-		String lat = (String)session.getAttribute("user_lat");
-		String lon = (String)session.getAttribute("user_lat");
-		map.put("lat", lat);
-		map.put("lon", lon);
+//		String user_lat = (String)session.getAttribute("user_lat");
+//		String user_lon = (String)session.getAttribute("user_lat");
+		map.put("user_lat", user_lat);
+		map.put("user_lon", user_lon);
 		/* 나중에 위치정보 bean 만들어서 가져다 쓰기 지금은 귀찮... */
-
+		log.debug("<<위치>> : " + user_lat + "," + user_lon);
+		
 		// 현재 시간 변수 생성 후 값 넣기
 		LocalDateTime now = LocalDateTime.now();
 		String time = now.format(DateTimeFormatter.ofPattern("HH:mm")); //hh:mm
 		int day = now.getDayOfWeek().getValue(); //1:월 2:화 3:수 4:목 5:금 6:토 7:일
 		map.put("time", time);
 		map.put("day", day);
-
+		log.debug("<<시간>> : " + time + "," + day);
+		
+		
 		// pageNum
 		map.put("pageNum", pageNum);
-		// 접속할 때 내 위도 경도 값 담아서 받아오기 (진행중)
-
+		log.debug("<<페이지번호>> : " + pageNum);
+		
 		// pageItemNum
 		map.put("pageItemNum", pageItemNum);
+		log.debug("<<페이지아이템갯수>> : " + pageItemNum);
 
 		// keyword
 		map.put("keyword", keyword);
-
+		log.debug("<<키워드>> : " + keyword);
+		
 		// commonFilter
 		map.put("commonFilter", commonFilter);
-
+		log.debug("<<필터>> : " + commonFilter);
 		
 		//sortType
 		map.put("sortType", sortType);
-
+		log.debug("<<정렬타입>> : " + sortType);
+		
 		// 병원 리스트 담기
 		List<HospitalVO> hosList = new ArrayList<>();
 		hosList = hospitalService.selectListHospital(map);

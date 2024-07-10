@@ -13,6 +13,7 @@
 	color: #1C1D1F;
 }
 
+/* =================== hospitals =================== */
 /* 진료과목 */
 .sub-icon {
 	padding: 0 0;
@@ -144,4 +145,48 @@
 	margin: 0 auto;
 	text-align: center;
 	align-self: center;
+}
+
+/* =================== hospital > search =================== */
+#search_back {
+	cursor: pointer;
+	margin: 0 10px;
+}
+.filter-item{
+	min-width: 70px;
+	height: 40px;
+	margin: 0 12px;
+	padding: 10px;
+	font-size: 14px;
+	font-weight: 600;
+	color: #4a4a4a;
+	background-color: #e0e0e0;
+	border-radius: 20px;
+	cursor: pointer;
+	text-align: center;
+	vertical-align: middle;
+}
+.filter-item:hover {
+	background-color: #cecece;
+}
+#filter-img-box{
+	height: 40px;
+	width: 40px;
+	margin-right: 10px;
+	border-radius: 50px;
+	border: 2px solid rgb(76, 165, 165);
+	background-color: rgb(153, 204, 204);
+	align-content: center;
+	text-align: center;
+	cursor: pointer;
+}
+.hospital-box{
+	padding: 8px;
+}
+.hospital-docCnt{
+	margin-top: 10px;
+	padding: 2px;
+	border-radius: 5px;
+	background-color: #f2f2f2;
+	display: inline-block;
 }
