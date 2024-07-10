@@ -258,7 +258,7 @@ hr{
 	margin: 0 40px;
 }
 #header-search-input{
-	width: 300px;
+	width: 330px;
 }
 #header-search-icon {
 	font-size: 25px;
@@ -319,10 +319,6 @@ hr{
 
 
 /* ================= 푸터 ================= */
-#main_footer{
-	min-height: calc(100vh - 300px);
-}
-
 .footer-title{
 	font-weight: 700;
 	color: #4a4a4a;

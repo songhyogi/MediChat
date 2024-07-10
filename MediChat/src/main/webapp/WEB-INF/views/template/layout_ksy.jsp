@@ -23,7 +23,7 @@
 					<tiles:insertAttribute name="footer"/>
 				</div>
 			</div>
-			<div id="main_right_nav" class="col-3">
+			<div class="col-3">
 				<tiles:insertAttribute name="right_nav"/>
 			</div>
 		</div>

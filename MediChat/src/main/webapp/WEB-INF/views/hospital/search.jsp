@@ -19,10 +19,10 @@
 	</div>
 	<!-- 검색 모드 끝 -->
 	<!-- 병원 리스트 시작 -->
-	<c:forEach items="${hosList}" var="hospital">
+	<c:forEach items="${list}" var="hospital">
 		<div>
 			<ul class="list-unstyled">
-				<li><h5>${hospital.hos_name}</h5></li>
+				<li><h5>제이마취통증의학과</h5></li>
 				<li><small>정형외과</small></li>
 				
 				<!-- 진료시간이 있으면-->

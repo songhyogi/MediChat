@@ -18,7 +18,7 @@
 	    	<a href="#" class="footer-text">약국 찾기</a><br>
 	    	<a href="#" class="footer-text">건강 블로그</a><br>
 	    	<a href="/disease/diseaseDictionary" class="footer-text">질병 백과사전</a><br>
-	    	<a href="/durg/search" class="footer-text">약품 백과사전</a><br>
+	    	<a href="/durg/search" class="footer-text">약품 백과사전</a><br><br>
 			<a href="#" class="footer-text">고객센터</a><br>
 		</div>
 		<div class="col-3">
