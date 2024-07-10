@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="kr.spring.hospital.dao.HospitalMapper">
+	<!-- insertHospital -->
+	<insert id="insertHospital" parameterType="hospitalVO">
+		INSERT INTO hospital VALUES (
+									  #{hos_num},
+									  #{hos_addr},
+									  #{hos_div},
+									  #{hos_divName},
+									  #{hos_emcls},
+									  #{hos_emclsName},
+									  #{hos_eryn},
+									  #{hos_etc},
+									  #{hos_mapImg},
+									  #{hos_name},
+									  #{hos_tell1},
+									  #{hos_tell3},
+									  #{hos_time1C},
+									  #{hos_time2C},
+									  #{hos_time3C},
+									  #{hos_time4C},
+									  #{hos_time5C},
+									  #{hos_time6C},
+									  #{hos_time7C},
+									  #{hos_time8C},
+									  #{hos_time1S},
+									  #{hos_time2S},
+									  #{hos_time3S},
+									  #{hos_time4S},
+									  #{hos_time5S},
+									  #{hos_time6S},
+									  #{hos_time7S},
+									  #{hos_time8S},
+									  #{hos_hpId},
+									  #{hos_postCdn1},
+									  #{hos_postCdn2},
+									  #{hos_info},
+									  #{hos_lon},
+									  #{hos_lat},
+									  #{hos_x},
+									  #{hos_y},
+									  #{hos_weekendAt}
+									  )
+	</insert>
+	
+	<sql id="searchHospitalByKeyword">
+		<if test="keyword!=null and keyword!=''">
+			AND (hos_addr LIKE '%' || #{keyword} || '%' OR
+				 hos_name LIKE '%' || #{keyword} || '%' OR
+				 hos_info LIKE '%' || #{keyword} || '%')
+		</if>
+	</sql>
+	<sql id="searchHospitalByCommonFilter">
+		<if test="commonFilter=='NONFACE'">
+			AND doc_cnt > 0
+		</if>
+		<if test="commonFilter=='ING'">
+			AND 
+		</if>
+		<if test="commonFilter=='NIGHTTIME'">
+			AND 
+		</if>
+		<if test="commonFilter=='WEEKEND'">
+			AND hos_weekendat = 'Y'
+		</if>
+	</sql>
+	<sql id="searchHospitalBySortType">
+		<if test="sortType=='NEAR'">
+			ORDER BY distance
+		</if>
+		<if test="sortType=='REVIEW'">
+			ORDER BY rev_cnt DESC
+		</if>
+		<if test="sortType=='SCORE'">
+			ORDER BY hos_score DESC
+		</if>
+		<if test="sortType=='HIT'">
+			ORDER BY hos_hit DESC
+		</if>
+	</sql>
+	
+	<!-- selectListHospital -->
+	<select id="selectListHospital" parameterType="map" resultType="hospitalVO">
+		SELECT * 
+		FROM (
+		       SELECT h.*, ROWNUM
+		       FROM ( SELECT h.*, 
+		       			  (POWER((h.hos_lat - #{hos_lat}), 2) + POWER((h.hos_lon - #{hos_lon}), 2)) AS distance, 
+		       			   COALESCE(d.doc_cnt, 0) AS doc_cnt
+		              FROM hospital h 
+		              LEFT JOIN ( SELECT hos_num, COUNT(*) AS doc_cnt
+		                      	   FROM doctor_detail
+		                      	   WHERE doc_treat = 1
+		                      	   GROUP BY hos_num
+		                      	 ) d ON h.hos_num = d.hos_num
+		              LEFT JOIN (SELECT hos_num, COUNT(*) AS rev_cnt
+                      FROM review
+            			       GROUP BY hos_num) r ON h.hos_num = r.hos_num
+		          	   
+		          	  ORDER BY distance
+		            ) h
+		       WHERE <![CDATA[
+     				  ROWNUM <= #{pageNum} * #{pageItemNum} and hos_weekendat='N'
+       				 ]]>
+      				 <include refid="searchHospitalByKeyword"/>
+			         <include refid="searchHospitalByCommonFilter"/>
+			         <include refid="searchHospitalBySortType"/>
+		     )
+		WHERE ROWNUM > (#{pageNum} - 1) * #{pageItemNum};
+	</select>
+	
+	<!-- selectListCntHospital -->
+	<select id="selectListCntHospital" parameterType="map" resultType="integer">
+		SELECT COUNT(*) FROM HOSPITAL
+	</select>
+</mapper>

@@ -5,10 +5,21 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-	<definition name="lsy" template="/WEB-INF/views/template/layout_basic.jsp">
+	<definition name="whr" template="/WEB-INF/views/template/layout_basic.jsp">
 		<put-attribute name="title" value="SpringPage"/>
 		<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/main/main.jsp"/>
+	</definition>
+	<!-- 의약품 목록 -->
+	<definition name="drugSearch" extends="main">
+		<put-attribute name="title" value="의약품 검색"/>
+		<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/drug/drugSearch.jsp"/>
+	</definition>
+	<definition name="drugDetail" extends="main">
+		<put-attribute name="title" value="의약품 검색"/>
+		<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/drug/drugDetail.jsp"/>
 	</definition>
 </tiles-definitions>
 

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="kr.spring.disease.dao.DiseaseMapper">
+	<sql id="diseaseSearch">
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<if test="keyfield == 1">
+					 dis_name LIKE '%' || #{keyword} || '%'
+				</if>
+				<if test="keyfield == 2">
+					  dis_symptoms LIKE '%' || #{keyword} || '%'
+				</if>
+				<if test="keyfield == 3">
+					(dis_name LIKE '%' || #{keyword} || '%' OR
+					 dis_symptoms LIKE '%' || #{keyword} || '%')
+				</if>
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectDisRowCount" parameterType="map" resultType="integer">
+		SELECT
+			COUNT(*)
+		FROM disease
+		<include refid="diseaseSearch"></include>
+	</select>
+	<select id="selectDisList" parameterType="map" resultType="diseaseVO">
+		SELECT 
+			*
+			FROM (SELECT 
+							rownum alnum, a.*
+						 FROM (SELECT 
+						 					*
+						 			FROM disease 
+						 			<include refid="diseaseSearch"></include>  
+						 			ORDER BY dis_name ASC
+						 			) a )
+		<![CDATA[
+		WHERE alnum >= #{start} AND alnum <= #{end}
+		]]>
+	</select>
+ </mapper>
+
+
+
+
+
+
+

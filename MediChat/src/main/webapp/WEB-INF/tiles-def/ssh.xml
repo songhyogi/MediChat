@@ -5,11 +5,34 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-	<definition name="khc" template="/WEB-INF/views/template/layout_basic.jsp">
+	<definition name="diseaseMain" template="/WEB-INF/views/template/layout_basic.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/>
 		<put-attribute name="title" value="SpringPage"/>
-		<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>
-		<put-attribute name="body" value="/WEB-INF/views/main/main.jsp"/>
+		<put-attribute name="css" value="/WEB-INF/views/disease/diseaseCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/disease/diseaseMain.jsp"/>
 	</definition>
+	<definition name="disease_Dictionary" extends="main">
+		<put-attribute name="title" value="diseaseDictionary"/>
+		<put-attribute name="css" value="/WEB-INF/views/disease/diseaseCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/disease/diseaseDictionary.jsp"/>
+	</definition>
+	<definition name="disease_Detail" extends="main">
+		<put-attribute name="title" value="diseaseDictionary"/>
+		<put-attribute name="css" value="/WEB-INF/views/disease/diseaseCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/disease/diseaseDetail.jsp"/>
+	</definition>
+	<definition name="healthy_Blog" extends="main">
+		<put-attribute name="title" value="healthyBlog"/>
+		<put-attribute name="css" value="/WEB-INF/views/health/healthCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/health/healthyBlogMain.jsp"/>
+	</definition>
+	<definition name="healthy_writeForm" extends="main">
+		<put-attribute name="title" value="healthyBlog"/>
+		<put-attribute name="css" value="/WEB-INF/views/health/healthCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/health/healthyWrite.jsp"/>
+	</definition>
+	
 </tiles-definitions>
 
 

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="kr.spring.doctor.dao.DoctorMapper">
+	<!-- 회원가입 -->
+	<insert id="insertDoctor_detail" parameterType="doctorVO">
+		INSERT INTO doctor_detail (doc_num,hos_num,doc_passwd,doc_email,doc_license,doc_history) 
+		VALUES (#{mem_num},#{hos_num},#{doc_passwd},#{doc_email},#{doc_license},#{doc_history})
+	</insert>
+	<!-- 아이디 중복확인 -->
+	<select id="checkId" parameterType="string" resultType="doctorVO">
+		SELECT m.mem_num,d.doc_num,m.mem_id,m.mem_auth,m.mem_name,d.doc_passwd,d.doc_email,d.doc_agree 
+		FROM member m
+		LEFT OUTER JOIN doctor_detail d 
+		ON m.mem_num = d.doc_num
+		WHERE mem_id=#{mem_id}
+	</select>
+	<!-- 병원 목록(검색) -->
+	<sql id="hosSearch">
+		<where>
+			<if test="keyword!=null and keyword != ''">
+					hos_name LIKE '%' || #{keyword} || '%'
+			</if>
+		</where>
+	</sql>
+	<!-- 병원 목록 총 레코드수/검색 레코드 수 -->
+	<select id="selectRowCount" parameterType="map" resultType="integer">
+		SELECT COUNT(*) FROM hospital
+		<include refid="hosSearch"></include>
+	</select>
+	<!-- 병원 목록 전체/검색 -->
+	<select id="getHosListByKeyword" parameterType="map" resultType="hospitalVO">
+		SELECT hos_num,hos_name,hos_addr FROM hospital 
+		<include refid="hosSearch"></include>
+	</select>
+</mapper>
+
+
+
+
+
+
+
