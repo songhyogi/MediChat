@@ -26,4 +26,9 @@ public class DrugServiceImpl implements DrugService{
 	public Integer selectRowCount(Map<String, Object> map) {
 		return drugInfoMapper.selectRowCount(map);
 	}
+
+	@Override
+	public DrugInfoVO selectDrug(Long drg_num) {
+		return drugInfoMapper.selectDrug(drg_num);
+	}
 }

@@ -23,7 +23,7 @@
 	    		<if test="keyfield == 2">
 	    			drg_company LIKE '%' || #{keyword} || '%'
 	    		</if>
-	    		<if test="keyfield == 2">
+	    		<if test="keyfield == 3">
 	    			drg_effect LIKE '%' || #{keyword} || '%'
 	    		</if>
 	    	</if>
