@@ -2,20 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<script type="text/javascript">
-    function validateForm() {
-        var docPasswd = document.getElementById('doc_passwd').value.trim();
-        var currentPassword = '<%= session.getAttribute("currentPassword") %>'; // 현재 로그인한 사용자의 비밀번호
-
-        // 현재 로그인한 사용자의 비밀번호와 입력한 비밀번호 비교
-        if (docPasswd !== currentPassword) {
-            alert('비밀번호가 틀렸습니다.');
-            return false;
-        }
-
-        return true;
-    }
-</script>
 <!-- 비대면 진료 신청 시작 -->
 <div>
 	<h2>비대면 진료 신청</h2>
@@ -79,9 +65,9 @@
 				</div> 
 				<form:errors path="doc_time" cssClass="error-color" /></li>
 			<li>
-                <form:label path="doc_passwd">비밀번호</form:label> 
-                <form:input path="doc_passwd" id="doc_passwd" />
-                <form:errors path="doc_passwd" cssClass="error-color" />
+                <form:label path="now_passwd">비밀번호</form:label> 
+                <form:password path="now_passwd" id="now_passwd" />
+                <form:errors path="now_passwd" cssClass="error-color" />
             </li>
             <li>
             	<input type="submit" value="신청" onclick="location.href='${pageContext.request.contextPath}/main/main'">
