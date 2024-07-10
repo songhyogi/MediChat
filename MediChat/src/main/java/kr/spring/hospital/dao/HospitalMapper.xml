@@ -55,17 +55,19 @@
 		</if>
 	</sql>
 	<sql id="searchHospitalByCommonFilter">
-		<if test="commonFilter=='NONFACE'">
-			AND doc_cnt > 0
-		</if>
-		<if test="commonFilter=='ING'">
-			AND 
-		</if>
-		<if test="commonFilter=='NIGHTTIME'">
-			AND 
-		</if>
-		<if test="commonFilter=='WEEKEND'">
-			AND hos_weekendat = 'Y'
+		<if test="commonFilter!=null || commonFilter==''">
+			<if test="commonFilter=='NONFACE'">
+				AND doc_cnt > 0
+			</if>
+			<if test="commonFilter=='ING'">
+				AND 
+			</if>
+			<if test="commonFilter=='NIGHTTIME'">
+				AND 
+			</if>
+			<if test="commonFilter=='WEEKEND'">
+				AND hos_weekendat = 'Y'
+			</if>
 		</if>
 	</sql>
 	<sql id="searchHospitalBySortType">
@@ -90,19 +92,20 @@
 		       SELECT h.*, ROWNUM
 		       FROM ( SELECT h.*, 
 		       			  (POWER((h.hos_lat - #{user_lat}), 2) + POWER((h.hos_lon - #{user_lat}), 2)) AS distance, 
-		       			   COALESCE(d.doc_cnt, 0) AS doc_cnt
-		              FROM hospital h 
+		       			   COALESCE(d.doc_cnt, 0) AS doc_cnt,
+		       			   COALESCE(r.rev_cnt, 0) AS rev_cnt
+		              FROM hospital h
 		              LEFT JOIN ( SELECT hos_num, COUNT(*) AS doc_cnt
-		                      	   FROM doctor_detail
-		                      	   WHERE doc_treat = 1
-		                      	   GROUP BY hos_num
-		                      	 ) d ON h.hos_num = d.hos_num
-		              LEFT JOIN (SELECT hos_num, COUNT(*) AS rev_cnt
-                      FROM review
-            			       GROUP BY hos_num) r ON h.hos_num = r.hos_num
-		          	   
+		                      	  FROM doctor_detail
+		                      	  WHERE doc_treat = 1
+		                      	  GROUP BY hos_num
+		                      	) d ON h.hos_num = d.hos_num
+		              LEFT JOIN ( SELECT hos_num, COUNT(*) AS rev_cnt
+                      			  FROM review
+            			          GROUP BY hos_num
+            			        ) r ON h.hos_num = r.hos_num
 		          	  ORDER BY distance
-		            ) h
+		            	  ) h
 		       WHERE <![CDATA[
      				  ROWNUM <= #{pageNum} * #{pageItemNum}
        				 ]]>
@@ -110,7 +113,7 @@
 			         <include refid="searchHospitalByCommonFilter"/>
 			         <include refid="searchHospitalBySortType"/>
 		     )
-		WHERE ROWNUM > (#{pageNum} - 1) * #{pageItemNum};
+		WHERE ROWNUM > (#{pageNum} - 1) * #{pageItemNum}
 	</select>
 	
 	<!-- selectListCntHospital -->
