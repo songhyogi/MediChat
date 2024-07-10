@@ -1,13 +1,22 @@
--- 휴무일
+--정기휴무일 
 create table dayoff(
  doff_num number not null,
  doc_num number not null,
- doff_date varchar2(30) not null,
- doff_time varchar2(30) not null,
+ doff_week number not null,
  constraint doff_pk primary key (doff_num),
  constraint doff_fk foreign key (doc_num) references member (mem_num)
 );
 create sequence dayoff_seq;
+-- 휴무일
+create table holiday(
+ holi_num number not null,
+ doc_num number not null,
+ holi_date varchar2(30) not null,
+ holi_time varchar2(30) not null,
+ constraint holi_pk primary key (holi_num),
+ constraint holi_fk foreign key (doc_num) references member (mem_num)
+);
+create sequence holi_seq;
 -- 예약내역
 create table reservation(
  res_num number not null,
