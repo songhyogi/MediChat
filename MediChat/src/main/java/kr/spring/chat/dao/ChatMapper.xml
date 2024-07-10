@@ -18,17 +18,4 @@
 			SYSDATE,
 			0);
 	</insert>
-	
-	<select id="selectChatListForMem" parameterType="long" resultType="chatVO">
-		SELECT c.*,m.mem_name,r.res_date,r.res_time FROM chat c JOIN member m ON (c.doc_num=m.mem_num) JOIN (SELECT r.* FROM reservation r WHERE res_type=0) r ON (c.mem_num=r.mem_num) WHERE c.mem_num=#{mem_num};
-	</select>
-	
-	<select id="selectChatListForDoc" parameterType="long" resultType="chatVO">
-		SELECT c.*,m.mem_name,r.res_date,r.res_time
-			FROM chat c
-			JOIN member m ON (c.mem_num=m.mem_num)
-			JOIN (SELECT r.* FROM reservation r WHERE res_type=0) r ON (c.mem_num=r.mem_num)
-			WHERE c.mem_num=#{mem_num};
-	</select>
-	
 </mapper>
