@@ -6,7 +6,6 @@
 
 <tiles-definitions>
 	<definition name="ksy" template="/WEB-INF/views/template/layout_ksy.jsp">
-		<put-attribute name="bootstrap" value="/WEB-INF/views/template/bootStrap.jsp"/>
 		<put-attribute name="css" value="/WEB-INF/views/common/css.jsp"/>
 		<put-attribute name="bootstrap" value="/WEB-INF/views/common/bootStrap.jsp"/>
 		<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"/>

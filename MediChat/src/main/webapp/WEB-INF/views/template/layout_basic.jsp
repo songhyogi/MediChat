@@ -6,12 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title><tiles:getAsString name="title"/></title>
-<tiles:insertAttribute name="css" ignore="true"/>
-<tiles:insertAttribute name="font" ignore="true"/>
 <tiles:insertAttribute name="bootstrap" ignore="true"/>
+<tiles:insertAttribute name="css" ignore="true"/>
 </head>
 <body>
-<div id="main">
+<div id="">
+	<div id="main_header">
+		<tiles:insertAttribute name="header" ignore="true"/>
+	</div>
 	<div id="main_body">
 		<tiles:insertAttribute name="body"/>
 	</div>
