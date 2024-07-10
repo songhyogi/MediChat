@@ -6,11 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title><tiles:getAsString name="title"/></title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/common.css" type="text/css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/ksy.css" type="text/css">
-<tiles:insertAttribute name="font" ignore="true"/>
-<tiles:insertAttribute name="css" ignore="true"/>
 <tiles:insertAttribute name="bootstrap" ignore="true"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/ksy.css" type="text/css">
+<tiles:insertAttribute name="css" ignore="true"/>
 </head>
 <body>
 <div id="main">
@@ -21,16 +19,15 @@
 		<div id="main_body" class="row">
 			<div class="col-9 border-end">
 				<tiles:insertAttribute name="body"/>
+				<div id="main_footer">
+					<tiles:insertAttribute name="footer"/>
+				</div>
 			</div>
 			<div class="col-3">
 				<tiles:insertAttribute name="right_nav"/>
 			</div>
 		</div>
-			<div id="main_footer">
-		<tiles:insertAttribute name="footer"/>
 	</div>
-	</div>
-
 </div>
 </body>
 </html>

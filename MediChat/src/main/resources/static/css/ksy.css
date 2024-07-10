@@ -39,7 +39,7 @@
 	padding: 5px;
 }
 .subject:hover{
-	background-color: rgb(210, 225, 215);
+	background-color: #cecece;
 	transform: scale(1.15);
 }
 
@@ -88,6 +88,8 @@
 /* 어떻게 아프신가요 */
 .hs-item{
 	cursor: pointer;
+	height: 45px;
+	align-content: center;
 }
 .hs-item:hover {
 	background-color: rgb(47, 154, 144);
@@ -97,10 +99,10 @@
 	color: white;
 }
 .hs-item p {
-	color: rgb(29, 105, 98);
+	color: white;
 	font-weight: 800;
 	font-size: 16px;
-	margin: 10px auto;
+	margin: auto 0px ;
 }
 
 /* 검색창 */
