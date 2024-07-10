@@ -18,10 +18,21 @@ public class ChatServiceImpl implements ChatService{
 
 	@Autowired
 	ChatMapper chatMapper;
-	
+
 	@Override
-	public String selectDoctorName(long res_num) {
-		return chatMapper.selectDoctorName(res_num);
+	public List<ChatVO> selectChatListForMem(long mem_num) {
+		return chatMapper.selectChatListForMem(mem_num);
+	}
+
+	@Override
+	public List<ChatVO> selectChatListForDoc(long mem_num) {
+		return chatMapper.selectChatListForDoc(mem_num);
+	}
+
+	@Override
+	public void createChat(ReservationVO reservationVO) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
@@ -47,17 +58,5 @@ public class ChatServiceImpl implements ChatService{
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public List<ReservationVO> selectReservation(long mem_num) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void createChat(ReservationVO reservationVO) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 }
