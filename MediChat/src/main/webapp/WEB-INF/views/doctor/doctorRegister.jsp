@@ -35,8 +35,10 @@
 			<li>
 				<!-- 병원 목록 검색 -->
 				<form:label path="hos_num">병원</form:label>
+				<form:hidden path="hos_num"/>
 				<input type="search" name="keyword" id="keyword" value="${keyword}">
                 <input type="button" id="search_button" value="검색">
+                <form:errors path="hos_num" cssClass="error-color"/>
             </li>
             <li>
             	<form:select path="hos_num">
@@ -55,6 +57,7 @@
 			<li>
 				<form:label path="doc_license">의사 면허증</form:label>
 				<input type="file" name="doc_license" id="doc_license" accept="image/gif,image/png,image/jpeg">
+				<form:errors path="doc_license" cssClass="error-color"/>
 			</li>
 		</ul>
 		<!-- 캡챠 시작 -->
@@ -101,7 +104,7 @@
 
 	                   $.each(hosList, function(index, hospital) {
 	                       options += '<option value="' + hospital.hos_num + '">' 
-	                                + hospital.hos_name + '/' + hospital.hos_addr + '/' + hospital.hos_tell1 + '</option>';
+	                                + hospital.hos_name + ' / ' + hospital.hos_addr + '</option>';
 	                   });
 	                   $('form').find('select[name="hos_num"]').append(options);
 	                }else{
@@ -114,7 +117,7 @@
 	        });
 	    });
 	 	// select 태그 값 변경 시
-	    $('form').on('change', 'select[name="hos_num"]', function() {
+	    $('form').on('change','select[name="hos_num"]',function() {
 	        var selectedHosNum = $(this).val();
 	        $('form').find('input[name="hos_num"]').val(selectedHosNum); // 숨겨진 input 태그에 선택한 값 할당
 	    });
