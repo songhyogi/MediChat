@@ -24,7 +24,7 @@ public class Item {
     @XmlElement(name = "srchCdNm",defaultValue="")
     private String srchCdNm;
     @XmlElement(name = "sickCd",defaultValue="")
-    private String sickCd;
+    private String sickcd;
     @XmlElement(name = "sickNm",defaultValue="")
-    private String sickNm;
+    private String sicknm;
 }

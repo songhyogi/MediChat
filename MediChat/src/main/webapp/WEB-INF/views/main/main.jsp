@@ -109,7 +109,7 @@
 	<a href="">증상 검색</a>
 	<div class="align-center">
 	<h2>메디챗의 건강 블로그</h2>
-		<a href="#">블로그 글1</a>
+		<a href="${pageContext.request.contextPath}/disease/diseaseDictionary">질병백과사전</a>
 		<a href="#" style="margin: 0 10px;">&nbsp;</a>
 		<a href="#">블로그 글2</a>
 		<a href="#" style="margin: 0 10px;">&nbsp;</a>
