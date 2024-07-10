@@ -18,6 +18,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor{
 		log.debug("<<LoginCheckInterceptor 진입>>");
 		
 		HttpSession session = request.getSession();
+		
 		//로그인 여부 검사
 		if(session.getAttribute("user")==null) {
 			log.debug("<<LoginCheckInterceptor 로그아웃 상태>>");

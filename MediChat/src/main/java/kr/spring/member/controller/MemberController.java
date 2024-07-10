@@ -99,7 +99,6 @@ public class MemberController {
 	public String loginSubmit(@Valid MemberVO memberVO,BindingResult result,
 											HttpServletRequest request,HttpSession session) {
 		log.debug("<로그인 정보> : " +memberVO);
-		
 		//아이디와 비밀번호만 유효성 체크하여 오류가 있다면 폼으로
 		if(result.hasFieldErrors("mem_id") || result.hasFieldErrors("mem_passwd")) {
 			return loginForm();
@@ -118,22 +117,10 @@ public class MemberController {
 				//로그인 처리
 				session.setAttribute("user", member);
 				
-				
-//				위도 경도 값 세팅
-//				위도
-//				String lat = (String)request.getAttribute("user_lat");
-//				//경도
-//				String lon = (String)request.getAttribute("user_lon");
-//				
-//				session.setAttribute("user_lat", lat);
-//				session.setAttribute("user_lon", lon);
-//				
-//				log.debug(lat," ", lon);
-				
-				
 				log.debug("<인증 성공> : "+ member);
 				
-				return "redirect:/main/main";
+				
+				return "redirect:/"+request.getRequestURI();
 			}
 			//인증 실패
 			throw new AuthCheckException();
@@ -155,7 +142,7 @@ public class MemberController {
 	@GetMapping("/member/logout")
 	public String processLogout(HttpSession session) {	
 		//로그아웃
-		session.invalidate();
+		session.removeAttribute("user");
 		//====== 자동로그인 체크 시작 =======//
 		//====== 자동로그인 체크 끝 =======//
 		

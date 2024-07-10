@@ -4,18 +4,22 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.spring.hospital.service.HospitalService;
+import kr.spring.hospital.vo.HospitalVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -60,11 +64,11 @@ public class HospitalController {
 
 		model.addAttribute("subList",subList);
 		
-		// 병원 (어떻게 아프신가요) 리스트 생성 후 값 넣기
+		// 병원 (어떻게 아프신가요) 리스트 생성 후 값 넣기 (미완성)
 		List<String> howSick = new ArrayList<>(Arrays.asList("독감","탈모","비염","대상포진","다이어트","아토피"));
 		model.addAttribute("howSick", howSick);
 		
-		// 병원 (인기 검색어) 리스트 생성 후 값 넣기
+		// 병원 (인기 검색어) 리스트 생성 후 값 넣기 (미완성)
 		List<String> hotKeyWord = new ArrayList<>(Arrays.asList("여드름","지루성 피부염","감기","두드러기","역류성 식도염","보톡스","발열","백옥주사","당뇨"));
 		model.addAttribute("hotKeyWord", hotKeyWord);
 		
@@ -74,25 +78,48 @@ public class HospitalController {
 	
 	// 병원 > 검색 결과
 	@GetMapping("/hospitals/search")
-	public String search(Model model) {
+	public String search(Model model,HttpSession session,@RequestParam(defaultValue="1") int pageNum,
+							@RequestParam(defaultValue="10") int pageItemNum, @RequestParam("") String keyword,
+							@RequestParam String commonFilter, @RequestParam(defaultValue="NEAR") String sortType) {
+		Map<String, Object> map = new HashMap<>();
 		
-		// 접속할 때 내 위도 경도 값 담아서 받아오기 (진행중)
-		
-		
-		
+		// 접속할 때 내 위도 경도 값 담아서 받아오기
+		String lat = (String)session.getAttribute("user_lat");
+		String lon = (String)session.getAttribute("user_lat");
+		map.put("lat", lat);
+		map.put("lon", lon);
+		/* 나중에 위치정보 bean 만들어서 가져다 쓰기 지금은 귀찮... */
 		
 		// 현재 시간 변수 생성 후 값 넣기
 		LocalDateTime now = LocalDateTime.now();
-		
 		String time = now.format(DateTimeFormatter.ofPattern("HH:mm")); //hh:mm
 		int day = now.getDayOfWeek().getValue(); //1:월 2:화 3:수 4:목 5:금 6:토 7:일
-		model.addAttribute("time", time);
-		model.addAttribute("day", day);
+		map.put("time", time);
+		map.put("day", day);
 		
+		// pageNum
+		map.put("pageNum", pageNum);
+		
+		// pageItemNum
+		map.put("pageItemNum", pageItemNum);
+		
+		// keyword
+		map.put("keyword", keyword);
+		
+		// commonFilter
+		map.put("commonFilter", commonFilter);
+		
+		
+		//sortType
+		map.put("sortType", sortType);
+		
+		
+		// 병원 리스트 담기
+		List<HospitalVO> hosList = new ArrayList<>();
+		hosList = hospitalService.selectListHospital(map);
+		model.addAttribute("hosList", hosList);
 		return "search";
 	}
-	
-	
 	
 	
 	

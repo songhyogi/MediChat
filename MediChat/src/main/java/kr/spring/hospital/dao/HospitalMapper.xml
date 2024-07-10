@@ -89,7 +89,7 @@
 		FROM (
 		       SELECT h.*, ROWNUM
 		       FROM ( SELECT h.*, 
-		       			  (POWER((h.hos_lat - #{hos_lat}), 2) + POWER((h.hos_lon - #{hos_lon}), 2)) AS distance, 
+		       			  (POWER((h.hos_lat - #{user_lat}), 2) + POWER((h.hos_lon - #{user_lon}), 2)) AS distance, 
 		       			   COALESCE(d.doc_cnt, 0) AS doc_cnt
 		              FROM hospital h 
 		              LEFT JOIN ( SELECT hos_num, COUNT(*) AS doc_cnt
@@ -104,7 +104,7 @@
 		          	  ORDER BY distance
 		            ) h
 		       WHERE <![CDATA[
-     				  ROWNUM <= #{pageNum} * #{pageItemNum} and hos_weekendat='N'
+     				  ROWNUM <= #{pageNum} * #{pageItemNum}
        				 ]]>
       				 <include refid="searchHospitalByKeyword"/>
 			         <include refid="searchHospitalByCommonFilter"/>
