@@ -60,7 +60,7 @@ public class DoctorController {
 		log.debug("<회원가입>" + doctor);
 		
 		if(result.hasErrors()) {
-            return "doctorRegister";
+            return form();
 		}
 		//========캡챠 시작=============//
 		String code = "1";//키 발급 0, 캡챠 이미지 비교시 1로 세팅
@@ -69,14 +69,14 @@ public class DoctorController {
 		//사용자가 입력한 캡챠 이미지 글자값
 		String value = doctor.getCaptcha_chars();
 		String apiURL = "https://openapi.naver.com/v1/captcha/nkey?code=" + code + "&key=" + key + "&value=" + value;
-		
+
 		Map<String, String> requestHeaders = new HashMap<String, String>();
 		
 		requestHeaders.put("X-Naver-Client-Id", X_Naver_Client_Id);
 		requestHeaders.put("X-Naver-Client-Secret", X_Naver_Client_Secret);
 		
 		String responseBody = CaptchaUtil.get(apiURL, requestHeaders);
-		
+
 		log.debug("<<캡챠 결과>> : " + responseBody);
 		
 		//변환 작업
@@ -228,11 +228,10 @@ public class DoctorController {
     ============================*/
 	@GetMapping("/doctor/myPage")
 	public String process(HttpSession session,Model model) {
-		DoctorVO user = 
-				(DoctorVO)session.getAttribute("user");
+		DoctorVO user = (DoctorVO)session.getAttribute("user");
 		//회원정보
-		DoctorVO doctor = 
-				doctorService.selectDoctor(user.getDoc_num());
+		DoctorVO doctor = doctorService.selectDoctor(user.getDoc_num());
+		
 		log.debug("<<MY페이지>> : " + doctor);
       
 		model.addAttribute("doctor", doctor);
