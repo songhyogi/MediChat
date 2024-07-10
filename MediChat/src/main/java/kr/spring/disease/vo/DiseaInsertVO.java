@@ -7,13 +7,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class DiseaseVO {
+public class DiseaInsertVO {
 	private String sickcd;
-	private String dis_name;
-	private String dis_symptoms;
+	private String sicknm;
+	private String  main_sick;
+	private int dsbjt_cd;
 	private String dis_department;
-	private int dis_hit;
-	
-	
-
 }
