@@ -319,9 +319,7 @@ hr{
 
 
 /* ================= 푸터 ================= */
-#main_footer{
-	min-height: calc(100vh - 300px);
-}
+
 .footer-title{
 	font-weight: 700;
 	color: #4a4a4a;
