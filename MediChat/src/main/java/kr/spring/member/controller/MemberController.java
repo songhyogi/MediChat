@@ -118,19 +118,6 @@ public class MemberController {
 				//로그인 처리
 				session.setAttribute("user", member);
 
-
-//				위도 경도 값 세팅
-//				위도
-//				String lat = (String)request.getAttribute("user_lat");
-//				//경도
-//				String lon = (String)request.getAttribute("user_lon");
-//				
-//				session.setAttribute("user_lat", lat);
-//				session.setAttribute("user_lon", lon);
-//				
-//				log.debug(lat," ", lon);
-
-
 				log.debug("<인증 성공> : "+ member);
 
 				return "redirect:/main/main";
@@ -155,7 +142,7 @@ public class MemberController {
 	@GetMapping("/member/logout")
 	public String processLogout(HttpSession session) {	
 		//로그아웃
-		session.invalidate();
+		session.removeAttribute("user");
 		//====== 자동로그인 체크 시작 =======//
 		//====== 자동로그인 체크 끝 =======//
 
