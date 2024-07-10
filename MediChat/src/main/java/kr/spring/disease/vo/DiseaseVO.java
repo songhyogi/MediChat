@@ -8,11 +8,12 @@ import lombok.ToString;
 @Setter
 @ToString
 public class DiseaseVO {
-	private long dis_num;
+	private String sickcd;
 	private String dis_name;
-	private String symptoms;
-	private String dis_departmemt;
+	private String dis_symptoms;
+	private String dis_department;
 	private int dis_hit;
+	
 	
 
 }

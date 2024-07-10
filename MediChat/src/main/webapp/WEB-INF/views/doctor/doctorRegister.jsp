@@ -41,7 +41,7 @@
             <li>
             	<form:select path="hos_num">
               	 	<c:forEach var="hos" items="${hosList}">
-            			<option value="${hos.hos_num}">${hos.hos_name}/${hos.hos_addr}/${hos.hos_tell1}</option>
+            			<option value="${hos.hos_num}">${hos.hos_name}/${hos.hos_addr}</option>
             		</c:forEach>
                 </form:select>
             </li>

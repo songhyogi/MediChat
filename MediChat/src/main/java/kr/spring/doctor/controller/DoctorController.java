@@ -1,6 +1,7 @@
 package kr.spring.doctor.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import kr.spring.doctor.service.DoctorService;
 import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.hospital.service.HospitalService;
+import kr.spring.member.vo.MemberVO;
 import kr.spring.util.AuthCheckException;
 import kr.spring.util.CaptchaUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -115,10 +117,6 @@ public class DoctorController {
 				//비밀번호 확인
 				check = doctor.checkPasswd(doctorVO.getDoc_passwd());
 			}
-			if(doctor!=null) {
-				//관리자 승인 여부 확인
-				check = doctor.checkAgree(doctorVO.getDoc_agree());
-			}
 			if(check) {
 				//=====자동 로그인 할까말까=====
 				//=====자동 로그인 끝=====
@@ -135,8 +133,6 @@ public class DoctorController {
 			//인증 실패
 			if(doctor!=null && doctor.getMem_auth() == 1) {
 				result.reject("noAuthority");
-			}else if(doctor.getDoc_agree() == 0) {
-				result.reject("noAgree");
 			}else {
 				result.reject("invalidIdOrPassword");
 			}
@@ -150,7 +146,7 @@ public class DoctorController {
 	 ============================*/
 	@GetMapping("/doctor/logout")
 	public String processLogout(HttpSession session) {
-		session.invalidate();
+		session.removeAttribute("doctor");
 		//====== 자동로그인 체크 시작 =======//
 		//====== 자동로그인 체크 끝 =======//
 		
@@ -164,9 +160,32 @@ public class DoctorController {
 	/*=============================
 	 * 비밀번호 변경
 	 ============================*/
+	
 	/*=============================
 	 * 의사회원 탈퇴
 	 ============================*/
+	
+	/*=============================
+	 * 의사회원가입 관리자 승인
+	 ============================*/
+	@GetMapping("/doctor/agree")
+	public String agreeForm(Long doc_num,Long mem_num,HttpSession session,Model model) {
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		DoctorVO doctor = (DoctorVO)session.getAttribute("doctor");
+		if(user==null || user.getMem_auth()!=9) {
+			return "redirect:/main/main";
+		}else {
+			Map<String, Object> map = new HashMap<String, Object>();
+			List<DoctorVO> docList = null;
+
+			docList = doctorService.docList(map);
+			
+
+			model.addAttribute("docList",docList);
+		}
+		return "adminAgree";
+	}
 	
 	/*=============================
 	 * 캡챠 API
@@ -203,5 +222,21 @@ public class DoctorController {
 			log.error(e.toString());
 		}
 		return "imageView";
+	}
+	/*=============================
+	 * MyPage
+    ============================*/
+	@GetMapping("/doctor/myPage")
+	public String process(HttpSession session,Model model) {
+		DoctorVO user = 
+				(DoctorVO)session.getAttribute("user");
+		//회원정보
+		DoctorVO doctor = 
+				doctorService.selectDoctor(user.getDoc_num());
+		log.debug("<<MY페이지>> : " + doctor);
+      
+		model.addAttribute("doctor", doctor);
+        
+		return "docPage";
 	}
 }

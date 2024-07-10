@@ -7,7 +7,6 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!-- 회원정보 시작 -->
 <div class="page-main">
 	<ul>
@@ -30,24 +29,21 @@
 							<div class="modal-body">
 								<div class="member_detail">
 									<ul>
-										<li>이름 : ${member.mem_name}</li>
-										<li>이메일 : ${member.mem_email}</li>
-										<li>병원정보 : ${hospital.hos_num}</li>
-										<li>비대면 진료 여부 : ${dmember.doc_treat}</li>
+										<li>이름 : ${user.mem_name}</li>
+										<li>이메일 : ${user.doc_email}</li>
+										<li>병원정보 : ${user.hos_num}</li>
+										<li>비대면 진료 여부 : ${user.doc_treat}</li>
 										<li><a href="#" class="dropdown-toggle" data-toggle="dropdown">연혁 <span class="caret"></span></a>
 											<ul class="dropdown-menu">
-												<li>${dmember.doc_history}</li>
+												<li>${user.doc_history}</li>
 											</ul>
 										</li>
-										<li>가입일 : ${member.mem_reg}</li>
-										<c:if test="${!empty member.mem_modify}">
-											<li>정보 수정일 : ${member.mem_modify}</li>
-										</c:if>
+										<li>가입일 : ${user.doc_reg}</li>
 									</ul>
 									<div class="align-center">
 										<input type="button" value="회원정보 수정"
-											onclick="location.href='memberModify.jsp'"><input
-											type="button" value="비밀번호 변경" onclick="location.href='#'">
+											onclick="location.href='memberModify.jsp'">
+										<input type="button" value="비밀번호 변경" onclick="location.href='#'">
 									</div>
 								</div>
 							</div>
@@ -63,6 +59,7 @@
     <input type="button" value="스케줄 관리">
 <br>
 </c:if>
+<input type="button" value="비대면 진료"><br>
 <input type="button" value="로그아웃">
 
 </html>
