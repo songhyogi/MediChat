@@ -43,22 +43,33 @@
 		<!-- 로그인/회원가입 시작 -->
 		<div id="header-status-logout" class=" d-flex">
 			<div class="header-status-leftBox">
-				<a id="header-status-logout-text" href="#">로그인</a>
+				<a id="header-status-logout-text" href="/member/login">로그인</a>
 			</div>
 			<div class="header-status-rightBox">
-				<a id="header-status-logout-text" href="#">회원가입</a>
+				<a id="header-status-logout-text" href="/member/registerUser">회원가입</a>
 			</div>
 		</div>
 		<!-- 로그인/회원가입 끝 -->
 		</c:if>
 		<c:if test="${!empty user}">
 		<!-- 알림 + 프로필 시작 -->
-		<div id="header-status-login" class="d-flex">
+		<div id="header-status-login" class="d-flex align-items-center">
 			<div class="header-status-leftBox">
 				<a href="#"><img id="header-notification" src="/images/notification.png" width="35" height="35"></a>
 			</div>
 			<div class="header-status-rightBox">
-				<a href="#"><img id="header-profile" src="${pageContext.request.contextPath}/image_bundle/face.png" width="40" height="40" class="border rounded-circle"></a>
+				<div class="text-center">
+					<img id="header-profile" src="${pageContext.request.contextPath}/image_bundle/face.png" width="40" height="40" class="border rounded-circle">
+				</div>
+			</div>
+			<div id="header-status-div" style="display: none;">
+				<div class="header-status-select">
+					<a href="/member/logout">내 정보</a>
+				</div>
+				<hr>
+				<div class="header-status-select">
+					<a href="/member/logout">로그아웃</a>
+				</div>
 			</div>
 		</div>
 		<!-- 알림 + 프로필 끝 -->
@@ -67,7 +78,15 @@
 </div>
 <!-- 상단 끝 -->
 
-
-
-
-
+<script>
+	const header_profile = document.getElementById('header-profile');
+	const header_status_div = document.getElementById('header-status-div');
+	
+	header_profile.onclick = function(){
+		if(header_status_div.style.display == 'block'){
+			header_status_div.style.display = 'none';
+		} else {
+			header_status_div.style.display = 'block';
+		}
+	};
+</script>

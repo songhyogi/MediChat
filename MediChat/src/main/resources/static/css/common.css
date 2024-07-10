@@ -5,30 +5,30 @@ body {
 /* ================= 글 두께 ================= */
 /* 글 두께 1~10 */
 .fw-1 {
-	font-weight: 100;
-}
-.fw-2 {
-	font-weight: 200;
-}
-.fw-3 {
-	font-weight: 300;
-}
-.fw-4 {
-	font-weight: 400;
-}
-.fw-5 {
-	font-weight: 500;
-}
-.fw-6 {
+	font-weight: 100 !important;
+}                    
+.fw-2 {              
+	font-weight: 200 !important;
+}                    
+.fw-3 {              
+	font-weight: 300 !important;
+}                    
+.fw-4 {              
+	font-weight: 400 !important;
+}                    
+.fw-5 {              
+	font-weight: 500 !important;
+}                    
+.fw-6 {              
 	font-weight: 600;
-}
-.fw-7 {
+}                    
+.fw-7 {              
 	font-weight: 700;
-}
-.fw-8 {
+}                    
+.fw-8 {              
 	font-weight: 800;
-}
-.fw-9 {
+}                    
+.fw-9 {              
 	font-weight: 900;
 }
 .fw-10 {
@@ -38,10 +38,10 @@ body {
 /* ================= 글 크기 ================= */
 /* 글 크기 4 ~ 25*/
 .fs-4 {
-    font-size: 4px;
+    font-size: 4px !important;
 }
 .fs-5 {
-    font-size: 5px;
+    font-size: 5px !important;
 }
 .fs-6 {
     font-size: 6px;
@@ -230,6 +230,7 @@ hr{
 /* ================= 헤더 ================= */
 #header_box{
 	margin: 25px 70px;
+	margin-right: 125px;
 }
 /* --- 메뉴 --- */
 .header-menu {
@@ -282,6 +283,40 @@ hr{
 #header-status-logout-text:hover{
 	color: #333333;
 }
+#header-profile{
+	cursor: pointer;
+}
+#header-status-div{
+	position:relative;
+	width: 80px;
+	height: 80px;
+	padding: 5px 5px;
+	border: 1px solid rgb(76, 165, 165);
+	border-radius: 10px;
+}
+#header-status-div:after{
+	content:""; 
+	position: absolute; 
+	top: 27px; 
+	left: -15px; 
+	border-right: 15px solid rgb(76, 165, 165); 
+	border-top: 10px solid transparent; 
+	border-bottom: 10px solid transparent;
+}
+#header-status-div a{
+	text-decoration: none;
+	color: black;
+	font-size: 12px;
+	
+}
+.header-status-select{
+	text-align: center;
+}
+.header-status-select:hover {
+	text-align: center;
+	background-color: #bdbdbd;
+}
+
 
 /* ================= 푸터 ================= */
 .footer-title{
