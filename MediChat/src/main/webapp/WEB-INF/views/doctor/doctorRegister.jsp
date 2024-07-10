@@ -36,9 +36,9 @@
 				<!-- 병원 목록 검색 -->
 				<form:label path="hos_num">병원</form:label>
 				<form:hidden path="hos_num"/>
+                <form:errors path="hos_num" cssClass="error-color"/>
 				<input type="search" name="keyword" id="keyword" value="${keyword}">
                 <input type="button" id="search_button" value="검색">
-                <form:errors path="hos_num" cssClass="error-color"/>
             </li>
             <li>
             	<form:select path="hos_num">

@@ -182,7 +182,10 @@ public class MemberController {
 	/*=============================
 	 * 비밀번호 변경
 	 ============================*/
-
+	@GetMapping("/member/changePasswd")
+	public String changeMemPasswd() {
+		return "memberChangePasswd";
+	}
 	/*=============================
 	 * 회원탈퇴
 	 ============================*/

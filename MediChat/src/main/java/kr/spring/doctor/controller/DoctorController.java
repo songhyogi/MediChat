@@ -60,7 +60,7 @@ public class DoctorController {
 		log.debug("<회원가입>" + doctor);
 		
 		if(result.hasErrors()) {
-            return form();
+            return "doctorRegister";
 		}
 		//========캡챠 시작=============//
 		String code = "1";//키 발급 0, 캡챠 이미지 비교시 1로 세팅
