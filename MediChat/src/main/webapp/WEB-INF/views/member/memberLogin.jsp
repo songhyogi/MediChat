@@ -38,7 +38,7 @@
 	<!--  네이버 로그인 끝 -->
 </div>
 <!-- 위도 경도 보내기 -->
-<!-- <script>
+<script>
 window.onload = function() {
     const log_btn = document.getElementById('login_btn');
     log_btn.onsubmit = function(event) {
@@ -76,4 +76,4 @@ window.onload = function() {
         }
     };
 };
-</script> -->
+</script>
