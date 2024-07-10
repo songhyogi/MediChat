@@ -61,12 +61,12 @@ public class MemberVO {
    public boolean checkPasswd(String userPasswd) {
       if(mem_auth > 1 && mem_passwd.equals(userPasswd)) {
          return true;
-      }
+      }  
       return false;
    }
    //이미지 BLOB 처리
    public void setUpload(MultipartFile upload)throws IOException {
-      //MultipartFile > byte[]
+      //MultipartFile > byte[] 
       setMem_photo(upload.getBytes());
       //파일 이름
       setMem_photoname(upload.getOriginalFilename());
