@@ -44,6 +44,7 @@ public class HealthController {
 			model.addAttribute("message","쓰기 권한이 없습니다.");
 			model.addAttribute("url",request.getContextPath()+"/heath/healWrite");
 		}
+		
 		return "common/resultAlert";
 	}
 	@PostMapping("/heath/healWrite")
