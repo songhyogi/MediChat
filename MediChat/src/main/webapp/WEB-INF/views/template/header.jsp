@@ -46,7 +46,16 @@
 				<a id="header-login-text">로그인</a>
 			</div>
 			<div class="header-status-rightBox">
-				<a id="header-signIn-text" href="/member/registerUser">회원가입</a>
+				<a id="header-register-text">회원가입</a>
+			</div>
+			<div id="header-register-div" style="display: none;">
+				<div class="header-register-select">
+					<a href="/member/registerUser">일반 회원가입</a>
+				</div>
+				<hr>
+				<div class="header-register-select">
+					<a href="/doctor/registerDoc">의사 회원가입</a>
+				</div>
 			</div>
 		</div>
 		<div id="header-login-div" style="display: none;">
@@ -108,5 +117,13 @@
 			headerLoginDiv.style.display = 'block';
 		}
 	};
-
+	const registerText = document.getElementById('header-register-text');
+	const headerRegisterDiv = document.getElementById('header-register-div');
+	registerText.onclick = function(){
+		if(headerRegisterDiv.style.display == 'block'){
+			headerRegisterDiv.style.display = 'none';
+		} else {
+			headerRegisterDiv.style.display = 'block';
+		}
+	};
 </script>
