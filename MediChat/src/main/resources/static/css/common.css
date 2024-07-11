@@ -280,13 +280,13 @@ hr{
 .header-status-rightBox{
 	width: 70px;
 }
-#header-status-logout-text{
+#header-login-text,#header-signIn-text{
 	text-decoration: none;
 	color: #4D4D4D;
 	font-weight: 700;
 	font-size: 17px;
 }
-#header-status-logout-text:hover{
+#header-login-text:hover,#header-signIn-text:hover{
 	color: #333333;
 }
 #header-profile{
@@ -325,6 +325,42 @@ hr{
 }
 
 
+
+#header-login-text{
+	cursor:pointer;
+}
+#header-login-div{
+	position:absolute;
+	right:180px;
+	top: 100px;
+	width: 100px;
+	height: 80px;
+	padding: 5px 5px;
+	border: 1px solid rgb(76, 165, 165);
+	border-radius: 10px;
+}
+#header-login-div:after{
+	content:""; 
+	position: absolute;
+	right: 40px; 
+	top: -20px; 
+	border-left: 10px solid transparent; 
+	border-right: 10px solid transparent;
+	border-bottom: 20px solid rgb(76, 165, 165);
+}
+#header-login-div a{
+	text-decoration: none;
+	color: black;
+	font-size: 12px;
+}
+.header-login-select{
+	text-align: center;
+	border-radius: 5px;
+}
+.header-login-select:hover {
+	text-align: center;
+	background-color: #bdbdbd;
+}
 /* ================= 푸터 ================= */
 
 .footer-title{
