@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title><tiles:getAsString name="title"/></title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/common.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/kcy.css" type="text/css">
 <tiles:insertAttribute name="font" ignore="true"/>
 <tiles:insertAttribute name="css" ignore="true"/>
 <tiles:insertAttribute name="bootstrap" ignore="true"/>
@@ -16,9 +16,9 @@
 	<div id="main_header">
 		<tiles:insertAttribute name="header"/>
 	</div>
-	<div class="custom-container pt-4 border">
+	<div class="custom-container pt-4">
 		<div id="main_body" class="row">
-				<tiles:insertAttribute name="body"/>
+			<tiles:insertAttribute name="body"/>
 		</div>
 	<div id="main_footer">
 		<tiles:insertAttribute name="footer"/>

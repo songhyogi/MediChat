@@ -16,6 +16,7 @@ public interface MemberService {
 	public void updateProfile(MemberVO member);
 	//회원탈퇴
 	public void deleteMember(Long mem_num);
+	public void deleteMember_detail(MemberVO member);
 
 
 	//자동 로그인
