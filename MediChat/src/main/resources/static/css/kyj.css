@@ -1,0 +1,34 @@
+@charset "UTF-8";
+.display{
+	display:flex;
+}
+.nav-body{
+	width:200px;
+	height:930px;
+}
+.nav-item{
+	width:200px;
+	height:100px;
+}
+.nav-item th, td{
+	padding:10px;
+	border-bottom:2px solid #cecece;
+}
+.nav-title th{
+	height:130px;
+	color: rgb(76, 165, 165);
+}
+.chat-main{
+	width:850px;
+	height:930px;
+}
+.chat-header{
+	padding:10px;
+	width:850px;
+	height:130px;
+}
+.chat-title{
+	padding-left:40px;
+	color:white;
+	
+}
