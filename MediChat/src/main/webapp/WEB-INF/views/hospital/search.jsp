@@ -119,7 +119,7 @@ if(typeof '${commonFilter}' !== 'undefined' && '${commonFilter}' !== null && '${
 
 
 //위치 정보 가져오기
-if(${!empty user_lat} || ${!empty user_lon} || '${user_lat}'=='37.4993499' || '${user_lon}'=='127.0332284'){
+if(${empty user_lat} || ${empty user_lon} || '${user_lat}'=='37.4981646510326' || '${user_lon}'=='127.028307900881'){
 	if(navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(
 			function(position) {
@@ -127,6 +127,7 @@ if(${!empty user_lat} || ${!empty user_lon} || '${user_lat}'=='37.4993499' || '$
 			    const lon = position.coords.longitude;
 			    document.getElementById('lat').value = lat;
 			    document.getElementById('lon').value = lon;
+			    searchForm.submit();
 			},
 			function(error) {
 			
@@ -160,7 +161,7 @@ $(document).ready(function() {
     const hospitalListBox = $('#hospitalListBox');
     let pageNum = 2;
     const pageItemNum = 15;
-    const maxItems = 150;
+    const maxItems = 120;
     const keyword = '${keyword}';
     const sortType = '${sortType}';
     const commonFilter = '${commonFilter}';
@@ -191,9 +192,18 @@ $(document).ready(function() {
             },
             success: function(param) {
                 pageNum++;
+                let output = '';
                 for(let i=0; i<param.length; i++){
-                	hospitalListBox.append('<div class="text-center">'+param[i].hos_num+'</div>');
+                	output += '<div class="hospital-box">';
+                	output += '<div class="hospital-name fs-17 fw-8 text-black-6">'+param[i].hos_name+'</div>';
+                	output += '<div class="hospital-sub fs-11 fw-6 text-gray-7">'+'정형외과'+'</div>';
+                	output += '<div class="hospital-open fs-13 fw-7 text-black-4">'+'진료중&nbsp;'+'<div class="vr"></div>'+'&nbsp;19:30에 마감'+'</div>';
+                	output += '<div class="hospital-address fs-12 fw-7 text-black-3">'+param[i].hos_addr+'</div>';
+                	output += '<div class="hospital-docCont fs-11 fw-8 text-black-3">'+'정형외과 전문의'+param[i].doc_cnt+'명'+'</div>';
+                	output += '</div>'
+                	output += '<hr width="100%">';
                 }
+                hospitalListBox.append(output);
                 totalItemsLoaded += param.length;
                 loading = false;
             },

@@ -151,8 +151,6 @@ public class HospitalController {
 		map.put("day", day);
 		model.addAttribute("time", time);
 		model.addAttribute("day", day);
-		log.debug("<<시간>> : " + time + "," + day);
-		
 		
 		// pageNum
 		map.put("pageNum", pageNum);
