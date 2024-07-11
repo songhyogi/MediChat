@@ -75,7 +75,7 @@
 }
 
 .working-time {
-    background-color: skyblue;
+    background-color: rgb(153, 204, 204);
 }
 
 #time-buttons {
