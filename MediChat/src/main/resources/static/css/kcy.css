@@ -1,5 +1,20 @@
 @charset "UTF-8";
 
+div.container {
+     width: 800px; /* 원하는 고정 너비 */
+     margin-left: auto;
+     margin-right: auto;
+     margin-bottom: 100px;
+     padding-left: 15px;
+     padding-right: 15px;
+     background-color:rgb(250, 250, 250);
+}
+
+div#main_body.row{
+	background-color:rgba(57, 174, 164, 0.21);
+	height:300px;
+	margin-bottom:300px;
+}
 /* 회원가입 등록, 수정, 삭제 폼 */
 #member_register {
     width: 800px;
@@ -74,7 +89,6 @@ input#mem_address1 {
     background-size: 24px 24px;
     cursor: pointer;
 }
-
 .ui-datepicker-header {
     background-color: #f0f0f0;
     border-bottom: 1px solid #ccc;
@@ -104,61 +118,72 @@ input#mem_address1 {
 }
 
 /* 로그인 */
-#member_login {
+form#member_login {
     width: 320px;
     margin: 0 auto;
     padding: 0;
     border: none;
 }
-
 #member_login ul {
     padding: 0;
+    list-style:none;
 }
-
-.floating-label {
-    position: relative;
+input#mem_id,input#mem_passwd{
+	width:350px;
+	height:45px;
 }
-
-.floating-label > .form-input {
-    width: 300px;
-    height: 32px;
-    padding: 0.55rem 0.55rem;
+button.login_btn {
+	background-color: rgb(102, 178, 178);
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 100 !important;
+	font-size: 16px;
+	font-weight:bold;
+    color: #fff; /* 버튼 텍스트를 하얀색으로 */
+    border: none; /* 기본 테두리 제거 */
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 350px;
 }
-
-.floating-label > label {
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 1.05rem 0.75rem;
-    transition: all 0.25s;
+input#auto{
+	margin-right:5px;
 }
-
-.floating-label > .form-input::placeholder {
-    color: transparent;
-}
-
-.floating-label > .form-input:focus,
-.floating-label > .form-input:not(:placeholder-shown) {
-    padding-top: 1.125rem;
-    padding-bottom: 0.125rem;
-}
-
-.floating-label > .form-input:focus + label,
-.floating-label > .form-input:not(:placeholder-shown) + label {
-    opacity: 0.65;
-    transform: scale(0.85) translateY(-0.5rem) translateX(-0.5rem);
-}
-
-#member_login .login-btn {
-    width: 320px;
-}
-
 #member_login label[for="auto"] {
     width: 200px;
+    margin-top:5px;
+    margin-right:20px;
     padding: 0 0 5px 0;
 }
-
-.profile{
-	margin-top:10px;
-	cursor:pointer;
+.button-container {
+    display: flex;
+}
+.button-container input[type="button"] {
+    width: 120px;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    cursor: pointer;
+    text-align: center;
+}
+.centered-hr{
+	padding: 0 0;
+	margin: 0 auto;
+	margin-top: 20px;
+    margin-bottom: 25px;
+    height: 3px;
+}
+.custom-container .social {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+.social {
+    text-align: center;
+    margin-bottom:30px;
+}
+.social img{
+	 width: 200px;
+     height: 50px;
+     margin: 10px;
 }

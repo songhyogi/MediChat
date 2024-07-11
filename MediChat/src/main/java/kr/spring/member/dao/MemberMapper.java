@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import kr.spring.member.vo.MemberVO;
-
+ 
 @Mapper
 public interface MemberMapper {
 	//==========일반 회원============
@@ -31,6 +31,7 @@ public interface MemberMapper {
 	@Update("UPDATE member SET mem_photo=#{mem_photo},mem_photoname=#{mem_photoname} WHERE mem_num=#{mem_num}")
 	public void updateProfile(MemberVO member);
 	//회원탈퇴
+	@Update("UPDATE member SET mem_auth=0 WHERE mem_num=#{mem_num}")
 	public void deleteMember(Long mem_num);
 	@Delete("DELETE FROM member_detail WHERE mem_num=#{mem_num}")
 	public void deleteMember_detail(MemberVO member);
@@ -50,6 +51,7 @@ public interface MemberMapper {
 	
 	//==========관리자============
 	//회원등급수정
+	@Update("UPDATE member SET mem_auth=#{mem_auth} WHERE mem_num=#{mem_num}")
 	public void updateAuth(MemberVO member);
 	
 }
