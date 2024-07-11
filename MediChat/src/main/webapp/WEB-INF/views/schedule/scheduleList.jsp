@@ -4,18 +4,21 @@
 <script src="${pageContext.request.contextPath}/js/index.global.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+    	const doc_num = ${doc_num};
+    	const regularDayOffStr = '${regularDayOff}';
+    	const regularDayOff = regularDayOffStr ? regularDayOffStr.split(',').map(Number) : []; //정기휴무요일이 하나일 경우에도 쉼표로 분할하여 배열로 변환
+    	
         // FullCalendar 초기화
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
-            selectable: true, // 사용자가 날짜를 선택할 수 있게 설정
+            selectable: true, //사용자가 날짜를 선택할 수 있게 설정
             height: 'auto',
             width: 'auto',
             headerToolbar: {
-                left: 'prev',
-                center: 'title',
-                right: 'next'
+                left: 'title',
+                right: 'today prev,next'
             },
-            initialView: 'dayGridMonth', // 초기 보여줄 뷰 설정
+            initialView: 'dayGridMonth',// 초기 보여줄 뷰 설정
             locale: 'ko', // 로케일 설정
             dayCellContent: function(e) {
                 // 날짜 셀 내용 설정 (1일, 2일 -> '일' 빼고 1, 2만 보이게)
@@ -27,38 +30,76 @@
             dateClick: function(info) {
                 // 날짜 클릭 시 호출될 함수
                 displayTimes(info.dateStr);
+            },
+            dayCellDidMount: function(info){
+            	const date = new Date(info.date);
+            	const day = date.getDay();//요일 가져오기
+            	if(regularDayOff.includes(day)){
+            		info.el.classList.add('regular-day-off');//정기휴무요일에 해당하면 클래스 추가해서 스타일 적용
+            	}
+            },
+            datesSet: function(info) {//datesSet 이벤트는 달력이 새로 렌더링될 때마다 호출됨
+                const days = document.querySelectorAll('.fc-daygrid-day');
+                days.forEach(dayEl => {
+                    const date = new Date(dayEl.getAttribute('data-date'));
+                    const day = date.getDay();
+                    if(regularDayOff.includes(day)){//datesSet 이벤트로 이전 달이나 다음 달로 이동했을 때도 정기휴무요일 적용
+                        dayEl.classList.add('regular-day-off');
+                    }
+                });
             }
         });
         calendar.render();
         
-     // 선택한 날짜의 근무/휴무 시간을 표시하는 함수
+     	// 선택한 날짜의 근무/휴무 시간을 표시하는 함수
         function displayTimes(date) {
-            $('#time-buttons').empty(); // 기존 버튼들을 지우고 새로 시작
-            const allTimes = generateTimesForDay(); // 9:00 to 18:00, excluding lunch time
-            let output = '<div class="time-row">';
-            allTimes.forEach((time, index) => {
-                if (index > 0 && index % 4 == 0) {
-                    output += '</div><div class="time-row">';
+            $('#time-buttons').empty();
+            // AJAX 요청을 통해 근무 시간 정보를 가져옴
+            $.ajax({
+                url: '/schedule/workingTimes',
+                method: 'GET',
+                data: { doc_num: doc_num },
+                dataType: 'json',
+                success: function(response) {
+                    console.log("AJAX response:", response);
+                    if (response.result === 'success') {
+                        const { DOC_STIME, DOC_ETIME } = response.workingHours;
+                        const allTimes = generateTimesForDay(DOC_STIME, DOC_ETIME);
+                        let output = '<div class="time-row">';
+                        allTimes.forEach((time, index) => {
+                            if (index > 0 && index % 4 === 0) {
+                                output += '</div><div class="time-row">';
+                            }
+                            output += '<button class="working-time" data-time="' + time + '">' + time + '</button>';
+                        });
+                        output += '</div>';
+                        $('#time-buttons').html(output);
+                    } else if (response.result === 'logout') {
+                        alert('로그인이 필요합니다.');
+                    } else if (response.result === 'wrongAccess') {
+                        alert('잘못된 접근입니다.');
+                    }
+                },
+                error: function() {
+                    alert('근무 시간을 가져오는 데 실패했습니다.');
                 }
-                output += '<button class="working-time" data-time="' + time + '">' + time + '</button>';
             });
-            output += '</div>';
-            $('#time-buttons').html(output);
         }
 
         // 시간 범위를 생성하는 함수
-        function generateTimesForDay() {
+        function generateTimesForDay(start, end) {
             let times = [];
-            for (let hour = 9; hour < 18; hour++) { // 9시부터 18시 전까지 (17:30 포함)
-                for (let minute = 0; minute < 60; minute += 30) { // 30분 간격
-                    let time = hour + ':' + (minute == 0 ? '00' : minute);
-                    // 점심 시간 (13:00 - 13:59) 제외
-                    if (hour == 13 && (minute == 0 || minute == 30)) {
-                        continue;
-                    }
+            let [startHour, startMinute] = start.split(':').map(Number);
+            let [endHour, endMinute] = end.split(':').map(Number);
+
+            for (let hour = startHour; hour <= endHour; hour++) {
+                for (let minute = (hour == startHour ? startMinute : 0); minute < 60; minute += 30) {
+                    if (hour === endHour && minute >= endMinute) break; // 종료 시간에 도달하면 루프 종료
+                    let time = '${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}';
                     times.push(time);
                 }
             }
+
             return times;
         }
     });
@@ -69,13 +110,16 @@
     width: 80%;
     max-width: 800px; /* 최대 너비 */
 }
+.regular-day-off{
+	background-color: #f2f2f2;
+}
 
 .time-off {
     background-color: gray;
 }
 
 .working-time {
-    background-color: skyblue;
+    background-color: rgb(153, 204, 204);
 }
 
 #time-buttons {
@@ -106,6 +150,22 @@ button:disabled {
     cursor: not-allowed;
     opacity: 0.6;
 }
+/* 일요일 날짜 빨간색 */
+.fc-day-sun a {
+  color: red;
+  text-decoration: none;
+}
+
+/* 토요일 날짜 파란색 */
+.fc-day-sat a {
+  color: blue;
+  text-decoration: none;
+}
+.fc-prev-button, .fc-next-button, .fc-today-button {
+	width:60px;
+    font-size: 10px;
+}
+
 </style>
 <div id='calendar'></div>
 <div id="time-buttons"></div>

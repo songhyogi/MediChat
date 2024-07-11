@@ -28,7 +28,6 @@ public class DoctorVO {
 	private String mem_photoname;	//프로필 사진명
 	private int mem_auth;			//권한 등급(0:탈퇴,1:정지,2:일반,3:의사,9:관리자)
 	private long doc_num;
-	@NotEmpty
 	private long hos_num;
 	private String hos_name;
 	@Pattern(regexp="^[A-Za-z0-9]{4,12}$")
@@ -41,8 +40,9 @@ public class DoctorVO {
 	private String doc_license;
 	private String doc_history;
 	private int doc_treat;
-	private int doc_off;
-	private String doc_time;
+	private int doc_off;			//휴무요일
+	private String doc_stime;		//근무시작시간
+	private String doc_etime;		//근무종료시간
 	private int doc_agree;
 
 	@NotBlank(message = "비밀번호를 입력해주세요.")
