@@ -34,7 +34,6 @@ public class ScheduleAjaxController {
 			map.put("result", "wrongAccess");
 		}else {
 			Map<String,String> workingHours = scheduleService.getWorkingHours(doc_num);
-			log.debug("<<확인용>>");
 			map.put("result", "success");
 			map.put("workingHours", workingHours);
 		}

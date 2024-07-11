@@ -8,6 +8,8 @@
     	const regularDayOffStr = '${regularDayOff}';
     	const regularDayOff = regularDayOffStr ? regularDayOffStr.split(',').map(Number) : []; //정기휴무요일이 하나일 경우에도 쉼표로 분할하여 배열로 변환
     	
+    	let modifiedTimes = []; // 임시로 변경된 시간을 저장할 배열
+    	
         // FullCalendar 초기화
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -57,26 +59,27 @@
             // AJAX 요청을 통해 근무 시간 정보를 가져옴
             $.ajax({
                 url: '/schedule/workingTimes',
-                method: 'GET',
-                data: { doc_num: doc_num },
+                method: 'get',
+                data: {doc_num: doc_num},
                 dataType: 'json',
-                success: function(response) {
-                    console.log("AJAX response:", response);
-                    if (response.result === 'success') {
-                        const { DOC_STIME, DOC_ETIME } = response.workingHours;
-                        const allTimes = generateTimesForDay(DOC_STIME, DOC_ETIME);
+                success: function(param) {
+                    console.log("AJAX response:", param);
+                    if (param.result == 'success') {
+                    	const doc_stime = param.workingHours.DOC_STIME;
+                        const doc_etime = param.workingHours.DOC_ETIME;
+                        const allTimes = generateTimesForDay(doc_stime, doc_etime);
                         let output = '<div class="time-row">';
                         allTimes.forEach((time, index) => {
-                            if (index > 0 && index % 4 === 0) {
+                            if (index > 0 && index % 4 == 0) {
                                 output += '</div><div class="time-row">';
                             }
                             output += '<button class="working-time" data-time="' + time + '">' + time + '</button>';
                         });
                         output += '</div>';
                         $('#time-buttons').html(output);
-                    } else if (response.result === 'logout') {
+                    } else if (param.result == 'logout') {
                         alert('로그인이 필요합니다.');
-                    } else if (response.result === 'wrongAccess') {
+                    } else if (param.result == 'wrongAccess') {
                         alert('잘못된 접근입니다.');
                     }
                 },
@@ -87,15 +90,15 @@
         }
 
         // 시간 범위를 생성하는 함수
-        function generateTimesForDay(start, end) {
+        function generateTimesForDay(doc_stime, doc_etime) {
             let times = [];
-            let [startHour, startMinute] = start.split(':').map(Number);
-            let [endHour, endMinute] = end.split(':').map(Number);
+            let [startHour, startMinute] = doc_stime.split(':').map(Number);
+            let [endHour, endMinute] = doc_etime.split(':').map(Number);
 
             for (let hour = startHour; hour <= endHour; hour++) {
                 for (let minute = (hour == startHour ? startMinute : 0); minute < 60; minute += 30) {
-                    if (hour === endHour && minute >= endMinute) break; // 종료 시간에 도달하면 루프 종료
-                    let time = '${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}';
+                    if (hour == endHour && minute >= endMinute) break; // 종료 시간에 도달하면 루프 종료
+                    let time = hour.toString().padStart(2, '0') + ':' + minute.toString().padStart(2, '0');
                     times.push(time);
                 }
             }
@@ -113,29 +116,24 @@
 .regular-day-off{
 	background-color: #f2f2f2;
 }
-
 .time-off {
     background-color: gray;
 }
-
 .working-time {
     background-color: rgb(153, 204, 204);
 }
-
 #time-buttons {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     margin-top: 20px;
 }
-
 .time-row {
     display: flex;
     width: 100%;
     justify-content: center; /* 가운데 정렬 */
     margin-bottom: 10px;
 }
-
 button {
     width: 195px;
     height: 45px;
@@ -145,19 +143,15 @@ button {
     border-radius: 5px;
     cursor: pointer;
 }
-
 button:disabled {
     cursor: not-allowed;
     opacity: 0.6;
 }
-/* 일요일 날짜 빨간색 */
-.fc-day-sun a {
+.fc-day-sun a {/* 일요일 날짜 빨간색 */
   color: red;
   text-decoration: none;
 }
-
-/* 토요일 날짜 파란색 */
-.fc-day-sat a {
+.fc-day-sat a {/* 토요일 날짜 파란색 */
   color: blue;
   text-decoration: none;
 }
@@ -167,5 +161,5 @@ button:disabled {
 }
 
 </style>
-<div id='calendar'></div>
+<div id='calendar' data-doc-num="${doc_num}" data-regular-day-off="${regularDayOff}"></div>
 <div id="time-buttons"></div>

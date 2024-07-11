@@ -20,15 +20,16 @@ public interface ScheduleMapper {
 	@Select("SELECT doc_stime,doc_etime FROM doctor_detail WHERE doc_num=#{doc_num}")
 	public Map<String,String> getWorkingHours(Long doc_num);
 	
+	//개별휴무일 가져오기
+	@Select("SELECT * FROM holiday WHERE doc_num=#{doc_num}")
+	public String getHoliday(Long doc_num);
+	
+	//근무 수정
+	@Insert("INSERT INTO holiday(holi_num,doc_num,holi_date,holi_time,holi_status) VALUES(holi_seq.nextval,#{doc_num},#{holi_date},#{holi_time},#{holi_status})")
+	public void insertHoliday(Long doc_num);
+	
 	//휴무시간 가져오기
 	@Select("SELECT doff_time FROM dayoff WHERE doc_num=#{doc_num} AND doff_date=#{doff_date}")
 	public List<String> getDayoffTimes(Long doc_num, String doff_date);
-	// 휴무시간 추가
-    @Insert("INSERT INTO dayoff (doc_num, doff_date, doff_time) VALUES (#{doc_num}, #{doff_date}, #{doff_time})")
-    void insertDayoff(Long doc_num,String doff_date,String doff_time);
-
-    // 휴무시간 삭제
-    @Delete("DELETE FROM dayoff WHERE doc_num=#{doc_num} AND doff_date=#{doff_date} AND doff_time=#{doff_time}")
-    void deleteDayoff(Long doc_num,String doff_date,String doff_time);
 	
 }
