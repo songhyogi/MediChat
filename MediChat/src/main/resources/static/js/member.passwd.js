@@ -1,6 +1,6 @@
 $(function(){
 	/*---------------------
-		비밀번호 변경 체크
+		비밀번호 변경체크
 	----------------------*/
 	$('#mem_passwd').keyup(function(){
 		if($('#confirm_passwd').val()!='' && $('#confirm_passwd').val()!=$(this).val() ){

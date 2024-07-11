@@ -24,7 +24,7 @@ public class MemberAjaxController {
 	private MemberService memberService;
 	
 	//아아디 중복확인
-	@GetMapping("/member/confirmId")
+	@GetMapping("/member/confirmId") 
 	@ResponseBody
 	public Map<String,String> processMember(@RequestParam String mem_id){
 		

@@ -27,7 +27,7 @@
 	</form:form>
 	<hr size="1" width="50%" noshade="noshade" class="centered-hr">
 	<div class="social">
-		<!--  카카오 로그인 시작 -->
+		<!--  카카오 로그인시작 -->
 		<img src="${pageContext.request.contextPath}/images/kakao_login_medium_narrow.png" width="200">
 		<!--  카카오 로그인 끝 -->
 		<!--  네이버 로그인 시작 -->

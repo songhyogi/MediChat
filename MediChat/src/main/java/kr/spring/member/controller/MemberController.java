@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 	@Autowired 
 	MemberService memberService;
-
+ 
 	@Value("${API.KCY.X-Naver-Client-Id}")
 	private String X_Naver_Client_Id;
 	@Value("${API.KCY.X-Naver-Client-Secret}")

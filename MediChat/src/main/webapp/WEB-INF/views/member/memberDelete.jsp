@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<!-- 회원정보 수정 시작 -->
+<!-- 회원탈퇴 시작 -->
 <div class="page-main">
 	<h2>회원탈퇴</h2>
 	<form:form action="deleteUser" id="member_delete" modelAttribute="memberVO">
@@ -30,4 +30,4 @@
 		</div>
 	</form:form>
 </div>
-<!-- 회원정보 수정 끝 -->
+<!-- 회원탈퇴 끝 -->

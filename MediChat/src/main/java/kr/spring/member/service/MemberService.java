@@ -1,7 +1,7 @@
 package kr.spring.member.service;
 
 import kr.spring.member.vo.MemberVO;
-
+ 
 public interface MemberService {
 	//==========일반 회원============
 	//회원가입

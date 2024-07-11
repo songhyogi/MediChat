@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import kr.spring.member.vo.MemberVO;
-
+ 
 @Mapper
 public interface MemberMapper {
 	//==========일반 회원============
