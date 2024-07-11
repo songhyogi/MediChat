@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.spring.hospital.service.HospitalService;
 import kr.spring.hospital.vo.HospitalVO;
@@ -78,8 +79,8 @@ public class HospitalController {
 	// 병원 > 검색 결과
 	@GetMapping("/hospitals/search")
 	public String search(Model model,HttpSession session,@RequestParam(defaultValue="1") int pageNum,
-							@RequestParam(defaultValue="10") int pageItemNum, @RequestParam(defaultValue="") String keyword,
-							@RequestParam(defaultValue="") String commonFilter, @RequestParam(defaultValue="NEAR") String sortType,
+							@RequestParam(defaultValue="15") int pageItemNum, @RequestParam(defaultValue="") String keyword,
+							@RequestParam(required = false) String commonFilter, @RequestParam(defaultValue="NEAR") String sortType,
 							@RequestParam(defaultValue="37.4981646510326") String user_lat, @RequestParam(defaultValue="127.028307900881") String user_lon) {
 		Map<String, Object> map = new HashMap<>();
 
@@ -88,36 +89,45 @@ public class HospitalController {
 //		String user_lon = (String)session.getAttribute("user_lat");
 		map.put("user_lat", user_lat);
 		map.put("user_lon", user_lon);
+		model.addAttribute("user_lat", user_lat);
+		model.addAttribute("user_lon", user_lon);
 		/* 나중에 위치정보 bean 만들어서 가져다 쓰기 지금은 귀찮... */
 		log.debug("<<위치>> : " + user_lat + "," + user_lon);
 		
 		// 현재 시간 변수 생성 후 값 넣기
 		LocalDateTime now = LocalDateTime.now();
-		String time = now.format(DateTimeFormatter.ofPattern("HH:mm")); //hh:mm
+		String time = now.format(DateTimeFormatter.ofPattern("HHmm")); //hh:mm
 		int day = now.getDayOfWeek().getValue(); //1:월 2:화 3:수 4:목 5:금 6:토 7:일
 		map.put("time", time);
 		map.put("day", day);
+		model.addAttribute("time", time);
+		model.addAttribute("day", day);
 		log.debug("<<시간>> : " + time + "," + day);
 		
 		
 		// pageNum
 		map.put("pageNum", pageNum);
+		model.addAttribute("pageNum", pageNum);
 		log.debug("<<페이지번호>> : " + pageNum);
 		
 		// pageItemNum
 		map.put("pageItemNum", pageItemNum);
+		model.addAttribute("pageItemNum", pageItemNum);
 		log.debug("<<페이지아이템갯수>> : " + pageItemNum);
 
 		// keyword
 		map.put("keyword", keyword);
+		model.addAttribute("keyword", keyword);
 		log.debug("<<키워드>> : " + keyword);
 		
 		// commonFilter
 		map.put("commonFilter", commonFilter);
+		model.addAttribute("commonFilter", commonFilter);
 		log.debug("<<필터>> : " + commonFilter);
 		
 		//sortType
 		map.put("sortType", sortType);
+		model.addAttribute("sortType", sortType);
 		log.debug("<<정렬타입>> : " + sortType);
 		
 		// 병원 리스트 담기
@@ -127,7 +137,60 @@ public class HospitalController {
 		
 		return "search";
 	}
+	@GetMapping("/hospitals/search-json")
+	@ResponseBody
+	public List<HospitalVO> searchJson(Model model,HttpSession session,@RequestParam(defaultValue="1") int pageNum,
+							@RequestParam(defaultValue="15") int pageItemNum, @RequestParam(defaultValue="") String keyword,
+							@RequestParam(required = false) String commonFilter, @RequestParam(defaultValue="NEAR") String sortType,
+							@RequestParam(defaultValue="37.4981646510326") String user_lat, @RequestParam(defaultValue="127.028307900881") String user_lon){
+		
+		Map<String, Object> map = new HashMap<>();
 
+		map.put("user_lat", user_lat);
+		map.put("user_lon", user_lon);
+		model.addAttribute("user_lat", user_lat);
+		model.addAttribute("user_lon", user_lon);
+		log.debug("<<위치>> : " + user_lat + "," + user_lon);
+		
+		// 현재 시간 변수 생성 후 값 넣기
+		LocalDateTime now = LocalDateTime.now();
+		String time = now.format(DateTimeFormatter.ofPattern("HHmm")); //hh:mm
+		int day = now.getDayOfWeek().getValue(); //1:월 2:화 3:수 4:목 5:금 6:토 7:일
+		map.put("time", time);
+		map.put("day", day);
+		model.addAttribute("time", time);
+		model.addAttribute("day", day);
+		log.debug("<<시간>> : " + time + "," + day);
+		
+		
+		// pageNum
+		map.put("pageNum", pageNum);
+		model.addAttribute("pageNum", pageNum);
+		
+		// pageItemNum
+		map.put("pageItemNum", pageItemNum);
+		model.addAttribute("pageItemNum", pageItemNum);
+
+		// keyword
+		map.put("keyword", keyword);
+		model.addAttribute("keyword", keyword);
+		
+		// commonFilter
+		map.put("commonFilter", commonFilter);
+		model.addAttribute("commonFilter", commonFilter);
+		
+		//sortType
+		map.put("sortType", sortType);
+		model.addAttribute("sortType", sortType);
+		
+		// 병원 리스트 담기
+		List<HospitalVO> hosList = new ArrayList<>();
+		hosList = hospitalService.selectListHospital(map);
+		model.addAttribute("hosList", hosList);
+		
+		return hosList;
+	}
+	
 	// 병원 > 검색 결과 > 상세 페이지
 	@GetMapping("/hospitals/search/detail")
 	public String detail() {
