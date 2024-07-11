@@ -43,10 +43,28 @@
 		<!-- 로그인/회원가입 시작 -->
 		<div id="header-status-logout" class=" d-flex">
 			<div class="header-status-leftBox">
-				<a id="header-status-logout-text" href="/member/login">로그인</a>
+				<a id="header-login-text">로그인</a>
 			</div>
 			<div class="header-status-rightBox">
-				<a id="header-status-logout-text" href="/member/registerUser">회원가입</a>
+				<a id="header-register-text">회원가입</a>
+			</div>
+			<div id="header-register-div" style="display: none;">
+				<div class="header-register-select">
+					<a href="/member/registerUser">일반 회원가입</a>
+				</div>
+				<hr>
+				<div class="header-register-select">
+					<a href="/doctor/registerDoc">의사 회원가입</a>
+				</div>
+			</div>
+		</div>
+		<div id="header-login-div" style="display: none;">
+			<div class="header-login-select">
+				<a href="/member/login">일반 로그인</a>
+			</div>
+			<hr>
+			<div class="header-login-select">
+				<a href="/doctor/login">의사 로그인</a>
 			</div>
 		</div>
 		<!-- 로그인/회원가입 끝 -->
@@ -90,4 +108,22 @@
 			}
 		};
 	}
+	const loginText = document.getElementById('header-login-text');
+	const headerLoginDiv = document.getElementById('header-login-div');
+	loginText.onclick = function(){
+		if(headerLoginDiv.style.display == 'block'){
+			headerLoginDiv.style.display = 'none';
+		} else {
+			headerLoginDiv.style.display = 'block';
+		}
+	};
+	const registerText = document.getElementById('header-register-text');
+	const headerRegisterDiv = document.getElementById('header-register-div');
+	registerText.onclick = function(){
+		if(headerRegisterDiv.style.display == 'block'){
+			headerRegisterDiv.style.display = 'none';
+		} else {
+			headerRegisterDiv.style.display = 'block';
+		}
+	};
 </script>

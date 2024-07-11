@@ -144,7 +144,7 @@
 	<select id="selectListHospital" parameterType="map" resultType="hospitalVO">
 		SELECT * 
 		FROM (
-		       SELECT h.*, ROWNUM
+		       SELECT h.*, ROWNUM RNUM
 		       FROM ( SELECT h.*, 
 		       			  (POWER((h.hos_lat - #{user_lat}), 2) + POWER((h.hos_lon - #{user_lon}), 2)) AS distance, 
 		       			   COALESCE(d.doc_cnt, 0) AS doc_cnt,
@@ -168,7 +168,7 @@
 			         <include refid="searchHospitalByCommonFilter"/>
 			         <include refid="searchHospitalBySortType"/>
 		     )
-		WHERE ROWNUM > (#{pageNum} - 1) * #{pageItemNum}
+		WHERE RNUM > (#{pageNum} - 1) * #{pageItemNum}
 	</select>
 <!-- ========================= 병원 리스트 끝 ========================= -->
 
