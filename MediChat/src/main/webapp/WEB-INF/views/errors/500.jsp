@@ -10,6 +10,7 @@
 	href="${pageContext.request.contextPath}/css/ych.css" type="text/css">
 </head>
 <body>
+<div class="error-body">
 	<div class="mainbox">
 		<div class="logo">
 			<a href="${contextPath.request.contextPath}/main/main"><img src="${pageContext.request.contextPath}/images/logo.jpg" width="400"></a>
@@ -23,3 +24,4 @@
 			<p><b>Let's go <a href="${contextPath.request.contextPath}/main/main" class="msgh">home</a> and try from there.</b>
 		</div>
 	</div>
+</div>

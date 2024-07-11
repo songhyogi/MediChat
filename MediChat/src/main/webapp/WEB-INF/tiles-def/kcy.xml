@@ -5,33 +5,48 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-	<definition name="kcy" template="/WEB-INF/views/template/layout_basic.jsp">
-		<put-attribute name="title" value="SpringPage"/>
-		<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>
-		<put-attribute name="body" value="/WEB-INF/views/main/main.jsp"/>
+	<definition name="kcy" template="/WEB-INF/views/template/layout_kcy.jsp">
+		<put-attribute name="css" value="/WEB-INF/views/common/css.jsp"/>
+		<put-attribute name="css" value="/WEB-INF/views/css/kcy.jsp"/>
+		<put-attribute name="bootstrap" value="/WEB-INF/views/common/bootStrap.jsp"/>
+		<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/>
 	</definition>
 
 	<!-- 일반회원 -->
-	<definition name="memberRegister" extends="main">
+	<definition name="memberRegister" extends="kcy">
 		<put-attribute name="title" value="회원가입"/>
-		<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/member/memberRegister.jsp"/>
 	</definition>
-	<definition name="memberLogin" extends="main">
+	<definition name="memberLogin" extends="kcy">
 		<put-attribute name="title" value="로그인"/>
-		<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/member/memberLogin.jsp"/>
 	</definition>
-	<definition name="memberModify" extends="main">
+	<definition name="memberModify" extends="kcy">
 		<put-attribute name="title" value="회원정보 수정"/>
-		<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/member/memberModify.jsp"/>
 	</definition>
-
+	<definition name="memberChangePasswd" extends="kcy">
+		<put-attribute name="title" value="비밀번호 변경"/>
+		<put-attribute name="body" value="/WEB-INF/views/member/memberChangePasswd.jsp"/>
+	</definition>
+	<definition name="memberDelete" extends="kcy">
+		<put-attribute name="title" value="회원탈퇴"/>
+		<put-attribute name="body" value="/WEB-INF/views/member/memberDelete.jsp"/>
+	</definition>
+	
 	<!-- 의사회원 -->
-	<definition name="doctorRegister" extends="main">
+	<definition name="doctorRegister" extends="kcy">
 		<put-attribute name="title" value="회원가입(의사)"/>
-		<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/doctor/doctorRegister.jsp"/>
+	</definition>
+	<definition name="doctorLogin" extends="kcy">
+		<put-attribute name="title" value="로그인(의사)"/>
+		<put-attribute name="body" value="/WEB-INF/views/doctor/doctorLogin.jsp"/>
+	</definition>
+	<!-- 관리자 -->
+	<definition name="adminAgree" extends="kcy">
+		<put-attribute name="title" value="의사회원가입 승인(관리자)"/>
+		<put-attribute name="body" value="/WEB-INF/views/doctor/adminAgree.jsp"/>
 	</definition>
 </tiles-definitions>

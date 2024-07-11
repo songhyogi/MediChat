@@ -1,7 +1,13 @@
 package kr.spring.main.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,16 +20,7 @@ public class MainController {
 	}
 	
 	@GetMapping("/main/main")
-	public String main() {
-		return "main";//Tiles의 설정명
+	public String main(HttpSession session) {
+		return "main";
 	}
-	
 }
-
-
-
-
-
-
-
-

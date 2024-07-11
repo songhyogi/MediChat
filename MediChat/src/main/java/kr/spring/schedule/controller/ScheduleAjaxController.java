@@ -22,39 +22,22 @@ public class ScheduleAjaxController {
 	@Autowired
 	private ScheduleService scheduleService;
 	
-	@GetMapping("/schedule/dayoffs")
-    @ResponseBody
-    public Map<String, Object> getDayoffs(HttpSession session,Long doc_num,String doff_date) {
+	@GetMapping("/schedule/workingTimes")
+	@ResponseBody
+	public Map<String, Object> getWorkingTimes(Long doc_num,HttpSession session){
+		DoctorVO user = (DoctorVO)session.getAttribute("user");
 		Map<String,Object> map = new HashMap<String,Object>();
-        DoctorVO user = (DoctorVO)session.getAttribute("user");//DoctorController.java 확인 필요
-
-        if(user == null) {
-            map.put("result", "logout");
-        }else if(user.getMem_num() != doc_num){
-        	map.put("result", "wrongAccess");
-        }else {
-            List<String> times = scheduleService.getDayoffTimes(doc_num,doff_date);
-            map.put("result", "success");
-            map.put("times", times);
-        }
-        return map;
-    }
-	
-
-    @PostMapping("/schedule/update")
-    @ResponseBody
-    public Map<String, Object> updateDayoffTimes(HttpSession session,Long doc_num,String doff_date,List<String> timesToAdd,List<String> timesToRemove) {
-        Map<String, Object> map = new HashMap<>();
-        DoctorVO user = (DoctorVO) session.getAttribute("user");
-
-        if (user == null) {
-            map.put("result", "logout");
-        } else if (user.getMem_num()!=doc_num) {
-            map.put("result", "wrongAccess");
-        } else {
-            scheduleService.updateDayoffTimes(doc_num, doff_date, timesToAdd, timesToRemove);
-            map.put("result", "success");
-        }
-        return map;
-    }
+		
+		if(user == null) {
+			map.put("result", "logout");
+		}else if(user.getMem_auth()!=3 || user.getDoc_treat()==0){
+			map.put("result", "wrongAccess");
+		}else {
+			Map<String,String> workingHours = scheduleService.getWorkingHours(doc_num);
+			log.debug("<<확인용>>");
+			map.put("result", "success");
+			map.put("workingHours", workingHours);
+		}
+		return map;
+	}
 }

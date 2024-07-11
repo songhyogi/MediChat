@@ -1,6 +1,12 @@
 /* 글씨체 바꿀 때 변경 용 */
-body {
-    font-family: 'Open Sans', sans-serif;
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+body{
+	font-family: Pretendard-Regular;
 }
 /* ================= 글 두께 ================= */
 /* 글 두께 1~10 */
@@ -258,7 +264,7 @@ hr{
 	margin: 0 40px;
 }
 #header-search-input{
-	width: 330px;
+	width: 270px;
 }
 #header-search-icon {
 	font-size: 25px;
@@ -274,20 +280,21 @@ hr{
 .header-status-rightBox{
 	width: 70px;
 }
-#header-status-logout-text{
+#header-login-text,#header-register-text{
 	text-decoration: none;
 	color: #4D4D4D;
 	font-weight: 700;
 	font-size: 17px;
 }
-#header-status-logout-text:hover{
+#header-login-text:hover,#header-register-text:hover{
 	color: #333333;
 }
-#header-profile{
+#header-profile,#header-login-text,#header-register-text{
 	cursor: pointer;
 }
 #header-status-div{
-	position:relative;
+	position:absolute;
+	right:40px;
 	width: 80px;
 	height: 80px;
 	padding: 5px 5px;
@@ -296,29 +303,67 @@ hr{
 }
 #header-status-div:after{
 	content:""; 
-	position: absolute; 
+	position: absolute;
 	top: 27px; 
 	left: -15px; 
 	border-right: 15px solid rgb(76, 165, 165); 
 	border-top: 10px solid transparent; 
 	border-bottom: 10px solid transparent;
 }
-#header-status-div a{
+#header-status-div a,#header-login-div a,#header-register-div a{
 	text-decoration: none;
 	color: black;
 	font-size: 12px;
-	
 }
-.header-status-select{
+.header-status-select,.header-login-select,.header-register-select{
 	text-align: center;
+	border-radius: 5px;
 }
-.header-status-select:hover {
+.header-status-select:hover,.header-login-select:hover,.header-register-select:hover {
 	text-align: center;
 	background-color: #bdbdbd;
 }
-
+#header-register-div{
+	position:absolute;
+	right:25px;
+	top:25px;
+	width: 90px;
+	height: 80px;
+	padding: 5px 5px;
+	border: 1px solid rgb(76, 165, 165);
+	border-radius: 10px;
+}
+#header-register-div:after{
+	content:""; 
+	position: absolute;
+	top: 29px; 
+	left: -15px; 
+	border-right: 15px solid rgb(76, 165, 165); 
+	border-top: 10px solid transparent; 
+	border-bottom: 10px solid transparent;
+}
+#header-login-div{
+	position:absolute;
+	right:180px;
+	top: 100px;
+	width: 100px;
+	height: 80px;
+	padding: 5px 5px;
+	border: 1px solid rgb(76, 165, 165);
+	border-radius: 10px;
+}
+#header-login-div:after{
+	content:""; 
+	position: absolute;
+	right: 40px; 
+	top: -20px; 
+	border-left: 10px solid transparent; 
+	border-right: 10px solid transparent;
+	border-bottom: 20px solid rgb(76, 165, 165);
+}
 
 /* ================= 푸터 ================= */
+
 .footer-title{
 	font-weight: 700;
 	color: #4a4a4a;

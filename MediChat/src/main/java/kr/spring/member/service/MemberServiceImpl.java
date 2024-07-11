@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.member.dao.MemberMapper;
 import kr.spring.member.vo.MemberVO;
-
+ 
 @Service
 @Transactional
 public class MemberServiceImpl implements MemberService{
@@ -40,11 +40,15 @@ public class MemberServiceImpl implements MemberService{
 	public void updateProfile(MemberVO member) {
 		memberMapper.updateProfile(member);
 	}
-
+	
 	@Override
 	public void deleteMember(Long mem_num) {
-		// TODO Auto-generated method stub
-		
+		memberMapper.deleteMember(mem_num);
+	}
+
+	@Override
+	public void deleteMember_detail(MemberVO member) {
+		memberMapper.deleteMember_detail(member);
 	}
 	
 	@Override
@@ -79,13 +83,13 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public void updateAuth(MemberVO member) {
-		// TODO Auto-generated method stub
-		
+		memberMapper.updateAuth(member);
 	}
 
 	@Override
 	public MemberVO checkId(String mem_id) {
 		return memberMapper.checkId(mem_id);
 	}
+
 
 }

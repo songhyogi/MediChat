@@ -4,26 +4,21 @@
 <script src="${pageContext.request.contextPath}/js/index.global.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // 로그인 후 메시지가 있을 경우 알림
-        <c:if test="${!empty message}">
-            alert('${message}');
-        </c:if>
-
-        // 모델에서 doc_num 가져오기
-        const doc_num = ${doc_num};
-
+    	const doc_num = ${doc_num};
+    	const regularDayOffStr = '${regularDayOff}';
+    	const regularDayOff = regularDayOffStr ? regularDayOffStr.split(',').map(Number) : []; //정기휴무요일이 하나일 경우에도 쉼표로 분할하여 배열로 변환
+    	
         // FullCalendar 초기화
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
-            selectable: true, // 사용자가 날짜를 선택할 수 있게 설정
+            selectable: true, //사용자가 날짜를 선택할 수 있게 설정
             height: 'auto',
             width: 'auto',
             headerToolbar: {
-                left: 'prev',
-                center: 'title',
-                right: 'next'
+                left: 'title',
+                right: 'today prev,next'
             },
-            initialView: 'dayGridMonth', // 초기 보여줄 뷰 설정
+            initialView: 'dayGridMonth',// 초기 보여줄 뷰 설정
             locale: 'ko', // 로케일 설정
             dayCellContent: function(e) {
                 // 날짜 셀 내용 설정 (1일, 2일 -> '일' 빼고 1, 2만 보이게)
@@ -34,123 +29,79 @@
             fixedWeekCount: false, // 다음 달의 날짜가 보여지지 않게 설정
             dateClick: function(info) {
                 // 날짜 클릭 시 호출될 함수
-                fetchDayoffTimes(doc_num, info.dateStr);
+                displayTimes(info.dateStr);
+            },
+            dayCellDidMount: function(info){
+            	const date = new Date(info.date);
+            	const day = date.getDay();//요일 가져오기
+            	if(regularDayOff.includes(day)){
+            		info.el.classList.add('regular-day-off');//정기휴무요일에 해당하면 클래스 추가해서 스타일 적용
+            	}
+            },
+            datesSet: function(info) {//datesSet 이벤트는 달력이 새로 렌더링될 때마다 호출됨
+                const days = document.querySelectorAll('.fc-daygrid-day');
+                days.forEach(dayEl => {
+                    const date = new Date(dayEl.getAttribute('data-date'));
+                    const day = date.getDay();
+                    if(regularDayOff.includes(day)){//datesSet 이벤트로 이전 달이나 다음 달로 이동했을 때도 정기휴무요일 적용
+                        dayEl.classList.add('regular-day-off');
+                    }
+                });
             }
         });
         calendar.render();
-
-        // 선택한 날짜의 휴무 시간을 가져오는 함수
-        function fetchDayoffTimes(doc_num, doff_date) {
+        
+     	// 선택한 날짜의 근무/휴무 시간을 표시하는 함수
+        function displayTimes(date) {
+            $('#time-buttons').empty();
+            // AJAX 요청을 통해 근무 시간 정보를 가져옴
             $.ajax({
-                url: '/schedule/dayoffTimes',
-                type: 'get',
-                data: {
-                    doc_num: doc_num,
-                    doff_date: doff_date
-                },
-                success: function(param) {
-                    if (param.result == 'logout') {
-                        alert('로그인 후 이용하세요');
-                        location.href = '/member/login';
-                    } else if (param.result == 'success') {
-                        displayTimes(doff_date, param.times);
-                    } else if (param.result == 'wrongAccess') {
+                url: '/schedule/workingTimes',
+                method: 'GET',
+                data: { doc_num: doc_num },
+                dataType: 'json',
+                success: function(response) {
+                    console.log("AJAX response:", response);
+                    if (response.result === 'success') {
+                        const { DOC_STIME, DOC_ETIME } = response.workingHours;
+                        const allTimes = generateTimesForDay(DOC_STIME, DOC_ETIME);
+                        let output = '<div class="time-row">';
+                        allTimes.forEach((time, index) => {
+                            if (index > 0 && index % 4 === 0) {
+                                output += '</div><div class="time-row">';
+                            }
+                            output += '<button class="working-time" data-time="' + time + '">' + time + '</button>';
+                        });
+                        output += '</div>';
+                        $('#time-buttons').html(output);
+                    } else if (response.result === 'logout') {
+                        alert('로그인이 필요합니다.');
+                    } else if (response.result === 'wrongAccess') {
                         alert('잘못된 접근입니다.');
-                        history.go(-1);
-                    } else {
-                        alert('스케줄 휴무 오류 발생');
                     }
                 },
                 error: function() {
-                    alert('네트워크 오류 발생');
+                    alert('근무 시간을 가져오는 데 실패했습니다.');
                 }
             });
-        }
-
-        // 선택한 날짜의 근무/휴무 시간을 표시하는 함수
-        function displayTimes(date, dayoffTimes) {
-            $('#time-buttons').empty(); // 기존 버튼들을 지우고 새로 시작
-            const allTimes = generateTimesForDay(); // 9:00 to 18:00, excluding lunch time
-            let output = '';
-            allTimes.forEach(time => {
-                output += '<button class="';
-                if (dayoffTimes.includes(time)) {
-                    output += 'time-off'; // 휴무 시간
-                } else {
-                    output += 'working-time'; // 근무 시간
-                }
-                output += '" data-time="' + time + '" disabled>' + time + '</button>';
-            });
-            output += '<input type="button" value="근무 수정" class="schedule-modify" data-date="' + date + '">';
-            $('#time-buttons').html(output);
         }
 
         // 시간 범위를 생성하는 함수
-        function generateTimesForDay() {
+        function generateTimesForDay(start, end) {
             let times = [];
-            for (let hour = 9; hour < 18; hour++) { // 9시부터 18시 전까지 (17:30 포함)
-                for (let minute = 0; minute < 60; minute += 30) { // 30분 간격
-                    let time = `${hour}:${minute == 0 ? '00' : minute}`;
-                    // 점심 시간 (13:00 - 13:59) 제외
-                    if (hour == 13 && (minute == 0 || minute == 30)) {
-                        continue;
-                    }
+            let [startHour, startMinute] = start.split(':').map(Number);
+            let [endHour, endMinute] = end.split(':').map(Number);
+
+            for (let hour = startHour; hour <= endHour; hour++) {
+                for (let minute = (hour == startHour ? startMinute : 0); minute < 60; minute += 30) {
+                    if (hour === endHour && minute >= endMinute) break; // 종료 시간에 도달하면 루프 종료
+                    let time = '${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}';
                     times.push(time);
                 }
             }
+
             return times;
         }
-
-        // '근무 수정' 버튼 클릭 시 시간 버튼 활성화
-        $(document).on('click', '.schedule-modify', function() {
-            $('#time-buttons button').attr('disabled', false);
-            let modifyButton = '<input type="button" value="근무 수정 완료" class="schedule-modify-complete" data-date="' + $(this).data('date') + '">';
-            $('#time-buttons').append(modifyButton);
-            $(this).hide();
-        });
-
-        // '근무 수정 완료' 버튼 클릭 시 변경된 데이터 서버로 전송
-        $(document).on('click', '.schedule-modify-complete', function() {
-            const selectedDate = $(this).data('date');
-            const timesToAdd = [];
-            const timesToRemove = [];
-            $('#time-buttons button').each(function() {
-                if ($(this).hasClass('time-off') && !$(this).data('original-off')) {
-                    timesToAdd.push($(this).data('time'));
-                } else if ($(this).hasClass('working-time') && $(this).data('original-off')) {
-                    timesToRemove.push($(this).data('time'));
-                }
-            });
-            $.ajax({
-                url: '/schedule/updateDayoffTimes',
-                type: 'post',
-                data: {
-                    doc_num: doc_num,
-                    doff_date: selectedDate,
-                    timesToAdd: timesToAdd,
-                    timesToRemove: timesToRemove
-                },
-                success: function(response) {
-                    if (response.result == 'success') {
-                        alert('근무시간이 수정되었습니다.');
-                        location.reload();
-                    } else {
-                        alert('근무시간 수정에 실패했습니다.');
-                    }
-                },
-                error: function() {
-                    alert('네트워크 오류 발생');
-                }
-            });
-        });
-
-        // 시간 버튼 클릭 시 클래스 토글 (근무 시간 <-> 휴무 시간)
-        $(document).on('click', '#time-buttons button', function() {
-            if (!$(this).attr('disabled')) {
-                $(this).toggleClass('time-off working-time');
-                $(this).data('original-off', !$(this).hasClass('working-time'));
-            }
-        });
     });
 </script>
 <style>
@@ -159,14 +110,62 @@
     width: 80%;
     max-width: 800px; /* 최대 너비 */
 }
+.regular-day-off{
+	background-color: #f2f2f2;
+}
 
 .time-off {
     background-color: gray;
 }
 
 .working-time {
-    background-color: skyblue;
+    background-color: rgb(153, 204, 204);
 }
+
+#time-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.time-row {
+    display: flex;
+    width: 100%;
+    justify-content: center; /* 가운데 정렬 */
+    margin-bottom: 10px;
+}
+
+button {
+    width: 195px;
+    height: 45px;
+    margin: 5px; /* 버튼 간의 간격 조정 */
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+/* 일요일 날짜 빨간색 */
+.fc-day-sun a {
+  color: red;
+  text-decoration: none;
+}
+
+/* 토요일 날짜 파란색 */
+.fc-day-sat a {
+  color: blue;
+  text-decoration: none;
+}
+.fc-prev-button, .fc-next-button, .fc-today-button {
+	width:60px;
+    font-size: 10px;
+}
+
 </style>
 <div id='calendar'></div>
 <div id="time-buttons"></div>

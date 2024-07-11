@@ -12,6 +12,14 @@ import kr.spring.schedule.vo.DayoffVO;
 
 @Mapper
 public interface ScheduleMapper {
+	//정기휴무요일 가져오기
+	@Select("SELECT doc_off FROM doctor_detail WHERE doc_num=#{doc_num}")
+	public String getRegularDayoff(Long doc_num);
+	
+	//근무시작시간, 근무종료시간 가져오기
+	@Select("SELECT doc_stime,doc_etime FROM doctor_detail WHERE doc_num=#{doc_num}")
+	public Map<String,String> getWorkingHours(Long doc_num);
+	
 	//휴무시간 가져오기
 	@Select("SELECT doff_time FROM dayoff WHERE doc_num=#{doc_num} AND doff_date=#{doff_date}")
 	public List<String> getDayoffTimes(Long doc_num, String doff_date);

@@ -1,4 +1,4 @@
-.modal_btn {
+/* .modal_btn {
 	display: block;
 	margin: 40px auto;
 	padding: 10px 20px;
@@ -14,10 +14,10 @@
 	box-shadow: 3px 4px 11px 0px #00000040;
 }
 
-/*모달 팝업 영역 스타일링*/
+모달 팝업 영역 스타일링
 .modal {
-	/*팝업 배경*/
-	display: none; /*평소에는 보이지 않도록*/
+	팝업 배경
+	display: none; 평소에는 보이지 않도록
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -28,7 +28,7 @@
 }
 
 .modal .modal_popup {
-	/*팝업*/
+	팝업
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -48,8 +48,8 @@
 	cursor: pointer;
 	transition: box-shadow 0.2s;
 }
-
-body {
+ */
+.error-body {
 	background-color: rgba(57, 174, 164, 0.21);
 }
 
@@ -110,4 +110,23 @@ a {
 
 a:hover {
 	text-decoration: underline;
+}
+ul {
+    list-style-type: none;
+}
+.side-bar{
+	border-right: 1px solid #ccc;
+	height:470px;
+}
+.camera{
+	width:45px;
+	height:45px;
+	border-radius:100%;
+	background-color:#fff;
+	position:relative;
+	top:-30px;
+	left:65px;
+	border:2px solid #e1e1e1;
+	cursor:pointer;
+	padding:13px 0 0 10px;
 }

@@ -1,62 +1,64 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<!-- 회원정보 시작 -->
-<div class="page-main">
-	<ul>
-		<li>
-		<li>이름 : ${member.mem_name}</li>
-	</ul>
-</div>
-<!--모달 팝업-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>회원 정보 조회</title>
+<style>
+.basic-btn {
+    border: 1px solid #ccc; /* 테두리 선 스타일 */
+    padding: 20px; /* 내부 여백 */
+    margin-bottom: 20px; /* 하단 여백 */
+    text-align:center;
+}
+.basic-btn ul{
+	display:inline-block;
+	margin-left:30px;
+	margin-right:80px;
+}
+.basic-btn input[type="button"]{
+	border:none;
+	text-align:center;
+	margin-left:100px;
+	margin-right:100px;
+}
+</style>
+</head>
 <body>
-	<div class="page-main">
-		<ul>
-			<li><a data-toggle="modal" href="#detailModal">회원정보</a>
-				<div class="modal fade" id="detailModal" role="dialog">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal">닫기</button>
-								<h1 class="modal-title" align="center">회원정보</h1>
-							</div>
-							<div class="modal-body">
-								<div class="member_detail">
-									<ul>
-										<li>이름 : ${member.mem_name}</li>
-										<li>생년월일 : ${member.mem_birth}</li>
-										<li>전화번호 : ${member.mem_phone}</li>
-										<li>이메일 : ${member.mem_email}</li>
-										<li>우편번호 : ${member.mem_zipcode}</li>
-										<li>주소 : ${member.mem_address1} ${member.mem_address2}</li>
-										<li>가입일 : ${member.mem_reg}</li>
-										<c:if test="${!empty member.mem_modify}">
-											<li>정보 수정일 : ${member.mem_modify}</li>
-										</c:if>
-									</ul>
-									<div class="align-center">
-									<input type="button" value="회원정보 수정" onclick="location.href='modifyUser'">
-									<input type="button" value="비밀번호 변경" onclick="location.href='memberModify.jsp'">
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+	<div class="container">
+		<div class="basic">
+			<ul>
+				<li>이용내역</li>
+			</ul>
+			<div class="border p-5">
+				<div class="row mb-5">
+					<div class="col-4 d-flex justify-content-center align-items-center">진료기록</div>
+					<div class="col-4 d-flex justify-content-center align-items-center">예약내역</div>
+					<div class="col-4 d-flex justify-content-center align-items-center">문의내역</div>
 				</div>
-			</li>
-		</ul>
+				<div class="row mt-5">
+					<div class="col-4 d-flex justify-content-center align-items-center"><input type="button" value="0" onclick="location.href='#'"></div>
+					<div class="col-4 d-flex justify-content-center align-items-center"><input type="button" value="0" onclick="location.href='#'"></div>
+					<div class="col-4 d-flex justify-content-center align-items-center"><input type="button" value="0" onclick="location.href='#'"></div>
+				</div>
+			</div>
+			<ul>
+				<li>나의 활동</li>
+			</ul>
+			<div class="border p-5">
+				<div class="row mb-5">
+					<div class="col-4 d-flex justify-content-center align-items-center">좋아요</div>
+					<div class="col-4 d-flex justify-content-center align-items-center">댓글</div>
+				</div>
+				<div class="row mt-5">
+					<div class="col-4 d-flex justify-content-center align-items-center"><input type="button" value="0" onclick="location.href='#'"></div>
+					<div class="col-4 d-flex justify-content-center align-items-center"><input type="button" value="0" onclick="location.href='#'"></div>
+				</div>
+			</div>
+		</div>
 	</div>
-	<input type="button" value="약 복용 내역"><br>
-	<input type="button" value="후기내역"><br>
-	<input type="button" value="비대면 진료"><br>
-	<input type="button" value="로그아웃">
+
 </body>
 </html>
-<!--end 모달 팝업-->
-<!-- 회원정보 끝 -->

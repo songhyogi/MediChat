@@ -40,12 +40,13 @@ public class DoctorVO {
 	private String doc_license;
 	private String doc_history;
 	private int doc_treat;
-	private int doc_off;
-	private String doc_time;
+	private int doc_off;			//휴무요일
+	private String doc_stime;		//근무시작시간
+	private String doc_etime;		//근무종료시간
 	private int doc_agree;
 
-	@NotBlank(message = "비밀번호를 입력해주세요.")
-    private String password; // 사용자가 입력한 비밀번호
+//	@NotBlank(message = "비밀번호를 입력해주세요.")
+//    private String password; // 사용자가 입력한 비밀번호
 	
 	//비밀번호 변경시 현재 비밀번호를 저장하는 용도로 사용
 	@Pattern(regexp="^[A-Za-z0-9]{4,12}$")

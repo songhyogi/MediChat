@@ -1,7 +1,7 @@
 package kr.spring.member.service;
 
 import kr.spring.member.vo.MemberVO;
-
+ 
 public interface MemberService {
 	//==========일반 회원============
 	//회원가입
@@ -16,6 +16,7 @@ public interface MemberService {
 	public void updateProfile(MemberVO member);
 	//회원탈퇴
 	public void deleteMember(Long mem_num);
+	public void deleteMember_detail(MemberVO member);
 
 
 	//자동 로그인

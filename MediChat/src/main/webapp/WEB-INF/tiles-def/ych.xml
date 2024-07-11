@@ -5,29 +5,37 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-	<definition name="main"
-		template="/WEB-INF/views/template/layout_basic.jsp">
-		<put-attribute name="title" value="MainPage" />
-		<put-attribute name="css"
-			value="/WEB-INF/views/member/memberCSS.jsp" />
-		<put-attribute name="body"
-			value="/WEB-INF/views/main/main.jsp" />
-			<put-attribute name="footer"
-			value="/WEB-INF/views/template/footer.jsp" />
-	</definition>
-
-	<!-- MyPage(일반) -->
-	<definition name="myPage"
+	<definition name="ych"
 		template="/WEB-INF/views/template/layout_mypage.jsp">
-		<put-attribute name="title" value="My페이지" />
-		<put-attribute name="header_mypage"
-			value="/WEB-INF/views/template/header_mypage.jsp" />
 		<put-attribute name="css"
-			value="/WEB-INF/views/member/memberCSS.jsp" />
-		<put-attribute name="body"
-			value="/WEB-INF/views/member/memberView.jsp" />
+			value="/WEB-INF/views/common/css.jsp" />
+		<put-attribute name="bootstrap"
+			value="/WEB-INF/views/common/bootStrap.jsp" />
+		<put-attribute name="header"
+			value="/WEB-INF/views/template/header.jsp" />
 		<put-attribute name="footer"
 			value="/WEB-INF/views/template/footer.jsp" />
+	</definition>
+	<!-- MyPage(일반) -->
+	<definition name="myPage" extends="ych">
+		<put-attribute name="title" value="My페이지" />
+		<put-attribute name="nav" value="/WEB-INF/views/template/nav_mypage.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/member/memberView.jsp" />
+	</definition>
+	<definition name="memberInfo" extends="ych">
+		<put-attribute name="title" value="My페이지" />
+		<put-attribute name="nav" value="/WEB-INF/views/template/nav_mypage.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/mypage/memberInfo.jsp" />
+	</definition>
+	<definition name="medicationHistory" extends="ych">
+		<put-attribute name="title" value="My페이지" />
+		<put-attribute name="nav" value="/WEB-INF/views/template/nav_mypage.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/mypage/medicationHistory.jsp" />
+	</definition>
+	<definition name="reviewHistory" extends="ych">
+		<put-attribute name="title" value="My페이지" />
+		<put-attribute name="nav" value="/WEB-INF/views/template/nav_mypage.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/mypage/reviewHistory.jsp" />
 	</definition>
 	<!-- <definition name="memberModify" extends="myPage"> <put-attribute name="title" 
 		value="회원정보 수정"/> <put-attribute name="body" value="/WEB-INF/views/member/memberModify.jsp"/> 
@@ -35,20 +43,13 @@
 		name="title" value="비밀번호 변경"/> <put-attribute name="body" value="/WEB-INF/views/member/memberChangePassword.jsp"/> 
 		</definition> -->
 	<!-- MyPage(의사) -->
-	<definition name="docPage"
-		template="/WEB-INF/views/template/layout_mypage.jsp">
+	<definition name="docPage" extends="ych">
 		<put-attribute name="title" value="My페이지" />
-		<put-attribute name="header_mypage"
-			value="/WEB-INF/views/template/header_mypage.jsp" />
-		<put-attribute name="css"
-			value="/WEB-INF/views/member/memberCSS.jsp" />
 		<put-attribute name="body"
 			value="/WEB-INF/views/member/docView.jsp" />
-		<put-attribute name="footer"
-			value="/WEB-INF/views/template/footer.jsp" />
 	</definition>
 	<!-- 비대면 진료 신청 -->
-	<definition name="registerTreat" extends="myPage">
+	<definition name="registerTreat" extends="ych">
 		<put-attribute name="title" value="비대면 진료 신청" />
 		<put-attribute name="body"
 			value="/WEB-INF/views/member/docTreatRegister.jsp" />

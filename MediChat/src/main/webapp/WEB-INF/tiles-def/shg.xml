@@ -10,7 +10,7 @@
 		<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/main/main.jsp"/>
 	</definition>
-	<definition name="scheduleList" extends="main"><!-- 마이페이지 상속받을 예정 -->
+	<definition name="scheduleList" extends="docPage"><!-- 마이페이지 상속받을 예정 -->
 		<put-attribute name="title" value="스케줄 관리"/>
 		<put-attribute name="body" value="/WEB-INF/views/schedule/scheduleList.jsp"/>
 	</definition>
