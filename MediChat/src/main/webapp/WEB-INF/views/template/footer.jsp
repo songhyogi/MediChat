@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <div class="bg-green-1 p-3">
-	<div class="row">
+	<div class="row justify-content-center">
 		<div class="col-3">
 			<p class="footer-title">MediChat</p>
 			<a href="#" class="footer-text">소개</a><br>
@@ -23,7 +23,7 @@
 		</div>
 		<div class="col-3">
 			<p class="footer-title">GitHub</p>
-			<a href="#" class="footer-text">김승연</a><br>
+			<a href="https://github.com/Kimseungyeon98" class="footer-text">김승연</a><br>
 	    	<a href="#" class="footer-text">김유진</a><br>
 	    	<a href="#" class="footer-text">김찬윤</a><br>
 	    	<a href="#" class="footer-text">손소희</a><br>

@@ -1,6 +1,12 @@
 /* 글씨체 바꿀 때 변경 용 */
-body {
-    font-family: 'Open Sans', sans-serif;
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+body{
+	font-family: Pretendard-Regular;
 }
 /* ================= 글 두께 ================= */
 /* 글 두께 1~10 */
@@ -258,7 +264,7 @@ hr{
 	margin: 0 40px;
 }
 #header-search-input{
-	width: 300px;
+	width: 270px;
 }
 #header-search-icon {
 	font-size: 25px;
@@ -287,7 +293,8 @@ hr{
 	cursor: pointer;
 }
 #header-status-div{
-	position:relative;
+	position:absolute;
+	right:40px;
 	width: 80px;
 	height: 80px;
 	padding: 5px 5px;
@@ -296,7 +303,7 @@ hr{
 }
 #header-status-div:after{
 	content:""; 
-	position: absolute; 
+	position: absolute;
 	top: 27px; 
 	left: -15px; 
 	border-right: 15px solid rgb(76, 165, 165); 
@@ -307,10 +314,10 @@ hr{
 	text-decoration: none;
 	color: black;
 	font-size: 12px;
-	
 }
 .header-status-select{
 	text-align: center;
+	border-radius: 5px;
 }
 .header-status-select:hover {
 	text-align: center;
@@ -319,9 +326,7 @@ hr{
 
 
 /* ================= 푸터 ================= */
-#main_footer{
-	min-height: calc(100vh - 300px);
-}
+
 .footer-title{
 	font-weight: 700;
 	color: #4a4a4a;

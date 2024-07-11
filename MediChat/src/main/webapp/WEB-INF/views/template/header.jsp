@@ -24,7 +24,7 @@
 				<a href="/disease/diseaseDictionary" class="header-menu-text">질병 백과사전</a>
 			</div>
 			<div class="header-menu">
-				<a href="/durg/search" class="header-menu-text">약품 백과사전</a>
+				<a href="/drug/search" class="header-menu-text">의약품 백과사전</a>
 			</div>
 			<div class="header-menu">
 				<a href="#" class="header-menu-text">고객센터</a>
@@ -64,7 +64,7 @@
 			</div>
 			<div id="header-status-div" style="display: none;">
 				<div class="header-status-select">
-					<a href="/member/logout">내 정보</a>
+					<a href="/member/myPage">내 정보</a>
 				</div>
 				<hr>
 				<div class="header-status-select">
@@ -81,12 +81,13 @@
 <script>
 	const header_profile = document.getElementById('header-profile');
 	const header_status_div = document.getElementById('header-status-div');
-	
-	header_profile.onclick = function(){
-		if(header_status_div.style.display == 'block'){
-			header_status_div.style.display = 'none';
-		} else {
-			header_status_div.style.display = 'block';
-		}
-	};
+	if(${!empty user}){
+		header_profile.onclick = function(){
+			if(header_status_div.style.display == 'block'){
+				header_status_div.style.display = 'none';
+			} else {
+				header_status_div.style.display = 'block';
+			}
+		};
+	}
 </script>

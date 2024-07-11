@@ -46,7 +46,8 @@
 									  #{hos_weekendAt}
 									  )
 	</insert>
-	
+
+<!-- ========================= 병원 리스트 시작 ========================= -->
 	<sql id="searchHospitalByKeyword">
 		<if test="keyword!=null and keyword!=''">
 			AND (hos_addr LIKE '%' || #{keyword} || '%' OR
@@ -55,17 +56,73 @@
 		</if>
 	</sql>
 	<sql id="searchHospitalByCommonFilter">
-		<if test="commonFilter=='NONFACE'">
-			AND doc_cnt > 0
-		</if>
-		<if test="commonFilter=='ING'">
-			AND 
-		</if>
-		<if test="commonFilter=='NIGHTTIME'">
-			AND 
-		</if>
-		<if test="commonFilter=='WEEKEND'">
-			AND hos_weekendat = 'Y'
+		<if test="commonFilter!=null || commonFilter==''">
+			<if test="commonFilter.contains('NONFACE')">
+				AND doc_cnt > 0
+			</if>
+			<if test="commonFilter.contains('ING')">
+				<if test="day==1">
+					AND hos_time1c != 'null'
+					AND hos_time1c >= #{time}
+				</if>
+				<if test="day==2">
+					AND hos_time2c != 'null'
+					AND hos_time2c >= #{time}
+				</if>
+				<if test="day==3">
+					AND hos_time3c != 'null'
+					AND hos_time3c >= #{time}
+				</if>
+				<if test="day==4">
+					AND hos_time4c != 'null'
+					AND hos_time4c >= #{time}
+				</if>
+				<if test="day==5">
+					AND hos_time5c != 'null'
+					AND hos_time5c >= #{time}
+				</if>
+				<if test="day==6">
+					AND hos_time6c != 'null'
+					AND hos_time6c >= #{time}
+				</if>
+				<if test="day==7">
+					AND hos_time7c != 'null'
+					AND hos_time7c >= #{time}
+				</if>
+			</if>
+			<if test="commonFilter.contains('NIGHTTIME')">
+				<if test="day==1">
+					AND hos_time1c != 'null'
+					AND hos_time1c >= '1800'
+				</if>
+				<if test="day==2">
+					AND hos_time2c != 'null'
+					AND hos_time2c >= '1800'
+				</if>
+				<if test="day==3">
+					AND hos_time3c != 'null'
+					AND hos_time3c >= '1800'
+				</if>
+				<if test="day==4">
+					AND hos_time4c != 'null'
+					AND hos_time4c >= '1800'
+				</if>
+				<if test="day==5">
+					AND hos_time5c != 'null'
+					AND hos_time5c >= '1800'
+				</if>
+				<if test="day==6">
+					AND hos_time6c != 'null'
+					AND hos_time6c >= '1300'
+				</if>
+				<if test="day==7">
+					AND hos_time7c != 'null'
+					AND hos_time7c >= '1300'
+				</if>
+			</if>
+			<if test="commonFilter.contains('WEEKEND')">
+				AND hos_weekendat = 'Y'
+			</if>
 		</if>
 	</sql>
 	<sql id="searchHospitalBySortType">
@@ -89,20 +146,21 @@
 		FROM (
 		       SELECT h.*, ROWNUM
 		       FROM ( SELECT h.*, 
-		       			  (POWER((h.hos_lat - #{user_lat}), 2) + POWER((h.hos_lon - #{user_lat}), 2)) AS distance, 
-		       			   COALESCE(d.doc_cnt, 0) AS doc_cnt
-		              FROM hospital h 
+		       			  (POWER((h.hos_lat - #{user_lat}), 2) + POWER((h.hos_lon - #{user_lon}), 2)) AS distance, 
+		       			   COALESCE(d.doc_cnt, 0) AS doc_cnt,
+		       			   COALESCE(r.rev_cnt, 0) AS rev_cnt
+		              FROM hospital h
 		              LEFT JOIN ( SELECT hos_num, COUNT(*) AS doc_cnt
-		                      	   FROM doctor_detail
-		                      	   WHERE doc_treat = 1
-		                      	   GROUP BY hos_num
-		                      	 ) d ON h.hos_num = d.hos_num
-		              LEFT JOIN (SELECT hos_num, COUNT(*) AS rev_cnt
-                      FROM review
-            			       GROUP BY hos_num) r ON h.hos_num = r.hos_num
-		          	   
+		                      	  FROM doctor_detail
+		                      	  WHERE doc_treat = 1
+		                      	  GROUP BY hos_num
+		                      	) d ON h.hos_num = d.hos_num
+		              LEFT JOIN ( SELECT hos_num, COUNT(*) AS rev_cnt
+                      			  FROM review
+            			          GROUP BY hos_num
+            			        ) r ON h.hos_num = r.hos_num
 		          	  ORDER BY distance
-		            ) h
+		            	  ) h
 		       WHERE <![CDATA[
      				  ROWNUM <= #{pageNum} * #{pageItemNum}
        				 ]]>
@@ -110,9 +168,10 @@
 			         <include refid="searchHospitalByCommonFilter"/>
 			         <include refid="searchHospitalBySortType"/>
 		     )
-		WHERE ROWNUM > (#{pageNum} - 1) * #{pageItemNum};
+		WHERE ROWNUM > (#{pageNum} - 1) * #{pageItemNum}
 	</select>
-	
+<!-- ========================= 병원 리스트 끝 ========================= -->
+
 	<!-- selectListCntHospital -->
 	<select id="selectListCntHospital" parameterType="map" resultType="integer">
 		SELECT COUNT(*) FROM HOSPITAL

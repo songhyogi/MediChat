@@ -143,7 +143,7 @@
 	<div class="row justify-content-between">
 		<c:forEach items="${howSick}" var="hs">
 			<div class="col-2">
-				<div class="hs-item rounded-2 bg-green-6">
+				<div class="hs-item rounded-2 bg-green-6" data-keyword="${hs}">
 					<p class="text-center">${hs}</p>
 				</div>
 			</div>
@@ -153,14 +153,14 @@
 <!-- 어떻게 아프신가요 끝 -->
 <!-- 검색창 + 인기 검색어 시작 -->
 <div class="bg-green-1 p-5">
-	<form id="search_form" class="d-flex">
-		<input type="text" id="h-search" class="form-control" placeholder="병원 이름, 지역 + 과목, 증상">
+	<form id="search_form" class="d-flex" method="get" action="/hospitals/search">
+		<input type="text" id="h-search" name="keyword" class="form-control" placeholder="병원 이름, 지역 + 과목, 증상">
 		<i id="h-search-icon" class="bi bi-search"></i>
 	</form>
 	<p class="text-lightgray fw-7 mt-3">인기 검색어</p>
 	<div class="d-inline">
 		<c:forEach items="${hotKeyWord}" var="hkw">
-			<div class="hkw-item border text-center rounded-5 bg-gray-1 px-2">
+			<div class="hkw-item border text-center rounded-5 bg-gray-1 px-2" data-keyword="${hkw}">
 				<p class="hkw fs-14 fw-7 text-gray-7">#${hkw}</p>
 			</div>
 		</c:forEach>
@@ -174,3 +174,40 @@
 	<!-- 지도 끝 -->
 </div>
 <!-- 검색창 + 인기 검색어 끝 -->
+
+
+
+<script>
+	const subject = document.getElementsByClassName('subject');
+	for(let i=0; i<subject.length; i++){
+		subject[i].onclick = function(){
+			location.href = '/hospitals/search?keyword='+subject[i].getAttribute('data-keyword')+'&sortType=NEAR';
+		};
+	}
+	const subItem = document.getElementsByClassName('sub-item');
+	for(let i=0; i<subItem.length; i++){
+		subItem[i].onclick = function(){
+			if(subItem[i].getAttribute('data-keyword')=='마취통증학과'){
+				subItem[i].setAttribute('data-keyword','마취통증');
+			}
+			location.href = '/hospitals/search?keyword=' + subItem[i].getAttribute('data-keyword')+'&sortType=NEAR';
+		};
+	}
+	const hsItem = document.getElementsByClassName('hs-item');
+	for(let i=0; i<hsItem.length; i++){
+		hsItem[i].onclick = function(){
+			location.href = '/hospitals/search?keyword='+hsItem[i].getAttribute('data-keyword')+'&sortType=NEAR';
+		};
+	}
+	const hSearchIcon = document.getElementById('h-search-icon');
+	const searchForm = document.getElementById('search_form');
+	hSearchIcon.onclick = function(){
+		searchForm.submit();
+	};
+	const hkwItem = document.getElementsByClassName('hkw-item');
+	for(let i=0; i<hkwItem.length; i++){
+		hkwItem[i].onclick = function(){
+			location.href = '/hospitals/search?keyword='+hkwItem[i].getAttribute('data-keyword')+'&sortType=NEAR';
+		};
+	}
+</script>

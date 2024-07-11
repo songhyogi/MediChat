@@ -1,0 +1,30 @@
+/*----------모달창----------*/
+modal{
+	display:none; /*기본적으로 안 보이게 처리*/
+	position:fixed; /*위치 고정*/
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	z-index: 1; /*요소의 쌓임 순서 결정, 값이 클수록 앞에 위치*/
+	background-color: rgba(0, 0, 0, 0.5); /* 배경을 회색으로 살짝 흐리게 */
+}
+.modal .close{/*닫는 버튼*/
+	position: absolute;
+    top: 20px;
+    right: 17px;
+  	cursor:pointer;
+}
+/*약품 이미지*/
+.drg-img{
+	cursor:pointer;
+}
+.drugImg-modal{
+	position: fixed;
+  	top: 50%;
+  	left: 50%;
+  	/* 위아래 너비를 준 상태에서 가로 50%, 세로 50%를 이동시킬 수 있다 (= 한가운데 배치) */
+  	transform: translate(-50%, -50%);
+	background-color:#ffffff;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); /* 그림자*/
+}

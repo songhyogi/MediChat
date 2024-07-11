@@ -13,13 +13,18 @@
 	<!-- 의약품 목록 -->
 	<definition name="drugSearch" extends="main">
 		<put-attribute name="title" value="의약품 검색"/>
-		<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>
+		<put-attribute name="css" value="/WEB-INF/views/drug/drugCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/drug/drugSearch.jsp"/>
 	</definition>
 	<definition name="drugDetail" extends="main">
-		<put-attribute name="title" value="의약품 검색"/>
-		<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>
+		<put-attribute name="title" value="의약품 상세"/>
+		<put-attribute name="css" value="/WEB-INF/views/drug/drugCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/drug/drugDetail.jsp"/>
+	</definition>
+	<!-- 회원 의약품 목록 -->
+	<definition name="memberDrugList" extends="myPage">
+		<put-attribute name="title" value="의약품 상세"/>
+		<put-attribute name="body" value="/WEB-INF/views/drug/memberDrugList.jsp"/>
 	</definition>
 </tiles-definitions>
 

@@ -39,8 +39,9 @@ public class DoctorVO {
 	private String doc_license;
 	private String doc_history;
 	private int doc_treat;
-	private int doc_off;
-	private String doc_time;
+	private int doc_off;			//휴무요일
+	private String doc_stime;		//근무시작시간
+	private String doc_etime;		//근무종료시간
 	private int doc_agree;
 	
 	//비밀번호 변경시 현재 비밀번호를 저장하는 용도로 사용

@@ -45,4 +45,7 @@ public class HospitalVO {
 	private String hos_x;               //X좌표
 	private String hos_y;               //Y좌표
 	private String hos_weekendAt;       //주말진료여부
+	
+	private int doc_cnt;
+	private int rev_cnt;
 }

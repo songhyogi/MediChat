@@ -5,11 +5,10 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-	<definition name="kyj" extends="main">
-		<put-attribute name="title" value="비대면 진료"/>
-		<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>
-		<put-attribute name="nav" value="/WEB-INF/views/chat/chatNav.jsp"/>
-		<put-attribute name="body" value="/WEB-INF/views/member/memberRegister.jsp"/>
+	<definition name="chatView" extends="myPage">
+		<put-attribute name="title" value="나의 비대면진료"/>
+		<put-attribute name="body" value="/WEB-INF/views/chat/chatView.jsp"/>
+		<put-attribute name="css" value="/WEB-INF/views/chat/chatCSS.jsp"/>
 	</definition>
 </tiles-definitions>
 
