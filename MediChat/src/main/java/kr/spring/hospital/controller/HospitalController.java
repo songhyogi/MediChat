@@ -84,9 +84,6 @@ public class HospitalController {
 							@RequestParam(defaultValue="37.4981646510326") String user_lat, @RequestParam(defaultValue="127.028307900881") String user_lon) {
 		Map<String, Object> map = new HashMap<>();
 
-		// 접속할 때 내 위도 경도 값 담아서 받아오기
-//		String user_lat = (String)session.getAttribute("user_lat");
-//		String user_lon = (String)session.getAttribute("user_lat");
 		map.put("user_lat", user_lat);
 		map.put("user_lon", user_lon);
 		model.addAttribute("user_lat", user_lat);
@@ -102,33 +99,27 @@ public class HospitalController {
 		map.put("day", day);
 		model.addAttribute("time", time);
 		model.addAttribute("day", day);
-		log.debug("<<시간>> : " + time + "," + day);
 		
 		
 		// pageNum
 		map.put("pageNum", pageNum);
 		model.addAttribute("pageNum", pageNum);
-		log.debug("<<페이지번호>> : " + pageNum);
 		
 		// pageItemNum
 		map.put("pageItemNum", pageItemNum);
 		model.addAttribute("pageItemNum", pageItemNum);
-		log.debug("<<페이지아이템갯수>> : " + pageItemNum);
 
 		// keyword
 		map.put("keyword", keyword);
 		model.addAttribute("keyword", keyword);
-		log.debug("<<키워드>> : " + keyword);
 		
 		// commonFilter
 		map.put("commonFilter", commonFilter);
 		model.addAttribute("commonFilter", commonFilter);
-		log.debug("<<필터>> : " + commonFilter);
 		
 		//sortType
 		map.put("sortType", sortType);
 		model.addAttribute("sortType", sortType);
-		log.debug("<<정렬타입>> : " + sortType);
 		
 		// 병원 리스트 담기
 		List<HospitalVO> hosList = new ArrayList<>();

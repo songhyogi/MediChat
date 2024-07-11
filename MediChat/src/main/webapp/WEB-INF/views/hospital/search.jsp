@@ -66,6 +66,7 @@
 			</div>
 			<hr width="100%">
 		</c:forEach>
+		<div id="loadingImg" style="display:none;"><img src="/images/loading.gif"></div>
 	</div>
 	<!-- 병원 리스트 끝 -->
 </div>
@@ -104,21 +105,21 @@ for(let i=1; i < filterItem.length; i++){
 		searchForm.submit();
 	};
 }
-window.onload = function(){
-	if(typeof '${commonFilter}' !== 'undefined' && '${commonFilter}' !== null && '${commonFilter}' !== ''){
-		const commonFilterArray = '${commonFilter}'.split(',');
-		for(let i=1; i<filterItem.length; i++){
-			for(let j=0; j<commonFilterArray.length; j++){
-				if(filterItem[i].getAttribute('data-commonFilter') == commonFilterArray[j]){
-					filterItem[i].classList.add('filter-item-selected');
-				}
+
+if(typeof '${commonFilter}' !== 'undefined' && '${commonFilter}' !== null && '${commonFilter}' !== ''){
+	const commonFilterArray = '${commonFilter}'.split(',');
+	for(let i=1; i<filterItem.length; i++){
+		for(let j=0; j<commonFilterArray.length; j++){
+			if(filterItem[i].getAttribute('data-commonFilter') == commonFilterArray[j]){
+				filterItem[i].classList.add('filter-item-selected');
 			}
 		}
 	}
 }
 
+
 //위치 정보 가져오기
-if(${!empty user_lat} || ${!empty user_lon} || '${user_lat}'=='37.4993499' || '${user_lon}'==127.0332284){
+if(${!empty user_lat} || ${!empty user_lon} || '${user_lat}'=='37.4993499' || '${user_lon}'=='127.0332284'){
 	if(navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(
 			function(position) {
@@ -167,14 +168,18 @@ $(document).ready(function() {
     const user_lon = '${user_lon}';
     
     let totalItemsLoaded = 0;
-
+    let loading = false;
+    
     function loadHospitals() {
-        if (totalItemsLoaded >= maxItems) {
+        if (totalItemsLoaded >= maxItems || loading) {
             return;
         }
+        loading = true;
+        $('#loadingImg').show();
         $.ajax({
             url: '/hospitals/search-json',
             type: 'GET',
+            dataType:'json',
             data: {
             	pageNum: pageNum,
             	pageItemNum: pageItemNum,
@@ -186,9 +191,17 @@ $(document).ready(function() {
             },
             success: function(param) {
                 pageNum++;
-                hospitalListBox.append(param.hos_name);
+                for(let i=0; i<param.length; i++){
+                	hospitalListBox.append('<div class="text-center">'+param[i].hos_num+'</div>');
+                }
+                totalItemsLoaded += param.length;
+                loading = false;
+            },
+            error: function(){
+            	loading = false;
             }
         });
+        $('#loadingImg').hide();
     }
 
     function onScroll() {
