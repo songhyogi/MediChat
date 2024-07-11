@@ -16,6 +16,16 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 	@Autowired
 	private ScheduleMapper scheduleMapper;
+	
+	@Override
+	public String getRegularDayoff(Long doc_num) {
+		return scheduleMapper.getRegularDayoff(doc_num);
+	}
+	
+	@Override
+	public Map<String,String> getWorkingHours(Long doc_num) {
+		return scheduleMapper.getWorkingHours(doc_num);
+	}
 
 	@Override
 	public List<String> getDayoffTimes(Long doc_num, String doff_date) {
@@ -25,11 +35,11 @@ public class ScheduleServiceImpl implements ScheduleService{
 	@Override
 	public void updateDayoffTimes(Long doc_num, String doff_date, List<String> timesToAdd, List<String> timesToRemove) {
 		for (String time : timesToAdd) {
-            scheduleMapper.insertDayoff(doc_num, doff_date, time);
-        }
-        for (String time : timesToRemove) {
-            scheduleMapper.deleteDayoff(doc_num, doff_date, time);
-        }
+			scheduleMapper.insertDayoff(doc_num, doff_date, time);
+		}
+		for (String time : timesToRemove) {
+			scheduleMapper.deleteDayoff(doc_num, doff_date, time);
+		}
 	}
-	
+
 }

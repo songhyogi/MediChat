@@ -25,24 +25,24 @@ public class ScheduleController {
 	
 	@GetMapping("/schedule/list")
 	public String showScheduleList(HttpSession session, Model model) {
-		/*
 		DoctorVO user = (DoctorVO) session.getAttribute("user");
 		if(user == null) {//로그인이 되지 않은 경우
-			return "redirect:/member/login";//로그인 페이지로 리다이렉트
+			return "redirect:/doctor/login";//로그인 페이지로 리다이렉트
 		}
 		if(user.getMem_auth()!=3) {//auth가 3이 아닌 경우
 			return "/errors/404";//에러페이지로 이동
 		}
-		
-		if(user.getDoc_treat()==0) {//처음 스케줄관리서비스를 사용할 경우 휴무일이 있는지 확인
+		if(user.getDoc_treat()!=1) {
 			return "/member/docTreatRegister";
-			
 		}
+		
 		Long doc_num = user.getMem_num();
 		String doc_name = user.getMem_name();
+		String regularDayOff = scheduleService.getRegularDayoff(doc_num);
 		model.addAttribute("doc_num", doc_num);
 		model.addAttribute("doc_name",doc_name);
-		*/
+		model.addAttribute("regularDayOff", regularDayOff);
+		
         return "scheduleList";//타일스
     }
    

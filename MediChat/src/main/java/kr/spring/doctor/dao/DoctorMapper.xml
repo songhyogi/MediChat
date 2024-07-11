@@ -10,7 +10,7 @@
 	</insert>
 	<!-- 아이디 중복확인 -->
 	<select id="checkId" parameterType="string" resultType="doctorVO">
-		SELECT m.mem_num,d.doc_num,m.mem_id,m.mem_auth,m.mem_name,d.doc_passwd,d.doc_email,d.doc_agree 
+		SELECT m.mem_num,d.doc_num,m.mem_id,m.mem_auth,m.mem_name,d.doc_passwd,d.doc_email,d.doc_agree,d.doc_stime,d.doc_etime,d.doc_treat  
 		FROM member m
 		LEFT OUTER JOIN doctor_detail d 
 		ON m.mem_num = d.doc_num

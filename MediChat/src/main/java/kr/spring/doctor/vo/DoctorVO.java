@@ -28,7 +28,6 @@ public class DoctorVO {
 	private String mem_photoname;	//프로필 사진명
 	private int mem_auth;			//권한 등급(0:탈퇴,1:정지,2:일반,3:의사,9:관리자)
 	private long doc_num;
-	@NotEmpty
 	private long hos_num;
 	private String hos_name;
 	@Pattern(regexp="^[A-Za-z0-9]{4,12}$")
