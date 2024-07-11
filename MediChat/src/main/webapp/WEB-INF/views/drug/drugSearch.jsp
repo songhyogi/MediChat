@@ -54,22 +54,21 @@
 		</table><br>
 	</c:if>
 	<div>${page}</div>
-<!-- 	
-	모달 시작
+	<!-- 모달 시작 --> 	
 	<div class="modal">
-		이미지 모달
-		<div id="img_modal">
-			<div id="imgModal_header">
-				<h4 class="modal-title">식별표시</h4>
-				<span class="close">&times;</span>
+		<!-- 이미지 모달 -->
+		<div class="drugImg-modal">
+			<div class="modal-header">
+				<div>의약품 이미지 확대보기</div>
+				<div class="close">&times;</div>
 			</div>
-			<div id="imgModal_body">
-				<img id="imgModal" src="">
+			<div class="modal-body">
+				<img class="drugModal-img" src="${drug.drg_img}" width="300">
 			</div>
+		<br>
 		</div>
 	</div>
-	모달 끝
-	 -->
+	<!-- 모달 끝 --> 	
 </div>
 <!-- 의약품 검색 끝 -->
 <!-- 
