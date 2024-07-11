@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.spring.chat.service.ChatService;
 import kr.spring.chat.vo.ChatVO;
@@ -48,28 +49,19 @@ public class ChatController {
 			log.debug("mem_auth==3");
 		}
 		
-		System.out.println(list.size());
 		model.addAttribute("list",list);
 		
 		return "chatView";
 	}
 	
-	/*
-	//생성된 채팅방 반환
-	public String setNav(HttpSession session, Model model){
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		List<ChatVO> list = new ArrayList<ChatVO>();
+	//채팅방 불러오기
+	@GetMapping("/chatRoom")
+	public String getChatRoom(@RequestParam long chat_num){
+		log.debug("chat_num = "+ chat_num);
 		
-		if(user.getMem_auth()==2) {
-			list = chatService.selectChatListForMem(user.getMem_num());
-		}else if(user.getMem_auth()==3){
-			list = chatService.selectChatListForDoc(user.getMem_num());
-		}
 		
-		model.addAttribute("list",list);
-		
-		return "chat";
-	}*/
+		return "chatRoom";
+	}
 	
 	//예약 확정 버튼 클릭 시 채팅방 생성
 	//@PostMapping("")
