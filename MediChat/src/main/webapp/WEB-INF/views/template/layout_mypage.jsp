@@ -6,27 +6,29 @@
 <head>
 <meta charset="UTF-8">
 <title><tiles:getAsString name="title"/></title>
+
+<tiles:insertAttribute name="font" ignore="true"/>
+<tiles:insertAttribute name="bootstrap" ignore="true"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common.css" type="text/css">
-<tiles:insertAttribute name="css" ignore="true"/>
+
 </head>
 <body>
 <div id="main">
 	<div id="main_header">
-		<tiles:insertAttribute name="header_mypage"/>
+		<tiles:insertAttribute name="header"/>
 	</div>
-	<div class="side-height">
-		<div id="page_body">
+	<div class="custom-container row d-flex justify-content-center pt-4 border">
+		<div id="main_leftNav" class="col-3">
+			<tiles:insertAttribute name="nav"/>
+		</div>
+		<div id="main_body" class="col-9">
 			<tiles:insertAttribute name="body"/>
 		</div>
+		<div id="main_footer">
+			<tiles:insertAttribute name="footer"/>
+		</div>
 	</div>
-	<div id="main_footer" class="page-clear">
-		<tiles:insertAttribute name="footer"/>
-	</div>
+
 </div>
 </body>
 </html>
-
-
-
-
-
