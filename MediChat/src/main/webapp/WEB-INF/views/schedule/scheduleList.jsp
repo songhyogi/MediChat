@@ -2,19 +2,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/index.global.min.js"></script>
+
+<script>
+
+</script>
+
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+    	const[] holiday = [];
     	const doc_num = ${doc_num};
     	const regularDayOffStr = '${regularDayOff}';
     	const regularDayOff = regularDayOffStr ? regularDayOffStr.split(',').map(Number) : []; //정기휴무요일이 하나일 경우에도 쉼표로 분할하여 배열로 변환
     	
-    	// JSON 형식으로 변환된 holiday 데이터를 파싱
-        /* const holiday = '${holiday}';
-        console.log(holiday[1]); */
-        
-        for (let i=0; i<holiday.length; i++) {
-			alert(holiday[i].doc_num);
-		}
+       
     	
     	let modifiedTimes = []; // 임시로 변경된 시간을 저장할 배열
     	
@@ -47,12 +48,7 @@
             	if(regularDayOff.includes(day)){
             		info.el.classList.add('regular-day-off');//정기휴무요일에 해당하면 클래스 추가해서 스타일 적용
             	}
-            	// 개별 휴무일의 날짜와 비교하여 해당하는 경우 배경색 변경
-                holiday.forEach(function(holi) {
-                    if (holi.HOLI_STATUS == 1 && holi.HOLI_DATE === info.date.toISOString().split('T')[0]) {
-                        info.el.classList.add('holiday-off');
-                    }
-                });
+            	
             },
             datesSet: function(info) {//datesSet 이벤트는 달력이 새로 렌더링될 때마다 호출됨
                 const days = document.querySelectorAll('.fc-daygrid-day');
@@ -62,12 +58,6 @@
                     if(regularDayOff.includes(day)){//datesSet 이벤트로 이전 달이나 다음 달로 이동했을 때도 정기휴무요일 적용
                         dayEl.classList.add('regular-day-off');
                     }
-                 // 개별 휴무일의 날짜와 비교하여 해당하는 경우 배경색 변경
-                    holiday.forEach(function(holi) {
-                        if (holi.HOLI_STATUS == 1 && holi.HOLI_DATE === info.date.toISOString().split('T')[0]) {
-                            info.el.classList.add('holiday-off');
-                        }
-                    });
                 });
             }
         });
@@ -199,9 +189,17 @@ button:disabled {
 	width: 800px;
 }
 </style>
-<c:forEach items="${holiday}" var="hd" status="loop">
-<div class="holi" style="display:none;" data-hd="${hd}-${loop.index}"></div>
+<c:forEach items="${holiday}" var="hd">
+	<script>
+		const holi_num = '${hd.holi_num}';
+		const doc_num = '${hd.doc_num}';
+		const holi_date = '${hd.holi_date}';
+		const holi_time = '${hd.holi_time}';
+		const holi_status = '${hd.holi_status}';
+		
+		
+		
+	</script>
 </c:forEach>
-
 <div id='calendar' data-doc-num="${doc_num}" data-regular-day-off="${regularDayOff}"></div>
 <div id="time-buttons"></div>

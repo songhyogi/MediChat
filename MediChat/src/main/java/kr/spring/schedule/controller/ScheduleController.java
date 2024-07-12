@@ -1,5 +1,7 @@
 package kr.spring.schedule.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,11 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.spring.doctor.vo.DoctorVO;
-import kr.spring.member.vo.MemberVO;
+import kr.spring.holiday.vo.HolidayVO;
 import kr.spring.schedule.service.ScheduleService;
-import kr.spring.schedule.vo.DayoffVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -41,7 +43,8 @@ public class ScheduleController {
 		
 		Long doc_num = user.getMem_num();
 		String doc_name = user.getMem_name();
-		List<Map<String, Object>> holiday = scheduleService.getHoliday(doc_num); // 개별 휴무일 가져오기
+		List<HolidayVO> holiday = scheduleService.getHoliday(doc_num); // 개별 휴무일 가져오기
+		
 		log.debug("<<holiday>> : " + holiday);
 		String regularDayOff = scheduleService.getRegularDayoff(doc_num);
 		model.addAttribute("doc_num", doc_num);
@@ -51,6 +54,14 @@ public class ScheduleController {
 		
         return "/schedule/scheduleList";//타일스
     }
-   
-    
+	
+	@GetMapping("/schedule/list-json")
+	@ResponseBody
+	public Map<String,Object> showScheduleListJson() {
+		Map<String,Object> map = new HashMap<>();
+		
+		
+		
+		return map;
+	}
 }
