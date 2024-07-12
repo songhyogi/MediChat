@@ -23,7 +23,7 @@ public interface ChatMapper {
 	//예약 내역을 기반으로 채팅방 만들기
 	public void createChat(ReservationVO reservationVO);
 	
-	@Select("SELECT res_date, res_time FROM chat JOIN reservation USING(res_num) WEHRE chat_num=#{chat_num}")
+	@Select("SELECT res_date, res_time FROM chat JOIN reservation USING(res_num) WHERE chat_num=#{chat_num}")
 	public ReservationVO selectReservationByChatNum(long chat_num);
 	public List<ChatMsgVO> selectMsg(long chat_num);
 	

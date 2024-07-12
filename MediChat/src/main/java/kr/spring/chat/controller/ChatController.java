@@ -42,15 +42,15 @@ public class ChatController {
 	@GetMapping("/chat/chatView")
 	public String getChat(HttpSession session, Model model) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
+		
 		List<ChatVO> list = new ArrayList<ChatVO>();
 		
 		if(user.getMem_auth()==2) {
 			list = chatService.selectChatListForMem(user.getMem_num());
-			log.debug("채팅 내용 : "+list);
-			log.debug("user.mem_num=="+user.getMem_num());
+			log.debug("<<생성된 채팅방 호출>> - 일반회원번호: "+user.getMem_num());
 		}else if(user.getMem_auth()==3){
 			list = chatService.selectChatListForDoc(user.getMem_num());
-			log.debug("mem_auth==3");
+			log.debug("<<생성된 채팅방 호출>> - 의사회원번호: " + user.getMem_num());
 		}
 		
 		model.addAttribute("list",list);
@@ -58,21 +58,13 @@ public class ChatController {
 		return "chatView";
 	}
 	
-	//채팅방 불러오기
-	@GetMapping("/chatRoom")
-	public String getChatRoom(@RequestParam long chat_num){
-		log.debug("chat_num = "+ chat_num);
-		
-		
-		return "chatRoom";
-	}
 	
 	//채팅창 들어가면 채팅 불러오기
 	@GetMapping("/chat/chatRoom")
 	@ResponseBody
 	public Map<String, Object> getMessage(HttpSession session,
 										  @RequestParam("chat_num") long chat_num){
-		log.debug("채팅 입장, 번호: "+ chat_num);
+		log.debug("<<채팅 입장>> 채팅방 번호: "+ chat_num);
 		
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		List<ChatMsgVO> msg_list = new ArrayList<ChatMsgVO>();
@@ -87,14 +79,29 @@ public class ChatController {
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		
+		if(user==null) {
+			map.put("user", "logout");
+		}else {
+			map.put("user", "login");
+			if(user.getMem_auth()==1) {
+				//현재 로그인한 사용자가 정지회원인 경우
+				map.put("type", "1");
+			}else if(user.getMem_auth()==2) {
+				//현재 로그인한 사용자가 일반회원인 경우
+				map.put("type", "2");
+			}else if(user.getMem_auth()==3) {
+				//현재 로그인한 사용자가 의사회원인 경우
+				map.put("type", "3");
+			}
+		}
 		
 		if(LocalDateTime.now().isAfter(reservationDateTime)){
-			log.debug("채팅방 사용 가능- 예약 날짜/시간: "+resDate+"/"+resTime);
+			log.debug("<<채팅방 사용 가능>> - 예약 날짜/시간: "+resDate+"/"+resTime);
 			msg_list = chatService.selectMsg(chat_num);
 			map.put("list",msg_list);
 			map.put("chat","open");
 		}else{
-			log.debug("채팅방 사용 불가- 예약 날짜/시간: "+resDate+"/"+resTime);
+			log.debug("<<채팅방 사용 불가>> - 예약 날짜/시간: "+resDate+"/"+resTime);
 			map.put("chat","close");
 		}
 		
