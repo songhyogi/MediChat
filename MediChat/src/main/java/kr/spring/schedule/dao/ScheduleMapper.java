@@ -3,12 +3,11 @@ package kr.spring.schedule.dao;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
-import kr.spring.schedule.vo.DayoffVO;
+import kr.spring.holiday.vo.HolidayVO;
 
 @Mapper
 public interface ScheduleMapper {
@@ -22,7 +21,7 @@ public interface ScheduleMapper {
 	
 	//개별휴무일 가져오기
 	@Select("SELECT * FROM holiday WHERE doc_num=#{doc_num}")
-	public List<Map<String, Object>> getHoliday(Long doc_num);
+	public List<HolidayVO> getHoliday(Long doc_num);
 	
 	//개별휴무일 등록
 	@Insert("INSERT INTO holiday(holi_num,doc_num,holi_date,holi_time,holi_status) VALUES(holi_seq.nextval,#{doc_num},#{holi_date},#{holi_time},#{holi_status})")
