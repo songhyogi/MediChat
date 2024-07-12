@@ -8,18 +8,18 @@
 <title>회원정보</title>
 </head>
 <body>
-	<div class="memberInfo">
+	<div class="docInfo">
 		<ul>
-			<li>이름 : ${member.mem_name}</li>
-			<li>생년월일 : ${member.mem_birth}</li>
-			<li>전화번호 : ${member.mem_phone}</li>
-			<li>이메일 : ${member.mem_email}</li>
-			<li>우편번호 : ${member.mem_zipcode}</li>
-			<li>주소 : ${member.mem_address1} ${member.mem_address2}</li>
-			<li>가입일 : ${member.mem_reg}</li>
-			<c:if test="${!empty member.mem_modify}">
-				<li>정보 수정일 : ${member.mem_modify}</li>
-			</c:if>
+			<li>이름 : ${user.mem_name}</li>
+			<li>이메일 : ${user.doc_email}</li>
+			<li>병원정보 : ${user.hos_num}</li>
+			<li>비대면 진료 여부 : ${user.doc_treat}</li>
+			<li><a href="#" class="dropdown-toggle" data-toggle="dropdown">연혁
+					<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li>${user.doc_history}</li>
+				</ul></li>
+			<li>가입일 : ${user.doc_reg}</li>
 		</ul>
 		<div class="align-center">
 			<input type="button" value="회원정보 수정"

@@ -17,7 +17,7 @@
 				<div class="row mb-5">
 					<div class="col-4 d-flex justify-content-center align-items-center">진료기록</div>
 					<div class="col-4 d-flex justify-content-center align-items-center">예약내역</div>
-					<div class="col-4 d-flex justify-content-center align-items-center">문의내역</div>
+					<div class="col-4 d-flex justify-content-center align-items-center">후기</div>
 				</div>
 				<div class="row mt-5">
 					<div class="col-4 d-flex justify-content-center align-items-center"><input type="button" value="0" onclick="location.href='#'"></div>

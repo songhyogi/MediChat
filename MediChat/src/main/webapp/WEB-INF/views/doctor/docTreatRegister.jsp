@@ -13,12 +13,12 @@
 		<ul>
 			 <li>
                 <form:label path="mem_name">이름</form:label> 
-                <form:input path="mem_name" value="${dmember.mem_name}" readonly="true" /> 
+                <form:input path="mem_name" value="${doctor.mem_name}" readonly="true" /> 
                 <form:errors path="mem_name" cssClass="error-color" />
             </li>
             <li>
                 <form:label path="doc_email">이메일</form:label> 
-                <form:input path="doc_email" value="${dmember.doc_email}" readonly="true" /> 
+                <form:input path="doc_email" value="${doctor.doc_email}" readonly="true" /> 
                 <form:errors path="doc_email" cssClass="error-color" />
             </li>
             <li>
@@ -42,22 +42,22 @@
 				</div> 
 				<form:errors path="doc_off" cssClass="error-color" />
 			</li>
-			<li><form:label path="doc_time">업무시간</form:label>
+			<li><form:label path="doc_stime">업무시간</form:label>
 				<div>
-					<form:select path="doc_time">
+					<form:select path="doc_stime">
 						<% for (int hour = 0; hour <= 23; hour++) { %>
 						<% for (int minute = 0; minute <= 45; minute += 15) { %>
 						<form:option
-							value='<%= String.format("%02d:%02d", hour, minute) %>'><%= String.format("%02d:%02d", hour, minute) %></form:option>
+							value='<%= String.format("%02d%02d", hour, minute) %>'><%= String.format("%02d%02d", hour, minute) %></form:option>
 						<% } %>
 						<% } %>
 					</form:select>
 					부터
-					<form:select path="doc_time">
+					<form:select path="doc_etime">
 						<% for (int hour = 0; hour <= 23; hour++) { %>
 						<% for (int minute = 0; minute <= 45; minute += 15) { %>
 						<form:option
-							value='<%= String.format("%02d:%02d", hour, minute) %>'><%= String.format("%02d:%02d", hour, minute) %></form:option>
+							value='<%= String.format("%02d%02d", hour, minute) %>'><%= String.format("%02d%02d", hour, minute) %></form:option>
 						<% } %>
 						<% } %>
 					</form:select>
@@ -65,9 +65,9 @@
 				</div> 
 				<form:errors path="doc_time" cssClass="error-color" /></li>
 			<li>
-                <form:label path="now_passwd">비밀번호</form:label> 
-                <form:password path="now_passwd" id="now_passwd" />
-                <form:errors path="now_passwd" cssClass="error-color" />
+                <form:label path="doc_passwd">비밀번호</form:label> 
+                <form:password path="doc_passwd" id="doc_passwd" />
+                <form:errors path="doc_passwd" cssClass="error-color" />
             </li>
             <li>
             	<input type="submit" value="신청" onclick="location.href='${pageContext.request.contextPath}/main/main'">
