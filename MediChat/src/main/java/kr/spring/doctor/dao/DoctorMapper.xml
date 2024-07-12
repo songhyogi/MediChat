@@ -16,6 +16,13 @@
 		ON m.mem_num = d.doc_num
 		WHERE mem_id=#{mem_id}
 	</select>
+	<update id="updateDoctor_detail" parameterType="doctorVO">
+		UPDATE doctor_detail SET 
+		doc_email=#{doc_email},
+		hos_num=#{hos_num},
+		doc_history=#{doc_history} 
+		WHERE doc_num=#{mem_num}
+	</update>
 	<!-- 병원 목록(검색) -->
 	<sql id="hosSearch">
 		<where>
