@@ -43,25 +43,15 @@ public class ScheduleController {
 		
 		Long doc_num = user.getMem_num();
 		String doc_name = user.getMem_name();
-		List<HolidayVO> holiday = scheduleService.getHoliday(doc_num); // 개별 휴무일 가져오기
+		//List<HolidayVO> holiday = scheduleService.getHoliday(doc_num); // 개별 휴무일 가져오기
 		
-		log.debug("<<holiday>> : " + holiday);
+		//log.debug("<<holiday>> : " + holiday);
 		String regularDayOff = scheduleService.getRegularDayoff(doc_num);
 		model.addAttribute("doc_num", doc_num);
 		model.addAttribute("doc_name",doc_name);
-		model.addAttribute("holiday", holiday);
+		//model.addAttribute("holiday", holiday);
 		model.addAttribute("regularDayOff", regularDayOff);
 		
         return "/schedule/scheduleList";//타일스
     }
-	
-	@GetMapping("/schedule/list-json")
-	@ResponseBody
-	public Map<String,Object> showScheduleListJson() {
-		Map<String,Object> map = new HashMap<>();
-		
-		
-		
-		return map;
-	}
 }

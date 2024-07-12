@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.spring.doctor.vo.DoctorVO;
+import kr.spring.holiday.vo.HolidayVO;
 import kr.spring.schedule.service.ScheduleService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,4 +41,10 @@ public class ScheduleAjaxController {
 		return map;
 	}
 	
+	@GetMapping("/schedule/holidays")
+	@ResponseBody
+	public List<HolidayVO> getHolidays(Long doc_num){
+		
+		return scheduleService.getHoliday(doc_num);
+	}
 }
