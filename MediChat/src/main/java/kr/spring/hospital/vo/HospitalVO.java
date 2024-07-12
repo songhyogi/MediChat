@@ -46,6 +46,7 @@ public class HospitalVO {
 	private String hos_y;               //Y좌표
 	private String hos_weekendAt;       //주말진료여부
 	
-	private int doc_cnt;
-	private int rev_cnt;
+	private int doc_cnt;				//병원에 소속한 의사회원 인원수
+	private int rev_cnt;				//병원의 리뷰 갯수
+	private long around;				//현재 지점서부터 병원까지의 실제거리
 }
