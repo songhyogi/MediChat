@@ -3,6 +3,7 @@ package kr.spring.doctor.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -31,17 +32,20 @@ public interface DoctorMapper {
 	//회원 목록
 	@Select("SELECT * FROM member m JOIN doctor_detail d ON m.mem_num=d.doc_num WHERE doc_agree=0")
 	public List<DoctorVO> docList(Map<String, Object> map);
-	
 	//회원정보 수정
+	@Update("UPDATE member SET mem_name=#{mem_name} WHERE mem_num=#{mem_num}")
 	public void updateDoctor(DoctorVO doctor);
 	public void updateDoctor_detail(DoctorVO doctor);
 	//비밀번호 수정
+	@Update("UPDATE doctor_detail SET doc_passwd=#{doc_passwd} WHERE doc_num=#{doc_num}")
 	public void updateDocPasswd(DoctorVO doctor);
 	//프로필 사진 저장
 	@Insert("INSERT INTO member(mem_photo,mem_photoname) VALUES(#{mem_photo},#{mem_photoname})")
 	public void uploadDocProfile(DoctorVO doctor);
 	//회원탈퇴
+	@Update("UPDATE member SET mem_auth=0 WHERE mem_num=#{mem_num}")
 	public void deleteDoctor(Long doc_num);
+	@Delete("DELETE FROM doctor_detail WHERE doc_num=#{doc_num}")
 	public void deleteDoctor_detail(DoctorVO doctor);
 	
 	//아이디 중복확인
@@ -52,6 +56,7 @@ public interface DoctorMapper {
 	public void findPasswd(DoctorVO doctor);
 	
 	//==========관리자============
+	//의사회원가입신청 관리자 승인
 	@Update("UPDATE doctor_detail SET doc_agree=1 WHERE doc_num=#{doc_num}")
 	public void updateAgree(DoctorVO doctor);
 }
