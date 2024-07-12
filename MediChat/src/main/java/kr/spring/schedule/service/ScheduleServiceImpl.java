@@ -28,7 +28,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 	}
 
 	@Override
-	public String getHoliday(Long doc_num) {
+	public List<Map<String, Object>> getHoliday(Long doc_num) {
 		return scheduleMapper.getHoliday(doc_num);
 	}
 
