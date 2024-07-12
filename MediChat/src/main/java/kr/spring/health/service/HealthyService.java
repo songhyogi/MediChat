@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Update;
 
 import kr.spring.health.vo.HealthyBlogVO;
 import kr.spring.health.vo.HealthyFavVO;
+import kr.spring.health.vo.HealthyReFavVO;
 import kr.spring.health.vo.HealthyReplyVO;
 
 public interface HealthyService {
@@ -35,5 +36,14 @@ public interface HealthyService {
 	public HealthyReplyVO selectHre(Long hre_num);
 	public List<HealthyReplyVO> selectHreList(Map<String,Object> map);
 	public Integer selectHreCount(Long healthy_num);
+	
+	//댓글 좋아요
+	//댓글 좋아요
+	public void insertHreFav(HealthyReFavVO vo);
+	public void deleteHreFav(HealthyReFavVO vo);
+	public Integer selectHreFavCount(Long hre_num);
+	public HealthyReFavVO selectHreFav(HealthyReFavVO vo);
+	
+	
 	
 }

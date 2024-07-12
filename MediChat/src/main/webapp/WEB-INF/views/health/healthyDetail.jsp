@@ -35,13 +35,13 @@
                     <polygon points="90,50 80,50"></polygon>
                     <polygon points="80,80 70,70"></polygon>
                 </svg>
-            </div>
-       </div>
+           </div>
+      </div>
         <span id="hfav_cnt">${healthy.fav_cnt}</span><br>
         
 <c:if test="${user.mem_num == healthy.mem_num}">
-	<input type="button" value="수정" onclick="location.href='healthUpdate?healthy_num=${healthy.healthy_num}'">
-	<input type="button" value="삭제" id="h_delbtn" >
+	<input type="button" value="글 수정" onclick="location.href='healthUpdate?healthy_num=${healthy.healthy_num}'">
+	<input type="button" value="글 삭제" id="h_delbtn" >
 	<br>
 	<script type="text/javascript">
 		$(function(){
@@ -77,6 +77,7 @@
 	</c:if>
 	
 </div>
+<input type="hidden"  id="user_num" value="${user.mem_num}">
 <div id="replyList" data-num="${healthy.healthy_num}">
 
 </div>

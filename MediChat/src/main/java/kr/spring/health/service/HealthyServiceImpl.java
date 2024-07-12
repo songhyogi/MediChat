@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.spring.health.dao.HealthMapper;
 import kr.spring.health.vo.HealthyBlogVO;
 import kr.spring.health.vo.HealthyFavVO;
+import kr.spring.health.vo.HealthyReFavVO;
 import kr.spring.health.vo.HealthyReplyVO;
 
 @Service
@@ -36,6 +37,10 @@ public class HealthyServiceImpl implements HealthyService{
 		// TODO Auto-generated method stub
 		
 		//댓글 좋아요삭제
+		List<Long>list =mapper.selectDeleteByHBlog(healthy_num);
+		for(int i=0; i<list.size(); i++) {
+			mapper.deleteHreFavByHeal(list.get(i));
+		}
 		//댓글 삭제
 		mapper.deleteHReByHeal(healthy_num);
 		mapper.deleteHFavByHeal(healthy_num);
@@ -100,13 +105,16 @@ public class HealthyServiceImpl implements HealthyService{
 	@Override
 	public void updateHre(HealthyReplyVO vo) {
 		// TODO Auto-generated method stub
+		mapper.updateHre(vo);
 		
 	}
 
 	@Override
 	public void deleteHre(Long hre_num) {
 		// TODO Auto-generated method stub
-		
+		//댓글좋아요 삭제
+		mapper.deleteHreFavByHre(hre_num);
+		mapper.deleteHre(hre_num);
 	}
 
 	@Override
@@ -126,5 +134,31 @@ public class HealthyServiceImpl implements HealthyService{
 		// TODO Auto-generated method stub
 		return mapper.selectHreCount(healthy_num);
 	}
+
+	@Override
+	public void insertHreFav(HealthyReFavVO vo) {
+		// TODO Auto-generated method stub
+		mapper.insertHreFav(vo);
+	}
+
+	@Override
+	public void deleteHreFav(HealthyReFavVO vo) {
+		// TODO Auto-generated method stub
+		mapper.deleteHreFav(vo);
+	}
+
+	@Override
+	public Integer selectHreFavCount(Long hre_num) {
+		// TODO Auto-generated method stub
+		return mapper.selectHreFavCount(hre_num);
+	}
+
+	@Override
+	public HealthyReFavVO selectHreFav(HealthyReFavVO vo) {
+		// TODO Auto-generated method stub
+		return mapper.selectHreFav(vo);
+	}
+
+
 
 }

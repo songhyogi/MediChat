@@ -19,6 +19,7 @@ public class HealthyReplyVO {
 	private int hre_level;
 	
 	private String id;
+	private int refav_cnt;
 	private long click_num;
     
 	public void setHre_reg_date(String  hre_reg_date) {

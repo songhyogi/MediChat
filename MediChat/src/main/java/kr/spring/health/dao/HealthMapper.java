@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Update;
 
 import kr.spring.health.vo.HealthyBlogVO;
 import kr.spring.health.vo.HealthyFavVO;
+import kr.spring.health.vo.HealthyReFavVO;
 import kr.spring.health.vo.HealthyReplyVO;
 
 @Mapper
@@ -44,7 +45,7 @@ public interface HealthMapper {
 	//댓글 
 	@Insert("INSERT INTO healthy_re(hre_num,healthy_num,mem_num,hre_renum,hre_content,hre_level) VALUES(hre_seq.nextval,#{healthy_num},#{mem_num},#{hre_renum},#{hre_content},#{hre_level})")
 	public void insertHre(HealthyReplyVO vo);
-	@Update("UPDATE healthy_re SET hre_content=#{hre_content}, hre_modify_num=#{hre_modify_num} WHERE hre_num=#{hre_num}")
+	@Update("UPDATE healthy_re SET hre_content=#{hre_content}, hre_modify_date=SYSDATE WHERE hre_num=#{hre_num}")
 	public void updateHre(HealthyReplyVO vo);
 	@Delete("DELETE FROM healthy_re WHERE hre_num=#{hre_num}")
 	public void deleteHre(Long hre_num);
@@ -54,5 +55,26 @@ public interface HealthMapper {
 	public Integer selectHreCount(Long healthy_num);
 	@Delete("DELETE FROM healthy_re WHERE healthy_num=#{healthy_num}")
 	public void deleteHReByHeal(Long healthy_num);
+	
+	
+	
+	//답댓글 삭제
+	
+	//댓글 좋아요
+	@Insert("INSERT INTO healthy_re_fav(hre_num,mem_num) VALUES(#{hre_num},#{mem_num})")
+	public void insertHreFav(HealthyReFavVO vo);
+	@Delete("DELETE FROM healthy_re_fav WHERE hre_num=#{hre_num} AND mem_num=#{mem_num}")
+	public void deleteHreFav(HealthyReFavVO vo);
+	@Select("SELECT COUNT(*) FROM healthy_re_fav WHERE hre_num=#{hre_num}")
+	public Integer selectHreFavCount(Long hre_num);
+	@Select("SELECT * FROM healthy_fav WHERE healthy_num=#{healthy_num} AND mem_num=#{mem_num}")
+	public HealthyReFavVO selectHreFav(HealthyReFavVO vo);
+	//댓글 삭제시 좋아요 삭제
+	@Delete("DELETE FROM healthy_re_fav WHERE hre_num=#{hre_num}")
+	public void deleteHreFavByHre(Long hre_num);
+	@Select("SELECT hre_num FROM healthy_re WHERE healthy_num=#{healthy_num}")
+	public List<Long> selectDeleteByHBlog(Long healthy_num);
+	@Delete("DELETE FROM healthy_re_fav WHERE hre_num=#{hre_num}")
+	public void deleteHreFavByHeal(Long hre_num);
 	
 }

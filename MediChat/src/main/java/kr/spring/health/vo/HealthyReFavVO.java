@@ -10,4 +10,5 @@ import lombok.ToString;
 public class HealthyReFavVO {
 	private long hre_num;
 	private long mem_num;
+	
 }
