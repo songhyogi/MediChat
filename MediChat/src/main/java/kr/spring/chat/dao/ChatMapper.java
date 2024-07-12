@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import kr.spring.chat.vo.ChatFileVO;
+import kr.spring.chat.vo.ChatMsgVO;
 import kr.spring.chat.vo.ChatPaymentVO;
 import kr.spring.chat.vo.ChatVO;
 import kr.spring.reservation.vo.ReservationVO;
@@ -22,8 +23,10 @@ public interface ChatMapper {
 	//예약 내역을 기반으로 채팅방 만들기
 	public void createChat(ReservationVO reservationVO);
 	
-	//@Select("SELECT * FROM chat WHERE ")
-	public ChatVO selectChatDetail(long res_num);
+	@Select("SELECT res_date, res_time FROM chat JOIN reservation USING(res_num) WEHRE chat_num=#{chat_num}")
+	public ReservationVO selectReservationByChatNum(long chat_num);
+	public List<ChatMsgVO> selectMsg(long chat_num);
+	
 	public void insertChatFile(ChatFileVO chatFileVO);
 	public void insertChatPayment(ChatPaymentVO chatPaymentVO);
 	public void updateChatStatus(long chat_num);

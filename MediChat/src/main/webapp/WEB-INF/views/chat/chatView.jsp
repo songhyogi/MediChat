@@ -14,7 +14,17 @@
 			<div class="chat-date fs-20">
 				${chat.res_date} ${chat.res_time}
 			</div>
-			<!-- 채팅창 표시 시작 -->
+		</div>
+		<!-- 채팅방 표시 시작 -->
+		<div class="chat-body">
+		</div>
+		<!-- 입력창 표시 -->
+		<div>
+			<form action="messageInput" method="post" class="chat-input">
+				<input type="button" class="bg-green-7">
+				<input type="text" id="message_text">
+				<input type="submit" value="전송" id="message_btn" class="btn-green">
+			</form>
 		</div>
 </div>
 </div>
