@@ -14,7 +14,7 @@
 		<!-- li에 들어가야 할 항목(일반회원)- 진료일시, 의사명 -->
 			<c:if test="${user.getMem_auth()==2}">
 				<tr>
-					<td class="fs-18 text-black-6"><a href="chatRoom?chat_num=${list.chat_num}">
+					<td class="fs-18 text-black-6"><a href="chatRoom?chat_num=${list.chat_num}&res_date=${list.res_date}&res_time=${list.res_time}">
 					${list.res_date} ${list.res_time}
 					<br>${list.mem_name} 의사</a></td>
 				</tr>
@@ -22,7 +22,7 @@
 		<!-- li에 들어가야 할 항목(의사회원)- 진료일시, 환자명 -->
 			<c:if test="${user.getMem_auth() ==3}">
 			<tr>
-				<td class="fs-18 text-black-6"><a href="chatRoom?chat_num=${list.chat_num}">
+				<td class="fs-18 text-black-6"><a href="chatRoom?chat_num=${list.chat_num}&res_date=${list.res_date}&res_time=${list.res_time}">
 				${list.res_date} ${list.res_time}
 				<br>${list.mem_name} 환자</a></td>
 			</tr>
