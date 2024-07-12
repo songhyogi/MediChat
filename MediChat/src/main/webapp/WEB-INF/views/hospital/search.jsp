@@ -23,7 +23,11 @@
 			</div>
 			<div class="border-end" style="height: 40px;"></div>
 			<!-- SortType -->
-			<div id="moreSortType" class="filter-item">가까운 순&nbsp;<img src="/images/down.png" width="10" height="10"></div>
+			<div id="moreSortType" class="filter-item"><c:if test="${sortType=='NEAR'}">가까운 순</c:if>
+														<c:if test="${sortType=='REVIEW'}">리뷰 순</c:if>
+														<c:if test="${sortType=='SCORE'}">평점 순</c:if>
+														<c:if test="${sortType=='HIT'}">조회 순</c:if>
+														&nbsp;<img src="/images/down.png" width="10" height="10"></div>
 			<div class="overlay" id="overlay"></div>
 			<div id="more_box" class="p-5 rounded-top-3 border bg-white" style="display: none; height: 300px;">
 				<h5 class="fw-8">어떤 기준으로 정렬할까요?</h5>
@@ -128,13 +132,8 @@ if(${empty user_lat} || ${empty user_lon} || '${user_lat}'=='37.4981646510326' |
 			    document.getElementById('lat').value = lat;
 			    document.getElementById('lon').value = lon;
 			    searchForm.submit();
-			},
-			function(error) {
-			
 			}
 		);
-	} else {
-			
 	}
 }
 
@@ -155,8 +154,6 @@ for(let i=0; i<sortTypeItem.length; i++){
 		searchForm.submit();
 	};
 }
-
-
 $(document).ready(function() {
     const hospitalListBox = $('#hospitalListBox');
     let pageNum = 2;
@@ -176,7 +173,6 @@ $(document).ready(function() {
             return;
         }
         loading = true;
-        $('#loadingImg').show();
         $.ajax({
             url: '/hospitals/search-json',
             type: 'GET',
@@ -191,7 +187,10 @@ $(document).ready(function() {
             	user_lon: user_lon
             },
             success: function(param) {
-                pageNum++;
+                if(param.length==0){
+                	return;
+                }
+            	pageNum++;
                 let output = '';
                 for(let i=0; i<param.length; i++){
                 	output += '<div class="hospital-box">';
@@ -211,13 +210,13 @@ $(document).ready(function() {
             	loading = false;
             }
         });
-        $('#loadingImg').hide();
     }
-
     function onScroll() {
         if ($(window).scrollTop() + $(window).height() >= $(document).height() - 10) {
-            loadHospitals();
+            $('#loadingImg').show();
+        	loadHospitals();
         }
+        $('#loadingImg').hide();
     }
 
     $(window).on('scroll', onScroll);
