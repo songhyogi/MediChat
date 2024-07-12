@@ -1,3 +1,19 @@
+/*----------정렬----------*/
+/* 왼쪽 정렬 */
+.align-left {
+  text-align: left;
+}
+
+/* 오른쪽 정렬 */
+.align-right {
+  text-align: right;
+}
+
+/* 가운데 정렬 */
+.align-center {
+  text-align: center;
+}
+
 /*----------모달창----------*/
 modal{
 	display:none; /*기본적으로 안 보이게 처리*/
@@ -19,7 +35,7 @@ modal{
 .drg-img{
 	cursor:pointer;
 }
-.drugImg-modal{
+.drugImg-modal .drugInsert-modal{
 	position: fixed;
   	top: 50%;
   	left: 50%;
@@ -28,3 +44,4 @@ modal{
 	background-color:#ffffff;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); /* 그림자*/
 }
+/*회원 - 의약품 검색*/
