@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -181,10 +182,10 @@ public class HospitalController {
 	}
 	
 	// 병원 > 검색 결과 > 상세 페이지
-	@GetMapping("/hospitals/search/detail")
-	public String detail() {
-		
-		
-		return "";
+	@GetMapping("/hospitals/search/detail/{hos_num}")
+	public String detail(Model model, @PathVariable Long hos_num) {
+		HospitalVO hospital = hospitalService.selectHospital(hos_num);
+		model.addAttribute("hospital",hospital);
+		return "detail";
 	}
 }
