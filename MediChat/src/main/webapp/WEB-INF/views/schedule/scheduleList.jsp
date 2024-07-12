@@ -2,22 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/index.global.min.js"></script>
-
-<script>
-
-</script>
-
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-    	const[] holiday = [];
     	const doc_num = ${doc_num};
     	const regularDayOffStr = '${regularDayOff}';
     	const regularDayOff = regularDayOffStr ? regularDayOffStr.split(',').map(Number) : []; //정기휴무요일이 하나일 경우에도 쉼표로 분할하여 배열로 변환
     	
-       
-    	
-    	let modifiedTimes = []; // 임시로 변경된 시간을 저장할 배열
+    	let holidays = [];
     	
         // FullCalendar 초기화
         var calendarEl = document.getElementById('calendar');
@@ -48,7 +39,11 @@
             	if(regularDayOff.includes(day)){
             		info.el.classList.add('regular-day-off');//정기휴무요일에 해당하면 클래스 추가해서 스타일 적용
             	}
-            	
+            	holidays.forEach(function(holi){
+            		if(holi.holi_status==1 && holi.holi_date == dayE1.getAttribute('data-date')){
+            			dayE1.classList.add('holiday-off');
+            		}
+            	});
             },
             datesSet: function(info) {//datesSet 이벤트는 달력이 새로 렌더링될 때마다 호출됨
                 const days = document.querySelectorAll('.fc-daygrid-day');
@@ -58,6 +53,11 @@
                     if(regularDayOff.includes(day)){//datesSet 이벤트로 이전 달이나 다음 달로 이동했을 때도 정기휴무요일 적용
                         dayEl.classList.add('regular-day-off');
                     }
+                    holidays.forEach(function(holi){
+                		if(holi.holi_status==1 && holi.holi_date == dayE1.getAttribute('data-date')){
+                			dayE1.classList.add('holiday-off');
+                		}
+                	});
                 });
             }
         });
@@ -121,6 +121,22 @@
 
             return times;
         }
+        
+        //Ajax로 개별 휴무 데이터를 가져옴
+        $.ajax({
+        	url: '/schedule/holidays',
+        	method:'get',
+        	data:{doc_num:doc_num},
+        	dataType:'json',
+        	success:function(param){
+        		holidays = param;
+        		console.log(holidays);
+        		calendar.render();
+        	},
+        	error:function(){
+        		alert('개별 휴무 데이터를 가져오는 데 실패했습니다.');
+        	}
+        });
     });
 </script>
 <style>
@@ -189,17 +205,5 @@ button:disabled {
 	width: 800px;
 }
 </style>
-<c:forEach items="${holiday}" var="hd">
-	<script>
-		const holi_num = '${hd.holi_num}';
-		const doc_num = '${hd.doc_num}';
-		const holi_date = '${hd.holi_date}';
-		const holi_time = '${hd.holi_time}';
-		const holi_status = '${hd.holi_status}';
-		
-		
-		
-	</script>
-</c:forEach>
 <div id='calendar' data-doc-num="${doc_num}" data-regular-day-off="${regularDayOff}"></div>
 <div id="time-buttons"></div>
