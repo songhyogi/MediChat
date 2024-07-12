@@ -21,6 +21,8 @@ public class HealthyBlogVO {
 	private int healthy_hit;
 	private String h_filename;
 	private MultipartFile upload;
-	private String id;
 	
+	private String id;
+	private int fav_cnt;
+	private int click_num;
 }

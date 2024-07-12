@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.health.dao.HealthMapper;
 import kr.spring.health.vo.HealthyBlogVO;
+import kr.spring.health.vo.HealthyFavVO;
+import kr.spring.health.vo.HealthyReplyVO;
 
 @Service
 @Transactional
@@ -20,37 +22,109 @@ public class HealthyServiceImpl implements HealthyService{
 	@Override
 	public void insertHeal(HealthyBlogVO vo) {
 		// TODO Auto-generated method stub
-		
+		mapper.insertHeal(vo);
 	}
 
 	@Override
 	public void updateHeal(HealthyBlogVO vo) {
 		// TODO Auto-generated method stub
-		
+		mapper.updateHeal(vo);
 	}
 
 	@Override
 	public void deleteHeal(Long healthy_num) {
 		// TODO Auto-generated method stub
 		
+		//댓글 좋아요삭제
+		//댓글 삭제
+		mapper.deleteHReByHeal(healthy_num);
+		mapper.deleteHFavByHeal(healthy_num);
+		mapper.deleteHeal(healthy_num);
 	}
 
 	@Override
-	public HealthyBlogVO getHealthy(Long healthy_num) {
+	public HealthyBlogVO getHealthy(Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		return null;
+		return mapper.getHealthy(map);
 	}
 
 	@Override
 	public Integer selectHealCount(Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		return null;
+		return mapper.selectHealCount(map);
 	}
 
 	@Override
 	public List<HealthyBlogVO> selectHealList(Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		return null;
+		return mapper.selectHealList(map);
+	}
+
+	@Override
+	public void updateHealHit(Long healthy_num) {
+		// TODO Auto-generated method stub
+		mapper.updateHealHit(healthy_num);
+		
+	}
+
+	@Override
+	public void insertHFav(HealthyFavVO vo) {
+		// TODO Auto-generated method stub
+		mapper.insertHFav(vo);
+	}
+
+	@Override
+	public void deleteHFav(HealthyFavVO vo) {
+		// TODO Auto-generated method stub
+		mapper.deleteHFav(vo);
+	}
+
+	@Override
+	public Integer selectHFavCount(Long healthy_num) {
+		// TODO Auto-generated method stub
+		return mapper.selectHFavCount(healthy_num);
+	}
+
+	@Override
+	public HealthyFavVO selectHFav(HealthyFavVO vo) {
+		// TODO Auto-generated method stub
+		return mapper.selectHFav(vo);
+	}
+
+	@Override
+	public void insertHre(HealthyReplyVO vo) {
+		// TODO Auto-generated method stub
+		mapper.insertHre(vo);
+	}
+
+	@Override
+	public void updateHre(HealthyReplyVO vo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteHre(Long hre_num) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public HealthyReplyVO selectHre(Long hre_num) {
+		// TODO Auto-generated method stub
+		return mapper.selectHre(hre_num);
+	}
+
+	@Override
+	public List<HealthyReplyVO> selectHreList(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mapper.selectHreList(map);
+	}
+
+	@Override
+	public Integer selectHreCount(Long healthy_num) {
+		// TODO Auto-generated method stub
+		return mapper.selectHreCount(healthy_num);
 	}
 
 }
