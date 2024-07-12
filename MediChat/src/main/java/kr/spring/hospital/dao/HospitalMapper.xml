@@ -126,17 +126,15 @@
 		</if>
 	</sql>
 	<sql id="searchHospitalBySortType">
-		<if test="sortType=='NEAR'">
-			ORDER BY around
-		</if>
+
 		<if test="sortType=='REVIEW'">
-			ORDER BY rev_cnt DESC
+			,rev_cnt DESC
 		</if>
 		<if test="sortType=='SCORE'">
-			ORDER BY hos_score DESC
+			,hos_score DESC
 		</if>
 		<if test="sortType=='HIT'">
-			ORDER BY hos_hit DESC
+			,hos_hit DESC
 		</if>
 	</sql>
 	
@@ -167,6 +165,7 @@
 		              <![CDATA[
 		              WHERE around <= 3000
 		              ]]>
+		              ORDER BY around
 		              <include refid="searchHospitalBySortType"/>
 		            ) a
 		       <![CDATA[     
