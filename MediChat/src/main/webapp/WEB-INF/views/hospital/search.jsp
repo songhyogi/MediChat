@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <div>
 <p class="text-lightgray fw-7 fs-13">홈 > 병원 찾기 > 검색 결과</p>
@@ -58,15 +59,34 @@
 	<!-- 병원 리스트 시작 -->
 	<div id="hospitalListBox">
 		<c:forEach items="${hosList}" var="hospital">
+		
 			<div class="hospital-box">
 				<div class="hospital-name fs-17 fw-8 text-black-6">${hospital.hos_name}</div>
-				<div class="hospital-sub fs-11 fw-6 text-gray-7">정형외과</div>
+				<div class="hospital-around fs-11 fw-9 text-gray-7">${hospital.around}m</div>
 				
 				<!-- 진료시간이 있으면-->
-				<div class="hospital-open fs-13 fw-7 text-black-4">진료중&nbsp;<div class="vr"></div>&nbsp;19:30에 마감</div>
+				<div class="hospital-open fs-13 fw-7 text-black-4 d-flex align-items-center">
+					<c:if test="${day==1}"><c:if test="${hospital.hos_time1C>=time}"><div class="greenCircle">&nbsp;</div>진료중</c:if><c:if test="${hospital.hos_time1C<time}"><div class="redCircle"></div>진료종료</c:if></c:if>
+					<c:if test="${day==2}"><c:if test="${hospital.hos_time2C>=time}"><div class="greenCircle">&nbsp;</div>진료중</c:if><c:if test="${hospital.hos_time2C<time}"><div class="redCircle"></div>진료종료</c:if></c:if>
+					<c:if test="${day==3}"><c:if test="${hospital.hos_time3C>=time}"><div class="greenCircle">&nbsp;</div>진료중</c:if><c:if test="${hospital.hos_time3C<time}"><div class="redCircle"></div>진료종료</c:if></c:if>
+					<c:if test="${day==4}"><c:if test="${hospital.hos_time4C>=time}"><div class="greenCircle">&nbsp;</div>진료중</c:if><c:if test="${hospital.hos_time4C<time}"><div class="redCircle"></div>진료종료</c:if></c:if>
+					<c:if test="${day==5}"><c:if test="${hospital.hos_time5C>=time}"><div class="greenCircle">&nbsp;</div>진료중</c:if><c:if test="${hospital.hos_time5C<time}"><div class="redCircle"></div>진료종료</c:if></c:if>
+					<c:if test="${day==6}"><c:if test="${hospital.hos_time6C>=time}"><div class="greenCircle">&nbsp;</div>진료중</c:if><c:if test="${hospital.hos_time6C<time}"><div class="redCircle"></div>진료종료</c:if></c:if>
+					<c:if test="${day==7}"><c:if test="${hospital.hos_time7C>=time}"><div class="greenCircle">&nbsp;</div>진료중</c:if><c:if test="${hospital.hos_time7C<time}"><div class="redCircle"></div>진료종료</c:if></c:if>
+				    &nbsp;                           
+				    <div class="vr"></div>
+				    &nbsp;
+				    <c:if test="${day==1}">${fn:substring(hospital.hos_time1C,0,2)}:${fn:substring(hospital.hos_time1C,2,4)}</c:if>
+				    <c:if test="${day==2}">${fn:substring(hospital.hos_time2C,0,2)}:${fn:substring(hospital.hos_time2C,2,4)}</c:if>
+				    <c:if test="${day==3}">${fn:substring(hospital.hos_time3C,0,2)}:${fn:substring(hospital.hos_time3C,2,4)}</c:if>
+				    <c:if test="${day==4}">${fn:substring(hospital.hos_time4C,0,2)}:${fn:substring(hospital.hos_time4C,2,4)}</c:if>
+				    <c:if test="${day==5}">${fn:substring(hospital.hos_time5C,0,2)}:${fn:substring(hospital.hos_time5C,2,4)}</c:if>
+				    <c:if test="${day==6}">${fn:substring(hospital.hos_time6C,0,2)}:${fn:substring(hospital.hos_time6C,2,4)}</c:if>
+				    <c:if test="${day==7}">${fn:substring(hospital.hos_time7C,0,2)}:${fn:substring(hospital.hos_time7C,2,4)}</c:if>
+				    에 마감</div>
 				
 				<div class="hospital-address fs-12 fw-7 text-black-3">${hospital.hos_addr}</div>
-				<div class="hospital-docCnt fs-11 fw-8 text-black-3">정형외과 전문의 ${hospital.doc_cnt}명</div>
+				<div class="hospital-docCnt fs-11 fw-8 text-black-3">전문의 ${hospital.doc_cnt}명</div>
 			</div>
 			<hr width="100%">
 		</c:forEach>
@@ -192,11 +212,21 @@ $(document).ready(function() {
                 }
             	pageNum++;
                 let output = '';
+                
                 for(let i=0; i<param.length; i++){
                 	output += '<div class="hospital-box">';
                 	output += '<div class="hospital-name fs-17 fw-8 text-black-6">'+param[i].hos_name+'</div>';
-                	output += '<div class="hospital-sub fs-11 fw-6 text-gray-7">'+'정형외과'+'</div>';
-                	output += '<div class="hospital-open fs-13 fw-7 text-black-4">'+'진료중&nbsp;'+'<div class="vr"></div>'+'&nbsp;19:30에 마감'+'</div>';
+                	output += '<div class="hospital-sub fs-11 fw-9 text-gray-7">'+param[i].around+'m</div>';
+                	output += '<div class="hospital-open fs-13 fw-7 text-black-4 d-flex align-items-center">';
+                	if(param[i].hos_time${day}C>=${time}){
+                		output += '<div class="greenCircle">&nbsp;</div>'+'진료중';
+                	} else {
+                		output += '<div class="redCircle">&nbsp;</div>'+'진료종료';
+                	}
+                	output += '&nbsp;'
+                	output += '<div class="vr"></div>';
+                	output += '&nbsp;'+param[i].hos_time${day}C.substr(0,2)+':'+param[i].hos_time${day}C.substr(2,4)+'에 마감';
+                	output += '</div>';
                 	output += '<div class="hospital-address fs-12 fw-7 text-black-3">'+param[i].hos_addr+'</div>';
                 	output += '<div class="hospital-docCont fs-11 fw-8 text-black-3">'+'정형외과 전문의'+param[i].doc_cnt+'명'+'</div>';
                 	output += '</div>'
