@@ -6,7 +6,7 @@ $(function(){
 	function selectMsg(){
 		//서버와 통신
 		$.ajax({
-			url:'chatRoom',
+			url:'/chat/chatRoom',
 			type:'get',
 			data:{chat_num:chat_num},
 			dataType:'json',

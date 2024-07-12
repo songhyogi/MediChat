@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,7 +40,9 @@ public class ChatController {
 		return new ChatVO();
 	}
 	
-	//비대면채팅 페이지 호출
+	/*=======================
+	 * 	 비대면채팅 페이지 호출
+	 ========================*/
 	@GetMapping("/chat/chatView")
 	public String getChat(HttpSession session, Model model) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
@@ -58,15 +62,18 @@ public class ChatController {
 		return "chatView";
 	}
 	
-	
-	//채팅창 들어가면 채팅 불러오기
+	/*=======================
+	 * 	  채팅 내역 불러오기
+	 ========================*/
 	@GetMapping("/chat/chatRoom")
-	@ResponseBody
 	public Map<String, Object> getMessage(HttpSession session,
-										  @RequestParam("chat_num") long chat_num){
+										  @RequestParam("chat_num") long chat_num,
+										  @RequestParam("res_date") String res_date,
+										  @RequestParam("res_time") String res_time){
 		log.debug("<<채팅 입장>> 채팅방 번호: "+ chat_num);
 		
 		MemberVO user = (MemberVO)session.getAttribute("user");
+		
 		List<ChatMsgVO> msg_list = new ArrayList<ChatMsgVO>();
 		ReservationVO reservation = chatService.selectReservationByChatNum(chat_num);
 		
@@ -115,5 +122,35 @@ public class ChatController {
 		
 		
 	//}
+	
+	/*=======================
+	 * 	 	 메시지 입력
+	 ========================*/
+	@PostMapping("/chat/ChatRoom")
+	public Map<String,Object> insertMsg(HttpSession session,
+										ChatMsgVO chatMsgVO,
+										HttpServletRequest request){
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		if(user==null) {
+			//로그아웃 상태
+			map.put("user","logout");
+		}else {
+			//로그인 상태
+			if(user.getMem_auth()==2) {
+				chatMsgVO.setMsg_sender_type(0); //일반회원이 0
+			}else if(user.getMem_auth()==3) {
+				chatMsgVO.setMsg_sender_type(1); //의사회원이 1
+			}
+			//chatMsgVO.set
+			
+		}
+		
+		
+		
+		return map;
+	}
 	
 }

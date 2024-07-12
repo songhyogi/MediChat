@@ -16,6 +16,7 @@ public interface ChatService {
 		public void createChat(ReservationVO reservationVO);
 		public ReservationVO selectReservationByChatNum(long chat_num);
 		public List<ChatMsgVO> selectMsg(long chat_num);
+		public void insertMsg(ChatMsgVO chatMsgVO);
 		public void insertChatFile(ChatFileVO chatFileVO);
 		public void insertChatPayment(ChatPaymentVO chatPaymentVO);
 		public void updateChatStatus(long chat_num);
