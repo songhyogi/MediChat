@@ -22,9 +22,9 @@ public interface ScheduleMapper {
 	
 	//개별휴무일 가져오기
 	@Select("SELECT * FROM holiday WHERE doc_num=#{doc_num}")
-	public String getHoliday(Long doc_num);
+	public List<Map<String, Object>> getHoliday(Long doc_num);
 	
-	//근무 수정
+	//개별휴무일 등록
 	@Insert("INSERT INTO holiday(holi_num,doc_num,holi_date,holi_time,holi_status) VALUES(holi_seq.nextval,#{doc_num},#{holi_date},#{holi_time},#{holi_status})")
 	public void insertHoliday(Long doc_num);
 	
