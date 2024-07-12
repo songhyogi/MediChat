@@ -187,7 +187,12 @@
 	cursor: pointer;
 }
 .hospital-box{
+	cursor: pointer;
 	padding: 8px;
+	border-radius: 10px;
+}
+.hospital-box:hover {
+	background-color: #f2f2f2;
 }
 .hospital-docCnt{
 	margin-top: 10px;
@@ -224,4 +229,10 @@
 	border: 2px solid #E60634;
 	background-color: #FF073A;
 	margin-right: 3px;
+}
+
+/* =================== hospital > search > detail =================== */
+#detail_hosName{
+	padding-top: 30px;
+	padding-left: 20px;
 }

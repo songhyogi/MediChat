@@ -60,30 +60,146 @@
 	<div id="hospitalListBox">
 		<c:forEach items="${hosList}" var="hospital">
 		
-			<div class="hospital-box">
+			<div class="hospital-box" data-hosNum="${hospital.hos_num}">
 				<div class="hospital-name fs-17 fw-8 text-black-6">${hospital.hos_name}</div>
 				<div class="hospital-around fs-11 fw-9 text-gray-7">${hospital.around}m</div>
 				
 				<!-- 진료시간이 있으면-->
 				<div class="hospital-open fs-13 fw-7 text-black-4 d-flex align-items-center">
-					<c:if test="${day==1}"><c:if test="${hospital.hos_time1C>=time}"><div class="greenCircle">&nbsp;</div>진료중</c:if><c:if test="${hospital.hos_time1C<time}"><div class="redCircle"></div>진료종료</c:if></c:if>
-					<c:if test="${day==2}"><c:if test="${hospital.hos_time2C>=time}"><div class="greenCircle">&nbsp;</div>진료중</c:if><c:if test="${hospital.hos_time2C<time}"><div class="redCircle"></div>진료종료</c:if></c:if>
-					<c:if test="${day==3}"><c:if test="${hospital.hos_time3C>=time}"><div class="greenCircle">&nbsp;</div>진료중</c:if><c:if test="${hospital.hos_time3C<time}"><div class="redCircle"></div>진료종료</c:if></c:if>
-					<c:if test="${day==4}"><c:if test="${hospital.hos_time4C>=time}"><div class="greenCircle">&nbsp;</div>진료중</c:if><c:if test="${hospital.hos_time4C<time}"><div class="redCircle"></div>진료종료</c:if></c:if>
-					<c:if test="${day==5}"><c:if test="${hospital.hos_time5C>=time}"><div class="greenCircle">&nbsp;</div>진료중</c:if><c:if test="${hospital.hos_time5C<time}"><div class="redCircle"></div>진료종료</c:if></c:if>
-					<c:if test="${day==6}"><c:if test="${hospital.hos_time6C>=time}"><div class="greenCircle">&nbsp;</div>진료중</c:if><c:if test="${hospital.hos_time6C<time}"><div class="redCircle"></div>진료종료</c:if></c:if>
-					<c:if test="${day==7}"><c:if test="${hospital.hos_time7C>=time}"><div class="greenCircle">&nbsp;</div>진료중</c:if><c:if test="${hospital.hos_time7C<time}"><div class="redCircle"></div>진료종료</c:if></c:if>
-				    &nbsp;                           
-				    <div class="vr"></div>
-				    &nbsp;
-				    <c:if test="${day==1}">${fn:substring(hospital.hos_time1C,0,2)}:${fn:substring(hospital.hos_time1C,2,4)}</c:if>
-				    <c:if test="${day==2}">${fn:substring(hospital.hos_time2C,0,2)}:${fn:substring(hospital.hos_time2C,2,4)}</c:if>
-				    <c:if test="${day==3}">${fn:substring(hospital.hos_time3C,0,2)}:${fn:substring(hospital.hos_time3C,2,4)}</c:if>
-				    <c:if test="${day==4}">${fn:substring(hospital.hos_time4C,0,2)}:${fn:substring(hospital.hos_time4C,2,4)}</c:if>
-				    <c:if test="${day==5}">${fn:substring(hospital.hos_time5C,0,2)}:${fn:substring(hospital.hos_time5C,2,4)}</c:if>
-				    <c:if test="${day==6}">${fn:substring(hospital.hos_time6C,0,2)}:${fn:substring(hospital.hos_time6C,2,4)}</c:if>
-				    <c:if test="${day==7}">${fn:substring(hospital.hos_time7C,0,2)}:${fn:substring(hospital.hos_time7C,2,4)}</c:if>
-				    에 마감</div>
+					<c:if test="${day==1}">
+						<c:if test="${hospital.hos_time1S<=time and time<hospital.hos_time1C}">
+							<div class="greenCircle"></div>진료중
+						</c:if>
+						<c:if test="${hospital.hos_time1S>time and hospital.hos_time1C>=time}">
+							<div class="redCircle"></div>진료종료
+						</c:if>
+					    <c:if test="${hospital.hos_time1S!='null' or hospital.hos_time1C!='null'}">
+					    	&nbsp;                           
+						    <div class="vr"></div>
+						    &nbsp;
+						    <c:if test="${hospital.hos_time1S<=time and time<hospital.hos_time1C}">
+						    	${fn:substring(hospital.hos_time1C,0,2)}:${fn:substring(hospital.hos_time1C,2,4)} 마감
+					    	</c:if>
+					    	<c:if test="${hospital.hos_time1S>time and hospital.hos_time1C>=time}">
+					    		${fn:substring(hospital.hos_time1S,0,2)}:${fn:substring(hospital.hos_time1S,2,4)} 오픈
+					    	</c:if>
+				    	</c:if>
+					</c:if>
+					<c:if test="${day==2}">
+						<c:if test="${hospital.hos_time2S<=time and time<hospital.hos_time2C}">
+							<div class="greenCircle"></div>진료중
+						</c:if>
+						<c:if test="${hospital.hos_time2S>time and hospital.hos_time2C>=time}">
+							<div class="redCircle"></div>진료종료
+						</c:if>
+					    <c:if test="${hospital.hos_time2S!='null' or hospital.hos_time2C!='null'}">
+						    &nbsp;                           
+						    <div class="vr"></div>
+						    &nbsp;
+						    <c:if test="${hospital.hos_time2S<=time and time<hospital.hos_time2C}">
+						    	${fn:substring(hospital.hos_time2C,0,2)}:${fn:substring(hospital.hos_time2C,2,4)} 마감
+					    	</c:if>
+					    	<c:if test="${hospital.hos_time2S>time and hospital.hos_time2C>=time}">
+					    		${fn:substring(hospital.hos_time2S,0,2)}:${fn:substring(hospital.hos_time2S,2,4)} 오픈
+					    	</c:if>
+				    	</c:if>
+					</c:if>
+					<c:if test="${day==3}">
+						<c:if test="${hospital.hos_time3S<=time and time<hospital.hos_time3C}">
+							<div class="greenCircle"></div>진료중
+						</c:if>
+						<c:if test="${hospital.hos_time3S>time and hospital.hos_time3C>=time}">
+							<div class="redCircle"></div>진료종료
+						</c:if>
+					    <c:if test="${hospital.hos_time3S!='null' or hospital.hos_time3C!='null'}">
+	   						&nbsp;                           
+						    <div class="vr"></div>
+						    &nbsp;
+						    <c:if test="${hospital.hos_time3S<=time and time<hospital.hos_time3C}">
+						    	${fn:substring(hospital.hos_time3C,0,2)}:${fn:substring(hospital.hos_time3C,2,4)} 마감
+					    	</c:if>
+					    	<c:if test="${hospital.hos_time3S>time and hospital.hos_time3C>=time}">
+					    		${fn:substring(hospital.hos_time3S,0,2)}:${fn:substring(hospital.hos_time3S,2,4)} 오픈
+					    	</c:if>
+				    	</c:if>
+					</c:if>
+					<c:if test="${day==4}">
+						<c:if test="${hospital.hos_time4S<=time and time<hospital.hos_time4C}">
+							<div class="greenCircle"></div>진료중
+						</c:if>
+						<c:if test="${hospital.hos_time4S>time and hospital.hos_time4C>=time}">
+							<div class="redCircle"></div>진료종료
+						</c:if>
+					    <c:if test="${hospital.hos_time4S!='null' or hospital.hos_time4C!='null'}">
+					    	&nbsp;                           
+						    <div class="vr"></div>
+						    &nbsp;
+						    <c:if test="${hospital.hos_time4S<=time and time<hospital.hos_time4C}">
+						    	${fn:substring(hospital.hos_time4C,0,2)}:${fn:substring(hospital.hos_time4C,2,4)} 마감
+					    	</c:if>
+					    	<c:if test="${hospital.hos_time4S>time and hospital.hos_time4C>=time}">
+					    		${fn:substring(hospital.hos_time4S,0,2)}:${fn:substring(hospital.hos_time4S,2,4)} 오픈
+					    	</c:if>
+				    	</c:if>
+					</c:if>
+					<c:if test="${day==5}">
+						<c:if test="${hospital.hos_time5S<=time and time<hospital.hos_time5C}">
+							<div class="greenCircle"></div>진료중
+						</c:if>
+						<c:if test="${hospital.hos_time5S>time and hospital.hos_time5C>=time}">
+							<div class="redCircle"></div>진료종료
+						</c:if>
+					    <c:if test="${hospital.hos_time5S!='null' or hospital.hos_time5C!='null'}">
+					    	&nbsp;                           
+						    <div class="vr"></div>
+						    &nbsp;
+						    <c:if test="${hospital.hos_time5S<=time and time<hospital.hos_time5C}">
+						    	${fn:substring(hospital.hos_time5C,0,2)}:${fn:substring(hospital.hos_time5C,2,4)} 마감
+					    	</c:if>
+					    	<c:if test="${hospital.hos_time5S>time and hospital.hos_time5C>=time}">
+					    		${fn:substring(hospital.hos_time5S,0,2)}:${fn:substring(hospital.hos_time5S,2,4)} 오픈
+					    	</c:if>
+				    	</c:if>
+					</c:if>
+					<c:if test="${day==6}">
+						<c:if test="${hospital.hos_time6S<=time and time<hospital.hos_time6C}">
+							<div class="greenCircle"></div>진료중
+						</c:if>
+						<c:if test="${hospital.hos_time6S>time and hospital.hos_time6C>=time}">
+							<div class="redCircle"></div>진료종료
+						</c:if>
+					    <c:if test="${hospital.hos_time6S!='null' or hospital.hos_time6C!='null'}">
+   							&nbsp;                           
+						    <div class="vr"></div>
+						    &nbsp;
+						    <c:if test="${hospital.hos_time6S<=time and time<hospital.hos_time6C}">
+						    	${fn:substring(hospital.hos_time6C,0,2)}:${fn:substring(hospital.hos_time6C,2,4)} 마감
+					    	</c:if>
+					    	<c:if test="${hospital.hos_time6S>time and hospital.hos_time6C>=time}">
+					    		${fn:substring(hospital.hos_time6S,0,2)}:${fn:substring(hospital.hos_time6S,2,4)} 오픈
+					    	</c:if>
+				    	</c:if>
+					</c:if>
+					<c:if test="${day==7}">
+						<c:if test="${hospital.hos_time7S<=time and time<hospital.hos_time7C}">
+							<div class="greenCircle"></div>진료중
+						</c:if>
+						<c:if test="${hospital.hos_time7S>time and hospital.hos_time7C>=time}">
+							<div class="redCircle"></div>진료종료
+						</c:if>
+					    <c:if test="${hospital.hos_time7S!='null' or hospital.hos_time7C!='null'}">
+					    	&nbsp;                           
+						    <div class="vr"></div>
+						    &nbsp;
+						    <c:if test="${hospital.hos_time7S<=time and time<hospital.hos_time7C}">
+						    	${fn:substring(hospital.hos_time7C,0,2)}:${fn:substring(hospital.hos_time7C,2,4)} 마감
+					    	</c:if>
+					    	<c:if test="${hospital.hos_time7S>time and hospital.hos_time7C>=time}">
+					    		${fn:substring(hospital.hos_time7S,0,2)}:${fn:substring(hospital.hos_time7S,2,4)} 오픈
+					    	</c:if>
+				    	</c:if>
+					</c:if>
+			    </div>
 				
 				<div class="hospital-address fs-12 fw-7 text-black-3">${hospital.hos_addr}</div>
 				<div class="hospital-docCnt fs-11 fw-8 text-black-3">전문의 ${hospital.doc_cnt}명</div>
@@ -214,21 +330,28 @@ $(document).ready(function() {
                 let output = '';
                 
                 for(let i=0; i<param.length; i++){
-                	output += '<div class="hospital-box">';
+                	output += '<div class="hospital-box" data-hosNum="'+param[i].hos_num+'">';
                 	output += '<div class="hospital-name fs-17 fw-8 text-black-6">'+param[i].hos_name+'</div>';
                 	output += '<div class="hospital-sub fs-11 fw-9 text-gray-7">'+param[i].around+'m</div>';
                 	output += '<div class="hospital-open fs-13 fw-7 text-black-4 d-flex align-items-center">';
-                	if(param[i].hos_time${day}C>=${time}){
-                		output += '<div class="greenCircle">&nbsp;</div>'+'진료중';
+                	if(param[i].hos_time${day}S<=${time} && ${time}<param[i].hos_time${day}C){
+                		output += '<div class="greenCircle"></div>'+'진료중';
                 	} else {
-                		output += '<div class="redCircle">&nbsp;</div>'+'진료종료';
+                		output += '<div class="redCircle"></div>'+'진료종료';
                 	}
-                	output += '&nbsp;'
-                	output += '<div class="vr"></div>';
-                	output += '&nbsp;'+param[i].hos_time${day}C.substr(0,2)+':'+param[i].hos_time${day}C.substr(2,4)+'에 마감';
+                	if(param[i].hos_time${day}S!='null' || param[i].hos_time${day}C!='null'){
+                    	output += '&nbsp;'
+                       	output += '<div class="vr"></div>';
+                       	output += '&nbsp;'
+                		if(param[i].hos_time${day}S<=${time} && ${time}<param[i].hos_time${day}C){
+                    		output += param[i].hos_time${day}C.substr(0,2)+':'+param[i].hos_time${day}C.substr(2,4)+' 마감';
+                    	} else {
+                    		output += param[i].hos_time${day}S.substr(0,2)+':'+param[i].hos_time${day}S.substr(2,4)+' 오픈';
+                    	}
+                	}
                 	output += '</div>';
                 	output += '<div class="hospital-address fs-12 fw-7 text-black-3">'+param[i].hos_addr+'</div>';
-                	output += '<div class="hospital-docCont fs-11 fw-8 text-black-3">'+'정형외과 전문의'+param[i].doc_cnt+'명'+'</div>';
+                	output += '<div class="hospital-docCnt fs-11 fw-8 text-black-3">'+'전문의'+param[i].doc_cnt+'명'+'</div>';
                 	output += '</div>'
                 	output += '<hr width="100%">';
                 }
@@ -250,5 +373,13 @@ $(document).ready(function() {
     }
 
     $(window).on('scroll', onScroll);
+    
+    const hosBox = document.getElementsByClassName('hospital-box');
+    for(let i=0; i<hosBox.length; i++){
+    	hosBox[i].onclick = function(){
+    		let hosNum = hosBox[i].getAttribute('data-hosNum');
+    		location.href = '/hospitals/search/detail/'+hosNum;
+    	}
+    }
 });
 </script>

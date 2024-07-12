@@ -35,4 +35,9 @@ public class HospitalServiceImpl implements HospitalService{
 	public int selectListCntHospital(Map<String,Object> map) {
 		return hospitalMapper.selectListCntHospital(map);
 	}
+	
+	@Override
+	public HospitalVO selectHospital(Long hos_num) {
+		return hospitalMapper.selectHospital(hos_num);
+	};
 }
