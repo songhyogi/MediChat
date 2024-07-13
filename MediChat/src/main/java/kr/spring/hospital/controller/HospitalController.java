@@ -32,7 +32,6 @@ public class HospitalController {
 	@Autowired
 	private HospitalService hospitalService;
 	
-	
 	// 병원
 	@GetMapping("/hospitals")
 	public Model hospital(Model model) {
@@ -100,7 +99,7 @@ public class HospitalController {
 		map.put("day", day);
 		model.addAttribute("time", time);
 		model.addAttribute("day", day);
-		
+		log.debug("<<시간>> = " + "day: " + day + ", time: " +time);
 		
 		// pageNum
 		map.put("pageNum", pageNum);
@@ -152,6 +151,7 @@ public class HospitalController {
 		map.put("day", day);
 		model.addAttribute("time", time);
 		model.addAttribute("day", day);
+		log.debug("<<시간>> = " + "day: " + day + ", time: " +time);
 		
 		// pageNum
 		map.put("pageNum", pageNum);
@@ -184,8 +184,19 @@ public class HospitalController {
 	// 병원 > 검색 결과 > 상세 페이지
 	@GetMapping("/hospitals/search/detail/{hos_num}")
 	public String detail(Model model, @PathVariable Long hos_num) {
+		model.addAttribute("apiKey", apiKey);
+		
 		HospitalVO hospital = hospitalService.selectHospital(hos_num);
 		model.addAttribute("hospital",hospital);
+		
+		// 현재 시간 변수 생성 후 값 넣기
+		LocalDateTime now = LocalDateTime.now();
+		String time = now.format(DateTimeFormatter.ofPattern("HHmm")); //hh:mm
+		int day = now.getDayOfWeek().getValue(); //1:월 2:화 3:수 4:목 5:금 6:토 7:일
+		model.addAttribute("time", time);
+		model.addAttribute("day", day);
+		log.debug("<<시간>> = " + "day: " + day + ", time: " +time);
+		
 		return "detail";
 	}
 }

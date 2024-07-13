@@ -86,10 +86,12 @@
 		</div>
 	</div>
 	<!-- 더 보기 시작 -->
-	<hr>
+	<div class="line"></div>
 	<div id="more">
-		<h4 class="text-center text-lightgray fw-7">더 보기</h4>
+		<p class="text-lightgray fw-7">더 보기</p>
 	</div>
+	<div class="line"></div>
+	
 	<div class="overlay" id="overlay"></div>
 	<div id="more_box" class="p-5 rounded-top-3 border bg-white" style="display: none;">
 		<h5 class="fw-8">진료과목 선택</h5>
@@ -115,7 +117,7 @@
 						<img width="50" height="50" src="/images/subIcon/${sub_icon}.png">
 					</div>
 				</div>
-				<hr noshade="noshade">
+				<div class="line"></div>
 			</c:forEach>
 		</div>
 	</div>
@@ -151,6 +153,7 @@
 	</div>
 </div>
 <!-- 어떻게 아프신가요 끝 -->
+<div class="line"></div>
 <!-- 검색창 + 인기 검색어 시작 -->
 <div class="bg-green-1 p-5">
 	<form id="search_form" class="d-flex" method="get" action="/hospitals/search">

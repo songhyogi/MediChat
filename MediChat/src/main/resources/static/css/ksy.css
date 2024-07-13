@@ -49,9 +49,11 @@
 	height: 40px;
 	cursor: pointer;
 }
-#more h4{
+#more p{
 	margin: 0 auto;
 	font-size: 20px;
+	text-align: center;
+	line-height: 50px;
 }
 #more_box{
 	position: fixed;
@@ -143,8 +145,6 @@
 	width:700px;
 	height: 600px;
 	margin: 0 auto;
-	text-align: center;
-	align-self: center;
 }
 
 /* =================== hospital > search =================== */
@@ -230,9 +230,41 @@
 	background-color: #FF073A;
 	margin-right: 3px;
 }
-
+.greenText{
+	color: #f2f2f2;
+}
+.redText{
+	color: #FF073A;
+}
 /* =================== hospital > search > detail =================== */
-#detail_hosName{
-	padding-top: 30px;
-	padding-left: 20px;
+#detail_hosName,#detail_hosTime,#detail_hosSub,#detail_hosPosition,#detail_hosTell{
+	padding: 30px 20px;
+}
+.detail-hospital-info-item{
+	width: auto;
+	height: 35px;
+	margin-right: 8px;
+	padding: 5px 10px;
+	border-radius: 10px;
+	background-color: #e0e0e0;
+	align-content:center;
+	font-size: 14px;
+	color: #5f5f5f;
+}
+#detail_hosRev{
+	padding:30px 20px;
+}
+.detail-hosRev-item{
+	margin: 10px 0;
+	padding: 10px;
+}
+.detail_hosRev_profile{
+	margin-right: 20px;
+}
+.detail_hosRev_content{
+	width: 450px;
+	max-height: 100px;
+	padding-top: 10px;
+	overflow: hidden;
+	margin-right: 40px;
 }
