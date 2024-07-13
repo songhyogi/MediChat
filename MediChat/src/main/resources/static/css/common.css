@@ -11,19 +11,19 @@ body{
 /* ================= 글 두께 ================= */
 /* 글 두께 1~10 */
 .fw-1 {
-	font-weight: 100 !important;
+	font-weight: 100;
 }                    
 .fw-2 {              
-	font-weight: 200 !important;
+	font-weight: 200;
 }                    
 .fw-3 {              
-	font-weight: 300 !important;
+	font-weight: 300;
 }                    
 .fw-4 {              
-	font-weight: 400 !important;
+	font-weight: 400;
 }                    
 .fw-5 {              
-	font-weight: 500 !important;
+	font-weight: 500;
 }                    
 .fw-6 {              
 	font-weight: 600;
@@ -160,6 +160,9 @@ body{
 
 /* ================= 배경 색상 ================= */
 /* 회색 7단계 */
+.bg-gray-0 {
+	background-color: rgb(247, 249, 250);
+}
 .bg-gray-1 {
     background-color: #f2f2f2; /* 매우 연한 회색 */
 }
@@ -228,9 +231,12 @@ body{
 }
 
 /* ================= 구분선 ================= */
-hr{
-	padding: 0 0;
-	margin: 10px 0;
+.line{
+	width: 100%;
+	height:1px;
+	border-bottom: 1px solid #dfe1e2;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
 /* ================= 헤더 ================= */
@@ -363,7 +369,11 @@ hr{
 }
 
 /* ================= 푸터 ================= */
-
+.line-footer{
+	width: 100%;
+	height:1px;
+	border-bottom: 1px solid #dfe1e2;
+}
 .footer-title{
 	font-weight: 700;
 	color: #4a4a4a;
@@ -398,6 +408,12 @@ hr{
 	color: #8c8c8c;
 }
 
+#detail_timeAndEtc{
+	height: 50px;
+}
+#detail_hospitalEtc{
+	overflow-y : auto;
+}
 
 
 /* 일단 보류(색상코드 보존용) */
