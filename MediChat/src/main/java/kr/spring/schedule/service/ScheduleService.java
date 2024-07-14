@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
+import kr.spring.holiday.vo.HolidayVO;
 import kr.spring.schedule.vo.DayoffVO;
 
 public interface ScheduleService {
@@ -15,7 +16,7 @@ public interface ScheduleService {
 	//근무시작시간, 근무종료시간 가져오기
 	public Map<String,String> getWorkingHours(Long doc_num);
 	//개별휴무일 가져오기
-	public String getHoliday(Long doc_num);
-	//근무 수정
+	public List<HolidayVO> getHoliday(Long doc_num);
+	//개별휴무 등록
 	public void insertHoliday(Long doc_num);
 }

@@ -9,7 +9,7 @@
 
 <tiles:insertAttribute name="font" ignore="true"/>
 <tiles:insertAttribute name="bootstrap" ignore="true"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/common.css" type="text/css">
+
 
 </head>
 <body>

@@ -93,31 +93,31 @@
 			<if test="commonFilter.contains('NIGHTTIME')">
 				<if test="day==1">
 					AND hos_time1c != 'null'
-					AND hos_time1c >= '1800'
+					AND hos_time1c > '1800'
 				</if>
 				<if test="day==2">
 					AND hos_time2c != 'null'
-					AND hos_time2c >= '1800'
+					AND hos_time2c > '1800'
 				</if>
 				<if test="day==3">
 					AND hos_time3c != 'null'
-					AND hos_time3c >= '1800'
+					AND hos_time3c > '1800'
 				</if>
 				<if test="day==4">
 					AND hos_time4c != 'null'
-					AND hos_time4c >= '1800'
+					AND hos_time4c > '1800'
 				</if>
 				<if test="day==5">
 					AND hos_time5c != 'null'
-					AND hos_time5c >= '1800'
+					AND hos_time5c > '1800'
 				</if>
 				<if test="day==6">
 					AND hos_time6c != 'null'
-					AND hos_time6c >= '1300'
+					AND hos_time6c > '1300'
 				</if>
 				<if test="day==7">
 					AND hos_time7c != 'null'
-					AND hos_time7c >= '1300'
+					AND hos_time7c > '1300'
 				</if>
 			</if>
 			<if test="commonFilter.contains('WEEKEND')">
@@ -126,17 +126,15 @@
 		</if>
 	</sql>
 	<sql id="searchHospitalBySortType">
-		<if test="sortType=='NEAR'">
-			ORDER BY around
-		</if>
+
 		<if test="sortType=='REVIEW'">
-			ORDER BY rev_cnt DESC
+			,rev_cnt DESC
 		</if>
 		<if test="sortType=='SCORE'">
-			ORDER BY hos_score DESC
+			,hos_score DESC
 		</if>
 		<if test="sortType=='HIT'">
-			ORDER BY hos_hit DESC
+			,hos_hit DESC
 		</if>
 	</sql>
 	
@@ -167,6 +165,7 @@
 		              <![CDATA[
 		              WHERE around <= 3000
 		              ]]>
+		              ORDER BY around
 		              <include refid="searchHospitalBySortType"/>
 		            ) a
 		       <![CDATA[     
@@ -180,5 +179,9 @@
 	<!-- selectListCntHospital -->
 	<select id="selectListCntHospital" parameterType="map" resultType="integer">
 		SELECT COUNT(*) FROM HOSPITAL
+	</select>
+	
+	<select id="selectHospital" parameterType="long" resultType="hospitalVO">
+		SELECT * FROM hospital WHERE hos_num=#{hos_num}
 	</select>
 </mapper>

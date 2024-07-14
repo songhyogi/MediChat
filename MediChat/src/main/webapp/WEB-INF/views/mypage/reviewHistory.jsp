@@ -5,14 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>후기내역</title>
-<style>
-.reviewHistory{
-	margin-top:50px;
-}
-</style>
 </head>
 <body>
-	<div class="reviewHistory" style="text-align:center; font-size:20px;">
+	<div class="reviewHistory">
 		<ul>
 			<li>후기</li>
 			<li>후기</li>

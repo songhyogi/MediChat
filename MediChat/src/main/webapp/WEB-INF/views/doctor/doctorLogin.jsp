@@ -2,30 +2,31 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<div>
-	<form:form action="login" id="doctor_login" modelAttribute="doctorVO">
-		<form:errors element="div" cssClass="error-color"/>
+<div class="container">
+	<div style="text-align:right;">
+	    <span style="display:block; font-weight:bold;">의사회원 로그인</span>
+	</div>
+	<form:form action="login" id="doctor_login" modelAttribute="doctorVO" style="padding-bottom:50px;">
 <!-- 	<input type="hidden" id="lon" name="user_lon" value="" >
 		<input type="hidden" id="lat" name="user_lat" value="" > -->
 		<ul>
-			<li class="floating-label">
-				<form:input path="mem_id" placeholder="아이디" autocomplete="off" cssClass="form-input"/>
-				<form:label path="mem_id">아이디</form:label>
+			<li>
+				<form:input path="mem_id" placeholder="아이디" autocomplete="off" style="margin-top:130px;"/>
 				<form:errors path="mem_id" cssClass="error-color"/>
 			</li>
-			<li class="floating-label">
-				<form:password path="doc_passwd" placeholder="비밀번호" cssClass="form-input"/>
-				<form:label path="doc_passwd">비밀번호</form:label>
+			<li>
+				<form:password path="doc_passwd" placeholder="비밀번호" style="margin-top:15px;"/>
 				<form:errors path="doc_passwd" cssClass="error-color"/>
 			</li>
 		</ul>
 		<div>
-			<form:button id="login_btn">로그인</form:button>
+			<form:errors element="div" cssClass="error-color"/>
+			<form:button class="login_btn">로그인</form:button>
 		</div>
-		<div>
+		<div class="button-container">
 			<label for="auto">
 			<input type="checkbox" name="auto" id="auto">자동로그인</label>
-			<input type="button" value="아이디 찾기">
+			<input type="button" value="아이디 찾기" style="margin-right:10px;">
 			<input type="button" value="비밀번호 찾기">
 		</div>
 	</form:form>

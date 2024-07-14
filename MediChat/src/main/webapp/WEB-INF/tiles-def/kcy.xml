@@ -7,7 +7,6 @@
 <tiles-definitions>
 	<definition name="kcy" template="/WEB-INF/views/template/layout_kcy.jsp">
 		<put-attribute name="css" value="/WEB-INF/views/common/css.jsp"/>
-		<put-attribute name="css" value="/WEB-INF/views/css/kcy.jsp"/>
 		<put-attribute name="bootstrap" value="/WEB-INF/views/common/bootStrap.jsp"/>
 		<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"/>
 		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/>
@@ -43,6 +42,10 @@
 	<definition name="doctorLogin" extends="kcy">
 		<put-attribute name="title" value="로그인(의사)"/>
 		<put-attribute name="body" value="/WEB-INF/views/doctor/doctorLogin.jsp"/>
+	</definition>
+	<definition name="doctorModify" extends="kcy">
+		<put-attribute name="title" value="회원정보수정(의사)"/>
+		<put-attribute name="body" value="/WEB-INF/views/doctor/doctorModify.jsp"/>
 	</definition>
 	<!-- 관리자 -->
 	<definition name="adminAgree" extends="kcy">

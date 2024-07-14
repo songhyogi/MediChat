@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.spring.holiday.vo.HolidayVO;
 import kr.spring.schedule.dao.ScheduleMapper;
-import kr.spring.schedule.vo.DayoffVO;
 
 @Service
 @Transactional
@@ -28,7 +28,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 	}
 
 	@Override
-	public String getHoliday(Long doc_num) {
+	public List<HolidayVO> getHoliday(Long doc_num) {
 		return scheduleMapper.getHoliday(doc_num);
 	}
 

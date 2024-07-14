@@ -17,12 +17,12 @@
 		<tiles:insertAttribute name="header"/>
 	</div>
 	<div class="custom-container pt-4">
-		<div id="main_body" class="row">
-			<tiles:insertAttribute name="body"/>
+		<div id="main_body">
+				<tiles:insertAttribute name="body"/>
+			</div>
 		</div>
 	<div id="main_footer">
 		<tiles:insertAttribute name="footer"/>
-	</div>
 	</div>
 </div>
 </body>
