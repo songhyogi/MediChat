@@ -35,6 +35,10 @@
 			onclick="location.href='${pageContext.request.contextPath}/mypage/reviewHistory'">
 		</li>
 		<li>
+			<input type="button" class="detail-btn" value="비대면 진료"
+			onclick="location.href='${pageContext.request.contextPath}/chat/chatView'">
+		</li>
+		<li>
 			<input type="button" class="detail-btn" value="로그아웃"
 			onclick="location.href='#'">
 		</li>

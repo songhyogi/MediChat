@@ -15,6 +15,7 @@ public interface ChatService {
 		public List<ChatVO> selectChatListForDoc(long mem_num);
 		public void createChat(ReservationVO reservationVO);
 		public ReservationVO selectReservationByChatNum(long chat_num);
+		public ChatVO selectChat(long chat_num);
 		public List<ChatMsgVO> selectMsg(long chat_num);
 		public void insertMsg(ChatMsgVO chatMsgVO);
 		public void insertChatFile(ChatFileVO chatFileVO);
