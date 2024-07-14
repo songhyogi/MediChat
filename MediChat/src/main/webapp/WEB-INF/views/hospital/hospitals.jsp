@@ -11,37 +11,37 @@
 	<h4 class="text-black-6 fw-7 fs-23">어떤 병원을 찾으세요?</h4>
 	<div class="row justify-content-between">
 		<div class="col-2">
-			<div class="subject rounded-2 bg-gray-1 text-center" data-keyword="피부과">
+			<div class="subject rounded-2 bg-gray-0 text-center" data-keyword="피부과">
 				<p class="sub-icon"><img src="/images/subIcon/skin.png" width="30" height="30"></p>
 				<p class="sub-name">피부과</p>
 			</div>
 		</div>
 		<div class="col-2">
-			<div class="subject rounded-2 bg-gray-1 text-center" data-keyword="산부인과">
+			<div class="subject rounded-2 bg-gray-0 text-center" data-keyword="산부인과">
 				<p class="sub-icon"><img src="/images/subIcon/gynecology.png" width="30" height="30"></p>
 				<p class="sub-name">산부인과</p>
 			</div>                            
 		</div>                                
 		<div class="col-2">                   
-			<div class="subject rounded-2 bg-gray-1 text-center" data-keyword="이비인후과">
+			<div class="subject rounded-2 bg-gray-0 text-center" data-keyword="이비인후과">
 				<p class="sub-icon"><img src="/images/subIcon/ear.png" width="30" height="30"></p> 
 				<p class="sub-name">이비인후과</p>
 			</div>                            
 		</div>                                
 		<div class="col-2">                   
-			<div class="subject rounded-2 bg-gray-1 text-center" data-keyword="내과">
+			<div class="subject rounded-2 bg-gray-0 text-center" data-keyword="내과">
 				<p class="sub-icon"><img src="/images/subIcon/physician.png" width="30" height="30"></p> 
 				<p class="sub-name">내과</p>   
 			</div>                             
 		</div>                                 
 		<div class="col-2">                    
-			<div class="subject rounded-2 bg-gray-1 text-center" data-keyword="안과">
+			<div class="subject rounded-2 bg-gray-0 text-center" data-keyword="안과">
 				<p class="sub-icon"><img src="/images/subIcon/eye.png" width="30" height="30"></p> 
 				<p class="sub-name">안과</p>   
 			</div>                             
 		</div>                                 
 		<div class="col-2">                    
-			<div class="subject rounded-2 bg-gray-1 text-center" data-keyword="가정의학과">
+			<div class="subject rounded-2 bg-gray-0 text-center" data-keyword="가정의학과">
 				<p class="sub-icon"><img src="/images/subIcon/home.png" width="30" height="30"></p>
 				<p class="sub-name">가정의학과</p>
 			</div>
@@ -49,37 +49,37 @@
 	</div>
 	<div class="row justify-content-between">
 		<div class="col-2">
-			<div class="subject rounded-2 bg-gray-1 text-center" data-keyword="소아과">
+			<div class="subject rounded-2 bg-gray-0 text-center" data-keyword="소아과">
 				<p class="sub-icon"><img src="/images/subIcon/child.png" width="30" height="30"></p>
 				<p class="sub-name">소아과</p>
 			</div>                            
 		</div>                                
 		<div class="col-2">                   
-			<div class="subject rounded-2 bg-gray-1 text-center" data-keyword="정형외과">
+			<div class="subject rounded-2 bg-gray-0 text-center" data-keyword="정형외과">
 				<p class="sub-icon"><img src="/images/subIcon/bone.png" width="30" height="30"></p>
 				<p class="sub-name">정형외과</p>
 			</div>
 		</div>
 		<div class="col-2">
-			<div class="subject rounded-2 bg-gray-1 text-center" data-keyword="정신건강의학과">
+			<div class="subject rounded-2 bg-gray-0 text-center" data-keyword="정신건강의학과">
 				<p class="sub-icon"><img src="/images/subIcon/mental.png" width="30" height="30"></p>
 				<p class="sub-name">정신건강의학과</p>
 			</div>
 		</div>
 		<div class="col-2">
-			<div class="subject rounded-2 bg-gray-1 text-center" data-keyword="비뇨기과">
+			<div class="subject rounded-2 bg-gray-0 text-center" data-keyword="비뇨기과">
 				<p class="sub-icon"><img src="/images/subIcon/urology.png" width="30" height="30"></p>
 				<p class="sub-name">비뇨기과</p>
 			</div>
 		</div>
 		<div class="col-2">
-			<div class="subject rounded-2 bg-gray-1 text-center" data-keyword="치과">
+			<div class="subject rounded-2 bg-gray-0 text-center" data-keyword="치과">
 				<p class="sub-icon"><img src="/images/subIcon/tooth.png" width="30" height="30"></p>
 				<p class="sub-name">치과</p>
 			</div>
 		</div>
 		<div class="col-2">
-			<div class="subject rounded-2 bg-gray-1 text-center" data-keyword="신경외과">
+			<div class="subject rounded-2 bg-gray-0 text-center" data-keyword="신경외과">
 				<p class="sub-icon"><img src="/images/subIcon/headache.png" width="30" height="30"></p>
 				<p class="sub-name">신경외과</p>
 			</div>
