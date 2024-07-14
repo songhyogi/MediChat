@@ -40,7 +40,7 @@
 	padding: 5px;
 }
 .subject:hover{
-	background-color: #cecece;
+	background-color: RGB(220, 225, 230);
 	transform: scale(1.15);
 }
 
