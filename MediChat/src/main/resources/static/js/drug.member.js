@@ -1,5 +1,5 @@
 $(function(){
-	/*------------------모달------------------ */
+	/*------------------의약품 등록------------------ */
 	//의약품 검색
 	let drug_list = [];
 	
@@ -54,6 +54,61 @@ $(function(){
 		$(this).remove();//span 태그 삭제
 	});
 	
-	//유효성 체크(복용내용 외 전부)
+	//유효성 체크(복용내용 외 전부) 및 등록
+	$('#drugSearch').submit(function(event){
+		event.preventDefault();
+		if(drug_list.length == 0){
+			alert('복용한 의약품을 입력하세요');
+			$('#drugSelect').val('').focus();
+			return false;
+		}
+		if($('#selectedDate').val().trim()==''){
+			alert('복용 일자를 입력하세요');
+			$('#selectedDate').val('').focus();
+			return false;
+		}
+		if($('#selectedTime').val().trim()==''){
+			alert('복용 시간을 입력하세요');
+			$('#selectedTime').val('').focus();
+			return false;
+		}
+		if($('#memberDosage').val().trim()==''){
+			alert('복용 일자를 입력하세요');
+			$('#memberDosage').val('').focus();
+			return false;
+		}
+		
+		// 선택한 의약품을 hidden input으로 추가
+	    $('<input>').attr({
+	        type: 'hidden',
+	        name: 'drug_list',
+	        value: JSON.stringify(drug_list)
+	    }).appendTo('#drugSearch');
+
+
+		let form_data = $(this).serialize();
+		console.log(form_data);
+		//서버와 통신
+		$.ajax({
+			url:'/memberDrug/memberDrugInsertAjax',
+			type:'post',
+			data:form_data,
+			success:function(param){
+				if(param.result=='logout'){
+					alert('로그인해야 등록할 수 있습니다.');
+				}else if(param.result=='success'){
+					alert('의약품 복용 기록 등록이 완료되었습니다.');
+					$('#drugModal').hide();
+					//폼 초기화
+					$('#drugSearch')[0].reset();
+					$('#drugSelect').empty();
+                    drug_list = [];
+				}
+			},
+			error:function(){
+				alert('네트워크 오류 발생');
+			}
+		});
+	});
 	
 });

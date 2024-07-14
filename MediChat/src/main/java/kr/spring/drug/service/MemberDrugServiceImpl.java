@@ -26,26 +26,22 @@ public class MemberDrugServiceImpl implements MemberDrugService{
 	}
 	
 	@Override
-	public List<MemberDrugVO> selectMemberDrugList(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<MemberDrugVO> selectMemberDrugList(Long mem_num) {
+		return memberdrugMapper.selectMemberDrugList(mem_num);
 	}
 
 	@Override
 	public void insertDrug(MemberDrugVO memberDrug) {
-		// TODO Auto-generated method stub
-		
+		memberdrugMapper.insertDrug(memberDrug);
 	}
 
 	@Override
 	public void updateDrug(MemberDrugVO memberDrug) {
-		// TODO Auto-generated method stub
-		
+		memberdrugMapper.updateDrug(memberDrug);
 	}
 
 	@Override
 	public void deleteDrug(Long med_num) {
-		// TODO Auto-generated method stub
-		
+		memberdrugMapper.deleteDrug(med_num);
 	}
 }

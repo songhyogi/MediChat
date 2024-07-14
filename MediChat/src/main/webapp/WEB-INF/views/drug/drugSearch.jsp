@@ -27,7 +27,7 @@
 		<div class="result-display">표시할 게시물이 없습니다</div>
 	</c:if>
 	<c:if test="${count > 0}">
-		<table class="drug">
+		<table class="table table-hover">
 			<tr>
 				<th>식별</th>
 				<th>제품명</th>
