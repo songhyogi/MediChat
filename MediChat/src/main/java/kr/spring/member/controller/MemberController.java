@@ -255,7 +255,8 @@ public class MemberController {
 	public String deleteSubmit(@Valid MemberVO memberVO,BindingResult result,HttpSession session) {
 		
 		//아이디와 비밀번호만 유효성 체크하여 오류가 있다면 폼으로
-		if(result.hasFieldErrors("mem_id") || result.hasFieldErrors("mem_passwd")||result.hasFieldErrors("mem_email")) {
+		if(result.hasFieldErrors("mem_id") || result.hasFieldErrors("mem_passwd")
+												||result.hasFieldErrors("mem_email")) {
 			return "memberDelete";
 		}
 		
@@ -280,9 +281,9 @@ public class MemberController {
 		if(user==null) {//로그인X
 			getBasicProfileImage(request, model);//기본이미지 불러오기
 		}else {//로그인O
-			MemberVO memberVO = memberService.selectMember(user.getMem_num());//저장된 이미지를 불러옴
+			MemberVO memberVO = memberService.selectMember(user.getMem_num());
 			
-			viewProfile(memberVO, request, model);
+			memViewProfile(memberVO, request, model);
 		}
 		return "imageView";
 	}
@@ -292,13 +293,13 @@ public class MemberController {
 	public String getProfileByMem_num(long mem_num,HttpServletRequest request,Model model) {
 		MemberVO memberVO = memberService.selectMember(mem_num);
 		
-		viewProfile(memberVO,request,model);
+		memViewProfile(memberVO,request,model);
 		
 		return "imageView";
 	}
 	
 	//프로필 사진 처리를 위한 공통 코드
-	public void viewProfile(MemberVO memberVO,HttpServletRequest request,Model model) {
+	public void memViewProfile(MemberVO memberVO,HttpServletRequest request,Model model) {
 		if(memberVO == null || memberVO.getMem_photoname() == null) {
 			//DB에 저장된 프로필 이미지가 없기 때문에 기본 이미지 로딩
 			getBasicProfileImage(request, model);
@@ -315,10 +316,8 @@ public class MemberController {
 		byte[] readbyte = FileUtil.getBytes(request.getServletContext().getRealPath("/image_bundle/face.png"));
 		
 		model.addAttribute("imageFile",readbyte);
-		model.addAttribute("filename","face.png");
-		
+		model.addAttribute("filename","face.png");	
 	}
-	
 	
 	/*=============================
 	 * 캡챠 API
