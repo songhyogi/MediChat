@@ -40,6 +40,11 @@ public class ChatServiceImpl implements ChatService{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public ChatVO selectChat(long chat_num) {
+		return chatMapper.selectChat(chat_num);
+	}
 
 	@Override
 	public List<ChatMsgVO> selectMsg(long chat_num) {
@@ -68,7 +73,6 @@ public class ChatServiceImpl implements ChatService{
 		// TODO Auto-generated method stub
 		
 	}
-
 
 
 }

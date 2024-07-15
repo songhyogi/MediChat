@@ -8,17 +8,19 @@
 }
 .nav-item{
 	width:200px;
-	height:100px;
 }
 .nav-item th, td{
 	padding:10px;
 	border-bottom:2px solid #cecece;
 }
+.nav-item th{
+	text-align:center;
+}
 .nav-item a{
 	text-decoration: none;
 }
 .nav-item a:hover{
-	color:#757575;
+	color:#333333;
 	cursor:pointer;
 }
 .nav-title th{
@@ -30,12 +32,15 @@
 	height:800px;
 }
 .chat-header{
+	display:table-cell;
+	vertical-align:middle;
 	padding:10px;
+	width:600px;
 	height:130px;
 }
-.chat-title{
-	padding-left:40px;
-	color:white;	
+.chat-title,.chat-date{
+	padding-left:10px;
+	color:white;
 }
 .chat-body{
 	width:100%;
