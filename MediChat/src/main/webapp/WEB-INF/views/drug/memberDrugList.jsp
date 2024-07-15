@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/index.global.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/drug.member.js"></script>
@@ -26,6 +28,18 @@
                 return { html: html };
             },
             fixedWeekCount: false, // 다음 달의 날짜가 보여지지 않게 설정 
+            //이벤트 적용
+            events:[
+            	<c:forEach var="memberDrug" items="${memberDrug}" varStatus="status">
+            		<c:if test="${status.index>0}">,</c:if>
+            		{
+            			title: '${memberDrug.med_title}',
+            			start: '${memberDrug.med_date}',
+            			allDay: true
+            		}
+            	</c:forEach>
+            ],
+            //날짜 클릭 시
             select:function(arg){ //오늘 이후 날짜 선택 불가
             	var today = new Date(); //현재 날짜 및 시간
                 var selectedDate = new Date(arg.start);	//선택한 날짜
@@ -38,8 +52,10 @@
             		$('#selectedDate').val(arg.start.toISOString().slice(0, 10));
             		$('#drugModal').show();
             	}
+            },
+            eventClick:function(event){//이벤트 클릭
+            	alert('이벤트 클릭');
             }
-            
         });
         calendar.render();
     });
@@ -50,11 +66,8 @@
     	});
     });
 </script>
-<div>
-	<input type="button" value="등록">
-</div>
 <br>
-<!-- 모달 시작 -->
+<!-- 등록 모달 시작 -->
 <div class="modal" id="drugModal">
 	<div class="modal-header">
 		<div>의약품 복용 기록 등록</div>
@@ -63,9 +76,9 @@
 	<div class="modal-body">
 	<form action="memberDrugSearch" method="post" id="drugSearch">
 		<ul>
-			<!-- <li>
-				증상 : <input type="text" class="check">
-			</li> -->
+			<li>
+				증상 : <input type="text" class="check" id="title" name="med_title">
+			</li>
 			<li>
 				<label>의약품명</label> 
 				<input type="text" id="drug_search" autocomplete="off" class="check">
@@ -73,21 +86,26 @@
 				<div id="drugSelect"></div>
 			</li>
 			<li>
-				복용일자 : <input type="date" id="selectedDate" class="check">
+				복용일자 : <input type="date" id="selectedDate" class="check" name="med_date">
 			</li>
 			<li>
 				복용시간 : 
-				<select id="selectedTime">
+				<input type="checkbox" name="med_time" value="아침" class="drug">아침
+				<input type="checkbox" name="med_time" value="점심">점심
+				<input type="checkbox" name="med_time" value="저녁">저녁
+				<input type="checkbox" name="med_time" value="자기 전">자기 전
+				 
+				<!-- <select id="selectedTime" name="med_time">
 					<option value="" selected disabled>-복용시간-</option>
 					<option value="1">아침</option>
 					<option value="2">점심</option>
 					<option value="3">저녁</option>
 					<option value="4">자기 전</option>
-				</select>
+				</select> -->
 			</li>	
 			<li>
-				복용량 : <input type="text" id="memberDosage" class="check"><br>
-				메모 : <textarea></textarea>
+				복용량 : <input type="text" id="memberDosage" class="check" name="med_dosage"><br>
+				메모 : <textarea name="med_note"></textarea>
 			</li>	
 		</ul>
 		<div>
@@ -96,7 +114,48 @@
 	</form>
 	</div>
 </div>
-<!-- 모달 끝 -->
+<!-- 등록 모달 끝 -->
+<!-- 수정 모달 시작 -->
+<div class="modal-" id="updateDrug">
+	<div class="modal-header">
+		<div>의약품 복용 기록 수정</div>
+		<div class="close">&times;</div>
+	</div>
+	<div class="modal-body">
+	<form action="memberDrugSearch" method="post" id="drugSearch">
+	<input type="hidden">
+		<ul>
+			<li>
+				증상 : <input type="text" class="check" id="title" name="med_title">
+			</li>
+			<li>
+				<label>의약품명</label> 
+				<input type="text" id="drug_search" autocomplete="off" class="check">
+				<ul id="searchDrugList"></ul>
+				<div id="drugSelect"></div>
+			</li>
+			<li>
+				복용일자 : <input type="date" id="selectedDate" class="check" name="med_date">
+			</li>
+			<li>
+				복용시간 : 
+				<input type="checkbox" name="med_time" value="아침" class="drug">아침
+				<input type="checkbox" name="med_time" value="점심">점심
+				<input type="checkbox" name="med_time" value="저녁">저녁
+				<input type="checkbox" name="med_time" value="자기 전">자기 전
+			</li>	
+			<li>
+				복용량 : <input type="text" id="memberDosage" class="check" name="med_dosage"><br>
+				메모 : <textarea name="med_note"></textarea>
+			</li>	
+		</ul>
+		<div>
+			<input type="submit" value="전송">
+		</div>
+	</form>
+	</div>
+</div>
+<!-- 수정 모달 끝 -->
 <br>
 <!-- 캘린더 -->
 <div id='calendar'></div>

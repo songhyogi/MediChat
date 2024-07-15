@@ -1,6 +1,5 @@
 package kr.spring.drug.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.spring.chat.vo.ChatVO;
 import kr.spring.drug.service.MemberDrugService;
 import kr.spring.drug.vo.DrugInfoVO;
 import kr.spring.drug.vo.MemberDrugVO;
@@ -27,6 +25,7 @@ public class MemberDrugController {
 	MemberDrugService memberDrugService;
 	
 	/*------회원 의약품 목록------*/
+	//마이페이지 접근
 	@GetMapping("/memberDrug/list")
 	public String getDrugList(HttpSession session, Model model) {
 				
@@ -79,7 +78,7 @@ public class MemberDrugController {
 		memberDrug.setMem_num(user.getMem_num());
 		
 		memberDrugService.insertDrug(memberDrug);
-
+		
 		mapJson.put("result", "success");
 		
 		return mapJson;

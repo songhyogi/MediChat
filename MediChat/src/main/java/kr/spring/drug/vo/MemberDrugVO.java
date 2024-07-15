@@ -14,11 +14,13 @@ public class MemberDrugVO {
 	private int med_num;
 	private long mem_num;
 	@NotBlank
+	private String med_title;
+	@NotBlank
 	private String med_name;
 	@NotBlank
 	private String med_date;
-	@NotEmpty
-	private int med_time;
+	@NotBlank
+	private String med_time;
 	@NotBlank
 	private String med_dosage;
 	private String med_note;
