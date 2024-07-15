@@ -13,6 +13,13 @@
 .align-center {
   text-align: center;
 }
+ul {
+    list-style-type: none; /* 모든 ul 태그의 점 제거 */
+}
+
+ul li {
+    list-style-type: none; /* 각각의 li 태그의 점 제거 */
+}
 
 /*----------모달창----------*/
 .modal{
