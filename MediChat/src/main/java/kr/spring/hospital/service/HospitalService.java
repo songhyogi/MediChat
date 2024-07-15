@@ -13,7 +13,8 @@ public interface HospitalService {
 	
 	// 실 사용
 	public List<HospitalVO> selectListHospital(Map<String,Object> map);
-	public int selectListCntHospital(Map<String,Object> map);
 	
 	public HospitalVO selectHospital(Long hos_num);
+	
+	public void initHitHospital();
 }
