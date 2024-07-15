@@ -1,10 +1,15 @@
 package kr.spring.chat.controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +17,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.spring.chat.service.ChatService;
+import kr.spring.chat.vo.ChatMsgVO;
 import kr.spring.chat.vo.ChatVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.reservation.vo.ReservationVO;
@@ -26,50 +37,90 @@ public class ChatController {
 	@Autowired
 	ChatService chatService;
 	
-	@ModelAttribute
-	public ChatVO initCommand() {
-		return new ChatVO();
-	}
-	
-	
-	
-	//비대면채팅 페이지 호출
+	/*=======================
+	 * 	 비대면채팅 페이지 호출
+	 ========================*/
 	@GetMapping("/chat/chatView")
 	public String getChat(HttpSession session, Model model) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
+		
 		List<ChatVO> list = new ArrayList<ChatVO>();
 		
 		if(user.getMem_auth()==2) {
 			list = chatService.selectChatListForMem(user.getMem_num());
-			log.debug("채팅 내용 : "+list);
-			log.debug("user.mem_num=="+user.getMem_num());
+			log.debug("<<생성된 채팅방 호출>> - 일반회원번호: "+user.getMem_num());
+			log.debug("<<생성된 채팅방 호출>> - 일반회원번호: "+list);
 		}else if(user.getMem_auth()==3){
 			list = chatService.selectChatListForDoc(user.getMem_num());
-			log.debug("mem_auth==3");
+			log.debug("<<생성된 채팅방 호출>> - 의사회원번호: " + user.getMem_num());
+			log.debug("<<생성된 채팅방 호출>> - 일반회원번호: "+list);
 		}
 		
-		System.out.println(list.size());
 		model.addAttribute("list",list);
+		log.debug("생성된 채팅방의 모델: "+model);
 		
 		return "chatView";
 	}
 	
-	/*
-	//생성된 채팅방 반환
-	public String setNav(HttpSession session, Model model){
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		List<ChatVO> list = new ArrayList<ChatVO>();
+	/*=======================
+	 * 	  채팅 내역 불러오기
+	 ========================*/
+	@GetMapping("/chat/chatDetail")
+	@ResponseBody
+	public Map<String, Object> getMessage(HttpSession session,
+										  @RequestParam("chat_num") long chat_num,
+										  @RequestParam("res_date") String res_date,
+										  @RequestParam("res_time") String res_time){
+		log.debug("<<채팅 입장>> 채팅방 번호: "+ chat_num);
+		log.debug("<<예약 날짜, 예약 시간: >>"+res_date+ res_time);
 		
-		if(user.getMem_auth()==2) {
-			list = chatService.selectChatListForMem(user.getMem_num());
-		}else if(user.getMem_auth()==3){
-			list = chatService.selectChatListForDoc(user.getMem_num());
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		
+		List<ChatMsgVO> msg_list = new ArrayList<ChatMsgVO>();
+		ReservationVO reservation = chatService.selectReservationByChatNum(chat_num);
+		
+		//파라미터를 날짜 및 시각으로 파싱
+		LocalDate resDate = LocalDate.parse(reservation.getRes_date(), DateTimeFormatter.ISO_DATE);
+		LocalTime resTime = LocalTime.parse(reservation.getRes_time(), DateTimeFormatter.ofPattern("HH:mm"));
+		
+		//local 시각과 비교할 날짜와 시각으로 파싱
+		LocalDateTime reservationDateTime = LocalDateTime.of(resDate, resTime);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		if(user==null) {
+			map.put("user", "logout");
+		}else {
+			map.put("user", "login");
+			if(user.getMem_auth()==1) {
+				//현재 로그인한 사용자가 정지회원인 경우
+				map.put("type", "1");
+			}else if(user.getMem_auth()==2) {
+				//현재 로그인한 사용자가 일반회원인 경우
+				map.put("type", "2");
+			}else if(user.getMem_auth()==3) {
+				//현재 로그인한 사용자가 의사회원인 경우
+				map.put("type", "3");
+			}
 		}
 		
-		model.addAttribute("list",list);
+		if(LocalDateTime.now().isAfter(reservationDateTime)){
+			log.debug("<<채팅방 사용 가능>> - 예약 날짜/시간: "+resDate+"/"+resTime);
+			msg_list = chatService.selectMsg(chat_num);
+			map.put("res_num",reservation.getRes_num());
+			map.put("res_date",res_date);
+			map.put("res_time",res_time);
+			map.put("list",msg_list);
+			map.put("chat","open");
+		}else{
+			log.debug("<<채팅방 사용 불가>> - 예약 날짜/시간: "+resDate+"/"+resTime);
+			map.put("chat","close");
+		}
 		
-		return "chat";
-	}*/
+	 return map;
+		
+	}
 	
 	//예약 확정 버튼 클릭 시 채팅방 생성
 	//@PostMapping("")
@@ -77,5 +128,38 @@ public class ChatController {
 		
 		
 	//}
+	
+	/*=======================
+	 * 	 	 메시지 입력
+	 ========================*/
+	@PostMapping("/chat/chatRoom")
+	@ResponseBody
+	public Map<String,Object> insertMsg(HttpSession session,
+										ChatMsgVO chatMsgVO){
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		
+		if(user==null) {
+			//로그아웃 상태
+			map.put("user","logout");
+		}else {
+			//로그인 상태
+			if(user.getMem_auth()==2) {
+				map.put("user", "login");
+				chatMsgVO.setMsg_sender_type(0); //일반회원이 0
+				chatService.insertMsg(chatMsgVO);
+			}else if(user.getMem_auth()==3) {
+				map.put("user", "login");
+				chatMsgVO.setMsg_sender_type(1); //의사회원이 1
+				chatService.insertMsg(chatMsgVO);
+			}
+			
+		}
+		
+		
+		return map;
+	}
 	
 }

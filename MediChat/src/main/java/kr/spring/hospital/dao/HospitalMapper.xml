@@ -93,31 +93,31 @@
 			<if test="commonFilter.contains('NIGHTTIME')">
 				<if test="day==1">
 					AND hos_time1c != 'null'
-					AND hos_time1c >= '1800'
+					AND hos_time1c > '1800'
 				</if>
 				<if test="day==2">
 					AND hos_time2c != 'null'
-					AND hos_time2c >= '1800'
+					AND hos_time2c > '1800'
 				</if>
 				<if test="day==3">
 					AND hos_time3c != 'null'
-					AND hos_time3c >= '1800'
+					AND hos_time3c > '1800'
 				</if>
 				<if test="day==4">
 					AND hos_time4c != 'null'
-					AND hos_time4c >= '1800'
+					AND hos_time4c > '1800'
 				</if>
 				<if test="day==5">
 					AND hos_time5c != 'null'
-					AND hos_time5c >= '1800'
+					AND hos_time5c > '1800'
 				</if>
 				<if test="day==6">
 					AND hos_time6c != 'null'
-					AND hos_time6c >= '1300'
+					AND hos_time6c > '1300'
 				</if>
 				<if test="day==7">
 					AND hos_time7c != 'null'
-					AND hos_time7c >= '1300'
+					AND hos_time7c > '1300'
 				</if>
 			</if>
 			<if test="commonFilter.contains('WEEKEND')">
@@ -126,54 +126,62 @@
 		</if>
 	</sql>
 	<sql id="searchHospitalBySortType">
-		<if test="sortType=='NEAR'">
-			ORDER BY distance
-		</if>
+
 		<if test="sortType=='REVIEW'">
-			ORDER BY rev_cnt DESC
+			,rev_cnt DESC
 		</if>
 		<if test="sortType=='SCORE'">
-			ORDER BY hos_score DESC
+			,hos_score DESC
 		</if>
 		<if test="sortType=='HIT'">
-			ORDER BY hos_hit DESC
+			,hos_hit DESC
 		</if>
 	</sql>
 	
 	<!-- selectListHospital -->
 	<select id="selectListHospital" parameterType="map" resultType="hospitalVO">
-		SELECT * 
-		FROM (
-		       SELECT h.*, ROWNUM RNUM
-		       FROM ( SELECT h.*, 
-		       			  (POWER((h.hos_lat - #{user_lat}), 2) + POWER((h.hos_lon - #{user_lon}), 2)) AS distance, 
-		       			   COALESCE(d.doc_cnt, 0) AS doc_cnt,
-		       			   COALESCE(r.rev_cnt, 0) AS rev_cnt
-		              FROM hospital h
-		              LEFT JOIN ( SELECT hos_num, COUNT(*) AS doc_cnt
-		                      	  FROM doctor_detail
-		                      	  WHERE doc_treat = 1
-		                      	  GROUP BY hos_num
-		                      	) d ON h.hos_num = d.hos_num
-		              LEFT JOIN ( SELECT hos_num, COUNT(*) AS rev_cnt
-                      			  FROM review
-            			          GROUP BY hos_num
-            			        ) r ON h.hos_num = r.hos_num
-		          	  ORDER BY distance
-		            	  ) h
-		       WHERE <![CDATA[
-     				  ROWNUM <= #{pageNum} * #{pageItemNum}
-       				 ]]>
-      				 <include refid="searchHospitalByKeyword"/>
-			         <include refid="searchHospitalByCommonFilter"/>
-			         <include refid="searchHospitalBySortType"/>
+		SELECT *
+		FROM ( SELECT a.* , ROWNUM rnum
+		       FROM ( SELECT t.*
+		              FROM ( SELECT h.*, 
+		                            ROUND((6378137 * ACOS(COS(RADIANS(#{user_lat})) * COS(RADIANS(h.hos_lat)) * COS(RADIANS(h.hos_lon) - RADIANS(#{user_lon})) + SIN(RADIANS(#{user_lat})) * SIN(RADIANS(h.hos_lat))))) AS around,
+		                            COALESCE(d.doc_cnt, 0) AS doc_cnt,
+		                            COALESCE(r.rev_cnt, 0) AS rev_cnt
+		                     FROM hospital h LEFT JOIN ( SELECT hos_num, COUNT(*) AS doc_cnt
+		                                                 FROM doctor_detail
+		                                                 WHERE doc_treat = 1
+		                                                 GROUP BY hos_num
+		                                               ) d 
+		                                     ON h.hos_num = d.hos_num
+		                                     LEFT JOIN ( SELECT hos_num, COUNT(*) AS rev_cnt
+		                                                 FROM review
+		                                                 GROUP BY hos_num
+		                                               ) r 
+		                                     ON h.hos_num = r.hos_num
+		                     where 1=1
+		                     <include refid="searchHospitalByKeyword"/>
+							 <include refid="searchHospitalByCommonFilter"/>
+		                   ) t
+		              <![CDATA[
+		              WHERE around <= 3000
+		              ]]>
+		              ORDER BY around
+		              <include refid="searchHospitalBySortType"/>
+		            ) a
+		       <![CDATA[     
+		       WHERE ROWNUM <= #{pageNum} * #{pageItemNum}
+		       ]]>
 		     )
-		WHERE RNUM > (#{pageNum} - 1) * #{pageItemNum}
+		WHERE rnum > (#{pageNum} - 1) * #{pageItemNum}
 	</select>
 <!-- ========================= 병원 리스트 끝 ========================= -->
 
 	<!-- selectListCntHospital -->
 	<select id="selectListCntHospital" parameterType="map" resultType="integer">
 		SELECT COUNT(*) FROM HOSPITAL
+	</select>
+	
+	<select id="selectHospital" parameterType="long" resultType="hospitalVO">
+		SELECT * FROM hospital WHERE hos_num=#{hos_num}
 	</select>
 </mapper>

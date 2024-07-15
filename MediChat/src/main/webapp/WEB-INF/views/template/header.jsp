@@ -6,7 +6,7 @@
 	<div class="d-flex justify-content-start">
 		<!-- 로고 시작 -->
 		<div>
-			<a href="/main/main"><img src="/images/logo.jpg" width="270" height="80"></a>
+			<a href="/main/main"><img src="/images/logo3.png" width="220" height="70"></a>
 		</div>
 		<!-- 로고 끝 -->
 		<!-- 메뉴 시작 -->
@@ -52,7 +52,7 @@
 				<div class="header-register-select">
 					<a href="/member/registerUser">일반 회원가입</a>
 				</div>
-				<hr>
+				<div class="select-line"></div>
 				<div class="header-register-select">
 					<a href="/doctor/registerDoc">의사 회원가입</a>
 				</div>
@@ -62,7 +62,7 @@
 			<div class="header-login-select">
 				<a href="/member/login">일반 로그인</a>
 			</div>
-			<hr>
+			<div class="select-line"></div>
 			<div class="header-login-select">
 				<a href="/doctor/login">의사 로그인</a>
 			</div>
@@ -84,7 +84,7 @@
 				<div class="header-status-select">
 					<a href="/member/myPage">내 정보</a>
 				</div>
-				<hr>
+				<div class="select-line"></div>
 				<div class="header-status-select">
 					<a href="/member/logout">로그아웃</a>
 				</div>

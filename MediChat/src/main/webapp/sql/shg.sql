@@ -13,6 +13,7 @@ create table holiday(
  doc_num number not null,
  holi_date varchar2(30) not null,
  holi_time varchar2(30) not null,
+ holi_status number,
  constraint holi_pk primary key (holi_num),
  constraint holi_fk foreign key (doc_num) references member (mem_num)
 );

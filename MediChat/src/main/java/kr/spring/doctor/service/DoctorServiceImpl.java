@@ -27,14 +27,13 @@ public class DoctorServiceImpl implements DoctorService{
 
 	@Override
 	public DoctorVO selectDoctor(Long doc_num) {
-		// TODO Auto-generated method stub
-		return null;
+		return doctorMapper.selectDoctor(doc_num);
 	}
 
 	@Override
 	public void updateDoctor(DoctorVO doctor) {
-		// TODO Auto-generated method stub
-		
+		doctorMapper.updateDoctor(doctor);
+		doctorMapper.updateDoctor_detail(doctor);
 	}
 
 	@Override

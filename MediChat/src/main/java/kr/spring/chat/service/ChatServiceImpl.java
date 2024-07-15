@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.chat.dao.ChatMapper;
 import kr.spring.chat.vo.ChatFileVO;
+import kr.spring.chat.vo.ChatMsgVO;
 import kr.spring.chat.vo.ChatPaymentVO;
 import kr.spring.chat.vo.ChatVO;
 import kr.spring.reservation.vo.ReservationVO;
@@ -28,19 +29,33 @@ public class ChatServiceImpl implements ChatService{
 	public List<ChatVO> selectChatListForDoc(long mem_num) {
 		return chatMapper.selectChatListForDoc(mem_num);
 	}
+	
+	@Override
+	public ReservationVO selectReservationByChatNum(long chat_num) {
+		return chatMapper.selectReservationByChatNum(chat_num);
+	}
 
 	@Override
 	public void createChat(ReservationVO reservationVO) {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	@Override
-	public ChatVO selectChatDetail(long res_num) {
-		// TODO Auto-generated method stub
-		return null;
+	public ChatVO selectChat(long chat_num) {
+		return chatMapper.selectChat(chat_num);
 	}
 
+	@Override
+	public List<ChatMsgVO> selectMsg(long chat_num) {
+		return chatMapper.selectMsg(chat_num);
+	}
+	
+	@Override
+	public void insertMsg(ChatMsgVO chatMsgVO) {
+		chatMapper.insertMsg(chatMsgVO);
+	}
+	
 	@Override
 	public void insertChatFile(ChatFileVO chatFileVO) {
 		// TODO Auto-generated method stub
@@ -58,5 +73,6 @@ public class ChatServiceImpl implements ChatService{
 		// TODO Auto-generated method stub
 		
 	}
-	
+
+
 }

@@ -12,7 +12,7 @@ import lombok.ToString;
 @ToString
 public class MemberDrugVO {
 	private int med_num;
-	private int mem_num;
+	private long mem_num;
 	@NotBlank
 	private String med_name;
 	@NotBlank

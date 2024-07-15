@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.spring.holiday.vo.HolidayVO;
 import kr.spring.schedule.dao.ScheduleMapper;
-import kr.spring.schedule.vo.DayoffVO;
 
 @Service
 @Transactional
@@ -16,30 +16,35 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 	@Autowired
 	private ScheduleMapper scheduleMapper;
-	
+
 	@Override
 	public String getRegularDayoff(Long doc_num) {
 		return scheduleMapper.getRegularDayoff(doc_num);
 	}
-	
+
 	@Override
 	public Map<String,String> getWorkingHours(Long doc_num) {
 		return scheduleMapper.getWorkingHours(doc_num);
 	}
 
 	@Override
-	public List<String> getDayoffTimes(Long doc_num, String doff_date) {
-		return scheduleMapper.getDayoffTimes(doc_num, doff_date);
+	public List<HolidayVO> getHoliday(Long doc_num) {
+		return scheduleMapper.getHoliday(doc_num);
 	}
 
 	@Override
-	public void updateDayoffTimes(Long doc_num, String doff_date, List<String> timesToAdd, List<String> timesToRemove) {
-		for (String time : timesToAdd) {
-			scheduleMapper.insertDayoff(doc_num, doff_date, time);
-		}
-		for (String time : timesToRemove) {
-			scheduleMapper.deleteDayoff(doc_num, doff_date, time);
-		}
+	public void insertHoliday(HolidayVO holiday) {
+		scheduleMapper.insertHoliday(holiday);
 	}
+
+	@Override
+	public void updateHoliday(HolidayVO holiday) {
+		scheduleMapper.updateHoliday(holiday);
+	}
+
+	@Override
+    public int countHoliday(HolidayVO holiday) {
+        return scheduleMapper.countHoliday(holiday);
+    }
 
 }
