@@ -3,7 +3,7 @@ spring:
     name: MediChat
   profiles:
     active: local #local,dev,real
-    include: API-KEY
+    include: API-KEY,DB-SCHEDULE
    
   mvc:
     view: #view 경로 및 확장자 지정

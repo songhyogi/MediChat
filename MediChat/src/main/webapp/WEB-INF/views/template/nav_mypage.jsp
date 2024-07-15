@@ -5,18 +5,17 @@
 <div class="side-bar">
 	<ul>
 		<li>
-			<img src="${pageContext.request.contextPath}/image_bundle/face.png"
-			width="100" height="100" class="border rounded-circle"
+			<img src="${pageContext.request.contextPath}/member/memPhotoView"
+			width="150" height="150" class="my-photo border rounded-circle" 
 			onclick="location.href='${pageContext.request.contextPath}/member/myPage'">
 			<div class="camera" id="photo_btn">
-			<img src="${pageContext.request.contextPath}/images/re.png" width="20">
+			<img src="${pageContext.request.contextPath}/images/re.png" width="25">
 			</div>
 		</li>
 		<li>
 			<div id="photo_choice" style="display:none;">
-				<input type="file" id="upload"
-				  accept="image/gif,image/png,image/jpeg"><br>
-				<input type="button" value="전송" id="photo_submit"> 
+				<input type="file" id="upload" accept="image/gif,image/png,image/jpeg"><br>
+				<input type="button" value="변경" id="photo_submit"> 
 				<input type="button" value="취소" id="photo_reset"> 
 			</div>
 		</li>
@@ -35,12 +34,17 @@
 			onclick="location.href='${pageContext.request.contextPath}/mypage/reviewHistory'">
 		</li>
 		<li>
+			<input type="button" class="detail-btn" value="비대면 진료"
+			onclick="location.href='${pageContext.request.contextPath}/chat/chatView'">
+		</li>
+		<li>
 			<input type="button" class="detail-btn" value="로그아웃"
 			onclick="location.href='#'">
 		</li>
 	</ul>
 </div>
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/member.profile.js"></script>
 <!-- MyPage 메뉴 끝 -->
 
 

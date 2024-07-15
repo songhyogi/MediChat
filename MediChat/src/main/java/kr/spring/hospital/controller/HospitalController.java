@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -31,10 +32,16 @@ public class HospitalController {
 	@Autowired
 	private HospitalService hospitalService;
 	
-	
 	// 병원
 	@GetMapping("/hospitals")
-	public Model hospital(Model model) {
+	public Model hospital(Model model,HttpSession session) {
+		if(session.getAttribute("user_lat")!=null && session.getAttribute("user_lon")!=null) {
+			String user_lat = (String)session.getAttribute("user_lat");
+			String user_lon = (String)session.getAttribute("user_lon");
+			model.addAttribute("user_lat", user_lat);
+			model.addAttribute("user_lon", user_lon);
+		}
+		
 		//카카오맵 api 키
 		model.addAttribute("apiKey", apiKey);
 		
@@ -75,15 +82,20 @@ public class HospitalController {
 		return model;
 	}
 
-	
 	// 병원 > 검색 결과
 	@GetMapping("/hospitals/search")
 	public String search(Model model,HttpSession session,@RequestParam(defaultValue="1") int pageNum,
 							@RequestParam(defaultValue="15") int pageItemNum, @RequestParam(defaultValue="") String keyword,
 							@RequestParam(required = false) String commonFilter, @RequestParam(defaultValue="NEAR") String sortType,
 							@RequestParam(defaultValue="37.4981646510326") String user_lat, @RequestParam(defaultValue="127.028307900881") String user_lon) {
+		
+		if(!user_lat.equals("37.4981646510326") && !user_lon.equals("127.028307900881")) {
+			session.setAttribute("user_lat", user_lat);
+			session.setAttribute("user_lon", user_lon);
+		}
+		
 		Map<String, Object> map = new HashMap<>();
-
+		
 		map.put("user_lat", user_lat);
 		map.put("user_lon", user_lon);
 		model.addAttribute("user_lat", user_lat);
@@ -99,7 +111,7 @@ public class HospitalController {
 		map.put("day", day);
 		model.addAttribute("time", time);
 		model.addAttribute("day", day);
-		
+		log.debug("<<시간>> = " + "day: " + day + ", time: " +time);
 		
 		// pageNum
 		map.put("pageNum", pageNum);
@@ -151,6 +163,7 @@ public class HospitalController {
 		map.put("day", day);
 		model.addAttribute("time", time);
 		model.addAttribute("day", day);
+		log.debug("<<시간>> = " + "day: " + day + ", time: " +time);
 		
 		// pageNum
 		map.put("pageNum", pageNum);
@@ -181,10 +194,21 @@ public class HospitalController {
 	}
 	
 	// 병원 > 검색 결과 > 상세 페이지
-	@GetMapping("/hospitals/search/detail")
-	public String detail() {
+	@GetMapping("/hospitals/search/detail/{hos_num}")
+	public String detail(Model model, @PathVariable Long hos_num) {
+		model.addAttribute("apiKey", apiKey);
 		
+		HospitalVO hospital = hospitalService.selectHospital(hos_num);
+		model.addAttribute("hospital",hospital);
 		
-		return "";
+		// 현재 시간 변수 생성 후 값 넣기
+		LocalDateTime now = LocalDateTime.now();
+		String time = now.format(DateTimeFormatter.ofPattern("HHmm")); //hh:mm
+		int day = now.getDayOfWeek().getValue(); //1:월 2:화 3:수 4:목 5:금 6:토 7:일
+		model.addAttribute("time", time);
+		model.addAttribute("day", day);
+		log.debug("<<시간>> = " + "day: " + day + ", time: " +time);
+		
+		return "detail";
 	}
 }

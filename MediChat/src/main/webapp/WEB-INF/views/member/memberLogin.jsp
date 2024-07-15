@@ -4,10 +4,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <div class="container">
 	<form:form action="login" id="member_login" modelAttribute="memberVO">
-		<form:errors element="div" cssClass="error-color"/>
 		<ul>
 			<li>
-				<form:input path="mem_id" placeholder="아이디" autocomplete="off" style="margin-top:80px;"/>
+				<form:input path="mem_id" placeholder="아이디" autocomplete="off" style="margin-top:130px;"/>
 				<form:errors path="mem_id" cssClass="error-color"/>
 			</li>
 			<li>
@@ -16,6 +15,7 @@
 			</li>
 		</ul>
 		<div>
+			<form:errors element="div" cssClass="error-color"/>
 			<form:button class="login_btn">로그인</form:button>
 		</div>
 		<div class="button-container">

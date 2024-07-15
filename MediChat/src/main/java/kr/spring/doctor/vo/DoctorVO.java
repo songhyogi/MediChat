@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.sql.Date;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +30,7 @@ public class DoctorVO {
 	private String mem_photoname;	//프로필 사진명
 	private int mem_auth;			//권한 등급(0:탈퇴,1:정지,2:일반,3:의사,9:관리자)
 	private long doc_num;
+	@Min(value = 1, message = "병원을 선택하세요.")
 	private long hos_num;
 	private String hos_name;
 	@Pattern(regexp="^[A-Za-z0-9]{4,12}$")
@@ -40,13 +43,13 @@ public class DoctorVO {
 	private String doc_license;
 	private String doc_history;
 	private int doc_treat;
-	private int doc_off;			//휴무요일
+	private String doc_off;			//휴무요일
 	private String doc_stime;		//근무시작시간
 	private String doc_etime;		//근무종료시간
 	private int doc_agree;
 
 //	@NotBlank(message = "비밀번호를 입력해주세요.")
-//    private String password; // 사용자가 입력한 비밀번호
+//  private String password; // 사용자가 입력한 비밀번호
 	
 	//비밀번호 변경시 현재 비밀번호를 저장하는 용도로 사용
 	@Pattern(regexp="^[A-Za-z0-9]{4,12}$")

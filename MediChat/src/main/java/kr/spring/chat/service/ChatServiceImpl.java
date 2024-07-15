@@ -40,7 +40,22 @@ public class ChatServiceImpl implements ChatService{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public ChatVO selectChat(long chat_num) {
+		return chatMapper.selectChat(chat_num);
+	}
 
+	@Override
+	public List<ChatMsgVO> selectMsg(long chat_num) {
+		return chatMapper.selectMsg(chat_num);
+	}
+	
+	@Override
+	public void insertMsg(ChatMsgVO chatMsgVO) {
+		chatMapper.insertMsg(chatMsgVO);
+	}
+	
 	@Override
 	public void insertChatFile(ChatFileVO chatFileVO) {
 		// TODO Auto-generated method stub
@@ -59,10 +74,5 @@ public class ChatServiceImpl implements ChatService{
 		
 	}
 
-	@Override
-	public List<ChatMsgVO> selectMsg(long chat_num) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
+
 }

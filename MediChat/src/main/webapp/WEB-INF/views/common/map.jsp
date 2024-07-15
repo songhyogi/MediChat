@@ -1,14 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>글상세</title>
 <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${apiKey}&libraries=services"></script>
-</head>
-<body>
-<div id="map" style="width:700px; height:500px;" class="rounded-4"></div>
+<div class="d-flex justify-content-center">
+	<div id="map" style="width:700px; height:500px;" class="rounded-4"></div>
+</div>
 <script>
 kakao.maps.load(function(){
 	// 카카오맵 API
@@ -111,4 +106,3 @@ kakao.maps.load(function(){
 });
 
 </script>
-</body>

@@ -11,37 +11,37 @@
 	<h4 class="text-black-6 fw-7 fs-23">어떤 병원을 찾으세요?</h4>
 	<div class="row justify-content-between">
 		<div class="col-2">
-			<div class="subject rounded-2 bg-gray-1 text-center" data-keyword="피부과">
+			<div class="subject rounded-2 bg-gray-0 text-center" data-keyword="피부과">
 				<p class="sub-icon"><img src="/images/subIcon/skin.png" width="30" height="30"></p>
 				<p class="sub-name">피부과</p>
 			</div>
 		</div>
 		<div class="col-2">
-			<div class="subject rounded-2 bg-gray-1 text-center" data-keyword="산부인과">
+			<div class="subject rounded-2 bg-gray-0 text-center" data-keyword="산부인과">
 				<p class="sub-icon"><img src="/images/subIcon/gynecology.png" width="30" height="30"></p>
 				<p class="sub-name">산부인과</p>
 			</div>                            
 		</div>                                
 		<div class="col-2">                   
-			<div class="subject rounded-2 bg-gray-1 text-center" data-keyword="이비인후과">
+			<div class="subject rounded-2 bg-gray-0 text-center" data-keyword="이비인후과">
 				<p class="sub-icon"><img src="/images/subIcon/ear.png" width="30" height="30"></p> 
 				<p class="sub-name">이비인후과</p>
 			</div>                            
 		</div>                                
 		<div class="col-2">                   
-			<div class="subject rounded-2 bg-gray-1 text-center" data-keyword="내과">
+			<div class="subject rounded-2 bg-gray-0 text-center" data-keyword="내과">
 				<p class="sub-icon"><img src="/images/subIcon/physician.png" width="30" height="30"></p> 
 				<p class="sub-name">내과</p>   
 			</div>                             
 		</div>                                 
 		<div class="col-2">                    
-			<div class="subject rounded-2 bg-gray-1 text-center" data-keyword="안과">
+			<div class="subject rounded-2 bg-gray-0 text-center" data-keyword="안과">
 				<p class="sub-icon"><img src="/images/subIcon/eye.png" width="30" height="30"></p> 
 				<p class="sub-name">안과</p>   
 			</div>                             
 		</div>                                 
 		<div class="col-2">                    
-			<div class="subject rounded-2 bg-gray-1 text-center" data-keyword="가정의학과">
+			<div class="subject rounded-2 bg-gray-0 text-center" data-keyword="가정의학과">
 				<p class="sub-icon"><img src="/images/subIcon/home.png" width="30" height="30"></p>
 				<p class="sub-name">가정의학과</p>
 			</div>
@@ -49,47 +49,49 @@
 	</div>
 	<div class="row justify-content-between">
 		<div class="col-2">
-			<div class="subject rounded-2 bg-gray-1 text-center" data-keyword="소아과">
+			<div class="subject rounded-2 bg-gray-0 text-center" data-keyword="소아과">
 				<p class="sub-icon"><img src="/images/subIcon/child.png" width="30" height="30"></p>
 				<p class="sub-name">소아과</p>
 			</div>                            
 		</div>                                
 		<div class="col-2">                   
-			<div class="subject rounded-2 bg-gray-1 text-center" data-keyword="정형외과">
+			<div class="subject rounded-2 bg-gray-0 text-center" data-keyword="정형외과">
 				<p class="sub-icon"><img src="/images/subIcon/bone.png" width="30" height="30"></p>
 				<p class="sub-name">정형외과</p>
 			</div>
 		</div>
 		<div class="col-2">
-			<div class="subject rounded-2 bg-gray-1 text-center" data-keyword="정신건강의학과">
+			<div class="subject rounded-2 bg-gray-0 text-center" data-keyword="정신건강의학과">
 				<p class="sub-icon"><img src="/images/subIcon/mental.png" width="30" height="30"></p>
 				<p class="sub-name">정신건강의학과</p>
 			</div>
 		</div>
 		<div class="col-2">
-			<div class="subject rounded-2 bg-gray-1 text-center" data-keyword="비뇨기과">
+			<div class="subject rounded-2 bg-gray-0 text-center" data-keyword="비뇨기과">
 				<p class="sub-icon"><img src="/images/subIcon/urology.png" width="30" height="30"></p>
 				<p class="sub-name">비뇨기과</p>
 			</div>
 		</div>
 		<div class="col-2">
-			<div class="subject rounded-2 bg-gray-1 text-center" data-keyword="치과">
+			<div class="subject rounded-2 bg-gray-0 text-center" data-keyword="치과">
 				<p class="sub-icon"><img src="/images/subIcon/tooth.png" width="30" height="30"></p>
 				<p class="sub-name">치과</p>
 			</div>
 		</div>
 		<div class="col-2">
-			<div class="subject rounded-2 bg-gray-1 text-center" data-keyword="신경외과">
+			<div class="subject rounded-2 bg-gray-0 text-center" data-keyword="신경외과">
 				<p class="sub-icon"><img src="/images/subIcon/headache.png" width="30" height="30"></p>
 				<p class="sub-name">신경외과</p>
 			</div>
 		</div>
 	</div>
 	<!-- 더 보기 시작 -->
-	<hr>
+	<div class="line"></div>
 	<div id="more">
-		<h4 class="text-center text-lightgray fw-7">더 보기</h4>
+		<p class="text-lightgray fw-7">더 보기</p>
 	</div>
+	<div class="line"></div>
+	
 	<div class="overlay" id="overlay"></div>
 	<div id="more_box" class="p-5 rounded-top-3 border bg-white" style="display: none;">
 		<h5 class="fw-8">진료과목 선택</h5>
@@ -106,7 +108,7 @@
 						<c:set var="sub_icon" value="${item}"/>
 					</c:if>
 				</c:forEach>
-				<div class="sub-item d-flex justify-content-between" data-keyword="${sub_name}">
+				<div class="sub-item d-flex justify-content-between rounded-3" data-keyword="${sub_name}">
 					<div class="py-3">
 						<h5 class="text-black-6 fw-8 fs-17">${sub_name}</h5>
 						<h5 class="text-gray-6 fw-7 fs-14">${sub_content}</h5>
@@ -115,7 +117,7 @@
 						<img width="50" height="50" src="/images/subIcon/${sub_icon}.png">
 					</div>
 				</div>
-				<hr noshade="noshade">
+				<div class="mbline"></div>
 			</c:forEach>
 		</div>
 	</div>
@@ -151,6 +153,7 @@
 	</div>
 </div>
 <!-- 어떻게 아프신가요 끝 -->
+<div class="line"></div>
 <!-- 검색창 + 인기 검색어 시작 -->
 <div class="bg-green-1 p-5">
 	<form id="search_form" class="d-flex" method="get" action="/hospitals/search">
@@ -181,7 +184,7 @@
 	const subject = document.getElementsByClassName('subject');
 	for(let i=0; i<subject.length; i++){
 		subject[i].onclick = function(){
-			location.href = '/hospitals/search?keyword='+subject[i].getAttribute('data-keyword')+'&sortType=NEAR';
+			location.href = '/hospitals/search?keyword='+subject[i].getAttribute('data-keyword')+'&sortType=NEAR&user_lat=${user_lat}&user_lon=${user_lon}';
 		};
 	}
 	const subItem = document.getElementsByClassName('sub-item');
@@ -190,13 +193,13 @@
 			if(subItem[i].getAttribute('data-keyword')=='마취통증학과'){
 				subItem[i].setAttribute('data-keyword','마취통증');
 			}
-			location.href = '/hospitals/search?keyword=' + subItem[i].getAttribute('data-keyword')+'&sortType=NEAR';
+			location.href = '/hospitals/search?keyword=' + subItem[i].getAttribute('data-keyword')+'&sortType=NEAR&user_lat=${user_lat}&user_lon=${user_lon}';
 		};
 	}
 	const hsItem = document.getElementsByClassName('hs-item');
 	for(let i=0; i<hsItem.length; i++){
 		hsItem[i].onclick = function(){
-			location.href = '/hospitals/search?keyword='+hsItem[i].getAttribute('data-keyword')+'&sortType=NEAR';
+			location.href = '/hospitals/search?keyword='+hsItem[i].getAttribute('data-keyword')+'&sortType=NEAR&user_lat=${user_lat}&user_lon=${user_lon}';
 		};
 	}
 	const hSearchIcon = document.getElementById('h-search-icon');
@@ -207,7 +210,7 @@
 	const hkwItem = document.getElementsByClassName('hkw-item');
 	for(let i=0; i<hkwItem.length; i++){
 		hkwItem[i].onclick = function(){
-			location.href = '/hospitals/search?keyword='+hkwItem[i].getAttribute('data-keyword')+'&sortType=NEAR';
+			location.href = '/hospitals/search?keyword='+hkwItem[i].getAttribute('data-keyword')+'&sortType=NEAR&user_lat=${user_lat}&user_lon=${user_lon}';
 		};
 	}
 </script>

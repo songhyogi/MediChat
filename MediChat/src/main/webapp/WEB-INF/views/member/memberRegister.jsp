@@ -4,19 +4,21 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- 회원가입 시작 -->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
-<div>
-	<h2>회원가입</h2>
-	<hr size="1" width="80%" noshade="noshade">
-	<h3>정보입력</h3>
-	<span>회원가입에 필요한 정보를 입력합니다.</span>
+<div class="container">
+	<h2 class="title">회원가입</h2>
+	<hr size="1" width="100%" noshade="noshade">
+	<span style="font-weight:bold;">정보입력</span>
+	<br>
+	<span class="title2">회원가입에 필요한 정보를 입력합니다.</span>
 	<form:form action="registerUser" id="member_register" modelAttribute="memberVO">
+		<div class="form-main">
 		<ul>
-			<li>
+			<li style="margin-top:20px;">
 				<form:label path="mem_id">아이디</form:label>
-				<form:input path="mem_id" placeholder="영문or숫자사용하여 4~12자 입력하세요." autocomplete="off"/>
-				<input type="button" id="confirmId" value="중복확인" class="default-btn"><br>
-				<span id="message_id"></span>
-				<form:errors path="mem_id" cssClass="error-color"/>
+				<form:input path="mem_id" placeholder="영문or숫자사용하여 4~12자 입력하세요." autocomplete="off" style="width:250px;"/>
+				<input type="button" id="confirmId" value="중복확인" class="default-btn" style="margin-left:0px;">
+				<form:errors path="mem_id" cssClass="error-color" style="display:inline;"/><br>
+				<span id="message_id" style=""></span>
 			</li>
 			<li>
 				<form:label path="mem_passwd">비밀번호</form:label>
@@ -43,23 +45,27 @@
 				<form:errors path="mem_phone" cssClass="error-color"/>
 			</li>
 			<li>
-				<form:label path="mem_zipcode">주소</form:label>
-				<form:input path="mem_zipcode"/>
-				<input type="button" onclick="execDaumPostcode()" value="우편번호" class="default-btn">
-				<form:errors path="mem_zipcode" cssClass="error-color"/>
-				<form:label path="mem_address1"></form:label>
-				<form:input path="mem_address1"/>
-				<form:errors path="mem_address1" cssClass="error-color"/>
+			   <form:label path="mem_zipcode">주소</form:label>
+			   <form:input path="mem_zipcode"/>
+			   <input type="button" onclick="execDaumPostcode()" value="우편번호" class="default-btn">
+			   <form:errors path="mem_zipcode" cssClass="error-color"/>
+			   <form:label path="mem_address1"></form:label>
+			   <form:input path="mem_address1"/>
+			   <form:errors path="mem_address1" cssClass="error-color"/>
 			</li>
 			<li>
 				<form:label path="mem_address2">상세주소</form:label>
 				<form:input path="mem_address2"/>
 				<form:errors path="mem_address2" cssClass="error-color"/>
-				<hr size="1" width="80%" noshade="noshade">
+				<hr size="1" width="100%" noshade="noshade">
 			</li>
+			</ul>
+		</div>
 		<!-- 캡챠 시작 -->
+		<div class="captcha">
+		<ul>
 			<li>
-				<h2>인증문자 입력</h2>
+				<span style="font-weight:bold;">인증문자 입력</span>
 				<div id="captcha_div">
 					<img src="getCaptcha" id="captcha_img" width="200" height="90">
 					<input type="button" value="새로고침" id="reload_btn">
@@ -71,10 +77,11 @@
 				<form:errors path="captcha_chars" cssClass="error-color"/>
 			</li>
 		</ul>
+		</div>
 		<!-- 캡챠 끝 -->
-		<hr size="1" width="80%" noshade="noshade">
-		<div class="align-center">
-			<input type="button" value="홈으로" class="default-btn" onclick="location.href='${pageContext.request.contextPath}/main/main'">
+		<hr size="1" width="100%" noshade="noshade">
+		<div style="text-align:center;">
+			<input type="button" value="홈으로" id="reload_btn" onclick="location.href='${pageContext.request.contextPath}/main/main'">
 			<form:button class="default-btn">가입완료</form:button>
 		</div>
 	</form:form>
@@ -84,16 +91,11 @@
 <script>
 	$(function(){
 		$('#reload_btn').click(function(){
-			$.ajax({
-				url:'getCaptcha',
-				type:'get',
-				success:function(){
-					$('#captcha_div').load(location.href + ' #captcha_div');
-				},
-				error:function(){
-					alert('네트워크 오류 발생');
-				}
-			});
+		 $.get('getCaptcha', function(data) {
+	            $('#captcha_img').attr('src', 'getCaptcha?' + new Date().getTime());
+	        }).fail(function() {
+	            alert('네트워크 오류 발생');
+	        });
 		});
 	});
 </script>

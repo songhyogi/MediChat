@@ -6,25 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>회원 정보 조회</title>
-<style>
-.basic-btn {
-    border: 1px solid #ccc; /* 테두리 선 스타일 */
-    padding: 20px; /* 내부 여백 */
-    margin-bottom: 20px; /* 하단 여백 */
-    text-align:center;
-}
-.basic-btn ul{
-	display:inline-block;
-	margin-left:30px;
-	margin-right:80px;
-}
-.basic-btn input[type="button"]{
-	border:none;
-	text-align:center;
-	margin-left:100px;
-	margin-right:100px;
-}
-</style>
 </head>
 <body>
 	<div class="container">

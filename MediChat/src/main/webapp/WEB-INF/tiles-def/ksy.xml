@@ -22,4 +22,9 @@
 		<put-attribute name="title" value="검색 결과"/>
 		<put-attribute name="body" value="/WEB-INF/views/hospital/search.jsp"/>
 	</definition>
+	
+	<definition name="detail" extends="ksy">
+		<put-attribute name="title" value="병원 위치 · 정보 · 후기"/>
+		<put-attribute name="body" value="/WEB-INF/views/hospital/detail.jsp"/>
+	</definition>
 </tiles-definitions>
