@@ -238,6 +238,31 @@ body{
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
+.mline{
+	width: 100%;
+	height:1px;
+	border-bottom: 1px solid #dfe1e2;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin: 10px 0;
+}
+.mtline{
+	width: 100%;
+	height:1px;
+	border-bottom: 1px solid #dfe1e2;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-top: 10px;
+}
+.mbline{
+	width: 100%;
+	height:1px;
+	border-bottom: 1px solid #dfe1e2;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-bottom: 10px;
+}
+
 
 /* ================= 헤더 ================= */
 #header_box{
@@ -300,7 +325,7 @@ body{
 }
 #header-status-div{
 	position:absolute;
-	right:40px;
+	right: 35px;
 	width: 80px;
 	height: auto;
 	padding: 5px 5px;

@@ -20,4 +20,14 @@ public interface NotificationMapper {
 	//알림 목록
 	public List<NotificationVO> selectListNotification(Long mem_num);
 	
+	//알림 삭제
+	public void deleteNotification(Long noti_num);
+	
+	
+	//링크가 있다면 에약에 추가
+	
+	
+	//예약 알림
+	
+	
 }
