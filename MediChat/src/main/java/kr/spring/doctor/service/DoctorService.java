@@ -18,7 +18,7 @@ public interface DoctorService {
 	public Integer selectRowCount(Map<String,Object> map);
 	public List<HospitalVO> getHosListByKeyword(String keyword);
 	//회원상세정보
-	public DoctorVO selectDoctor(Long doc_num);
+	public DoctorVO selectDoctor(Long mem_num);
 	//회원 목록
 	public List<DoctorVO> docList(Map<String, Object> map);
 	//회원정보 수정
@@ -29,6 +29,7 @@ public interface DoctorService {
 	public void uploadDocProfile(DoctorVO doctor);
 	//회원탈퇴
 	public void deleteDoctor(Long doc_num);
+	public void deleteDoctor_detail(DoctorVO doctor);
 
 	//아이디 중복확인
 	public DoctorVO checkId(String mem_id);
