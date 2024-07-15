@@ -7,12 +7,13 @@
 <tiles-definitions>
 	<definition name="whr" template="/WEB-INF/views/template/layout_basic.jsp">
 		<put-attribute name="title" value="SpringPage"/>
-		<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>
+		<put-attribute name="css" value="/WEB-INF/views/common/css.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/main/main.jsp"/>
 	</definition>
 	<!-- 의약품 목록 -->
 	<definition name="drugSearch" extends="main">
 		<put-attribute name="title" value="의약품 검색"/>
+		<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"/>
 		<put-attribute name="css" value="/WEB-INF/views/drug/drugCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/drug/drugSearch.jsp"/>
 	</definition>
@@ -20,11 +21,13 @@
 		<put-attribute name="title" value="의약품 상세"/>
 		<put-attribute name="css" value="/WEB-INF/views/drug/drugCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/drug/drugDetail.jsp"/>
+		<put-attribute name="bootstrap" value="/WEB-INF/views/common/bootStrap.jsp"/>
 	</definition>
 	<!-- 회원 의약품 목록 -->
 	<definition name="memberDrugList" extends="myPage">
-		<put-attribute name="title" value="의약품 상세"/>
+		<put-attribute name="title" value="회원 의약품 상세"/>
 		<put-attribute name="body" value="/WEB-INF/views/drug/memberDrugList.jsp"/>
+		<put-attribute name="css" value="/WEB-INF/views/drug/drugCSS.jsp"/>
 	</definition>
 </tiles-definitions>
 
