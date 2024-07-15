@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="kr.spring.reservation.dao.ReservationMapper"><!-- namespace가 인터페이스명과 같아야 한다. -->
+	<!-- 병원진료시간 가져오기 -->
+	<select id="getHosHours" parameterType="long" resultType="hospitalVO">
+		SELECT 
+			hos_time1c,hos_time2c,hos_time3c,hos_time4c,hos_time5c,hos_time6c,hos_time7c,
+			hos_time1s,hos_time2s,hos_time3s,hos_time4s,hos_time5s,hos_time6s,hos_time7s 
+		FROM hospital
+		WHERE hos_num=#{hos_num}
+	</select>
+ </mapper>

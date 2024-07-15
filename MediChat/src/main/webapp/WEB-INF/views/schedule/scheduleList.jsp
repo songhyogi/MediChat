@@ -326,5 +326,5 @@ button:disabled {
     pointer-events: auto;
 }
 </style>
-<div id='calendar' data-doc-num="${doc_num}" data-regular-day-off="${regularDayOff}"></div>
+<div id="calendar" data-doc-num="${doc_num}" data-regular-day-off="${regularDayOff}"></div>
 <div id="time-buttons"></div>
