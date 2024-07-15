@@ -116,7 +116,7 @@
 </div>
 <!-- 등록 모달 끝 -->
 <!-- 수정 모달 시작 -->
-<div class="modal-" id="updateDrug">
+<div class="modal" id="updateDrug">
 	<div class="modal-header">
 		<div>의약품 복용 기록 수정</div>
 		<div class="close">&times;</div>
