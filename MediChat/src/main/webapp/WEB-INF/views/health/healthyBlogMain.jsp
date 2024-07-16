@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+ <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div class="page-main">
 	<h4>홈 > 건강 블로그</h4> 		
 	<h2>건강 블로그</h2>
-	<form action="${pageContext.request.contextPath}" method="get">
+	<form action="healthBlog" method="get">
 		<select name="keyfield">
 			<option value="1" <c:if test="${keyfield ==1}">selected</c:if>>제목</option>
 			<option value="2"<c:if test="${keyfield ==2}">selected</c:if>>내용</option>
@@ -21,19 +22,20 @@
 		건강 블로그 내역이 없습니다.
 </c:if>
 <c:if test="${count > 0}">
-		<table>
-			<tr>
-				<th>
-				</th>
-			</tr>
 		
-<c:forEach var="d" items="${list}">
-		<tr>
-			<td><a href="${pageContext.request.contextPath}/disease/diseaseDictDetail?sickcd=${d.sickcd}">${d.dis_name}</a></td>
-		</tr>
+<c:forEach var="h" items="${list}">
 		
+	<div>
+	<a href="${pageContext.request.contextPath}/health/healthDetail?healthy_num=${h.healthy_num}">
+			<ul>
+				<li>${h.healthy_title}</li>
+				<li>내용들어갈거</li>
+				<li> ${h.h_reg_date} ♡ ${h.healthy_hit}   </li>
+				<li> <c:if test="${!empty h.h_filename}"><img  width="120" height="120" src="${pageContext.request.contextPath}/upload/${h.h_filename}"/></c:if></li>
+			</ul>
+		</a>
+	</div>
 </c:forEach>
-		</table>
 		<div class="align-center">
 			${page}
 		</div>

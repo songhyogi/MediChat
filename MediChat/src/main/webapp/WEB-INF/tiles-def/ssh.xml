@@ -28,11 +28,21 @@
 		<put-attribute name="body" value="/WEB-INF/views/health/healthyBlogMain.jsp"/>
 	</definition>
 	<definition name="healthy_writeForm" extends="main">
-		<put-attribute name="title" value="healthyBlog"/>
+		<put-attribute name="title" value="healthyWrite"/>
 		<put-attribute name="css" value="/WEB-INF/views/health/healthCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/health/healthyWrite.jsp"/>
 	</definition>
-	
+	<definition name="healthy_Detail" template="/WEB-INF/views/template/layout_ssh.jsp">
+		<put-attribute name="title" value="healthyDetail"/>
+		<put-attribute name="css" value="/WEB-INF/views/health/healthCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/health/healthyDetail.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/>
+	</definition>
+	<definition name="healthy_Update" extends="main">
+		<put-attribute name="title" value="healthyUpdate"/>
+		<put-attribute name="css" value="/WEB-INF/views/health/healthCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/health/healthyUpdate.jsp"/>
+	</definition>
 </tiles-definitions>
 
 

@@ -13,7 +13,8 @@
 	
 	<hr size="1" width="80%">
 	
-	<form:form action="healWrite" id="register_form" method="post" modelAttribute="healthyBlogVO" enctype="multipart/form-data">
+	<form:form action="healthUpdate" id="register_form" method="post" modelAttribute="healthyBlogVO" enctype="multipart/form-data">
+			<form:hidden path="healthy_num"/>
 			<ul>
 				<li>
 					<form:input path="healthy_title" placeholder="제목을 입력하세요"/>
@@ -43,12 +44,13 @@
 				</li>
 				<li>
 					<form:label path="upload">파일업로드</form:label>
-					<input type="file" id="upload" name="upload">
+					<input type="file" id="upload" name="upload" >
+					
 				</li>
 				
 		</ul>
 		<div class="align-center">
-			<form:button class="default-btn">전송</form:button>
+			<form:button class="default-btn">수정</form:button>
 			<input type="button" class="default-btn" value="목록" onclick="location.href='${pageContext.request.contextPath}/health/healthBlog'">
 		</div>
 	

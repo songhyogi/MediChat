@@ -21,3 +21,15 @@ CREATE TABLE Healthy_Blog (
 
 create sequence health_seq;
 
+CREATE TABLE Healthy_Re (
+	hre_num	NUMBER NOT NULL primary key,
+	healthy_num	NUMBER		NOT NULL ,
+	mem_num	NUMBER		NOT NULL,
+	hre_renum	NUMBER		NULL,
+	hre_content	VARCHAR2(900)		NOT NULL,
+	hre_reg_date	DATE	DEFAULT sysdate	NOT NULL,
+	hre_modify_date	DATE		NULL,
+	hre_level	NUMBER(1)	DEFAULT 0	NOT NULL,
+    constraint hre_fk1 foreign key (healthy_num) references healthy_blog(healthy_num),
+    constraint hre_fk2 foreign key (mem_num) references member(mem_num)
+);
