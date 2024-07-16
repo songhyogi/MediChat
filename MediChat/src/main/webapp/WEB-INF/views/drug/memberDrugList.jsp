@@ -116,14 +116,14 @@
 </div>
 <!-- 등록 모달 끝 -->
 <!-- 수정 모달 시작 -->
-<div class="modal-" id="updateDrug">
+<div class="modal" id="updateDrug">
 	<div class="modal-header">
 		<div>의약품 복용 기록 수정</div>
 		<div class="close">&times;</div>
 	</div>
 	<div class="modal-body">
 	<form action="memberDrugSearch" method="post" id="drugSearch">
-	<input type="hidden">
+		<input type="hidden" name="med_num" value="${memberDrug.med_num}">
 		<ul>
 			<li>
 				증상 : <input type="text" class="check" id="title" name="med_title">
