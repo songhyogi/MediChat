@@ -18,6 +18,7 @@ public interface ChatService {
 		public ChatVO selectChat(long chat_num);
 		public List<ChatMsgVO> selectMsg(long chat_num);
 		public void insertMsg(ChatMsgVO chatMsgVO);
+		public void insertImage(ChatMsgVO chatMsgVO);
 		public void insertChatFile(ChatFileVO chatFileVO);
 		public void insertChatPayment(ChatPaymentVO chatPaymentVO);
 		public void updateChatStatus(long chat_num);
