@@ -22,7 +22,7 @@ $(function(){
 			data:{chat_num:chat_num, res_date:res_date, res_time:res_time, res_num:res_num},
 			dataType:'json',
 			success:function(param){
-				if(param.user=='logout'){
+				if(param.userCheck=='logout'){
 					//로그아웃 상태인 경우, 메인으로 이동
 					alert('로그인 후 이용해주십시오');
 					window.location.href='/main/main';
@@ -33,14 +33,16 @@ $(function(){
 					$('#res_time').val(res_time);
 					$('#res_num').val(res_num);
 					let res_title = '';
+					res_title += '			<div class="res-title">'
 					res_title += '			<div class="chat-title fs-25 fw-8" id="chat_title">';
 					res_title += '				예약번호: '+res_num;
 					res_title += '			</div>';
 					res_title += '			<div class="chat-date fs-20">';
 					res_title += '				'+res_date+'  '+res_time;
 					res_title += '			</div>';
+					res_title += '			</div>';
 					if(param.type=='3'){
-						res_title += '			<button class="chat-image" value="진료 종료" id="chat_close">';
+						res_title += '			<button class="chat-close-btn" id="chat_close">진료 종료</button>';
 					};
 
 					$('#chat_header').html(res_title);
@@ -103,6 +105,8 @@ $(function(){
 	$('.chat-room').click(function(event){
 		event.preventDefault();
 		
+		console.log('채팅방 선택 이벤트 발생');
+		
 		let chat_num = $(this).data('chat-num');
         let res_date = $(this).data('res-date');
         let res_time = $(this).data('res-time');
@@ -135,22 +139,27 @@ $(function(){
 		
 		//form 제출 데이터
 		let formArray = $(this).serializeArray();
+			//form 제출 데이터를 배열로 직렬화
+			//{chat_num: '21', res_num: '4' ...}
 		console.log(formArray);
 		
 		//서버와 통신
 		$.ajax({
 			url:'/chat/chatRoom',
 			type:'post',
-			data:$(this).serialize(),
+			data:$(this).serialize(), //form 제출 데이터를 문자열로 직렬화
+									  //메시지 입력창에서 메시지에 해당하는 부분
 			dataType:'json',
 			success:function(param){
-				if(param.user=='logout'){
+				if(param.userCheck=='logout'){
 					//로그아웃 상태인 경우, 메인으로 이동
 					alert('로그인 후 이용해주십시오');
 					window.location.href='/main/main';
-				}else if(param.user=='login'){
+				}else if(param.userCheck=='login'){
 					//로그인 상태인 경우
 					let chat_num = formArray.find(item => item.name === 'chat_num').value;
+					//직렬화된 데이터 배열에서 이름(key)이 chat_num인 대상을 찾아서 그 대상의 값(value)을 저장
+					
 	                let res_date = formArray.find(item => item.name === 'res_date').value;
 	                let res_time = formArray.find(item => item.name === 'res_time').value;
 	                let res_num = formArray.find(item => item.name === 'res_num').value;
@@ -231,19 +240,13 @@ $(function(){
 			data:$(this).serialize(),
 			dataType:'json',
 			success:function(param){
-				if(param.user=='logout'){
+				if(param.userCheck=='logout'){
 					//로그아웃 상태인 경우, 메인으로 이동
 					alert('로그인 후 이용해주십시오');
 					window.location.href='/main/main';
-				}else if(param.user=='login'){
+				}else if(param.userCheck=='login'){
 					//로그인 상태인 경우
-					let chat_num = formArray.find(item => item.name === 'chat_num').value;
-	                let res_date = formArray.find(item => item.name === 'res_date').value;
-	                let res_time = formArray.find(item => item.name === 'res_time').value;
-	                let res_num = formArray.find(item => item.name === 'res_num').value;
-					selectChat(chat_num, res_date, res_time, res_num);
-					initForm();	
-					console.log('메시지 입력');
+					
 				}
 			},
 			error:function(){

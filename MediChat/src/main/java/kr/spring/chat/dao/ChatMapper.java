@@ -39,6 +39,8 @@ public interface ChatMapper {
 	@Insert("INSERT INTO chat_msg(msg_num, chat_num, msg_content, msg_sender_type) VALUES (msg_seq.nextval, #{chat_num}, #{msg_content}, #{msg_sender_type})")
 	public void insertMsg(ChatMsgVO chatMsgVO);
 	
+	public void insertImage(ChatMsgVO chatMsgVO);
+	
 	public void insertChatFile(ChatFileVO chatFileVO);
 	public void insertChatPayment(ChatPaymentVO chatPaymentVO);
 	public void updateChatStatus(long chat_num);

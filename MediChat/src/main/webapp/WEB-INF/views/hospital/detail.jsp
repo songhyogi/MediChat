@@ -172,7 +172,7 @@
 		<p class="fs-18 fw-7">병원 위치</p>
 		<div class="fs-14 text-black-6 fw-7 mb-3">${hospital.hos_addr}</div>
 		<div class="mb-3">
-			<jsp:include page="/WEB-INF/views/common/staticMap.jsp"/>
+			<jsp:include page="/WEB-INF/views/common/staticHosMap.jsp"/>
 		</div>
 		<c:if test="${hospital.hos_mapImg!='null'}">
 			<div class="fs-15 text-black-7 fw-9 text-center">&lt;간이약도&gt;</div>
@@ -223,44 +223,43 @@
 	
 	<div id="detail_btn_box">
 		<div class="d-flex justify-content-center align-items-center">
-			<div id="res_btn">
-				진료 예약하기
-			</div>
-			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-			  Launch demo modal
-			</button>
+			<button id="reservation_btn" data-hos-num="${hospital.hos_num}">
+                진료 예약하기
+            </button>
 			<div id="call_btn">
 				전화하기
 			</div>
 		</div>
 	</div>
 </div>
-<!-- Modal -->
-<div class="modal" id="exampleModal" tabindex="-1">
-  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        
-        <jsp:include page="/WEB-INF/views/reservation/reservation.jsp"/>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+
+<div id="reservation_page" style="display:none;">
+	<jsp:include page="/WEB-INF/views/reservation/reservation.jsp"/>
+</div>    
 <script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-	const myModal = document.getElementById('myModal');
-	var myInput = document.getElementById('myInput');
-	myModal.addEventListener('shown.bs.modal', function () {
-	  myInput.focus()
-	  calendar.refetchEvents();
-	});
+document.addEventListener('DOMContentLoaded', function() {
+$(function(){
+    $('#reservation_btn').click(function(event){
+        var reservation_page = $('#reservation_page'); // 'data-hos-num' 속성을 읽음
+        $.ajax({
+            url: '/reservation/reservation',
+            method: 'get',
+            data: { hos_num: '${hospital.hos_num}'},
+            dataType: 'json',
+            success: function(param) {
+            	if(param.status=='login'){
+            		$('#reservation_page').show();
+            		calendar.render();
+            	} else {
+            		location.href='/member/login';
+            	}
+            },
+            error: function() {
+                alert('네트워크 오류 발생');
+            }
+        });
+    });
+});
+});
 </script>

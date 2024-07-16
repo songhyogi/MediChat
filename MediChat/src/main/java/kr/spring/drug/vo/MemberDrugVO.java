@@ -11,7 +11,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class MemberDrugVO {
-	private int med_num;
+	private long med_num;
 	private long mem_num;
 	@NotBlank
 	private String med_title;

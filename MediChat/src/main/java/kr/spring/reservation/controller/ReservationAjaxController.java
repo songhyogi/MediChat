@@ -1,9 +1,13 @@
 package kr.spring.reservation.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -17,6 +21,21 @@ import lombok.extern.slf4j.Slf4j;
 public class ReservationAjaxController {
 	@Autowired
 	private ReservationService reservationService;
+	
+//	@GetMapping("/reservation/reservation")
+//	public Map<String,Object> reservation(Long hos_num,Model model,HttpSession session) {
+//		MemberVO user = (MemberVO) session.getAttribute("user");
+//		Map<String,Object> map = new HashMap<String,Object>();
+//		
+//		if(user == null) {
+//			map.put("result", "logout");
+//	    }else {
+//	    	map.put("result","success");
+//	    	model.addAttribute("hos_num", hos_num);
+//	    }
+//		
+//		return map;
+//	}
 
 	@GetMapping("/reservation/hosHours")
 	@ResponseBody

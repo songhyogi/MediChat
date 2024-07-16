@@ -9,7 +9,7 @@
 		<tr class="nav-title">
 			<th class="fs-24 text-black-7">나의 비대면 진료</th>
 		</tr>
-		<!-- 예약된 비대면 진료 채팅방이 있는 경우(예약 목록대로 채팅방 목록 출력, c:forEach 사용) -->
+		
 		<c:forEach var="item" items="${list}">
 		<!-- li에 들어가야 할 항목(일반회원)- 진료일시, 의사명 -->
 			<c:if test="${user.getMem_auth()==2}">
