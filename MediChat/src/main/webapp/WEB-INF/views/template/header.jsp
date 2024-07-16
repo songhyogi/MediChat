@@ -34,7 +34,7 @@
 	</div>
 	<div class="d-flex justify-content-end align-items-center">
 		<!-- 검색 시작 -->
-		<form id="header-search-form" class="d-flex">
+		<form id="header-search-form" class="d-flex" action="/hospitals/search" method="get">
 			<input type="text" id="header-search-input" class="form-control" name="keyword" placeholder="병원 이름, 지역 + 과목, 증상">
 			<i id="header-search-icon" class="bi bi-search"></i>
 		</form>

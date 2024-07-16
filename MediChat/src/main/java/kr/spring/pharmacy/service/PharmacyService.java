@@ -16,7 +16,7 @@ public interface PharmacyService {
 	public List<PharmacyVO> selectListPharmacy(Map<String,Object> map);
 	
 	public PharmacyVO selectPharmacy(Long pha_num);
-	public void updateHitPharmacy(Long hos_num);
+	public void updateHitPharmacy(Long pha_num);
 	
 	public void initHitPharmacy();
 }

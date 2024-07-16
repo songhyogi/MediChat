@@ -146,7 +146,16 @@
 		     )
 		WHERE rnum > (#{pageNum} - 1) * #{pageItemNum}
 	</select>
-	<update id="initHitPharmacy">
+	
+	<select id="selectPharmacy" parameterType="long" resultType="pharmacyVO">
+		SELECT * FROM pharmacy WHERE pha_num=#{pha_num}
+	</select>
+	
+	<update id="updateHitPharmacy" parameterType="long">
 		UPDATE pharmacy SET pha_hit = pha_hit + 1
+	</update>
+	
+	<update id="initHitPharmacy">
+		UPDATE pharmacy SET pha_hit = 0
 	</update>
 </mapper>

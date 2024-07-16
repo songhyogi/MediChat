@@ -172,7 +172,7 @@
 		<p class="fs-18 fw-7">병원 위치</p>
 		<div class="fs-14 text-black-6 fw-7 mb-3">${hospital.hos_addr}</div>
 		<div class="mb-3">
-			<jsp:include page="/WEB-INF/views/common/staticMap.jsp"/>
+			<jsp:include page="/WEB-INF/views/common/staticHosMap.jsp"/>
 		</div>
 		<c:if test="${hospital.hos_mapImg!='null'}">
 			<div class="fs-15 text-black-7 fw-9 text-center">&lt;간이약도&gt;</div>
@@ -238,26 +238,28 @@
 </div>    
 <script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <script>
+document.addEventListener('DOMContentLoaded', function() {
 $(function(){
     $('#reservation_btn').click(function(event){
         var reservation_page = $('#reservation_page'); // 'data-hos-num' 속성을 읽음
         $.ajax({
-            url: '/reservation/reservation1',
+            url: '/reservation/reservation',
             method: 'get',
             data: { hos_num: '${hospital.hos_num}'},
             dataType: 'json',
             success: function(param) {
             	if(param.status=='login'){
             		$('#reservation_page').show();
+            		calendar.render();
             	} else {
             		location.href='/member/login';
             	}
-                
             },
             error: function() {
                 alert('네트워크 오류 발생');
             }
         });
     });
+});
 });
 </script>

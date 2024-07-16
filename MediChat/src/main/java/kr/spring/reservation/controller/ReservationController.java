@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class ReservationController {
 	
-	@GetMapping("/reservation/reservation1")
+	@GetMapping("/reservation/reservation")
 	@ResponseBody
 	public Map<String,String> reservation(Long hos_num,Model model,HttpSession session) {
 		log.debug("<<ajax 컨트롤러 진입>>");
@@ -26,9 +26,10 @@ public class ReservationController {
 		MemberVO user = (MemberVO) session.getAttribute("user");
 		if(user == null) {
 	      map.put("status", "logout");
-	      }
-		map.put("status","login");
-		model.addAttribute("hos_num", hos_num);
+	    }else {
+	    	map.put("status","login");
+	    }
+		map.put("hos_num", String.valueOf(hos_num));
 		return map;
 	}
 }
