@@ -31,14 +31,20 @@ public class ScheduleController {
 	@GetMapping("/schedule/list")
 	public String showScheduleList(HttpSession session, Model model) {
 		DoctorVO user = (DoctorVO) session.getAttribute("user");
-		if(user == null) {//로그인이 되지 않은 경우
-			return "redirect:/doctor/login";//로그인 페이지로 리다이렉트
-		}
+		if(user == null) {
+	         model.addAttribute("message","로그인이 필요합니다.");
+	         model.addAttribute("url","/member/login");
+	         return "/common/resultAlert";
+	    }
 		if(user.getMem_auth()!=3) {//auth가 3이 아닌 경우
-			return "/errors/404";//에러페이지로 이동
+			model.addAttribute("message","잘못된 접근입니다.");
+			model.addAttribute("url","/main/main");
+			return "/common/resultAlert";//에러페이지로 이동
 		}
 		if(user.getDoc_treat()!=1) {
-			return "/member/docTreatRegister";
+			model.addAttribute("message", "스케줄관리를 이용하시려면 예약서비스 신청을 먼저 해야 합니다.");
+			model.addAttribute("url", "/doctor/registerTreat");
+			return "/common/resultAlert";
 		}
 		
 		Long doc_num = user.getMem_num();
