@@ -31,7 +31,6 @@
             }
         });
         calendar.render();
-        
         // 선택한 날짜의 병원 진료시간을 표시하는 함수
         function displayhosTimes(date, day){
             $('#time-buttons').empty();

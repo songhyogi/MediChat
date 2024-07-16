@@ -10,9 +10,11 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -24,6 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 public class PharmacyController {
+	@Value("${API.KSY.KAKAO-API-KEY}")
+	private String apiKey;
 	
 	@Autowired
 	private PharmacyService pharmacyService;
@@ -137,5 +141,24 @@ public class PharmacyController {
 		model.addAttribute("phaList", phaList);
 		
 		return phaList;
+	}
+	
+	// 약국 > 검색 결과 > 상세 페이지
+	@GetMapping("/pharmacies/search/detail/{pha_num}")
+	public String detail(Model model, @PathVariable Long pha_num) {
+		model.addAttribute("apiKey", apiKey);
+		
+		PharmacyVO pharmacy = pharmacyService.selectPharmacy(pha_num);
+		model.addAttribute("pharmacy",pharmacy);
+		
+		// 현재 시간 변수 생성 후 값 넣기
+		LocalDateTime now = LocalDateTime.now();
+		String time = now.format(DateTimeFormatter.ofPattern("HHmm")); //hh:mm
+		int day = now.getDayOfWeek().getValue(); //1:월 2:화 3:수 4:목 5:금 6:토 7:일
+		model.addAttribute("time", time);
+		model.addAttribute("day", day);
+		log.debug("<<시간>> = " + "day: " + day + ", time: " +time);
+		
+		return "pDetail";
 	}
 }
