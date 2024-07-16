@@ -35,7 +35,7 @@
 				<a href="${pageContext.request.contextPath}/health/healthDetail?healthy_num=${h.healthy_num}">
 						<ul>
 							<li style="font-size:16pt;">${h.healthy_title}</li>
-							<li>내용들어갈거</li>
+							<li>${fn:substring(h.healthy_content,0,fn:indexOf(h.healthy_content, '.')+1)}</li>
 							<li> ${h.h_reg_date} 조회수 : ${h.healthy_hit} &nbsp; ♡ : ${h.fav_cnt}   </li>
 						</ul>
 					</a>

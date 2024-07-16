@@ -38,11 +38,12 @@
 	                </svg>
 	           </div>
 	      </div>
-        <span id="hfav_cnt">${healthy.fav_cnt}</span><br>
-        
+        &nbsp; &nbsp; &nbsp;<span id="hfav_cnt">${healthy.fav_cnt}</span><br>
 <c:if test="${user.mem_num == healthy.mem_num}">
-	<input type="button" value="글 수정" onclick="location.href='healthUpdate?healthy_num=${healthy.healthy_num}'">
-	<input type="button" value="글 삭제" id="h_delbtn" >
+<div class="align-center">
+	<input type="button" class="default-btn" value="글 수정" onclick="location.href='healthUpdate?healthy_num=${healthy.healthy_num}'">
+	<input type="button" class="default-btn" value="글 삭제" id="h_delbtn" >
+</div>
 	<br>
 	<script type="text/javascript">
 		$(function(){
@@ -58,22 +59,26 @@
 	</script>
 </c:if>
 
-		<div>
+		<div class="align-center">
 			<c:if test="${empty user}">
 				<form >
 				<input type="hidden"   name ="healthy_num" value="${healthy.healthy_num}">
 				<input type="hidden" name="hre_renum" value="0">
 				<input type="hidden" name="hre_level" value="0">
-				<textarea rows="5" cols="35" name="hre_content" style="resize:none;" disabled="disabled" >로그인 후 작성가능합니다.</textarea>
+				<textarea rows="5" cols="55" name="hre_content" style="resize:none;" disabled="disabled" >로그인 후 작성가능합니다.</textarea>
 				</form>
+				<br>
 			</c:if>
 			<c:if test="${!empty user}">
 				<form  id="hreWrite" >
 				<input type="hidden" id="healthy_num"  name ="healthy_num" value="${healthy.healthy_num}">
 				<input type="hidden" name="hre_renum" value="0">
 				<input type="hidden" name="hre_level" value="0">
-				<textarea rows="5" cols="35" name="hre_content" id="hre_content"  style="resize:none;" placeholder="300자까지 입력가능" ></textarea>
-				<input type="submit" value="댓글쓰기">
+				<textarea rows="5" cols="55" name="hre_content" id="hre_content"  style="resize:none;" placeholder="300자까지 입력가능" ></textarea>
+				<br>
+				<div class="align-right">
+				<input type="submit" class="default-btn" value="댓글쓰기">
+				</div>
 				</form>
 			</c:if>
 			
@@ -85,7 +90,8 @@
 		<p>
 		<p>
 		<div class="align-center">
-			<input type="button" value="비대면 진료 받으러 가기">
+			<br><br><br><br>
+			<input type="button" class="default-btn" value="비대면 진료 받으러 가기">
 		</div>
 	</div>
 </div>

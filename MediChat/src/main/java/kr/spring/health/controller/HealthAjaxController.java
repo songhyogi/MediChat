@@ -154,5 +154,23 @@ public class HealthAjaxController {
 		
 		return map;
 	}
+	
+	//답글 달기
+	@PostMapping("/health/writereHReply")
+	@ResponseBody
+	public Map<String,Object> writereHre(HealthyReplyVO vo, HttpSession session){
+		Map<String,Object> map = new HashMap<String,Object>();
+		MemberVO user =(MemberVO) session.getAttribute("user");
+		if(user == null) {
+			map.put("result", "logout");
+		}else {
+			vo.setMem_num(user.getMem_num());
+			
+			service.insertHre(vo);
+			map.put("result", "success");
+		}
+		
+		return map;
+	}
 
 }

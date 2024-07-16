@@ -22,7 +22,7 @@
 						<form:errors path="healthy_title" cssClass="error-color"/>
 					</li>
 					<li>
-						<form:textarea path="healthy_content" placeholder="내용을 입력하세요"/>
+						<form:textarea path="healthy_content" placeholder="내용을 입력하세요. 첫문장이 목록에 나타납니다.(끝마침표 기준)"/>
 						<form:errors path="healthy_content" cssClass="error-color"/>
 						<script>
 							 function MyCustomUploadAdapterPlugin(editor) {

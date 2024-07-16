@@ -115,17 +115,20 @@ public class HealthController {
 		MemberVO user = (MemberVO) session.getAttribute("user");
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("healthy_num", healthy_num);
-		HealthyBlogVO vo = service.getHealthy(map);
+		
 		if(user == null) {
 			model.addAttribute("message","로그인 후 사용가능합니다.");
 			model.addAttribute("url",request.getContextPath()+"/member/login");
-		}else if(user.getMem_num() == vo.getMem_num() ) {
+		}else if( user != null) {
 			map.put("user_num", user.getMem_num());
-			model.addAttribute("healthyBlogVO",vo);
-			return "healthy_Update";
-		}else {
+			HealthyBlogVO vo = service.getHealthy(map);
+			if(user.getMem_num() == vo.getMem_num() ) {
+				model.addAttribute("healthyBlogVO",vo);
+				return "healthy_Update";
+			}else {
 			model.addAttribute("message","본인 작성 글만 수정 가능합니다.");
 			model.addAttribute("url",request.getContextPath()+"/health/healthBlog");
+			}
 		}
 		
 		return  "common/resultAlert";
@@ -136,21 +139,25 @@ public class HealthController {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("healthy_num", vo.getHealthy_num());
 	
-		HealthyBlogVO db_vo = service.getHealthy(map);
+		
 		if(user == null) {
 			model.addAttribute("message","로그인 후 사용가능합니다.");
 			model.addAttribute("url",request.getContextPath()+"/member/login");
-		}else if(user.getMem_num() == db_vo.getMem_num() ) {
-			if(vo.getUpload() != null) {
-				vo.setH_filename(FileUtil.createFile(request, vo.getUpload()));
-				FileUtil.removeFile(request, db_vo.getH_filename());
-			}
+		}else if(user != null) {
+			map.put("user_num", user.getMem_num());
+			HealthyBlogVO db_vo = service.getHealthy(map);
+			if(user.getMem_num() == db_vo.getMem_num() ) {
+				if(vo.getUpload() != null) {
+					vo.setH_filename(FileUtil.createFile(request, vo.getUpload()));
+					FileUtil.removeFile(request, db_vo.getH_filename());
+				}
 			service.updateHeal(vo);
 			
 			return "redirect:/health/healthDetail?healthy_num="+vo.getHealthy_num();
-		}else {
-			model.addAttribute("message","본인 작성 글만 수정 가능합니다.");
-			model.addAttribute("url",request.getContextPath()+"/health/healthBlog");
+			}else {
+				model.addAttribute("message","본인 작성 글만 수정 가능합니다.");
+				model.addAttribute("url",request.getContextPath()+"/health/healthBlog");
+			}
 		}
 		
 		
@@ -161,19 +168,22 @@ public class HealthController {
 		MemberVO user = (MemberVO) session.getAttribute("user");
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("healthy_num", healthy_num);
-		HealthyBlogVO vo = service.getHealthy(map);
+	
 		if(user == null) {
 			model.addAttribute("message","로그인 후 사용가능합니다.");
 			model.addAttribute("url",request.getContextPath()+"/member/login");
-		}else if(user.getMem_num() == vo.getMem_num() ) {
+		}else if(user != null) { 
+			map.put("user_num", user.getMem_num());
+			HealthyBlogVO vo = service.getHealthy(map);
+			if(user.getMem_num() == vo.getMem_num() ) {
 			service.deleteHeal(healthy_num);
 			model.addAttribute("message","게시글이 삭제 되었습니다.");
 			model.addAttribute("url",request.getContextPath()+"/health/healthBlog");
-		}else {
-			model.addAttribute("message","본인 작성 글만 삭제 가능합니다.");
-			model.addAttribute("url",request.getContextPath()+"/health/healthBlog");
+			}else {
+				model.addAttribute("message","본인 작성 글만 삭제 가능합니다.");
+				model.addAttribute("url",request.getContextPath()+"/health/healthBlog");
+			}
 		}
-		
 		return  "common/resultAlert";
 	}
 	

@@ -2,8 +2,10 @@ $(function(){
 let pageNum;
 let count;
 let pagecount;
+//댓글 목록처리랑 답글보기해야됨...
 
-//글쓰기
+
+//글쓰기 글수정 공통
 $('#register_form').submit(function(){
 	if($('#healthy_title').val().trim()==''){
 		alert('제목을 입력하세요');
@@ -127,70 +129,42 @@ function selectReply(currentNum){
 						output+='<li> 등록일 : '+item.hre_reg_date+'</li>';
 					}
 					output +='</ul>';
-					output+='<p>'+item.hre_content+'<p>';
-					output+='<div class="align-right btnspace">';
-					if(param.user_num == item.mem_num){
-						output+='<input type="button" data-content="'+item.hre_content+'" data-num="'+item.hre_num+'" data-mem="'+item.mem_num+'" value="수정" class="modify-btn"><input type="button" value="삭제" data-num="'+item.hre_num+'" data-mem="'+item.mem_num+'" class="delete-btn">';	
-					}
-					if(user_num != 0)
-						output+='<input type="button" class="re-wirte-btn" data-id="'+item.id+'" data-renum="'+item.hre_num+'" data-level="1"  value="답글 쓰기">';
-					if(item.rere_cnt !=0){
-						output+='<input type="button" class="re-view-btn"data-renum="'+item.hre_num+'"  value="답글 보기">';
-					}
-					output +='</div>';
-					output +='</div>';
-					output +='<div class="hrefav" data-num="'+item.hre_num+'">';
-					output+='<div title="Like" class="heart-container">';
+					output+='<p>'+item.hre_content+'<p><br>';
+							output +='<div class="hrefav" style="width:20px; margin-bottom:20px;" data-num="'+item.hre_num+'">';
+					output+='<div title="Like" class="heart-container" >';
 					if(item.click_num == $('#user_num').val()&& item.click_num !=0&& $('#user_num').val()!=0){
-					output+='<input id="'+item.hre_num+'"  class="checkbox" type="checkbox" checked="checked">';}
+					output+='<input id="'+item.hre_num+'"   class="checkbox" type="checkbox" checked="checked">';}
 
 					else{
 					output+='<input  id="'+item.hre_num+'" class="checkbox" type="checkbox">';
 					}
-					output+='<div class="svg-container">';
-					output+='<svg xmlns="http://www.w3.org/2000/svg" class="svg-outline" viewBox="0 0 24 24">';
-					output+='<path d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Zm-3.585,18.4a2.973,2.973,0,0,1-3.83,0C4.947,16.006,2,11.87,2,8.967a4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,11,8.967a1,1,0,0,0,2,0,4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,22,8.967C22,11.87,19.053,16.006,13.915,20.313Z">';
-
-
-
-					output+='</path></svg><svg xmlns="http://www.w3.org/2000/svg" class="svg-filled" viewBox="0 0 24 24"><path d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Z"> </path>';
-
-
-
-					output+='</svg><svg xmlns="http://www.w3.org/2000/svg" height="100" width="100" class="svg-celebrate"><polygon points="10,10 20,20"></polygon><polygon points="10,50 20,50"></polygon>';
-
-
-
-					output+='<polygon points="20,80 30,70"></polygon><polygon points="90,10 80,20"></polygon><polygon points="90,50 80,50"></polygon><polygon points="80,80 70,70"></polygon> </svg></div></div>';
-
-
-
-					output +='<span class="'+item.hre_num+'">'+item.refav_cnt+'</span>';
-
-
-
+					output+='<div class="svg-container" style="width:25px;  float:left;">';
+					output+='<svg style="width:20px; margin-bottom:25px;" xmlns="http://www.w3.org/2000/svg" class="svg-outline" viewBox="0 0 24 24">';
+					output+='<path  d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Zm-3.585,18.4a2.973,2.973,0,0,1-3.83,0C4.947,16.006,2,11.87,2,8.967a4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,11,8.967a1,1,0,0,0,2,0,4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,22,8.967C22,11.87,19.053,16.006,13.915,20.313Z">';
+					output+='</path></svg><svg style="width:20px; margin-bottom:25px;" xmlns="http://www.w3.org/2000/svg" class="svg-filled" viewBox="0 0 24 24"><path d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Z"> </path>';
+					output+='</svg><svg  style="width:10px; " xmlns="http://www.w3.org/2000/svg"  class="svg-celebrate"><polygon points="10,10 20,20"></polygon><polygon style="width:20px; margin-bottom:20px;" points="10,50 20,50"></polygon>';
+					output+='<polygon style="width:20px; margin-bottom:20px;" points="20,80 30,70"></polygon><polygon  style="width:20px; margin-bottom:20px;" points="90,10 80,20"></polygon><polygon style="width:20px; margin-bottom:20px;"  points="90,50 80,50"></polygon><polygon style="width:20px; margin-bottom:20px;" points="80,80 70,70"></polygon> </svg></div>';
+					output +='&nbsp; &nbsp;<span  style="width:10px;  text-align:center; margin-top:4px; padding-top:4px !important;" class="'+item.hre_num+'">'+item.refav_cnt+'</span></div>';
 					output +='</div>';
-
-
+					output+='<div class="align-right btnspace">';
+					if(param.user_num == item.mem_num){
+						output+=' <input type="button"  data-content="'+item.hre_content+'" data-num="'+item.hre_num+'" data-mem="'+item.mem_num+'" value="수정" class="modify-btn default-btn"> <input type="button"  value="삭제" data-num="'+item.hre_num+'" data-mem="'+item.mem_num+'" class="delete-btn default-btn">';	
+					}
+					if(param.user_num != 0)
+						output+=' <input type="button"  class="re-wirte-btn default-btn" data-id="'+item.id+'" data-renum="'+item.hre_num+'" data-healnum="'+item.healthy_num+'" data-level="1"  value="답글 쓰기">';
+					if(item.rere_cnt !=0){
+						output+=' <input type="button"  class="re-view-btn default-btn"data-renum="'+item.hre_num+'"  value="답글 보기">';
+					}
+					output +='</div>';
+					output +='</div><br><br><br>';
 					$('#replyList').append(output);
-
-
 				})
-
-
-
 		},
-
 		error:function(){
 			alert('네트워크 오류');
-
 		}
 	})
-
-
 };
-
-
 
 
 $(document).on('click','.modify-btn',function(){
@@ -207,7 +181,7 @@ $(document).on('click','.modify-btn',function(){
 
 	output+='<textarea rows="5" cols="35" name="hre_content"  style="resize:none;" placeholder="300자까지 입력가능" >'+$(this).attr('data-content')+'</textarea>';
 
-	output+='<input type="submit" value="댓글수정"><input type="button" id="resetbtn" value="취소"></form>';
+	output+='<input type="submit" class=" default-btn" value="댓글수정"><input type="button"  class="default-btn" id="resetbtn" value="취소"></form>';
 
 	output+='</div>';
 
@@ -221,14 +195,11 @@ $(document).on('click','.modify-btn',function(){
 
 
 $(document).on('click','#resetbtn',function(){
-
 	$('.btnspace').show();
 	$(this).parents().find('p').show();
 	$(this).parents().find('#modifyform').remove();
-
+	$('#rehreWriteform').remove();
 });
-
-
 
 $(document).on('submit','#hreModify',function(event){
 
@@ -348,23 +319,60 @@ $(document).on('click','.hrefav',function(event){
 		//댓글 목록 처리 해야됨
 
 		//답글 쓰기
-		function removerehre(){
-			$('#rehreWriteform').remove();
-		}
-		$(document).on('click','.re-wirte-btn',function(){
-				removerehre();
 	
+		$(document).on('click','.re-wirte-btn',function(){
+				$('#rehreWriteform').remove();
+			
 				let output = '<div id="rehreWriteform">';
-				output = '>>>'+$(this).attr('data-id')+'답글 작성중';				
+				output += '>>>'+$(this).attr('data-id')+'답글 작성중';				
 				output+='<form  id="rehreWrite">';
-				output+='<input type="hidden"  name ="hre_num" value="'+$(this).attr('data-num')+'">';
+				output+='<input type="hidden"  name ="healthy_num" value="'+$(this).attr('data-healnum')+'">';
+				output+='<input type="hidden"  name ="hre_renum" value="'+$(this).attr('data-renum')+'">';
 				output +='<input type="hidden" name="hre_level" value="'+$(this).attr('data-level')+'">';
 				output+='<textarea rows="5" cols="35" name="hre_content"  style="resize:none;" placeholder="300자까지 입력가능" ></textarea>';
-				output+='<input type="submit" value="답글달기"><input type="button" id="rehresetbtn" value="취소"></form>';
+				output+=' <input type="submit" class="default-btn" value="답글달기"> <input type="button"  class="default-btn" id="resetbtn" value="취소"></form>';
 				output+='</div>';
 				$(this).parent().parent().append(output);
 
 		});
+		
+		$(document).on('submit','#rehreWrite',function(event){
+
+	if($(this).find('textarea').val().trim()==''){
+		alert('내용을 입력해주세요.');+
+		$(this).find('textarea').val('').focus();
+		return false;
+	}
+
+	let formdata = $(this).serialize();
+
+	$.ajax({
+		url:'writereHReply',
+		type:'post',
+		data:formdata,
+		dataType:'json',
+		success:function(param){
+			if(param.result=='logout'){
+
+				alert('로그인 후 이용해주세요');
+
+			}else if(param.result=='success'){
+				selectReply(pageNum);
+				//목록작업 해야됨
+			}else{
+				alert('답글 달기 오류');
+			}
+
+		},
+
+		error:function(){
+			alert('네트워크 오류');
+		}
+	});	
+
+	event.preventDefault();
+
+});
 
 
 
