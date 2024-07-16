@@ -46,8 +46,8 @@ public class PharmacyServiceImpl implements PharmacyService{
 	}
 
 	@Override
-	public void initHospital() {
-		// TODO Auto-generated method stub
+	public void initHitPharmacy() {
+		pharmacyMapper.initHitPharmacy();
 		
 	}
 
