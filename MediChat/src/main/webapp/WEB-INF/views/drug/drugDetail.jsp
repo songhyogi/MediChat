@@ -2,15 +2,32 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<style>
+ul li {
+    margin-bottom: 50px; /* 리스트 아이템들 간의 간격을 넓힘 */
+}
+.drug-btn {
+    display: flex;
+    justify-content: center; /* 버튼들을 가운데 정렬 */
+    flex-wrap: nowrap; /* 버튼들을 한 줄에 나열 */
+}
+
+.drug-btn .button {
+    border-radius: 0; /* 버튼의 모서리를 둥글지 않게 함 */
+    margin: 0; /* 버튼들 간의 간격을 없앰 */
+    flex: 1; /* 버튼을 균등하게 배치 */
+    text-align: center; /* 버튼 텍스트 가운데 정렬 */
+}
+</style>
 <!-- 의약품 목록 상세 시작 -->
 <div class="page-main">
 	<div class="body-header">
-		<h2>의약품 상세 정보</h2>
-		<span>홈 > 의약품 백과사전 > 의약품 상세정보</span> <br><br>
-	</div>
+		<p class="text-lightgray fw-7 fs-13">홈 > 의약품 백과사전</p>
+		<h4>의약품 상세 정보</h4>
+	</div><br>
 	<div class="drug-body">
-		<h3>제품 기본 정보</h3>
-		<table>
+		<h4>제품 기본 정보</h4>
+		<table class="table table-bordered">
 			<tr>
 				<td>제품명</td>
 				<td>${drug.drg_name}</td>
@@ -32,10 +49,8 @@
 				<td>${drug.drg_code}</td>
 			</tr>
 		</table>
-	</div>
 	<br>
-	<div class="drug-body">
-		<h3>허가정보 · 복약정보</h3>
+		<h4>허가정보 · 복약정보</h4>
 		<!-- 모든 데이터가 존재하지 않을 경우 -->
 		<c:if test="${empty drug.drg_dosage && empty drug.drg_effect && empty drug.drg_warning && empty drug.drg_precaution && empty drug.drg_interaction && empty drug.drg_seffect && empty drug.drg_storage}">
 			<div class="warin">
@@ -44,40 +59,40 @@
 		</c:if>
 		<!-- 데이터가 하나 이상 존재할 경우 -->
 		<c:if test="${!empty drug.drg_dosage || !empty drug.drg_effect || !empty drug.drg_warning || !empty drug.drg_precaution || !empty drug.drg_interaction || !empty drug.drg_seffect || !empty drug.drg_storage}">
-		<div class="drug-btn">
+		<div class="drug-btn align-center">
 			<c:if test="${!empty drug.drg_dosage}">
-				<button class="button">복용법</button>
+				<button class="button" onclick="scrollToSection('dosage')">복용법</button>
 			</c:if>
 			<c:if test="${!empty drug.drg_effect}">
-				<button class="button">효능·효과</button>
+				<button class="button" onclick="scrollToSection('effect')">효능·효과</button>
 			</c:if>
 			<c:if test="${!empty drug.drg_warning || !empty drug.drg_precaution || !empty drug.drg_interaction}">
-				<button class="button">주의사항</button>
+				<button class="button" onclick="scrollToSection('warning')">주의사항</button>
 			</c:if>
 			<c:if test="${!empty drug.drg_seffect}">
-				<button class="button">부작용</button>
+				<button class="button" onclick="scrollToSection('seffect')">부작용</button>
 			</c:if>
 			<c:if test="${!empty drug.drg_storage}">
-				<button class="button">보관방법</button>
+				<button class="button" onclick="scrollToSection('storage')">보관방법</button>
 			</c:if>
 		</div>
 		<br>
 		<ul>
 			<c:if test="${!empty drug.drg_dosage}">
-				<li>
-					<h4>복용법</h4>
+				<li id="dosage">
+					<h5>복용법</h5>
 					<div>${drug.drg_dosage}</div>
 				</li>
 			</c:if>
 			<c:if test="${!empty drug.drg_effect}">
-				<li>
-					<h4>효능·효과</h4>
+				<li id="effect">
+					<h5>효능·효과</h5>
 					<div>${drug.drg_effect}</div>
 				</li>	
 			</c:if>
 			<c:if test="${!empty drug.drg_warning || !empty drug.drg_precaution || !empty drug.drg_interaction}">
-				<li>
-					<h4>주의사항</h4>
+				<li id="warning">
+					<h5>주의사항</h5>
 					<c:if test="${!empty drug.drg_warning}">
 						<div>${drug.drg_warning}</div><br>
 					</c:if>
@@ -90,14 +105,14 @@
 				</li>
 			</c:if>
 			<c:if test="${!empty drug.drg_seffect}">
-				<li>
-					<h4>부작용</h4>
+				<li id="seffect">
+					<h5>부작용</h5>
 					<div>${drug.drg_seffect}</div>
 				</li>
 			</c:if>
 			<c:if test="${!empty drug.drg_storage}">
-				<li>
-					<h4>보관방법</h4>
+				<li id="storage">
+					<h5>보관방법</h5>
 					<div>${drug.drg_storage}</div>
 				</li>
 			</c:if>
@@ -143,5 +158,11 @@ window.onload=function(){
 	}
 
 };
+
+//섹션으로 스크롤하는 함수
+function scrollToSection(sectionId) {
+	const element = document.getElementById(sectionId);
+	element.scrollIntoView({ behavior: 'smooth' });
+}
 </script>
 <!-- 스크립트 끝 -->

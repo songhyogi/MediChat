@@ -17,9 +17,9 @@
 	</div>
 	<div id="main_body" class="custom-container pt-4 border">
 		<tiles:insertAttribute name="body"/>
-	</div>
 	<div id="main_footer">
 		<tiles:insertAttribute name="footer"/>
+	</div>
 	</div>
 </div>
 </body>

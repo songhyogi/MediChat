@@ -123,7 +123,7 @@
 	</div>
 	<div class="modal-body">
 	<form action="memberDrugSearch" method="post" id="drugSearch">
-	<input type="hidden">
+		<input type="hidden" name="med_num" value="${memberDrug.med_num}">
 		<ul>
 			<li>
 				증상 : <input type="text" class="check" id="title" name="med_title">
