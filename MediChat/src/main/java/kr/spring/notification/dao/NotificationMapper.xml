@@ -19,7 +19,7 @@
 										#{noti_category},
 										#{noti_category_num},
 										#{noti_message},
-										#{noti_createdDate},
+										SYSDATE,
 										#{noti_priority}
 									)
 	</insert>
