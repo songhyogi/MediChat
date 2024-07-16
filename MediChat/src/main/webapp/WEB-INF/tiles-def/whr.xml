@@ -27,6 +27,7 @@
 		<put-attribute name="title" value="회원 의약품 상세"/>
 		<put-attribute name="body" value="/WEB-INF/views/drug/memberDrugList.jsp"/>
 		<put-attribute name="css" value="/WEB-INF/views/drug/drugCSS.jsp"/>
+		<put-attribute name="bootstrap" value="/WEB-INF/views/common/bootStrap.jsp"/>
 	</definition>
 </tiles-definitions>
 
