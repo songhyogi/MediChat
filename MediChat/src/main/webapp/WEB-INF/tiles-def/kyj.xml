@@ -15,6 +15,10 @@
 		<put-attribute name="chatRoom" value="/WEB-INF/views/chat/chatRoom.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" />
 	</definition>
+	
+	<definition name="chatViewForDoc" extends = "chatView">
+		<put-attribute name="nav" value="/WEB-INF/views/template/nav_docpage.jsp"/>
+	</definition>
 
 </tiles-definitions>
 
