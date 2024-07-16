@@ -176,12 +176,15 @@
 	</select>
 <!-- ========================= 병원 리스트 끝 ========================= -->
 
-	<!-- selectListCntHospital -->
-	<select id="selectListCntHospital" parameterType="map" resultType="integer">
-		SELECT COUNT(*) FROM HOSPITAL
-	</select>
-	
 	<select id="selectHospital" parameterType="long" resultType="hospitalVO">
 		SELECT * FROM hospital WHERE hos_num=#{hos_num}
 	</select>
+	
+	<update id="updateHitHospital" parameterType="long">
+		UPDATE hospital SET hos_hit = hos_hit + 1 WHERE hos_num=#{hos_num}
+	</update>
+	
+	<update id="initHitHospital">
+		UPDATE hospital SET hos_hit = 0 where hos_hit > 0
+	</update>
 </mapper>

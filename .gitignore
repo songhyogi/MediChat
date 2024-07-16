@@ -27,4 +27,5 @@ bin/
 hs_err_pid*
 replay_pid*
 
-application-API-KEY.properties
+application-API-KEY.yml
+application-DB-SCHEDULE.yml

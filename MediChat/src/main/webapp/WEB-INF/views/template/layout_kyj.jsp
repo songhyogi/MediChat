@@ -23,7 +23,7 @@
 		<div id="main_leftNav" class="col-3">
 			<tiles:insertAttribute name="nav"/>
 		</div>
-		<div id="main_body" class="col-6 display">
+		<div id="main_body" class="col-9 display">
 				<tiles:insertAttribute name="chatNav"/>
 				<tiles:insertAttribute name="chatRoom"/>
 		</div>
@@ -31,7 +31,6 @@
 			<tiles:insertAttribute name="footer"/>
 		</div>
 	</div>
-
 </div>
 </body>
 </html>

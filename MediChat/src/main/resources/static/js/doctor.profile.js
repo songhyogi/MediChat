@@ -44,7 +44,7 @@ $(function(){
 		
 		//서버와 통신(경로에 el 사용 불가 > 상대적인 경로 입력)
 		$.ajax({
-			url:'../doctor/updateDocProfile',
+			url:'../doctor/updateDocPhoto',
 			type:'post',
 			data:form_data,
 			dataType:'json',
@@ -66,15 +66,12 @@ $(function(){
 				alert('네트워크 오류 발생');
 			}
 		});
-		
-	});//end of click > 파일 전송
-	
+	});
 	//취소 버튼 처리
 	$('#photo_reset').click(function(){
 		$('.my-photo').attr('src',photo_path);
 		$('#upload').val('');
 		$('#photo_choice').hide();
 		$('#photo_btn').show();
-	});//end of click > 취소 버튼 처리
-	
+	});
 });

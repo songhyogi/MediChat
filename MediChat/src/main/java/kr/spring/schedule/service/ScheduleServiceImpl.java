@@ -33,8 +33,18 @@ public class ScheduleServiceImpl implements ScheduleService{
 	}
 
 	@Override
-	public void insertHoliday(Long doc_num) {
-		scheduleMapper.insertHoliday(doc_num);
+	public void insertHoliday(HolidayVO holiday) {
+		scheduleMapper.insertHoliday(holiday);
 	}
+
+	@Override
+	public void updateHoliday(HolidayVO holiday) {
+		scheduleMapper.updateHoliday(holiday);
+	}
+
+	@Override
+    public int countHoliday(HolidayVO holiday) {
+        return scheduleMapper.countHoliday(holiday);
+    }
 
 }

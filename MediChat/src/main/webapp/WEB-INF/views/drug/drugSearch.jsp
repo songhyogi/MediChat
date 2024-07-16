@@ -1,10 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style>
+.align-center {/* 가운데 정렬 */
+  text-align: center;
+}
+ul {
+    list-style-type: none; /* 모든 ul 태그의 점 제거 */
+}
+
+ul li {
+    list-style-type: none; /* 각각의 li 태그의 점 제거 */
+     display: inline-block;
+    margin-right: 10px; /* 각 항목 사이의 간격 조정 */
+}
+a {
+    text-decoration: none;
+    color: inherit; /* 기본 색상 상속 */
+}	
+</style>
 <!-- 의약품 검색 시작 -->
 <div class="page-main">
-	<h2>의약품 상세검색</h2>
-	<span>홈 > 의약품 백과사전</span>
+	<p class="text-lightgray fw-7 fs-13">홈 > 의약품 백과사전</p>
+	<h4>의약품 상세검색</h4>
+	
 	<!-- 의약품 검색 -->
 	<form action="search" id="search_form" method="get" class="align-center">
 		<ul class="search">
@@ -14,21 +33,23 @@
 					<option value="2" <c:if test="${param.keyfield == 2}">selected</c:if>>회사명</option>
 					<option value="3" <c:if test="${param.keyfield == 3}">selected</c:if>>효능</option>
 				</select>
+				<input type="search" name="keyword" id="keyword" value="${param.keyword}">
+				<input type="submit" value="검색">
 			</li>
-			<li>
+			<%-- <li>
 				<input type="search" name="keyword" id="keyword" value="${param.keyword}">
 			</li>
 			<li>
 				<input type="submit" value="검색">
-			</li>
+			</li> --%>
 		</ul>
 	</form><br>
 	<c:if test="${count == 0}">
 		<div class="result-display">표시할 게시물이 없습니다</div>
 	</c:if>
 	<c:if test="${count > 0}">
-		<table class="drug">
-			<tr>
+		<table class="table table-hover">
+			<tr class="table-light align-center">
 				<th>식별</th>
 				<th>제품명</th>
 				<th>회사명</th>
@@ -37,7 +58,7 @@
 			<c:forEach var="drug" items="${list}">
 			<tr>
 				<td>
-					<div>
+					<div class="align-center">
 						<c:if test="${empty drug.drg_img}">
 							<img src="${pageContext.request.contextPath}/images/noIMG.png" width="20">
 						</c:if>
@@ -47,13 +68,15 @@
 					</div>
 				</td>
 				<td><a href="detail?drg_num=${drug.drg_num}"> ${drug.drg_name}</a></td>
-				<td>${drug.drg_company}</td>
-				<td><img src="${pageContext.request.contextPath}/images/magnifier.png" width="20"></td>
+				<td class="align-center">${drug.drg_company}</td>
+				<td class="align-center"><img src="${pageContext.request.contextPath}/images/magnifier.png" width="20"></td>
 			</tr>
 			</c:forEach>
 		</table><br>
 	</c:if>
-	<div>${page}</div>
+	<nav aria-label="Page navigation example">
+		<div class="align-center">${page}</div>
+	</nav>
 	<!-- 모달 시작 --> 	
 	<div class="modal">
 		<!-- 이미지 모달 -->

@@ -26,8 +26,8 @@ public class DoctorServiceImpl implements DoctorService{
 	}
 
 	@Override
-	public DoctorVO selectDoctor(Long doc_num) {
-		return doctorMapper.selectDoctor(doc_num);
+	public DoctorVO selectDoctor(Long mem_num) {
+		return doctorMapper.selectDoctor(mem_num);
 	}
 
 	@Override
@@ -38,8 +38,7 @@ public class DoctorServiceImpl implements DoctorService{
 
 	@Override
 	public void updateDocPasswd(DoctorVO doctor) {
-		// TODO Auto-generated method stub
-		
+		doctorMapper.updateDocPasswd(doctor);
 	}
 
 	@Override
@@ -49,10 +48,14 @@ public class DoctorServiceImpl implements DoctorService{
 
 	@Override
 	public void deleteDoctor(Long doc_num) {
-		// TODO Auto-generated method stub
-		
+		doctorMapper.deleteDoctor(doc_num);
 	}
 
+	@Override
+	public void deleteDoctor_detail(DoctorVO doctor) {
+		doctorMapper.deleteDoctor_detail(doctor);
+	}
+	
 	@Override
 	public DoctorVO checkId(String mem_id) {
 		return doctorMapper.checkId(mem_id);
@@ -94,5 +97,6 @@ public class DoctorServiceImpl implements DoctorService{
 	public List<DoctorVO> docList(Map<String, Object> map) {
 		return doctorMapper.docList(map);
 	}
+
 
 }

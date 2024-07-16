@@ -3,6 +3,8 @@ package kr.spring.drug.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -14,9 +16,10 @@ public interface MemberDrugMapper {
 	//의약품 검색
 	@Select("SELECT drg_name FROM drug WHERE drg_name LIKE '%' || #{drg_name} || '%'")
 	public List<DrugInfoVO> selectDrugList (String drg_name);
-	
-	public List<MemberDrugVO> selectMemberDrugList(Map<String, Object> map);
+	@Select("SELECT * FROM medicine WHERE mem_num=#{mem_num}")
+	public List<MemberDrugVO> selectMemberDrugList(Long mem_num);
 	public void insertDrug(MemberDrugVO memberDrug);
 	public void updateDrug(MemberDrugVO memberDrug);
+	@Delete("DELETE FROM medicine WHERE med_num=#{med_num}")
 	public void deleteDrug(Long med_num);
 }

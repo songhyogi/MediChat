@@ -108,7 +108,7 @@
 						<c:set var="sub_icon" value="${item}"/>
 					</c:if>
 				</c:forEach>
-				<div class="sub-item d-flex justify-content-between" data-keyword="${sub_name}">
+				<div class="sub-item d-flex justify-content-between rounded-3" data-keyword="${sub_name}">
 					<div class="py-3">
 						<h5 class="text-black-6 fw-8 fs-17">${sub_name}</h5>
 						<h5 class="text-gray-6 fw-7 fs-14">${sub_content}</h5>
@@ -117,7 +117,7 @@
 						<img width="50" height="50" src="/images/subIcon/${sub_icon}.png">
 					</div>
 				</div>
-				<div class="line"></div>
+				<div class="mbline"></div>
 			</c:forEach>
 		</div>
 	</div>
@@ -184,7 +184,7 @@
 	const subject = document.getElementsByClassName('subject');
 	for(let i=0; i<subject.length; i++){
 		subject[i].onclick = function(){
-			location.href = '/hospitals/search?keyword='+subject[i].getAttribute('data-keyword')+'&sortType=NEAR';
+			location.href = '/hospitals/search?keyword='+subject[i].getAttribute('data-keyword')+'&sortType=NEAR&user_lat=${user_lat}&user_lon=${user_lon}';
 		};
 	}
 	const subItem = document.getElementsByClassName('sub-item');
@@ -193,13 +193,13 @@
 			if(subItem[i].getAttribute('data-keyword')=='마취통증학과'){
 				subItem[i].setAttribute('data-keyword','마취통증');
 			}
-			location.href = '/hospitals/search?keyword=' + subItem[i].getAttribute('data-keyword')+'&sortType=NEAR';
+			location.href = '/hospitals/search?keyword=' + subItem[i].getAttribute('data-keyword')+'&sortType=NEAR&user_lat=${user_lat}&user_lon=${user_lon}';
 		};
 	}
 	const hsItem = document.getElementsByClassName('hs-item');
 	for(let i=0; i<hsItem.length; i++){
 		hsItem[i].onclick = function(){
-			location.href = '/hospitals/search?keyword='+hsItem[i].getAttribute('data-keyword')+'&sortType=NEAR';
+			location.href = '/hospitals/search?keyword='+hsItem[i].getAttribute('data-keyword')+'&sortType=NEAR&user_lat=${user_lat}&user_lon=${user_lon}';
 		};
 	}
 	const hSearchIcon = document.getElementById('h-search-icon');
@@ -210,7 +210,7 @@
 	const hkwItem = document.getElementsByClassName('hkw-item');
 	for(let i=0; i<hkwItem.length; i++){
 		hkwItem[i].onclick = function(){
-			location.href = '/hospitals/search?keyword='+hkwItem[i].getAttribute('data-keyword')+'&sortType=NEAR';
+			location.href = '/hospitals/search?keyword='+hkwItem[i].getAttribute('data-keyword')+'&sortType=NEAR&user_lat=${user_lat}&user_lon=${user_lon}';
 		};
 	}
 </script>

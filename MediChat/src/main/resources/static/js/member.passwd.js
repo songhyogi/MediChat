@@ -34,7 +34,7 @@ $(function(){
 		}
 		
 		$.ajax({
-	        type: "POST",
+	        type:"POST",
 	        url: "/member/changePasswd",
 	        data: $('#member_changePasswd').serialize(),
 	        success: function(response) {

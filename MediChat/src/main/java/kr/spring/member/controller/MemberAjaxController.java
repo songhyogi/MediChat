@@ -47,7 +47,7 @@ public class MemberAjaxController {
 		return mapAjax;
 	}
 	//프로필 사진 업로드
-	@PostMapping("/member/updateMyPhoto")
+	@PostMapping("/member/updateMemPhoto")
 	@ResponseBody
 	public Map<String, String> processProfile(MemberVO memberVO,HttpSession session){
 		
