@@ -25,7 +25,7 @@ public class ScheduleController {
 	private ScheduleService scheduleService;
 	
 	/* =====================
-	 * 스케줄 목록
+	 * 스케줄 관리
 	 *=====================*/
 	
 	@GetMapping("/schedule/list")

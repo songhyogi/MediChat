@@ -17,7 +17,9 @@ public interface HospitalMapper {
 	
 	// 실 사용
 	public List<HospitalVO> selectListHospital(Map<String,Object> map); //XML
-	public int selectListCntHospital(Map<String,Object> map); //XML
 	
 	public HospitalVO selectHospital(Long hos_num);
+	public void updateHitHospital(Long hos_num);
+	
+	public void initHitHospital();
 }

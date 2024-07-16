@@ -263,7 +263,7 @@ if(typeof '${commonFilter}' !== 'undefined' && '${commonFilter}' !== null && '${
 
 
 //위치 정보 가져오기
-if(${empty user_lat} || ${empty user_lon} || '${user_lat}'=='37.4981646510326' || '${user_lon}'=='127.028307900881'){
+if((${empty user_lat} && ${empty user_lon}) || ('${user_lat}'=='37.4981646510326' && '${user_lon}'=='127.028307900881')){
 	if(navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(
 			function(position) {
@@ -363,7 +363,7 @@ $(document).ready(function() {
                 	output += '<div class="hospital-address fs-12 fw-7 text-black-3">'+param[i].hos_addr+'</div>';
                 	output += '<div class="hospital-docCnt fs-11 fw-8 text-black-3">'+'전문의'+param[i].doc_cnt+'명'+'</div>';
                 	output += '</div>';
-                	output += '<div class="line"></div>';
+                	output += '<div class="line"></div>';           
                 }
                 hospitalListBox.append(output);
                 totalItemsLoaded += param.length;

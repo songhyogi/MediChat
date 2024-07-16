@@ -44,7 +44,7 @@ $(function(){
 		
 		//서버와 통신(경로에 el 사용 불가 > 상대적인 경로 입력)
 		$.ajax({
-			url:'../doctor/updateDocPhoto',
+			url:'../member/updateMemPhoto',
 			type:'post',
 			data:form_data,
 			dataType:'json',

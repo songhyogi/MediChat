@@ -161,5 +161,32 @@ public class ChatController {
 		
 		return map;
 	}
-	
+	/*=======================
+	 * 	 	 파일 전송
+	 ========================*/
+	@PostMapping("image_input")
+	public Map<String,String> processImage(HttpSession session,
+										   ChatMsgVO chatMsgVO,
+										   MemberVO memberVO){
+		Map<String,String> map = new HashMap<String,String>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		if(user==null) {
+			map.put("user", "logout");
+		}else {
+			//로그인 상태
+			if(user.getMem_auth()==2) {
+				map.put("user", "login");
+				chatMsgVO.setMsg_sender_type(0); //일반회원이 0
+				chatService.insertMsg(chatMsgVO);
+			}else if(user.getMem_auth()==3) {
+				map.put("user", "login");
+				chatMsgVO.setMsg_sender_type(1); //의사회원이 1
+				chatService.insertMsg(chatMsgVO);
+			}
+		}
+		
+		return map;
+	}
 }

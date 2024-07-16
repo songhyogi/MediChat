@@ -49,16 +49,21 @@ public class DoctorAjaxController {
 		return mapAjax;
 	}
 	//프로필 사진 업로드
-	@PostMapping("/doctor/updateDocProfile")
+	@PostMapping("/doctor/updateDocPhoto")
 	@ResponseBody
 	public Map<String, String> processProfile(DoctorVO doctorVO,HttpSession session){
 		
+		DoctorVO user = (DoctorVO)session.getAttribute("user");
 		Map<String, String> mapAjax = new HashMap<String, String>();
-
-		doctorService.uploadDocProfile(doctorVO);
-
-		mapAjax.put("result","success");
-
+		
+		if(user == null) {
+			mapAjax.put("result", "logout");
+		}else {
+			doctorVO.setMem_num(user.getMem_num());
+			doctorService.uploadDocProfile(doctorVO);
+			
+			mapAjax.put("result","success");
+		}
 		return mapAjax;
 	}
 	/*===================

@@ -5,11 +5,11 @@
 <div class="side-bar">
 	<ul>
 		<li>
-			<img src="${pageContext.request.contextPath}/image_bundle/face.png"
-			width="100" height="100" class="border rounded-circle"
-			onclick="location.href='${pageContext.request.contextPath}/member/myPage'">
+			<img src="${pageContext.request.contextPath}/doctor/docPhotoView"
+			width="120" height="120" class="my-photo border rounded-circle" 
+			onclick="location.href='${pageContext.request.contextPath}/doctor/docPage'">
 			<div class="camera" id="photo_btn">
-			<img src="${pageContext.request.contextPath}/images/re.png" width="20">
+			<img src="${pageContext.request.contextPath}/images/re.png" width="25">
 			</div>
 		</li>
 		<li>
@@ -40,7 +40,8 @@
 		</li>
 	</ul>
 </div>
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/doctor.profile.js"></script>
 <!-- MyPage 메뉴 끝 -->
 
 

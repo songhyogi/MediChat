@@ -34,7 +34,14 @@ public class HospitalController {
 	
 	// 병원
 	@GetMapping("/hospitals")
-	public Model hospital(Model model) {
+	public Model hospital(Model model,HttpSession session) {
+		if(session.getAttribute("user_lat")!=null && session.getAttribute("user_lon")!=null) {
+			String user_lat = (String)session.getAttribute("user_lat");
+			String user_lon = (String)session.getAttribute("user_lon");
+			model.addAttribute("user_lat", user_lat);
+			model.addAttribute("user_lon", user_lon);
+		}
+		
 		//카카오맵 api 키
 		model.addAttribute("apiKey", apiKey);
 		
@@ -75,15 +82,20 @@ public class HospitalController {
 		return model;
 	}
 
-	
 	// 병원 > 검색 결과
 	@GetMapping("/hospitals/search")
 	public String search(Model model,HttpSession session,@RequestParam(defaultValue="1") int pageNum,
 							@RequestParam(defaultValue="15") int pageItemNum, @RequestParam(defaultValue="") String keyword,
 							@RequestParam(required = false) String commonFilter, @RequestParam(defaultValue="NEAR") String sortType,
 							@RequestParam(defaultValue="37.4981646510326") String user_lat, @RequestParam(defaultValue="127.028307900881") String user_lon) {
+		
+		if(!user_lat.equals("37.4981646510326") && !user_lon.equals("127.028307900881")) {
+			session.setAttribute("user_lat", user_lat);
+			session.setAttribute("user_lon", user_lon);
+		}
+		
 		Map<String, Object> map = new HashMap<>();
-
+		
 		map.put("user_lat", user_lat);
 		map.put("user_lon", user_lon);
 		model.addAttribute("user_lat", user_lat);
