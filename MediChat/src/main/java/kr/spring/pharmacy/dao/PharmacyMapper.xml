@@ -118,7 +118,7 @@
 	</sql>
 	<sql id="searchPharmacyBySortType">
 		<if test="sortType=='HIT'">
-			,hos_hit DESC
+			,pha_hit DESC
 		</if>
 	</sql>
 	
@@ -128,7 +128,7 @@
 		FROM ( SELECT a.* , ROWNUM rnum
 		       FROM ( SELECT t.*
 		              FROM ( SELECT p.*, 
-		                            ROUND((6378137 * ACOS(COS(RADIANS(#{user_lat})) * COS(RADIANS(p.pha_lat)) * COS(RADIANS(p.pha_lon) - RADIANS(#{user_lon})) + SIN(RADIANS(#{user_lat})) * SIN(RADIANS(p.pha_lat))))) AS around
+		                            ROUND((6378137 * ACOS(LEAST(1,GREATEST (-1, COS(RADIANS(#{user_lat})) * COS(RADIANS(p.pha_lat)) * COS(RADIANS(p.pha_lon) - RADIANS(#{user_lon})) + SIN(RADIANS(#{user_lat})) * SIN(RADIANS(p.pha_lat))))))) AS around
 		                     FROM pharmacy p
 		                     where 1=1
 		                     <include refid="searchPharmacyByKeyword"/>
@@ -146,4 +146,7 @@
 		     )
 		WHERE rnum > (#{pageNum} - 1) * #{pageItemNum}
 	</select>
+	<update id="initHitPharmacy">
+		UPDATE pharmacy SET pha_hit = pha_hit + 1
+	</update>
 </mapper>

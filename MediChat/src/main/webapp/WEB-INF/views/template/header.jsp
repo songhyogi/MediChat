@@ -15,7 +15,7 @@
 				<a href="/hospitals" class="header-menu-text">병원 찾기</a>
 			</div>
 			<div class="header-menu">
-				<a href="#" class="header-menu-text">약국 찾기</a>
+				<a href="/pharmacies/search?user_lat=${user_lat}&user_lon=${user_lon}" class="header-menu-text">약국 찾기</a>
 			</div>
 			<div class="header-menu">
 				<a href="#" class="header-menu-text">건강 블로그</a>
@@ -35,7 +35,7 @@
 	<div class="d-flex justify-content-end align-items-center">
 		<!-- 검색 시작 -->
 		<form id="header-search-form" class="d-flex">
-			<input type="text" id="header-search-input" class="form-control" placeholder="병원 이름, 지역 + 과목, 증상">
+			<input type="text" id="header-search-input" class="form-control" name="keyword" placeholder="병원 이름, 지역 + 과목, 증상">
 			<i id="header-search-icon" class="bi bi-search"></i>
 		</form>
 		<!-- 검색 끝 -->

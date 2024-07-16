@@ -18,5 +18,5 @@ public interface PharmacyService {
 	public PharmacyVO selectPharmacy(Long pha_num);
 	public void updateHitPharmacy(Long hos_num);
 	
-	public void initHospital();
+	public void initHitPharmacy();
 }
