@@ -11,6 +11,7 @@
     </insert>
     <update id="updateDrug" parameterType="memberDrugVo">
     	UPDATE medicine SET 
+    		med_title = #{med_title},
     		med_name = #{med_name},
     		med_date = #{med_date},
     		med_time = #{med_time},

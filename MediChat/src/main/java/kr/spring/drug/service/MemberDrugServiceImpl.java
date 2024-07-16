@@ -36,6 +36,11 @@ public class MemberDrugServiceImpl implements MemberDrugService{
 	}
 
 	@Override
+	public MemberDrugVO selectDrug(Long med_num) {
+		return memberdrugMapper.selectDrug(med_num);
+	}
+	
+	@Override
 	public void updateDrug(MemberDrugVO memberDrug) {
 		memberdrugMapper.updateDrug(memberDrug);
 	}
@@ -44,4 +49,5 @@ public class MemberDrugServiceImpl implements MemberDrugService{
 	public void deleteDrug(Long med_num) {
 		memberdrugMapper.deleteDrug(med_num);
 	}
+
 }
