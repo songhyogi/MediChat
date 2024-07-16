@@ -86,7 +86,7 @@ public class HealthController {
 			
 			service.insertHeal(vo);
 			
-			return "healthy_Blog";
+			return "redirect:/health/healthBlog";
 		}else {
 			model.addAttribute("message","쓰기 권한이 없습니다.");
 			model.addAttribute("url",request.getContextPath()+"/heath/healthBlog");

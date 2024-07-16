@@ -84,3 +84,172 @@
     display: none;
   }
 }
+
+a:link{
+	text-decoration:none;
+	color:#000000;
+}
+a:visited{
+	text-decoration:none;
+	color:#000000;
+}
+a:hover{
+	text-decoration:none;
+	color:#6C6C6C;
+}
+.align-center{
+	text-align:center;
+}
+.align-right{
+	text-align:right;
+}
+.align-left{
+	text-align:left;
+}
+table#diseaseDict tr td{
+	padding-left:20px;
+	padding-bottom:20px;
+}
+.page-main{
+	width:95%;
+	margin:0 auto;
+	margin-bottom:100px;
+}
+.page-one{
+	width:600px;
+	margin:0 auto;
+}
+
+
+/*검색창*/
+.container-input {
+  position: relative;
+}
+
+.input {
+  width: 250px;
+  height:35px;
+  padding: 10px 0px 10px 40px;
+  border-radius: 9999px;
+  border: solid 1px #333;
+  transition: all .2s ease-in-out;
+  outline: none;
+  opacity: 0.8;
+}
+
+.container-input svg {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translate(0, -50%);
+}
+
+.input:focus {
+  opacity: 1;
+  width: 250px;
+}
+#selectinput{
+	width:85px;
+	height:30px;
+}
+
+.button {
+  cursor: pointer;
+  padding:0 10px ;
+  color: black;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 5px;
+  outline: none;
+  box-shadow: 0 6px 7px rgba(0, 0, 0, 0.1),
+    inset 0 2px 4px rgba(255, 255, 255, 0.5); /* Hinzufügen eines inneren Schattens für Tiefe */
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  position: relative;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.5);
+  background-image: linear-gradient(
+    to top,
+    rgba(206, 255, 255, 0.75),
+    rgba(216, 255, 244, 0.65)
+  );
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 0%;
+}
+
+.button:hover {
+  box-shadow: 0 7px 9px rgba(0, 0, 0, 0.15),
+    inset 0 3px 5px rgba(255, 255, 255, 0.6);
+}
+
+@keyframes fillButtonAndPress {
+  0% {
+    background-size: 100% 0%;
+    transform: translateY(0);
+    border: 2px solid rgba(255, 255, 255, 0.6);
+  }
+
+}
+
+.button:active {
+  animation: fillButtonAndPress 0.4s ease forwards;
+}
+
+.font {
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+button.default-btn {
+ border: 1px solid rgb(102, 178, 178);;
+ border-radius: 5px;
+ background: rgb(255, 255, 255);
+ color: seagreen;
+ padding: 3px;
+ padding-right: 14px;
+ padding-left: 12px;
+}
+input.default-btn {
+ border: 1px solid rgb(102, 178, 178);;
+ border-radius: 5px;
+ background: rgb(255, 255, 255);
+ color: seagreen;
+ padding: 3px;
+ padding-right: 14px;
+ padding-left: 12px;
+}
+input.defaul-tbtn:hover {
+ background-color: rgb(102, 178, 178);;
+ color: white;
+ border: 1px solid  rgb(102, 178, 178);;
+}
+
+button.defaul-tbtn:hover {
+ background-color: rgb(102, 178, 178);;
+ color: white;
+ border: 1px solid  rgb(102, 178, 178);;
+}
+
+/*댓글 좋아요*/
+.hrefav, .svg-container{
+	 height:30px;
+	 width:30px;
+}
+div.float-left{
+	float:left;
+	width:80%;
+}
+ul{
+	list-style:none;
+}
+div.healthy_image{
+	float:left;
+	width:20%;
+}
+div.float-clear{
+	clear:both;
+}
+div.healthy_list{
+	margin-top: 20px;
+	height:120px;
+}

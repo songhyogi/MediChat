@@ -8,8 +8,9 @@
 <script src="${pageContext.request.contextPath}/js/ckeditor.js"></script>
 <script src="${pageContext.request.contextPath}/js/uploadAdapter.js"></script>
 <div class="page-main">
+	<div class="page-one">
 	<h4>홈 > 건강 블로그 >  글쓰기</h4> 		
-	<h2>건강 블로그 </h2>
+	<h2>&nbsp;&nbsp;&nbsp;건강 블로그 </h2>
 	
 	<hr size="1" width="80%">
 	
@@ -55,5 +56,5 @@
 		</div>
 	
 		</form:form>
-
+	</div>
 </div>

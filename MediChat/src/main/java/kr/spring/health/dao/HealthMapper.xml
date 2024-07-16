@@ -52,11 +52,13 @@
 	 		h_reg_date,
 	 		h_modify_date,
 	 		healthy_hit,
-	 		h_filename
+	 		h_filename,
+	 		fav_cnt
 	 	FROM (SELECT rownum anum, a.* 
 	 				 FROM (SELECT * 
 	 				 			  FROM healthy_Blog 
 	 				 			  	JOIN member USING (mem_num)
+	 				 			  	LEFT OUTER JOIN (SELECT COUNT(*) fav_cnt,healthy_num FROM healthy_fav GROUP BY healthy_num) USING(healthy_num)
 	 				 			  <include refid="searchHeal"></include>
 	 				 			  ORDER BY healthy_num DESC
 	 				 			  ) a)
