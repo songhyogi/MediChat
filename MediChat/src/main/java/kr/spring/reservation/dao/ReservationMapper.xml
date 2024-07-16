@@ -11,4 +11,21 @@
 		FROM hospital
 		WHERE hos_num=#{hos_num}
 	</select>
+	<!-- 특정 날짜와 시간에 근무 가능한 의사 가져오기 -->
+    <select id="getAvailableDoctors" parameterType="map" resultType="kr.spring.doctor.vo.DoctorVO">
+        SELECT
+            m.mem_num AS doc_num,
+            m.mem_name,
+            m.mem_photo AS image
+        FROM
+            member m
+        JOIN
+            doctor_detail dd ON m.mem_num = dd.doc_num
+        LEFT JOIN
+            holiday h ON m.mem_num = h.doc_num AND h.holi_date = #{date} AND h.holi_time = #{time}
+        WHERE
+            dd.hos_num = #{hos_num}
+            AND dd.doc_off != #{dayOfWeek}
+            AND (h.holi_status IS NULL OR h.holi_status != 1)
+    </select>
  </mapper>

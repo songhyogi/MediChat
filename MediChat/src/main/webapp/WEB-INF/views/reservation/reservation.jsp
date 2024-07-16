@@ -38,13 +38,13 @@
             
             // 요일에 따라 적절한 필드 이름을 매핑 (풀캘린더와 병원API의 정해진 필드가 다르기 때문)
             const dayMapping = {
-                0: { start: 'hos_time7s', end: 'hos_time7c' }, // 일요일
-                1: { start: 'hos_time1s', end: 'hos_time1c' }, // 월요일
-                2: { start: 'hos_time2s', end: 'hos_time2c' }, // 화요일
-                3: { start: 'hos_time3s', end: 'hos_time3c' }, // 수요일
-                4: { start: 'hos_time4s', end: 'hos_time4c' }, // 목요일
-                5: { start: 'hos_time5s', end: 'hos_time5c' }, // 금요일
-                6: { start: 'hos_time6s', end: 'hos_time6c' }  // 토요일
+                0: { start: 'hos_time7S', end: 'hos_time7C' }, // 일요일
+                1: { start: 'hos_time1S', end: 'hos_time1C' }, // 월요일
+                2: { start: 'hos_time2S', end: 'hos_time2C' }, // 화요일
+                3: { start: 'hos_time3S', end: 'hos_time3C' }, // 수요일
+                4: { start: 'hos_time4S', end: 'hos_time4C' }, // 목요일
+                5: { start: 'hos_time5S', end: 'hos_time5C' }, // 금요일
+                6: { start: 'hos_time6S', end: 'hos_time6C' }  // 토요일
             };
             const fields = dayMapping[day];
             console.log(`Fields: ${JSON.stringify(fields)}`); // 디버깅용 콘솔 출력
@@ -53,7 +53,7 @@
             $.ajax({
                 url: '/reservation/hosHours',
                 method: 'get',
-                data: { hos_num: hos_num },
+                data: {hos_num: hos_num},
                 dataType: 'json',
                 success: function(param){
                     console.log(param);  // 디버깅용 콘솔 출력
@@ -88,10 +88,8 @@
                          }
                      });
                      output += '</div></div>';
-                     output += getButtonRowHtml();
                      $('#time-buttons').html(output);
 
-                     handleButtonEvents(date);
                 },
                 error: function(){
                     alert('네트워크 오류 발생');

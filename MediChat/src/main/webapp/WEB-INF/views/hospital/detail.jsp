@@ -226,22 +226,40 @@
 			<div id="res_btn">
 				진료 예약하기
 			</div>
+			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+			  Launch demo modal
+			</button>
 			<div id="call_btn">
 				전화하기
 			</div>
 		</div>
 	</div>
 </div>
-
+<!-- Modal -->
+<div class="modal" id="exampleModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+        <jsp:include page="/WEB-INF/views/reservation/reservation.jsp"/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-	window.onload = function(){
-		const res_btn = document.getElementById('res_btn');
-		const call_btn = document.getElementById('call_btn');
-		res_btn.onclick = function(){
-			location.href='/reservation/reservation/'+'${hospital.hos_num}';
-		}
-		call_btn.onclick = function(){
-			
-		}
-	};
+	const myModal = document.getElementById('myModal');
+	var myInput = document.getElementById('myInput');
+	myModal.addEventListener('shown.bs.modal', function () {
+	  myInput.focus()
+	});
 </script>
