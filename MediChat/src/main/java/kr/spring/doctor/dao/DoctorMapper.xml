@@ -5,8 +5,8 @@
 <mapper namespace="kr.spring.doctor.dao.DoctorMapper">
 	<!-- 회원가입 -->
 	<insert id="insertDoctor_detail" parameterType="doctorVO">
-		INSERT INTO doctor_detail (doc_num,hos_num,doc_passwd,doc_email,doc_license,doc_history) 
-		VALUES (#{mem_num},#{hos_num},#{doc_passwd},#{doc_email},#{doc_license,jdbcType=VARCHAR},#{doc_history})
+	    INSERT INTO doctor_detail (doc_num, hos_num, doc_passwd, doc_email, doc_license, doc_history) 
+	    VALUES (#{mem_num}, #{hos_num}, #{doc_passwd}, #{doc_email}, #{doc_license, jdbcType=VARCHAR}, #{doc_history})
 	</insert>
 	<!-- 아이디 중복확인 -->
 	<select id="checkId" parameterType="string" resultType="doctorVO">
