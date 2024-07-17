@@ -12,20 +12,20 @@
 		</div>
 		<div class="form-list">
 			<table id="file_table">
-				<tr class="list-head">
+				<tr class="list-head bg-gray-3">
 					<th class="list-no">No.</th>
 					<th class="list-name">파일명</th>
 					<th class="list-type">파일 유형</th>
 					<th class="list-valid-date">유효기간</th>
 				</tr>
 				<tr>
-					
 				</tr>
 			</table>
 		</div>
 		<div class="form-body">
 		<form action="file_input" method="post" id="file_input" enctype="multipart/form-data">
 			<input type="hidden" name="chat_num" id="close_chat_num" value="">
+			<label for="file_type">파일 유형</label>
 			<select name="file_type">
 				<option value="0">처방전</option>
 				<option value="1">소견서</option>
@@ -33,17 +33,17 @@
 				<option value="3">진료비 세부내역서</option>
 			</select>
 			<label for="file_valid_date">유효기간</label>
-			<input type="date" name="file_valid_date">
+			<input type="date" name="file_valid_date"><br>
 			<label for="select_file" class="">파일 선택</label>
 			<input type="file" name="select_file" id="select_file" accept=".pdf,.doc,.docx">
-			<input type="submit" value="등록">
+			<input type="submit" value="등록" class="btn-green">
 		</form>
-		<div class="fs-16">파일은 word(.doc, .docx)와 PDF 형식 파일만 전송 가능합니다.</div>
+		<div class="fs-16">&#8251;파일은 word(.doc, .docx)와 PDF 형식 파일만 전송 가능합니다.</div>
 		</div>
 		<div class="form-button">
-		<button type="button" class="btn-green" id="close_cancel">취소</button>
-		<button type="button" class="btn-green" id="close_next">다음으로</button>
+		<button type="button" class="close-form-btn btn-green fs-20" id="close_cancel">취소</button>
+		<button type="button" class="close-form-btn btn-green fs-20" id="close_next">다음으로</button>
 		</div>
 	</div>
 </div>
-<div class="close-form-bg"></div>
+<div class="close-form-bg"></div>	

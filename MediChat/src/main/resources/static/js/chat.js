@@ -283,15 +283,22 @@ $(function(){
 		//기본 이벤트 제거
 		event.preventDefault();
 		
-		form_data = $(this).serialize();
+		let form_data = new FormData(this);
 		
 		alert('파일 전송 이벤트 발생');
+		
+		for (var pair of form_data.entries()) {
+        	alert(pair[0]+ ': ' + pair[1]); 
+    	}
+		
 		let file = '';
 		
 		$.ajax({
 			url:'file_input',
 			type:'post',
 			data:form_data,
+			contentType: false,  // 파일 업로드시 필요
+        	processData: false,
 			dataType:'json',
 			success:function(param){
 				if(param.file_name=='null'){
@@ -310,7 +317,7 @@ $(function(){
 				   
 	           },
 			error(){
-				alert('파일 등록 오류 발생');
+				alert('네트워크 오류 발생');
 			}
 		});
 	});

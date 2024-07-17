@@ -152,7 +152,7 @@
 	align-items: center;
 	padding-left:20px;
 	width:100%;
-	height:40px;
+	height:60px;
 	color:white;
 	
 }
@@ -187,8 +187,8 @@
 	position:absolute;
 	top:25%;
 	left:37%;
-	width:500px;
-	height:600px;
+	width:600px;
+	height:650px;
 	background-color:white;
 	z-index:999;
 }
@@ -197,35 +197,65 @@
 	top:0;
 	left:0;
 	width:100%;
-	height:132%;
+	height:138%;
 	background-color: rgba(0,0,0,0.5);
 	z-index:998;
 	display:none;
 }
 .close-form-body{
-	margin:10px;
+	margin:30px 10px 10px 10px;
 }
 .close-form-body .form-body{
 	display:inline;
+	text-align:center;
 }
+.close-form-body .form-body input{
+	padding:5px;
+	margin:0 5px;
+}
+
 #file_table{
 	height:200px;
 }
+#file_table tr.list-head{
+	height:40px;
+}
+
 .form-list{
 	margin:10px 0;
+}
+.form-notice{
+	padding-top:5px;
 }
 .form-notice span{
 	display:block;
 }
+
 .list-no{
-	width:40px;
+	padding-left:5px;
+	width:50px;
 }
 .list-name{
-	width:200px;
+	width:250px;
 }
 .list-type{
-	width:120px;
+	width:135px;
 }
 .list-valid-date{
-	width:120px;
+	width:135px;
+}
+#select_file{
+	width:298px;
+}
+.form-button{
+	display:flex;
+    justify-content: center;
+    align-items: center;
+    margin-top:80px;
+}
+.close-form-btn{
+	vertical-align:middle;
+	width:140px;
+	height:60px;
+	margin:3px;
 }

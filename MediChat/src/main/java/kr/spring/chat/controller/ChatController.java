@@ -236,18 +236,22 @@ public class ChatController {
 	 ========================*/
 	@PostMapping("file_input")
 	public Map<String,String> insertChatFile(@ModelAttribute ChatFileVO chatFileVO,
-											 @RequestParam("select_file") MultipartFile select_file, 
+											 @RequestParam("select_file") MultipartFile select_file,
 											 HttpServletRequest reqeust,
 											 HttpSession session
 							   				)throws IOException{
 		
-		
+		log.debug("<<파일 전송 컨트롤러 진입>>");		
 		ChatVO chat = chatService.selectChat(chatFileVO.getChat_num());
 		
 		chatFileVO.setMem_num(chat.getMem_num());
 		chatFileVO.setDoc_num(chat.getDoc_num());
 		
-		chatFileVO.setFile_name(FileUtil.createFile(reqeust,select_file));
+		
+		String file_name = FileUtil.createFile(reqeust,select_file);
+		log.debug("<<전송한 파일의 이름 생성>>: "+file_name);
+		
+		chatFileVO.setFile_name(file_name);
 		
 		Map<String,String> map = new HashMap<String,String>();
 		
@@ -257,15 +261,6 @@ public class ChatController {
 		if(chatFileVO.getValid_date()==null) {
 			map.put("valid_date", "null");
 		}
-		
-		
-		log.debug("파일 전송 데이터 file_name:"+chatFileVO.getFile_name());
-		log.debug("파일 전송 데이터 mem_num:"+chatFileVO.getMem_num());
-		log.debug("파일 전송 데이터 doc_num:"+chatFileVO.getDoc_num());
-		log.debug("파일 전송 데이터 chat_num:"+chatFileVO.getChat_num());
-		log.debug("파일 전송 데이터 file_type:"+chatFileVO.getFile_type());
-		log.debug("파일 전송 데이터 reg_date:"+chatFileVO.getFile_reg_date());
-		log.debug("파일 전송 데이터 valid_date:"+chatFileVO.getValid_date());
 		
 		chatService.insertChatFile(chatFileVO);
 		
