@@ -1,6 +1,7 @@
 package kr.spring.chat.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -234,23 +235,39 @@ public class ChatController {
 	 * 	   진료 파일 전송
 	 ========================*/
 	@PostMapping("file_input")
-	public Map<String,Object> insertChatFile(@ModelAttribute ChatFileVO chatFileVO,
-							   HttpServletRequest reqeust,
-							   HttpSession session
-							   ){
-
+	public Map<String,String> insertChatFile(@ModelAttribute ChatFileVO chatFileVO,
+											 @RequestParam("select_file") MultipartFile select_file, 
+											 HttpServletRequest reqeust,
+											 HttpSession session
+							   				)throws IOException{
+		
+		
 		ChatVO chat = chatService.selectChat(chatFileVO.getChat_num());
 		
 		chatFileVO.setMem_num(chat.getMem_num());
 		chatFileVO.setDoc_num(chat.getDoc_num());
 		
+		chatFileVO.setFile_name(FileUtil.createFile(reqeust,select_file));
+		
+		Map<String,String> map = new HashMap<String,String>();
+		
+		if(chatFileVO.getFile_name()==null) {
+			map.put("file_name","null");
+		}
+		if(chatFileVO.getValid_date()==null) {
+			map.put("valid_date", "null");
+		}
+		
+		
+		log.debug("파일 전송 데이터 file_name:"+chatFileVO.getFile_name());
+		log.debug("파일 전송 데이터 mem_num:"+chatFileVO.getMem_num());
+		log.debug("파일 전송 데이터 doc_num:"+chatFileVO.getDoc_num());
+		log.debug("파일 전송 데이터 chat_num:"+chatFileVO.getChat_num());
+		log.debug("파일 전송 데이터 file_type:"+chatFileVO.getFile_type());
+		log.debug("파일 전송 데이터 reg_date:"+chatFileVO.getFile_reg_date());
+		log.debug("파일 전송 데이터 valid_date:"+chatFileVO.getValid_date());
+		
 		chatService.insertChatFile(chatFileVO);
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		
-		map.put("file_name", chatFileVO.getFile_name());
-		map.put("file_type", chatFileVO.getFile_type());
-		map.put("valid_date", chatFileVO.getValid_date());
 		
 		return map;
 	}
