@@ -39,8 +39,12 @@ public class DoctorVO {
 	@NotBlank
 	private String doc_email;
 	private Date doc_reg;
-	@NotEmpty
-	private String doc_license;
+	private MultipartFile upload;	//파일
+	private String doc_license;		//의사 면허증
+	private String filename;		//파일명
+	/*
+	 * private byte[] doc_license; private String doc_license_name;
+	 */
 	private String doc_history;
 	private int doc_treat;
 	private String doc_off;			//휴무요일
@@ -82,4 +86,9 @@ public class DoctorVO {
 		//파일 이름
 		setMem_photoname(upload.getOriginalFilename());
 	}
+	/*
+	 * //이미지 BLOB 처리 public void setLicenseUpload(MultipartFile upload)throws
+	 * IOException { //MultipartFile > byte[] setDoc_license(upload.getBytes());
+	 * //파일 이름 setDoc_license_name(upload.getOriginalFilename()); }
+	 */
 }

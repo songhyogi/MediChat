@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/uploadAdapter.js"></script>
+
 <!-- 비대면진료 채팅창 시작 -->
 	<div class="chat-main col-9">
 		<div class="chat-header bg-green-7" id="chat_header">

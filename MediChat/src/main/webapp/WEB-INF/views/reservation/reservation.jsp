@@ -1,7 +1,69 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
+<style>
+#calendar {
+	margin: 0 auto;
+	width: 80%;
+	max-width: 800px;
+}
+
+.fc-day-sun a {
+	color: red;
+	text-decoration: none;
+}
+
+.fc-day-sat a {
+	color: blue;
+	text-decoration: none;
+}
+
+.time-button.selected {
+	background-color: blue;
+}
+
+#time-buttons {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 20px;
+}
+
+.time-section {
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.time-row {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 10px;
+}
+
+button {
+	width: 90px;
+	height: 45px;
+	margin: 5px;
+	font-size: 16px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+button:disabled {
+	opacity: 1;
+}
+
+.button-row {
+	display: flex;
+	justify-content: center;
+	margin-top: 10px;
+}
+
+.reserve-btn {
+	width: 100px;
+}
+</style>
 <script src="${pageContext.request.contextPath}/js/index.global.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -31,7 +93,6 @@
             }
         });
         calendar.render();
-        
         // 선택한 날짜의 병원 진료시간을 표시하는 함수
         function displayhosTimes(date, day){
             $('#time-buttons').empty();
@@ -130,68 +191,5 @@
         }
     });
 </script>
-<style>
-#calendar {
-    margin: 0 auto;
-    width: 80%;
-    max-width: 800px;
-}
-
-.fc-day-sun a {
-    color: red;
-    text-decoration: none;
-}
-
-.fc-day-sat a {
-    color: blue;
-    text-decoration: none;
-}
-
-.time-button.selected {
-    background-color: blue;
-}
-
-#time-buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.time-section {
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.time-row {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
-}
-
-button {
-    width: 90px;
-    height: 45px;
-    margin: 5px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:disabled {
-    opacity: 1;
-}
-
-.button-row {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-}
-
-.reserve-btn {
-    width: 100px;
-}
-</style>
 <div id="calendar"></div>
 <div id="time-buttons"></div>

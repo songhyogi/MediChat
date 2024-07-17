@@ -1,3 +1,4 @@
+
 package kr.spring.health.vo;
 
 import java.sql.Date;
@@ -26,3 +27,4 @@ public class HealthyBlogVO {
 	private int fav_cnt;
 	private int click_num;
 }
+

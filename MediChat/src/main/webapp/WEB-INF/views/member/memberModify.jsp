@@ -4,12 +4,17 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 <!-- 회원정보 수정 시작 -->
-<div class="page-main">
-	<h2>회원정보 수정</h2>
+<div class="container">
+	<h2 class="title">회원정보 수정</h2>
+	<hr size="1" width="100%" noshade="noshade">
+	<span style="font-weight:bold;">정보입력</span>
+	<br>
+	<span class="title2">회원정보수정에 필요한 정보를 입력합니다.</span>
 	<form:form action="modifyUser" id="member_modify" modelAttribute="memberVO">
 		<form:hidden path="mem_num"/>
+		<div class="form-main">
 		<ul>
-			<li>
+			<li style="margin-top:20px;">
 				<form:label path="mem_name">이름</form:label>
 				<form:input path="mem_name"/>
 				<form:errors path="mem_name" cssClass="error-color"/>
@@ -41,12 +46,13 @@
 				<form:label path="mem_address2">상세주소</form:label>
 				<form:input path="mem_address2"/>
 				<form:errors path="mem_address2" cssClass="error-color"/>
-				<hr size="1" width="80%" noshade="noshade">
+				<hr size="1" width="100%" noshade="noshade">
 			</li>
 		</ul>
-		<div class="align-center">
+		</div>
+		<div style="text-align:right; margin-bottom:10px;">
+			<input type="button" value="MY페이지" id="reload_btn" onclick="location.href='myPage'">
 			<form:button class="default-btn">수정</form:button>
-			<input type="button" value="MY페이지" class="default-btn" onclick="location.href='myPage'">
 		</div>
 	</form:form>
 
@@ -109,11 +115,11 @@
                 //(수정) }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('zipcode').value = data.zonecode;
+                document.getElementById('mem_zipcode').value = data.zonecode;
                 //(수정) + extraAddr를 추가해서 address1에 참고항목이 보여지도록 수정
-                document.getElementById("address1").value = addr + extraAddr;
+                document.getElementById("mem_address1").value = addr + extraAddr;
                 // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("address2").focus();
+                document.getElementById("mem_address2").focus();
 
                 // iframe을 넣은 element를 안보이게 한다.
                 // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)

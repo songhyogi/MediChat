@@ -108,6 +108,22 @@
 				   </div>
 				</div>
 			</c:if>
+			<c:if test="${user.mem_auth==9}">
+				<div class="header-status-rightBox">
+					<div class="text-center">
+						<img id="header-profile" src="${pageContext.request.contextPath}/member/memPhotoView" width="40" height="40" class="border rounded-circle">
+			    	</div>
+				</div>
+				<div id="header-status-div" style="display: none;">
+					<div class="header-status-select">
+						<a href="/doctor/agree">의사회원가입 승인</a>
+					</div>
+					<div class="select-line"></div>
+					<div class="header-status-select">
+						<a href="/member/logout">로그아웃</a>
+					</div>
+				</div>
+			</c:if>
 		</div>
 		<!-- 알림 + 프로필 끝 -->
 		</c:if>
@@ -144,5 +160,4 @@
 		} else {
 			headerRegisterDiv.style.display = 'block';
 		}
-	};
 </script>

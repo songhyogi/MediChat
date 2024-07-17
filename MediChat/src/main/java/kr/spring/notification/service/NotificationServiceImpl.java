@@ -16,6 +16,7 @@ public class NotificationServiceImpl implements NotificationService{
 	@Autowired
 	private NotificationMapper notificationMapper;
 	
+	
 	@Override
 	public void insertNotification(NotificationVO notificationVO) {
 		notificationMapper.insertNotification(notificationVO);

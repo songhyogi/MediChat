@@ -1,3 +1,5 @@
+
+
 package kr.spring.health.dao;
 
 import java.util.List;
@@ -67,7 +69,7 @@ public interface HealthMapper {
 	public void deleteHreFav(HealthyReFavVO vo);
 	@Select("SELECT COUNT(*) FROM healthy_re_fav WHERE hre_num=#{hre_num}")
 	public Integer selectHreFavCount(Long hre_num);
-	@Select("SELECT * FROM healthy_fav WHERE healthy_num=#{healthy_num} AND mem_num=#{mem_num}")
+	@Select("SELECT * FROM healthy_re_fav WHERE hre_num=#{hre_num} AND mem_num=#{mem_num}")
 	public HealthyReFavVO selectHreFav(HealthyReFavVO vo);
 	//댓글 삭제시 좋아요 삭제
 	@Delete("DELETE FROM healthy_re_fav WHERE hre_num=#{hre_num}")

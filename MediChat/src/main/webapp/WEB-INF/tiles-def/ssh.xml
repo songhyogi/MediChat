@@ -6,42 +6,59 @@
 
 <tiles-definitions>
 	<definition name="diseaseMain" template="/WEB-INF/views/template/layout_basic.jsp">
+		<put-attribute name="bootstrap" value="/WEB-INF/views/common/bootStrap.jsp"/>
 		<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"/>
 		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/>
 		<put-attribute name="title" value="SpringPage"/>
 		<put-attribute name="css" value="/WEB-INF/views/disease/diseaseCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/disease/diseaseMain.jsp"/>
 	</definition>
-	<definition name="disease_Dictionary" extends="main">
+	<definition name="disease_Dictionary" extends="diseaseMain">
 		<put-attribute name="title" value="diseaseDictionary"/>
 		<put-attribute name="css" value="/WEB-INF/views/disease/diseaseCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/disease/diseaseDictionary.jsp"/>
 	</definition>
-	<definition name="disease_Detail" extends="main">
+	<definition name="disease_Detail" extends="diseaseMain">
 		<put-attribute name="title" value="diseaseDictionary"/>
 		<put-attribute name="css" value="/WEB-INF/views/disease/diseaseCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/disease/diseaseDetail.jsp"/>
 	</definition>
-	<definition name="healthy_Blog" extends="main">
+	<definition name="healthy_Blog" extends="diseaseMain">
 		<put-attribute name="title" value="healthyBlog"/>
 		<put-attribute name="css" value="/WEB-INF/views/health/healthCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/health/healthyBlogMain.jsp"/>
 	</definition>
-	<definition name="healthy_writeForm" extends="main">
+	<definition name="healthy_writeForm" extends="diseaseMain">
 		<put-attribute name="title" value="healthyWrite"/>
 		<put-attribute name="css" value="/WEB-INF/views/health/healthCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/health/healthyWrite.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/>
 	</definition>
-	<definition name="healthy_Detail" template="/WEB-INF/views/template/layout_ssh.jsp">
+	<definition name="healthy_Detail" extends="diseaseMain">
 		<put-attribute name="title" value="healthyDetail"/>
 		<put-attribute name="css" value="/WEB-INF/views/health/healthCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/health/healthyDetail.jsp"/>
 		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/>
 	</definition>
-	<definition name="healthy_Update" extends="main">
+	<definition name="healthy_Update" extends="diseaseMain">
 		<put-attribute name="title" value="healthyUpdate"/>
 		<put-attribute name="css" value="/WEB-INF/views/health/healthCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/health/healthyUpdate.jsp"/>
+	</definition>
+	<definition name="video_List" extends="diseaseMain">
+		<put-attribute name="title" value="videoHealthyList"/>
+		<put-attribute name="css" value="/WEB-INF/views/video/videoCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/video/videoList.jsp"/>
+	</definition>
+	<definition name="video_Write" extends="diseaseMain">
+		<put-attribute name="title" value="videoHealthyWrite"/>
+		<put-attribute name="css" value="/WEB-INF/views/video/videoCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/video/videoWrite.jsp"/>
+	</definition>
+		<definition name="video_Detail" extends="diseaseMain">
+		<put-attribute name="title" value="videoHealthyWrite"/>
+		<put-attribute name="css" value="/WEB-INF/views/video/videoCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/video/videoDetail.jsp"/>
 	</definition>
 </tiles-definitions>
 

@@ -60,5 +60,9 @@
 		<put-attribute name="title" value="의사회원가입 승인(관리자)"/>
 		<put-attribute name="body" value="/WEB-INF/views/doctor/adminAgree.jsp"/>
 	</definition>
+	<definition name="doctorDetail" extends="kcy">
+		<put-attribute name="title" value="의사정보상세(관리자)"/>
+		<put-attribute name="body" value="/WEB-INF/views/doctor/doctorDetail.jsp"/>
+	</definition>
 	
 </tiles-definitions>
