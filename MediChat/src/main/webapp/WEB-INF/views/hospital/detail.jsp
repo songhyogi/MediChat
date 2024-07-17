@@ -238,21 +238,22 @@
 </div>    
 <script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
 $(function(){
     $('#reservation_btn').click(function(event){
-        var reservation_page = $('#reservation_page'); // 'data-hos-num' 속성을 읽음
+        var reservation_page = $('#reservation_page'); 
         $.ajax({
             url: '/reservation/reservation',
             method: 'get',
             data: { hos_num: '${hospital.hos_num}'},
             dataType: 'json',
             success: function(param) {
-            	if(param.status=='login'){
+            	if(param.result=='success'){
             		$('#reservation_page').show();
-            		calendar.render();
-            	} else {
+            		initializeCalendar('${hospital.hos_num}');
+            	}else if(param.result=='logout'){
             		location.href='/member/login';
+            	}else{
+            		alert('예약 신청 페이지 오류 발생');
             	}
             },
             error: function() {
@@ -260,6 +261,7 @@ $(function(){
             }
         });
     });
+    
 });
-});
+
 </script>

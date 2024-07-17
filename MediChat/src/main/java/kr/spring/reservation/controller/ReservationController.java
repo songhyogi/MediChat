@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class ReservationController {
-	
+
 	@GetMapping("/reservation/reservation")
 	@ResponseBody
 	public Map<String,String> reservation(Long hos_num,Model model,HttpSession session) {
@@ -25,11 +25,12 @@ public class ReservationController {
 		Map<String,String> map = new HashMap<>();
 		MemberVO user = (MemberVO) session.getAttribute("user");
 		if(user == null) {
-	      map.put("status", "logout");
-	    }else {
-	    	map.put("status","login");
-	    }
-		map.put("hos_num", String.valueOf(hos_num));
+
+			map.put("result", "logout");
+		}else {
+			map.put("result","success");
+			model.addAttribute("hos_num", hos_num);
+		}
 		return map;
 	}
 }
