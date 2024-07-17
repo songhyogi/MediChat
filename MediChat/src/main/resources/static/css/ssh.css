@@ -83,6 +83,7 @@
     opacity: 0;
     display: none;
   }
+
 }
 
 a:link{
@@ -264,3 +265,4 @@ input#healthy_title{
 	float:right;
 	margin-bottom:100px important;
 }
+
