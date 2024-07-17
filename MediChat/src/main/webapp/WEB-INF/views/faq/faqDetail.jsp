@@ -7,28 +7,28 @@
   <script src="${pageContext.request.contextPath}/js/videoAdapter.js"></script>
 <div class="page-main">
 	<div class="page-one">
-		<h4>홈 > 건강 비디오 > ${video.video_title}</h4> 		
-		<h2>&nbsp;&nbsp;&nbsp;${video.video_title}</h2>
-		${video.v_reg_date}  조회수 :  ${video.video_hit} <br>
+		<h4>홈 > 자주 묻는 질문(FAQ) > ${faq.faq_title}</h4> 		
+		<h2>&nbsp;&nbsp;&nbsp;${faq.faq_title}</h2>
+		${faq.f_reg_date}  조회수 :  ${faq.faq_hit} <br>
 		
 		
-				${video.video_content}
+				${faq.faq_content}
 
 	
 		
-        &nbsp; &nbsp; &nbsp;<span id="hfav_cnt"></span><br>
-<c:if test="${user.mem_num == video.mem_num}">
+     
+<c:if test="${user.mem_num == faq.mem_num}">
 <div class="align-center">
-	<input type="button" class="default-btn" value="글 수정" onclick="location.href='videoUpdate?video_num=${video.video_num}'">
-	<input type="button" class="default-btn" value="글 삭제" id="v_delbtn" >
+	<input type="button" class="default-btn" value="글 수정" onclick="location.href='faqUpdate?faq_num=${faq.faq_num}'">
+	<input type="button" class="default-btn" value="글 삭제" id="f_delbtn" >
 </div>
 	<br>
 	<script type="text/javascript">
 		$(function(){
-				$('#v_delbtn').click(function(){
+				$('#f_delbtn').click(function(){
 					let choice  =confirm('삭제하시겠습니까?');
 					if(choice){
-						location.href='videoDelete?video_num=${video.video_num}';
+						location.href='faqDelete?faq_num=${faq.faq_num}';
 					}
 			});
 		});

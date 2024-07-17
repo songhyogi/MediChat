@@ -38,7 +38,7 @@
 	 	WHERE anum >= #{start} AND anum <= #{end}
 	 	]]>
 	 </select>
-	  <select id="selectV" parameterType="map" resultType="videoVO">
+	  <select id="selectV" parameterType="long" resultType="videoVO">
 	 	SELECT 
 	 			*
 	 	FROM  video_healthy
