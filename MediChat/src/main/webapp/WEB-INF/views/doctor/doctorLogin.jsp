@@ -9,9 +9,12 @@
 	<form:form action="login" id="doctor_login" modelAttribute="doctorVO" style="padding-bottom:50px;">
 <!-- 	<input type="hidden" id="lon" name="user_lon" value="" >
 		<input type="hidden" id="lat" name="user_lat" value="" > -->
+		<div class="loginLogo">
+			<img src="/images/loginLogo.png" width="100" height="100" style="margin-top:50px;">
+		</div>
 		<ul>
 			<li>
-				<form:input path="mem_id" placeholder="아이디" autocomplete="off" style="margin-top:130px;"/>
+				<form:input path="mem_id" placeholder="아이디" autocomplete="off" style="margin-top:50px;"/>
 				<form:errors path="mem_id" cssClass="error-color"/>
 			</li>
 			<li>
@@ -70,4 +73,4 @@ window.onload = function() {
         }
     };
 };
-</script> -->
+-->

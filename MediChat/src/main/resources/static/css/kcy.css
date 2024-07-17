@@ -13,10 +13,9 @@ div.container {
      top:60px;
 }
 div#main_body{
-	height:1000px;
-	background: linear-gradient(to bottom, rgba(57, 174, 164, 0.21) 0%, rgba(57, 174, 164, 0.21) 33.33%, #FFF 33.33%, #FFF 100%);
+	background: linear-gradient(to bottom, rgba(57, 174, 164, 0.21) 0%, rgba(57, 174, 164, 0.21) 40%, #FFF 33.33%, #FFF 100%);
 }
-/* 회원가입 */
+/* 회원가입,수정,탈퇴 */
 h2.title{
 	padding-top:20px;
 	font-weight:bold;
@@ -29,17 +28,36 @@ span.title2{
 	font-size: 12px;
 	color:#bdbcb9;
 }
-#member_register ul,#doctor_register ul{
+.doctor-register-body {
+    height: 1000px; /* 원하는 높이로 설정 */
+}
+#member_register ul,#doctor_register ul,
+#member_modify ul,#doctor_modify ul,
+#member_changePasswd ul,#member_delete ul,
+#doctor_changePasswd ul,#doctor_delete ul{
     padding:0;
     margin:0;
 	list-style:none;
 }
-#member_register li,#doctor_register li{
+#member_register li,#doctor_register li,
+#member_modify li,#doctor_modify li,
+#member_changePasswd li,#member_delete li,
+#doctor_changePasswd li,#doctor_delete li{
     margin-bottom:15px;
 }
-#member_register label,#doctor_register label{
+#member_register label,#doctor_register label,
+#member_modify label,#doctor_modify label{
     display:inline-block;
     width:120px;
+    font-weight:bold;
+    margin-right:10px;
+    margin-left:70px;
+    text-align:right;
+}
+#member_changePasswd label,#member_delete label,
+#doctor_changePasswd label,#doctor_delete label{
+	display:inline-block;
+    width:158px;
     font-weight:bold;
     margin-right:10px;
     margin-left:70px;
@@ -50,13 +68,30 @@ span.title2{
 #member_register input[type="email"],
 #doctor_register input[type="text"],
 #doctor_register input[type="password"],
-#doctor_register input[type="email"] {
+#doctor_register input[type="email"],
+#member_modify input[type="text"],
+#member_modify input[type="password"],
+#member_modify input[type="email"],
+#doctor_modify input[type="text"],
+#doctor_modify input[type="password"],
+#doctor_modify input[type="email"],
+#member_changePasswd input[type="password"],
+#member_changePasswd input[type="text"],
+#member_delete input[type="text"],
+#member_delete input[type="password"],
+#member_delete input[type="email"],
+#doctor_changePasswd input[type="password"],
+#doctor_changePasswd input[type="text"],
+#doctor_delete input[type="text"],
+#doctor_delete input[type="password"],
+#doctor_delete input[type="email"]{
     width:350px;
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 3px;
 }
-#member_register .default-btn,#doctor_register .default-btn{
+#member_register .default-btn,#doctor_register .default-btn,
+#member_modify .default-btn,#doctor_modify .default-btn{
 	background-color: rgb(102, 178, 178);
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 100 !important;
@@ -69,12 +104,38 @@ span.title2{
     cursor: pointer;
     width: 95px;
 }
+#member_changePasswd .default-btn,#member_delete .default-btn,
+#doctor_changePasswd .default-btn,#doctor_delete .default-btn{
+	background-color: rgb(102, 178, 178);
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 100 !important;
+	font-size: 16px;
+	font-weight:bold;
+    color: #fff; /* 버튼 텍스트를 하얀색으로 */
+    border: none; /* 기본 테두리 제거 */
+    padding: 6px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 300px;
+}
 #member_register .default-btn:hover,
-#doctor_register .default-btn:hover {
-    background-color: #0056b3;
+#doctor_register .default-btn:hover,
+#member_modify .default-btn:hover,
+#doctor_modify .default-btn:hover,
+#member_changePasswd .default-btn:hover,
+#member_delete .defalut-btn:hover,
+#doctor_changePasswd .default-btn:hover,
+#doctor_delete .default-btn:hover{
+    background-color:gray;
 }
 #member_register .error-color,
-#doctor_register .error-color {
+#doctor_register .error-color,
+#member_modify .error-color,
+#doctor_modify .error-color,
+#member_changePasswd .error-color,
+#member_delete .error-color,
+#doctor_changePasswd .error-color,
+#doctor_delete .error-color{
 	font-size: 12px;
     color: red;
 }
@@ -89,7 +150,8 @@ span.title2{
 #member_modify input[id="mem_zipcode"] {
     width:100px;
 }
-#member_register input[id="mem_address1"]{
+#member_register input[id="mem_address1"],
+#member_modify input[id="mem_address1"]{
 	margin-left:205px;
 	margin-top:10px;
 }
@@ -117,18 +179,15 @@ input#mem_address1 {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
-
 #datepickerContainer {
     position: relative;
     display: inline-block;
     width: 236px;
 }
-
 #mem_birth {
     width: 292px;
     padding-right: 30px;
 }
-
 #calendarButton {
     position: absolute;
     right: 0;
@@ -144,20 +203,16 @@ input#mem_address1 {
     background-color: #f0f0f0;
     border-bottom: 1px solid #ccc;
 }
-
 .ui-datepicker-title {
     color: #333;
 }
-
 .ui-datepicker-calendar {
     color: #333;
 }
-
 .ui-datepicker-current {
     background-color: #007bff;
     color: #fff;
 }
-
 .ui-datepicker-trigger {
     margin-left: 5px;
     background-image: url('../images/calendar.jpg');
@@ -172,7 +227,13 @@ input#mem_address1 {
 	margin-left:50px;
 }
 #member_register #reload_btn,
-#doctor_register #reload_btn{
+#doctor_register #reload_btn,
+#member_modify #reload_btn,
+#doctor_modify #reload_btn,
+#member_changePasswd #reload_btn,
+#member_delete #reload_btn,
+#doctor_changePasswd #reload_btn,
+#doctor_delete #reload_btn{
 	background-color:#9c9c9c;
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 100 !important;
@@ -187,7 +248,10 @@ input#mem_address1 {
 }
 #doctor_register input[type="search"],
 #doctor_register textarea,
-#doctor_register select {
+#doctor_register select,
+#doctor_modify input[type="search"],
+#doctor_modify textarea,
+#doctor_modify select {
     width: 350px;
     padding: 8px;
     border: 1px solid #ccc;
@@ -204,7 +268,7 @@ input#mem_address1 {
     cursor: pointer;
 }
 #search_button:hover {
-    background-color: #45a049;
+    background-color:gray;
 }
 .upload-form {
     display: flex;
@@ -239,6 +303,9 @@ form#member_login,form#doctor_login{
 #member_login ul,#doctor_login ul{
     padding: 0;
     list-style:none;
+}
+.loginLogo{
+	text-align:center;
 }
 #member_login input#mem_id,#member_login input#mem_passwd,
 #doctor_login input#mem_id,#doctor_login input#doc_passwd{
@@ -304,4 +371,38 @@ input#auto{
 	 width: 200px;
      height: 50px;
      margin: 10px;
+}
+/* 관리자 승인 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+    background-color:white;
+}
+
+th, td{
+    border:2px solid #000000;
+    padding:8px;
+    text-align:left;
+}
+th{
+    background-color:#a19d9d;
+}
+
+/* 이미지 셀 크기 조정 */
+td img{
+    max-width: 100px;
+    height: auto;
+}
+#agree-btn{
+    padding:5px 10px;
+    background-color:rgb(12, 178, 178);
+    color:white;
+    border:none;
+    cursor:pointer;
+    border-radius:3px;
+}
+#agree-btn:hover {
+    background-color:gray;
 }
