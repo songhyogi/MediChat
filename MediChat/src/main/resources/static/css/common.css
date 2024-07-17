@@ -265,6 +265,28 @@ body{
 
 
 /* ================= 헤더 ================= */
+/* --- 알림 아이콘 흔들림 --- */
+@keyframes bell-shake {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-45deg);
+  }
+  50% {
+    transform: rotate(45deg);
+  }
+  75% {
+    transform: rotate(-45deg);
+  }
+}
+.bell-shake {
+  animation: bell-shake 0.5s;
+  animation-iteration-count: 2;
+  transform-origin: top center; /* 중심 축을 이미지의 위쪽 중앙으로 설정 */
+}
+
+/* --- 헤더 창 --- */
 #header_box{
 	margin: 25px 70px;
 	margin-right: 125px;

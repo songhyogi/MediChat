@@ -1,5 +1,6 @@
 package kr.spring.notification.vo;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -7,6 +8,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@Builder
 public class NotificationVO {
 	private Long noti_num;				//알림 식별자
 	private Long mem_num;				//받는 회원 식별자
