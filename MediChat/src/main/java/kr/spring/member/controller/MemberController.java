@@ -100,7 +100,7 @@ public class MemberController {
 	public String loginSubmit(@Valid MemberVO memberVO,BindingResult result,
 											HttpServletRequest request,HttpSession session) {
 		log.debug("<로그인 정보> : " +memberVO);
-
+		
 		//아이디와 비밀번호만 유효성 체크하여 오류가 있다면 폼으로
 		if(result.hasFieldErrors("mem_id") || result.hasFieldErrors("mem_passwd")) {
 			return loginForm();
@@ -159,6 +159,11 @@ public class MemberController {
 	@GetMapping("/member/modifyUser")
 	public String updateForm(HttpSession session,Model model) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user == null) {
+	         model.addAttribute("message","로그인이 필요합니다.");
+	         model.addAttribute("url","/member/login");
+	         return "/common/resultAlert";
+	    }
 		MemberVO memberVO = memberService.selectMember(user.getMem_num());
 
 		model.addAttribute("memberVO",memberVO);
@@ -187,14 +192,21 @@ public class MemberController {
 	 * 비밀번호 변경
 	 ============================*/
 	@GetMapping("/member/changePasswd")
-	public String changePasswdForm() {
+	public String changePasswdForm(HttpSession session,Model model) {
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user == null) {
+	         model.addAttribute("message","로그인이 필요합니다.");
+	         model.addAttribute("url","/member/login");
+	         return "/common/resultAlert";
+	    }
 		return "memberChangePasswd";
 	}
 	@PostMapping("/member/changePasswd")
 	public String changePasswdSubmit(MemberVO memberVO,BindingResult result,HttpSession session,
 										Model model,HttpServletRequest request) {
 		if(result.hasFieldErrors("now_passwd")||result.hasFieldErrors("mem_passwd")) {
-			return changePasswdForm();
+			return "memberChangePasswd";
 		}
 		//========캡챠 시작=============//
 		String code = "1";//키 발급 0, 캡챠 이미지 비교시 1로 세팅
@@ -218,7 +230,7 @@ public class MemberController {
 		boolean captcha_result = jObject.getBoolean("result");
 		if(!captcha_result) {
 			result.rejectValue("captcha_chars", "invalidCaptcha");
-			return changePasswdForm();
+			return "memberChangePasswd";
 		}
 		//========캡챠 끝=============//
 		MemberVO user = (MemberVO)session.getAttribute("user");
@@ -229,7 +241,7 @@ public class MemberController {
 		//비밀번호 일치 여부 확인
 		if(!db_member.getMem_passwd().equals(memberVO.getNow_passwd())) {
 			result.rejectValue("now_passwd", "invalidPasswd");
-			return changePasswdForm();
+			return "memberChangePasswd";
 		}
 		//비밀번호 수정
 		memberService.updatePasswd(memberVO);
@@ -243,11 +255,13 @@ public class MemberController {
 	 * 회원탈퇴
 	 ============================*/
 	@GetMapping("/member/deleteUser")
-	public String deleteForm(HttpSession session) {
+	public String deleteForm(HttpSession session,Model model) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		if(user == null) {
-			return "redirect:/member/login";
-		}
+	         model.addAttribute("message","로그인이 필요합니다.");
+	         model.addAttribute("url","/member/login");
+	         return "/common/resultAlert";
+	    }
 		return "memberDelete";
 	}
 	//탈퇴 폼에서 전송된 데이터 처리
@@ -259,6 +273,32 @@ public class MemberController {
 												||result.hasFieldErrors("mem_email")) {
 			return "memberDelete";
 		}
+		
+		//========캡챠 시작=============//
+		String code = "1";//키 발급 0, 캡챠 이미지 비교시 1로 세팅
+		//캡챠 키 발급시 받은 키값
+		String key = (String)session.getAttribute("captcha_key");
+		//사용자가 입력한 캡챠 이미지 글자값
+		String value = memberVO.getCaptcha_chars();
+		String apiURL = "https://openapi.naver.com/v1/captcha/nkey?code=" + code + "&key=" + key + "&value=" + value;
+
+		Map<String, String> requestHeaders = new HashMap<String, String>();
+
+		requestHeaders.put("X-Naver-Client-Id", X_Naver_Client_Id);
+		requestHeaders.put("X-Naver-Client-Secret", X_Naver_Client_Secret);
+
+		String responseBody = CaptchaUtil.get(apiURL, requestHeaders);
+
+		log.debug("<<캡챠 결과>> : " + responseBody);
+
+		//변환 작업
+		JSONObject jObject = new JSONObject(responseBody);
+		boolean captcha_result = jObject.getBoolean("result");
+		if(!captcha_result) {
+			result.rejectValue("captcha_chars", "invalidCaptcha");
+			return "memberDelete";
+		}
+		//========캡챠 끝=============//
 		
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		memberVO.setMem_num(user.getMem_num());
@@ -385,7 +425,7 @@ public class MemberController {
         
       return "memberInfo";
    }
-   @GetMapping("/mypage/medicationHistory")
+   @GetMapping("/drug/memberDrugList")
    public String process2(HttpSession session,Model model) {
       MemberVO user = (MemberVO)session.getAttribute("user");
       if(user == null) {
@@ -398,7 +438,7 @@ public class MemberController {
       
       model.addAttribute("member", member);
         
-      return "medicationHistory";
+      return "memberDrugList";
    }
    @GetMapping("/mypage/reviewHistory")
    public String process3(HttpSession session,Model model) {

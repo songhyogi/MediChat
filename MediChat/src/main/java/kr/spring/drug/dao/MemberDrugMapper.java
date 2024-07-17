@@ -19,6 +19,8 @@ public interface MemberDrugMapper {
 	@Select("SELECT * FROM medicine WHERE mem_num=#{mem_num}")
 	public List<MemberDrugVO> selectMemberDrugList(Long mem_num);
 	public void insertDrug(MemberDrugVO memberDrug);
+	@Select("SELECT * FROM medicine WHERE med_num=#{med_num}")
+	public MemberDrugVO selectDrug(Long med_num);//업데이트를 위해 특정 med_num의 레코드를 구함
 	public void updateDrug(MemberDrugVO memberDrug);
 	@Delete("DELETE FROM medicine WHERE med_num=#{med_num}")
 	public void deleteDrug(Long med_num);

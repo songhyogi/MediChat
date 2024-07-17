@@ -4,9 +4,12 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <div class="container">
 	<form:form action="login" id="member_login" modelAttribute="memberVO">
+		<div class="loginLogo">
+			<img src="/images/loginLogo.png" width="100" height="100" style="margin-top:50px;">
+		</div>
 		<ul>
 			<li>
-				<form:input path="mem_id" placeholder="아이디" autocomplete="off" style="margin-top:130px;"/>
+				<form:input path="mem_id" placeholder="아이디" autocomplete="off" style="margin-top:50px;"/>
 				<form:errors path="mem_id" cssClass="error-color"/>
 			</li>
 			<li>

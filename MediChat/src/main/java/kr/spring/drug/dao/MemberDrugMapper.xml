@@ -5,14 +5,16 @@
 <mapper namespace="kr.spring.drug.dao.MemberDrugMapper"> 
 	<!-- 회원 의약품 목용 내역 작성 -->
 	<insert id="insertDrug" parameterType="memberDrugVO">
-        INSERT INTO medicine (med_num, mem_num, med_title, med_name, med_date, med_time, med_dosage, med_note)
-        VALUES (drug_seq.nextval, #{mem_num}, #{med_title}, #{med_name}, #{med_date}, #{med_time},
+        INSERT INTO medicine (med_num, mem_num, med_title, med_name, med_sdate, med_edate, med_time, med_dosage, med_note)
+        VALUES (drug_seq.nextval, #{mem_num}, #{med_title}, #{med_name}, #{med_sdate}, #{med_edate,jdbcType=VARCHAR}, #{med_time},
                 #{med_dosage}, #{med_note})
     </insert>
     <update id="updateDrug" parameterType="memberDrugVo">
     	UPDATE medicine SET 
+    		med_title = #{med_title},
     		med_name = #{med_name},
-    		med_date = #{med_date},
+    		med_sdate = #{med_sdate},
+    		med_edate = #{med_edate},
     		med_time = #{med_time},
     		med_dosage = #{med_dosage},
     		med_note = #{med_note}

@@ -4,6 +4,7 @@ package kr.spring.doctor.vo;
 import java.io.IOException;
 import java.sql.Date;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -13,13 +14,14 @@ import javax.validation.constraints.Pattern;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.spring.util.FileUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
-@ToString(exclude = {"mem_photo","doc_license"})
+@ToString(exclude = {"mem_photo"})
 public class DoctorVO {
 	private long mem_num;
 	@Pattern(regexp="^[A-Za-z0-9]{4,12}$")
@@ -39,8 +41,9 @@ public class DoctorVO {
 	@NotBlank
 	private String doc_email;
 	private Date doc_reg;
-	@NotEmpty
-	private String doc_license;
+	private MultipartFile doc_upload;	//파일
+	private String doc_license;		//의사 면허증
+
 	private String doc_history;
 	private int doc_treat;
 	private String doc_off;			//휴무요일

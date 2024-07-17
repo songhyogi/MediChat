@@ -22,7 +22,7 @@ $(function(){
 			data:{chat_num:chat_num, res_date:res_date, res_time:res_time, res_num:res_num},
 			dataType:'json',
 			success:function(param){
-				if(param.user=='logout'){
+				if(param.userCheck=='logout'){
 					//로그아웃 상태인 경우, 메인으로 이동
 					alert('로그인 후 이용해주십시오');
 					window.location.href='/main/main';
@@ -33,14 +33,16 @@ $(function(){
 					$('#res_time').val(res_time);
 					$('#res_num').val(res_num);
 					let res_title = '';
+					res_title += '			<div class="res-title">'
 					res_title += '			<div class="chat-title fs-25 fw-8" id="chat_title">';
 					res_title += '				예약번호: '+res_num;
 					res_title += '			</div>';
 					res_title += '			<div class="chat-date fs-20">';
 					res_title += '				'+res_date+'  '+res_time;
 					res_title += '			</div>';
+					res_title += '			</div>';
 					if(param.type=='3'){
-						res_title += '			<button class="chat-image" value="진료 종료" id="chat_close">';
+						res_title += '			<button class="chat-close-btn" id="chat_close">진료 종료</button>';
 					};
 
 					$('#chat_header').html(res_title);
@@ -54,25 +56,17 @@ $(function(){
 							if(param.type=='1'|| param.type=='2'){
 								if(item.msg_sender_type == 0){ //일반 회원이 0
 									//유저가 일반 회원이면서 일반 회원의 입력인 경우(본인이 보낸 메시지인 경우)
-									console.log('발신자 타입: '+item.msg_sender_type);
-									console.log('발신 메시지: '+item.msg_content);
 									message += '			<li class="my-message bg-green-7 fs-20">'+item.msg_content+'</li>';
 								}else if(item.msg_sender_type == 1){
 									//유저가 일반 회원이면서 의사 회원의 입력인 경우(상대방이 보낸 메시지인 경우)
-									console.log('발신자 타입: '+item.msg_sender_type);
-									console.log('발신 메시지: '+item.msg_content);
 									message += '			<li class="other-message bg-gray-6 fs-20">'+item.msg_content+'</li>';
 								}
 							}else if(param.type=='3'){
 								if(item.msg_sender_type == 1){ //의사 회원이 1
 									//유저가 의사 회원이면서 일반 회원의 입력인 경우(본인이 보낸 메시지인 경우)
-									console.log('발신자 타입: '+item.msg_sender_type);
-									console.log('발신 메시지: '+item.msg_content);
 									message += '			<li class="my-message bg-green-7 fs-20">'+item.msg_content+'</li>';
 								}else if(item.msg_sender_type == 0){
 									//유저가 의사 회원이면서 의사 회원의 입력인 경우(상대방이 보낸 메시지인 경우)
-									console.log('발신자 타입: '+item.msg_sender_type);
-									console.log('발신 메시지: '+item.msg_content);
 									message += '			<li class="other-message bg-gray-6 fs-20">'+item.msg_content+'</li>';
 								}
 							}//end of param.type(이용자 type)
@@ -100,13 +94,22 @@ $(function(){
 	/*=======================
 	  채팅방 선택 시 채팅방 불러오기
 	=========================*/
+	let chat_num;
+	let res_date;
+	let res_time;
+	let res_num;
+	
+	
 	$('.chat-room').click(function(event){
 		event.preventDefault();
 		
-		let chat_num = $(this).data('chat-num');
-        let res_date = $(this).data('res-date');
-        let res_time = $(this).data('res-time');
-        let res_num = $(this).data('res-num');
+		console.log('채팅방 선택 이벤트 발생');
+		
+		chat_num = $(this).data('chat-num');
+        res_date = $(this).data('res-date');
+        res_time = $(this).data('res-time');
+        res_num = $(this).data('res-num');
+        
         
         const selected = $(this).parent().parent();
         const not_selected = $('.chat-room').parent().parent();
@@ -133,27 +136,22 @@ $(function(){
 			return false;
 		}
 		
-		//form 제출 데이터
-		let formArray = $(this).serializeArray();
-		console.log(formArray);
 		
 		//서버와 통신
 		$.ajax({
 			url:'/chat/chatRoom',
 			type:'post',
-			data:$(this).serialize(),
+			data:$(this).serialize(), //form 제출 데이터를 문자열로 직렬화
+									  //메시지 입력창에서 메시지에 해당하는 부분
 			dataType:'json',
 			success:function(param){
-				if(param.user=='logout'){
+				if(param.userCheck=='logout'){
 					//로그아웃 상태인 경우, 메인으로 이동
 					alert('로그인 후 이용해주십시오');
 					window.location.href='/main/main';
-				}else if(param.user=='login'){
+				}else if(param.userCheck=='login'){
 					//로그인 상태인 경우
-					let chat_num = formArray.find(item => item.name === 'chat_num').value;
-	                let res_date = formArray.find(item => item.name === 'res_date').value;
-	                let res_time = formArray.find(item => item.name === 'res_time').value;
-	                let res_num = formArray.find(item => item.name === 'res_num').value;
+					
 					selectChat(chat_num, res_date, res_time, res_num);
 					initForm();	
 					console.log('메시지 입력');
@@ -231,19 +229,13 @@ $(function(){
 			data:$(this).serialize(),
 			dataType:'json',
 			success:function(param){
-				if(param.user=='logout'){
+				if(param.userCheck=='logout'){
 					//로그아웃 상태인 경우, 메인으로 이동
 					alert('로그인 후 이용해주십시오');
 					window.location.href='/main/main';
-				}else if(param.user=='login'){
+				}else if(param.userCheck=='login'){
 					//로그인 상태인 경우
-					let chat_num = formArray.find(item => item.name === 'chat_num').value;
-	                let res_date = formArray.find(item => item.name === 'res_date').value;
-	                let res_time = formArray.find(item => item.name === 'res_time').value;
-	                let res_num = formArray.find(item => item.name === 'res_num').value;
-					selectChat(chat_num, res_date, res_time, res_num);
-					initForm();	
-					console.log('메시지 입력');
+					
 				}
 			},
 			error:function(){
@@ -252,4 +244,74 @@ $(function(){
 		}); //end of ajax
 	}); //end of submit image
 	
+	/*=======================
+		  채팅 종료 폼 노출
+	=========================*/
+	$(document).on('click','#chat_close',function(event){
+		//기본 이벤트 제거
+		event.preventDefault();
+		
+		console.log('버튼 클릭 이벤트 발생');
+		
+		$('#close_chat_num').val(chat_num);
+		$('.close-form-bg').show();
+		$('.close-form').css('display','block');
+		
+	});
+	
+	//모달 창 닫기 버튼 클릭
+	$('.close-form .close-button').click(function(event){
+		//기본 이벤트 제거
+		event.preventDefault();
+		
+		console.log('닫기 버튼 클릭 이벤트 발생');
+		
+		
+		$('.close-form-bg').hide();
+		$('.close-form').hide();
+	});
+	
+	//모달 창 생성 시 외부 클릭 이벤트 삭제
+	$('.close-form').click(function(event) {
+		event.stopPropagation();
+	});
+	
+	/*=======================
+		 채팅 종료 폼 파일 전송
+	=========================*/
+	$('#file_input').submit(function(event){
+		//기본 이벤트 제거
+		event.preventDefault();
+		
+		form_data = $(this).serialize();
+		
+		alert('파일 전송 이벤트 발생');
+		let file = '';
+		
+		$.ajax({
+			url:'file_input',
+			type:'post',
+			data:form_data,
+			dataType:'json',
+			success:function(param){
+				if(param.file_name=='null'){
+					alert('파일을 등록해주세요.');
+					$('#select_file').val('').focus();
+				}else if(param.valid_date=='null'){
+					alert('유효기간을 등록해주세요.');
+					$('#file_valid_date').focus();
+				}
+				
+				file += '	<td>';
+				file += '	</td>';
+				file += '	<td>'+param.file_name+'</td>';
+				file += '	<td>'+param.file_type+'</td>';
+				file += '	<td>'+param.valid_date+'</td>';
+				   
+	           },
+			error(){
+				alert('파일 등록 오류 발생');
+			}
+		});
+	});
 });

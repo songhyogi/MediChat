@@ -9,7 +9,7 @@
 	<span style="font-weight:bold;">정보입력</span>
 	<br>
 	<span class="title2">회원가입에 필요한 정보를 입력합니다.</span>
-	<form:form action="registerDoc" id="doctor_register" modelAttribute="doctorVO">
+	<form:form action="registerDoc" id="doctor_register" enctype="multipart/form-data" modelAttribute="doctorVO">
 		<div class="form-main">
 		<ul>
 			<li style="margin-top:20px;">
@@ -54,14 +54,14 @@
 				<form:textarea path="doc_history" placeholder="연혁을 입력해주세요." style="height: 150px; vertical-align: top;"/>
 			</li>
 		</ul>
-			<hr size="1" width="100%" noshade="noshade">
 		</div>
+		<hr size="1" width="100%" noshade="noshade">
 		<div class="upload-form">
 		<ul>
 			<li>
-				<form:label path="doc_license">의사 면허증</form:label>
-				<input type="file" name="doc_license" id="doc_license" accept="image/gif,image/png,image/jpeg">
-				<form:errors path="doc_license" cssClass="error-color"/>
+				<form:label path="doc_upload">의사 면허증</form:label>
+				<input type="file" name="doc_upload" id="doc_upload">
+				<form:errors path="doc_upload" cssClass="error-color"/>
 			</li>
 		</ul>
 		</div>
@@ -85,13 +85,14 @@
 		</div>
 		<!-- 캡챠 끝 -->
 		<hr size="1" width="80%" noshade="noshade">
-		<div style="text-align:center;">
+		<div style="text-align:right;">
 			<input type="button" value="홈으로" id="reload_btn" onclick="location.href='${pageContext.request.contextPath}/main/main'">
 			<form:button class="default-btn">가입신청</form:button>
 		</div>
 	</form:form>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/doctor.register.js"></script>
+<script src="${pageContext.request.contextPath}/js/uploadAdapter.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 	    $('#search_button').on('click', function() {

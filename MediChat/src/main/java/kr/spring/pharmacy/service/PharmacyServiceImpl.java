@@ -40,7 +40,7 @@ public class PharmacyServiceImpl implements PharmacyService{
 	}
 
 	@Override
-	public void updateHitPharmacy(Long hos_num) {
+	public void updateHitPharmacy(Long pha_num) {
 		// TODO Auto-generated method stub
 		
 	}

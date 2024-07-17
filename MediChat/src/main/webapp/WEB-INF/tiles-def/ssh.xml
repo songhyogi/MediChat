@@ -45,6 +45,46 @@
 		<put-attribute name="css" value="/WEB-INF/views/health/healthCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/health/healthyUpdate.jsp"/>
 	</definition>
+	<definition name="video_List" extends="diseaseMain">
+		<put-attribute name="title" value="videoHealthyList"/>
+		<put-attribute name="css" value="/WEB-INF/views/video/videoCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/video/videoList.jsp"/>
+	</definition>
+	<definition name="video_Write" extends="diseaseMain">
+		<put-attribute name="title" value="videoHealthyWrite"/>
+		<put-attribute name="css" value="/WEB-INF/views/video/videoCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/video/videoWrite.jsp"/>
+	</definition>
+	<definition name="video_Detail" extends="diseaseMain">
+		<put-attribute name="title" value="videoHealthyDetail"/>
+		<put-attribute name="css" value="/WEB-INF/views/video/videoCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/video/videoDetail.jsp"/>
+	</definition>
+	<definition name="video_Update" extends="diseaseMain">
+		<put-attribute name="title" value="videoHealthyUpdate"/>
+		<put-attribute name="css" value="/WEB-INF/views/video/videoCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/video/videoUpdate.jsp"/>
+	</definition>
+	<definition name="faq_List" extends="diseaseMain">
+		<put-attribute name="title" value="faqList"/>
+		<put-attribute name="css" value="/WEB-INF/views/faq/faqCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/faq/faqList.jsp"/>
+	</definition>
+	<definition name="faq_Write" extends="diseaseMain">
+		<put-attribute name="title" value="faqWrite"/>
+		<put-attribute name="css" value="/WEB-INF/views/faq/faqCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/faq/faqWrite.jsp"/>
+	</definition>
+	<definition name="faq_Detail" extends="diseaseMain">
+		<put-attribute name="title" value="faqDetail"/>
+		<put-attribute name="css" value="/WEB-INF/views/faq/faqCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/faq/faqDetail.jsp"/>
+	</definition>
+	<definition name="faq_Update" extends="diseaseMain">
+		<put-attribute name="title" value="faqUpdate"/>
+		<put-attribute name="css" value="/WEB-INF/views/faq/faqCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/faq/faqUpdate.jsp"/>
+	</definition>
 </tiles-definitions>
 
 

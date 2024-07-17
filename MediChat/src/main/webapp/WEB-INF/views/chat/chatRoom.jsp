@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/uploadAdapter.js"></script>
+
 <!-- 비대면진료 채팅창 시작 -->
 	<div class="chat-main col-9">
 		<div class="chat-header bg-green-7" id="chat_header">
@@ -35,17 +37,19 @@
 
 <!-- 이미지 전송 시 모달 -->
 	<div class="image-form">
-		<div class="form-title bg-green-7 fs-18">
-		파일 전송
+		<div class="form-title bg-green-7 fs-20 fw-4">
+		이미지 전송
 			<button type="button" class="close-button">&times;</button>
 		</div>
 		<div class="form-body">
 		<form action="image_input" id="image_input">
-			<label for="select_image" class="">파일 선택</label>
-			<input type="file" id="select_image" accept="image/gif,image/png,image/jpeg">
+			<input type="file" name="select_image" id="select_image" accept="image/gif,image/png,image/jpeg">
 			<input type="submit" value="전송">
 		</form>
 		</div>
 	</div>
 <div class="image-form-bg"></div>
 <!-- 모달 창 끝 -->
+<!-- 결제 종료 모달 창 -->
+<jsp:include page="chatClose.jsp"/>
+<!-- 결제 종료 모달 창 끝 -->

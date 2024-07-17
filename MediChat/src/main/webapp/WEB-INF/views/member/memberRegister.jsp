@@ -80,13 +80,15 @@
 		</div>
 		<!-- 캡챠 끝 -->
 		<hr size="1" width="100%" noshade="noshade">
-		<div style="text-align:center;">
+		<div style="text-align:right;">
 			<input type="button" value="홈으로" id="reload_btn" onclick="location.href='${pageContext.request.contextPath}/main/main'">
 			<form:button class="default-btn">가입완료</form:button>
 		</div>
 	</form:form>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/member.register.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/i18n/jquery.ui.datepicker-ko.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker.js"></script>
 <script>
 	$(function(){
@@ -104,7 +106,6 @@
 <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
 <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
 </div>
-
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     // 우편번호 찾기 화면을 넣을 element
