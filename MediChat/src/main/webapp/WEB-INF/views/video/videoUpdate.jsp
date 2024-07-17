@@ -10,18 +10,19 @@
 
 <div class="page-main">
 	<div class="page-one">
-		<h4>홈 > 건강 비디오 >  글쓰기</h4> 		
+		<h4>홈 > 건강 비디오 >  글수정</h4> 		
 		<h2>&nbsp;&nbsp;&nbsp;건강 비디오 </h2>
 		
 		<hr size="1" width="80%">
 		
-		<form:form action="videoWrite" id="register_form" method="post" modelAttribute="videoVO" enctype="multipart/form-data">
+		<form:form action="videoUpdate" id="register_form" method="post" modelAttribute="videoVO" enctype="multipart/form-data">
+				<form:hidden path="video_num"/>
 				<ul>
 					<li>
 						<select name="v_category" id="selectinput">
-							<option value="a" >건강</option>
-							<option value="b">미용</option>
-							<option value="c" >홍보</option>
+							<option value="a"<c:if test="${videoVO.v_category =='a'}">selected</c:if> >건강</option>
+							<option value="b" <c:if test="${videoVO.v_category =='b'}">selected</c:if>>미용</option>
+							<option value="c" <c:if test="${videoVO.v_category =='c'}">selected</c:if>>홍보</option>
 						</select>
 					</li>
 					<li>
@@ -29,7 +30,7 @@
 						<form:errors path="video_title" cssClass="error-color"/>
 					</li>
 					<li>
-						<form:textarea path="video_content" placeholder="영상링크 맨 상단에 첨부해주세요"/>
+						<form:textarea path="video_content" placeholder="영상링크만 첨부해주세요"/>
 						<form:errors path="video_content" cssClass="error-color"/>
 						<script>
 							 function MyCustomUploadAdapterPlugin(editor) {
@@ -52,7 +53,7 @@
 					</li>
 			</ul>
 			<div class="align-center">
-				<form:button class="default-btn">글쓰기</form:button>
+				<form:button class="default-btn">글수정</form:button>
 				<input type="button" class="default-btn" value="목록" onclick="location.href='${pageContext.request.contextPath}/video/videoList'">
 			</div>
 		

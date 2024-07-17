@@ -1,4 +1,4 @@
-package kr.spring.video.controller;
+package kr.spring.faq.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,43 +15,42 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import kr.spring.health.vo.HealthyBlogVO;
+import kr.spring.faq.service.FaqService;
+import kr.spring.faq.vo.FaqVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.PagingUtil;
-import kr.spring.video.service.VideoService;
-import kr.spring.video.vo.VideoVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public class VideoController {
+public class FaqController {
 	
 	@Autowired
-	private VideoService service;
+	private FaqService service;
 	
 	@ModelAttribute
-	public VideoVO initCommand() {
-		return new VideoVO();
+	public FaqVO initCommand() {
+		return new FaqVO();
 	}
 	
-	@GetMapping("/video/videoList")
-	public String getVideoMain(@RequestParam(defaultValue="1") int pageNum,String keyfield,String keyword,Model model) {
+	@GetMapping("/faq/faqList")
+	public String getFMain(@RequestParam(defaultValue="1") int pageNum,String keyfield,String keyword,Model model) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("keyword", keyword);
 		map.put("keyfield", keyfield);
-		int count = service.selectCountV(map);
-		PagingUtil page = new PagingUtil(keyfield,keyword,pageNum,count,4,10,"videoList");
+		int count = service.selectCountF(map);
+		PagingUtil page = new PagingUtil(keyfield,keyword,pageNum,count,10,10,"faqList");
 		map.put("start", page.getStartRow());
 		map.put("end", page.getEndRow());
-		List<VideoVO> list = service.selectVList(map);
+		List<FaqVO> list = service.selectFList(map);
 		model.addAttribute("list",list);
 		model.addAttribute("count",count);
 		model.addAttribute("page",page.getPage());
-		return "video_List";
+		return "faq_List";
 	}
 	
-	@GetMapping("/video/videoWrite")
-	public String getVideoWriteForm(HttpSession session,Model model,HttpServletRequest request) {
+	@GetMapping("/faq/faqWrite")
+	public String getFaqWriteForm(HttpSession session,Model model,HttpServletRequest request) {
 		MemberVO user = (MemberVO) session.getAttribute("user");
 		
 		if(user == null) {
@@ -59,18 +58,18 @@ public class VideoController {
 			model.addAttribute("url",request.getContextPath()+"/member/login");
 			
 		}else if(user.getMem_auth() >2 && user!= null) {
-			return "video_Write";
+			return "faq_Write";
 		}else {
 			model.addAttribute("message","쓰기 권한이 없습니다.");
-			model.addAttribute("url",request.getContextPath()+"/video/videoList");
+			model.addAttribute("url",request.getContextPath()+"/faq/faqList");
 		}
 		
 		return "common/resultAlert";
 		
 	}
 	
-	@PostMapping("/video/videoWrite")
-	public String getVidoWrite(VideoVO vo,HttpSession session,HttpServletRequest request,Model model) {
+	@PostMapping("/faq/faqWrite")
+	public String getFaqWrite(FaqVO vo,HttpSession session,HttpServletRequest request,Model model) {
 		MemberVO user = (MemberVO) session.getAttribute("user");
 		
 		if(user == null) {
@@ -79,26 +78,26 @@ public class VideoController {
 			
 		}else if(user.getMem_auth() >2 && user!= null) {
 			vo.setMem_num(user.getMem_num());
-			service.insertV(vo);
-			return "redirect:/video/videoList";
+			service.insertF(vo);
+			return "redirect:/faq/faqList";
 		}else {
 			model.addAttribute("message","쓰기 권한이 없습니다.");
-			model.addAttribute("url",request.getContextPath()+"/video/videoList");
+			model.addAttribute("url",request.getContextPath()+"/faq/faqList");
 		}
 		return "common/resultAlert";
 	}
-	@GetMapping("/video/videoDetail")
-	public String getVdetail(Long video_num,Model model) {
-		service.updateVhit(video_num);
-		VideoVO vo = service.selectV(video_num);
+	@GetMapping("/faq/faqDetail")
+	public String getFaqdetail(Long faq_num,Model model) {
+		service.updateFhit(faq_num);
+		FaqVO vo = service.selectF(faq_num);
 		
-		model.addAttribute("video", vo);
+		model.addAttribute("faq", vo);
 		
 		
-		return "video_Detail";
+		return "faq_Detail";
 	}
-	@GetMapping("/video/videoUpdate")
-	public String getVupdateForm(Long video_num,HttpSession session,HttpServletRequest request,Model model) {
+	@GetMapping("/faq/faqUpdate")
+	public String getFaqupdateForm(Long faq_num,HttpSession session,HttpServletRequest request,Model model) {
 		MemberVO user = (MemberVO) session.getAttribute("user");
 
 		if(user == null) {
@@ -106,26 +105,26 @@ public class VideoController {
 			model.addAttribute("url",request.getContextPath()+"/member/login");
 			
 		}else if(user.getMem_auth() >2 && user!= null) {
-			VideoVO  db_vo = service.selectV(video_num);
+			FaqVO  db_vo = service.selectF(faq_num);
 			if(db_vo.getMem_num() == user.getMem_num()) {
-				model.addAttribute("videoVO",db_vo);
-				log.debug("업데이트"+db_vo.getMem_num());
-				return "video_Update";
+				model.addAttribute("faqVO",db_vo);
+			
+				return "faq_Update";
 			}else {
 				model.addAttribute("message","수정 권한이 없습니다.");
-				model.addAttribute("url",request.getContextPath()+"/video/videoList");
+				model.addAttribute("url",request.getContextPath()+"/faq/faqList");
 			}
 			
 		}else {
 			model.addAttribute("message","수정 권한이 없습니다.");
-			model.addAttribute("url",request.getContextPath()+"/video/videoList");
+			model.addAttribute("url",request.getContextPath()+"/faq/faqList");
 		}
 		return "common/resultAlert";
 		
 	}
 	
-	@PostMapping("/video/videoUpdate")
-	public String getVupdate(VideoVO videoVO,HttpSession session,HttpServletRequest request,Model model) {
+	@PostMapping("/faq/faqUpdate")
+	public String getFaqupdate(FaqVO faqVO,HttpSession session,HttpServletRequest request,Model model) {
 		MemberVO user = (MemberVO) session.getAttribute("user");
 		
 		if(user == null) {
@@ -133,26 +132,26 @@ public class VideoController {
 			model.addAttribute("url",request.getContextPath()+"/member/login");
 			
 		}else if(user.getMem_auth() >2 && user!= null) {
-			VideoVO db_vo = service.selectV(videoVO.getVideo_num());
+			FaqVO db_vo = service.selectF(faqVO.getFaq_num());
 			if(db_vo.getMem_num() == user.getMem_num()) {
 				
-				service.updateV(videoVO);
-				return "redirect:/video/videoDetail?video_num="+videoVO.getVideo_num();
+				service.updateF(faqVO);
+				return "redirect:/faq/faqDetail?faq_num="+faqVO.getFaq_num();
 			}else {
 				model.addAttribute("message","수정 권한이 없습니다.");
-				model.addAttribute("url",request.getContextPath()+"/video/videoList");
+				model.addAttribute("url",request.getContextPath()+"/faq/faqList");
 			}
 			
 		}else {
 			model.addAttribute("message","수정 권한이 없습니다.");
-			model.addAttribute("url",request.getContextPath()+"/video/videoList");
+			model.addAttribute("url",request.getContextPath()+"/faq/faqList");
 		}
 		return "common/resultAlert";
 		
 	}
 	
-	@GetMapping("/video/videoDelete")
-	public String getVdelete(Long video_num,HttpSession session,HttpServletRequest request,Model model) {
+	@GetMapping("/faq/faqDelete")
+	public String getFaqdelete(Long faq_num,HttpSession session,HttpServletRequest request,Model model) {
 		MemberVO user = (MemberVO) session.getAttribute("user");
 
 		if(user == null) {
@@ -160,18 +159,18 @@ public class VideoController {
 			model.addAttribute("url",request.getContextPath()+"/member/login");
 			
 		}else if(user.getMem_auth() >2 && user!= null) {
-			VideoVO  db_vo = service.selectV(video_num);
+			FaqVO  db_vo = service.selectF(faq_num);
 			if(db_vo.getMem_num() == user.getMem_num()) {
-				service.deleteV(video_num);
-				return "redirect:/video/videoList";
+				service.deleteF(faq_num);
+				return "redirect:/faq/faqList";
 			}else {
 				model.addAttribute("message","삭제 권한이 없습니다.");
-				model.addAttribute("url",request.getContextPath()+"/video/videoList");
+				model.addAttribute("url",request.getContextPath()+"/faq/faqList");
 			}
 			
 		}else {
 			model.addAttribute("message","삭제 권한이 없습니다.");
-			model.addAttribute("url",request.getContextPath()+"/video/videoList");
+			model.addAttribute("url",request.getContextPath()+"/faq/faqList");
 		}
 		return "common/resultAlert";
 		

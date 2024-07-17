@@ -14,4 +14,5 @@ public interface VideoService {
 	public Integer selectCountV(Map<String,Object> map);
 	public  VideoVO selectV(Long video_num);
 	public List<VideoVO> selectVList(Map<String,Object> map);
+	public void updateVhit(Long video_num);
 }

@@ -7,7 +7,7 @@
 		<h5>홈 > 질병백과사전</h5> 		
 		<p>
 		<h2>&nbsp;&nbsp;&nbsp;<b>질병 백과사전</b></h2>
-	<a href="${pageContext.request.contextPath}/health/healthBlog">건강 블로그</a> <a href="${pageContext.request.contextPath}/video/videoList">건강 비디오</a>
+	<a href="${pageContext.request.contextPath}/health/healthBlog">건강 블로그</a> <a href="${pageContext.request.contextPath}/video/videoList">건강 비디오</a> <a href="${pageContext.request.contextPath}/faq/faqList">자주 묻는 질문</a>
 	<form class="align-center" action="${pageContext.request.contextPath}/disease/diseaseDictionary" method="get">
 		
 		<div class="container-input">

@@ -52,4 +52,10 @@ public class VideoServiceImpl implements VideoService{
 		return mapper.selectVList(map);
 	}
 
+	@Override
+	public void updateVhit(Long video_num) {
+		// TODO Auto-generated method stub
+		mapper.updateVhit(video_num);
+	}
+
 }
