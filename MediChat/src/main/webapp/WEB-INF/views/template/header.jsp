@@ -160,5 +160,4 @@
 		} else {
 			headerRegisterDiv.style.display = 'block';
 		}
-	};
 </script>

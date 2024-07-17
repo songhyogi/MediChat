@@ -27,4 +27,14 @@
 		<put-attribute name="title" value="병원 위치 · 정보 · 후기"/>
 		<put-attribute name="body" value="/WEB-INF/views/hospital/detail.jsp"/>
 	</definition>
+	
+	
+	<definition name="pSearch" extends="ksy">
+		<put-attribute name="title" value="검색 결과"/>
+		<put-attribute name="body" value="/WEB-INF/views/pharmacy/search.jsp"/>
+	</definition>
+	<definition name="pDetail" extends="ksy">
+		<put-attribute name="title" value="약국 위치 · 정보 · 후기"/>
+		<put-attribute name="body" value="/WEB-INF/views/pharmacy/detail.jsp"/>
+	</definition>
 </tiles-definitions>

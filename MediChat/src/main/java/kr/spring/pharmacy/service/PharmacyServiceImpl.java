@@ -1,6 +1,7 @@
 package kr.spring.pharmacy.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,37 +20,37 @@ public class PharmacyServiceImpl implements PharmacyService{
 	@Override
 	public void insertPharmacy(PharmacyVO pharmacyVO) {
 		pharmacyMapper.insertPharmacy(pharmacyVO);
-		
 	}
 
 	@Override
 	public void updatePharmacy(PharmacyVO pharmacyVO) {
+		pharmacyMapper.updatePharmacy(pharmacyVO);
+	}
+
+	@Override
+	public List<PharmacyVO> selectListPharmacy(Map<String, Object> map) {
+		return pharmacyMapper.selectListPharmacy(map);
+	}
+
+	@Override
+	public PharmacyVO selectPharmacy(Long pha_num) {
+		pharmacyMapper.updateHitPharmacy(pha_num);
+		
+		return pharmacyMapper.selectPharmacy(pha_num);
+	}
+
+	@Override
+	public void updateHitPharmacy(Long pha_num) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public HospitalVO selectPharmacyByNum(Long pha_num) {
-		// TODO Auto-generated method stub
-		return null;
+	public void initHitPharmacy() {
+		pharmacyMapper.initHitPharmacy();
+		
 	}
 
-	@Override
-	public HospitalVO selectPharmacyByName(String pha_name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public HospitalVO selectPharmacyByPosition(String x, String y) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<HospitalVO> selectListPharmacy() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	
 }

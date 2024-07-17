@@ -1,4 +1,5 @@
 $(function(){
+	
 	/*------------------의약품 등록------------------ */
 	//의약품 검색
 	let drug_list = [];
@@ -57,6 +58,11 @@ $(function(){
 	//유효성 체크(복용내용 외 전부) 및 등록
 	$('#drugSearch').submit(function(event){
 		event.preventDefault();
+		if($('#title').val().trim()==''){
+			alert('증상을 입력하세요');
+			$('#title').val('').focus();
+			return false;
+		}
 		if(drug_list.length == 0){
 			alert('복용한 의약품을 입력하세요');
 			$('#drugSelect').val('').focus();
@@ -67,31 +73,40 @@ $(function(){
 			$('#selectedDate').val('').focus();
 			return false;
 		}
-		if($('#selectedTime').val().trim()==''){
-			alert('복용 시간을 입력하세요');
-			$('#selectedTime').val('').focus();
+		var checkboxes = document.querySelectorAll('input[name="med_time"]');
+		var isChecked = false;
+		for(var i=0;i<checkboxes.length;i++){
+			if(checkboxes[i].checked){
+				isChecked = true;
+				break;
+			}
+		}
+		if(!isChecked){
+			alert('적어도 하나의 복용 시간을 선택하세요.');
 			return false;
 		}
 		if($('#memberDosage').val().trim()==''){
-			alert('복용 일자를 입력하세요');
+			alert('복용량을 입력하세요');
 			$('#memberDosage').val('').focus();
 			return false;
 		}
 		
-		// 선택한 의약품을 hidden input으로 추가
+		//선택한 의약품을 hidden input으로 추가
+		let med_names = drug_list.join(','); //배열을 쉼표로 구분된 문자열로 반환
+		le.log("수정, 선택한 의약품 : " + med_names);
 	    $('<input>').attr({
 	        type: 'hidden',
-	        name: 'drug_list',
-	        value: JSON.stringify(drug_list)
+	        name: 'med_name',
+	        value: med_names
 	    }).appendTo('#drugSearch');
 
-
 		let form_data = $(this).serialize();
-		console.log(form_data);
+		//
+		le.log(form_data);
 		//서버와 통신
 		$.ajax({
 			url:'/memberDrug/memberDrugInsertAjax',
-			type:'post',
+			type:'get',
 			data:form_data,
 			success:function(param){
 				if(param.result=='logout'){
@@ -102,7 +117,41 @@ $(function(){
 					//폼 초기화
 					$('#drugSearch')[0].reset();
 					$('#drugSelect').empty();
-                    drug_list = [];
+                    drug_list = []; //의약품 리스트 초기화
+                    
+				}
+			},
+			error:function(){
+				alert('네트워크 오류 발생');
+			}
+		});
+	});//end of 등록
+	
+	/*------------------의약품 수정------------------ */
+	//의약품 검색
+	$('#moDrug_search').keyup(function(){
+		if($('#moDrug_search').val().trim() ==''){//빈문자열
+			$('#moSearchDrugList').empty();//searchDrugList의 모든 자식 요소 제거
+			return;
+		}
+		$.ajax({
+			url:'memberDrugSearchAjax',
+			type:'get',
+			data:{drg_name:$('#moDrug_search').val()},
+			dataType:'json',
+			success:function(param){
+				if(param.result == 'success'){
+					let results = param.drugList.slice(0,10);//검색어 10개까지만 출력
+					$('#moSearchDrugList').empty();
+					$(results).each(function(index,item){
+						let output = '';
+						output += '<li data-name="'+item.drg_name+'">';
+						output += item.drg_name;
+						output += '</li>';
+						$('#moSearchDrugList').append(output);
+					});
+				}else{
+					alert('의약품 검색 오류 발생');
 				}
 			},
 			error:function(){
@@ -110,5 +159,82 @@ $(function(){
 			}
 		});
 	});
-	
+	//의약품 수정 submit
+	$('#modifyDrugSearch').submit(function(event){
+		event.preventDefault();
+		if($('#mo_title').val().trim()==''){
+			alert('증상을 입력하세요');
+			$('#mo_title').val('').focus();
+			return false;
+		}
+		if(med_list.length == 0){
+			alert('복용한 의약품을 입력하세요');
+			$('#moDrugSelect').val('').focus();
+			return false;
+		}
+		if($('#moSelectedDate').val().trim()==''){
+			alert('복용 일자를 입력하세요');
+			$('#moSelectedDate').val('').focus();
+			return false;
+		}
+		var checkboxes = document.querySelectorAll('input[name="med_time"]');
+		var isChecked = false;
+		for(var i=0;i<checkboxes.length;i++){
+			if(checkboxes[i].checked){
+				isChecked = true;
+				break;
+			}
+		}
+		if(!isChecked){
+			alert('적어도 하나의 복용 시간을 선택하세요.');
+			return false;
+		}
+		if($('#moMemberDosage').val().trim()==''){
+			alert('복용량을 입력하세요');
+			$('#moMemberDosage').val('').focus();
+			return false;
+		}
+		
+		//선택한 의약품을 hidden input으로 추가
+		let med_names = med_list.join(','); //배열을 쉼표로 구분된 문자열로 반환
+	    $('<input>').attr({
+	        type: 'hidden',
+	        name: 'med_name',
+	        value: med_names
+	    }).appendTo('#moDrugSelect');
+	    
+	    //
+	    le.log("js파일 통신 전 med_names:" + med_names);
+
+		let form_data = $(this).serialize();
+		//서버와 통신
+		$.ajax({
+			url:'/MemberDrug/memberDrugUpdateAjax',
+			type:'get',
+			data:form_data,
+			success:function(param){
+				if(param.result=='logout'){
+					alert('로그인해야 등록할 수 있습니다.');
+				}else if(param.result=='success'){
+					alert('의약품 복용 기록 수정이 완료되었습니다.');
+					//
+					le.log("통신성공 med_names : " + med_names);
+					$('#updateDrug').hide();
+					//폼 초기화
+					$('#modifyDrugSearch')[0].reset();
+					$('#moDrugSelect').empty();
+					//
+					le.log("통신성공 폼초기화 med_names:" + med_names);
+                    med_list = []; //의약품 리스트 초기화
+                    //
+					le.log("통신성공 의약품 리스트 초기화 med_names:" + med_names);
+				}else{
+					alert('의약품 복용 내역 수정 오류 발생');
+				}
+			},
+			error:function(){
+				alert('네트워크 오류 발생');
+			}
+		});
+	});
 });

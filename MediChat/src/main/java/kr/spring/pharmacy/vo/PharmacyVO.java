@@ -39,4 +39,6 @@ public class PharmacyVO {
 	private String pha_x;               //X좌표
 	private String pha_y;               //Y좌표
 	private String pha_weekendAt;       //주말진료여부
+	
+	private int around;					//현재 지점서부터 약국까지의 실제거리
 }

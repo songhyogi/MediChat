@@ -53,4 +53,14 @@
 		WHERE c.doc_num=#{mem_num}
 	</select>
 	
+	<insert id="insertImage" parameterType="ChatMsgVO">
+		INSERT
+		INTO chat_msg(msg_num, chat_num, msg_content, msg_sender_type)
+		VALUES(msg_seq.nextval,
+			   #{chat_num},
+			   #{msg_content},
+			   #{msg_sender_type}
+			   )
+	
+	</insert>
 </mapper>

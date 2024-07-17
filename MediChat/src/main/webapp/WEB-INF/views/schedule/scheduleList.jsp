@@ -77,6 +77,7 @@
         // 선택한 날짜의 근무/휴무 시간을 표시하는 함수
         function displayTimes(date) {
             $('#time-buttons').empty();
+            modifiedTimes = {}; // 선택한 날짜가 바뀔 때마다 수정된 시간을 초기화
             // AJAX 요청을 통해 근무 시간 정보를 가져옴
             $.ajax({
                 url: '/schedule/workingTimes',
@@ -152,6 +153,7 @@
         // 시간 버튼의 클릭 이벤트를 처리하는 함수
         function handleButtonEvents(date) {
             $('.modify-btn').click(function() {
+            	modifiedTimes = {}; // 근무수정버튼을 클릭할 때마다 수정된 시간을 초기화
                 $('.working-time, .time-off, .working-time-red').prop('disabled', false).addClass('active');
                 $(this).hide();
                 $('.complete-modify-btn, .cancel-btn').show();
@@ -326,5 +328,5 @@ button:disabled {
     pointer-events: auto;
 }
 </style>
-<div id='calendar' data-doc-num="${doc_num}" data-regular-day-off="${regularDayOff}"></div>
+<div id="calendar" data-doc-num="${doc_num}" data-regular-day-off="${regularDayOff}"></div>
 <div id="time-buttons"></div>

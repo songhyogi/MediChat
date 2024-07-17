@@ -26,58 +26,72 @@
 			<div class="fs-18 fw-7">진료 시간</div>
 			<c:if test="${day==1}">
 				<c:if test="${hospital.hos_time1S<=time and time<hospital.hos_time1C}">
-					<div class="greenCircle ms-2 mx-1"></div><div class="greenText">진료중</div>
+					<div class="greenCircle ms-2 mx-1"></div>
+					<div class="greenText">진료중</div>
 				</c:if>
 				<c:if test="${hospital.hos_time1S>time or hospital.hos_time1C<=time}">
-					<div class="redCircle ms-2 mx-1"></div><div class="redText">진료종료</div>
+					<div class="redCircle ms-2 mx-1"></div>
+					<div class="redText">진료종료</div>
 				</c:if>
 		    </c:if>
 		    <c:if test="${day==2}">
 				<c:if test="${hospital.hos_time2S<=time and time<hospital.hos_time2C}">
-					<div class="greenCircle ms-2 mx-1"></div><div class="greenText">진료중</div>
+					<div class="greenCircle ms-2 mx-1"></div>
+					<div class="greenText">진료중</div>
 				</c:if>
 				<c:if test="${hospital.hos_time2S>time or hospital.hos_time2C<=time}">
-					<div class="redCircle ms-2 mx-1"></div><div class="redText">진료종료</div>
+					<div class="redCircle ms-2 mx-1"></div>
+					<div class="redText">진료종료</div>
 				</c:if>
 		    </c:if>
 		    <c:if test="${day==3}">
 				<c:if test="${hospital.hos_time3S<=time and time<hospital.hos_time3C}">
-					<div class="greenCircle ms-2 mx-1"></div><div class="greenText">진료중</div>
+					<div class="greenCircle ms-2 mx-1"></div>
+					<div class="greenText">진료중</div>
 				</c:if>
 				<c:if test="${hospital.hos_time3S>time or hospital.hos_time3C<=time}">
-					<div class="redCircle ms-2 mx-1"></div><div class="redText">진료종료</div>
+					<div class="redCircle ms-2 mx-1"></div>
+					<div class="redText">진료종료</div>
 				</c:if>
 		    </c:if>
 		    <c:if test="${day==4}">
 				<c:if test="${hospital.hos_time4S<=time and time<hospital.hos_time4C}">
-					<div class="greenCircle ms-2 mx-1"></div><div class="greenText">진료중</div>
+					<div class="greenCircle ms-2 mx-1"></div>
+					<div class="greenText">진료중</div>
 				</c:if>
 				<c:if test="${hospital.hos_time4S>time or hospital.hos_time4C<=time}">
-					<div class="redCircle ms-2 mx-1"></div><div class="redText">진료종료</div>
+					<div class="redCircle ms-2 mx-1"></div>
+					<div class="redText">진료종료</div>
 				</c:if>
 		    </c:if>
 		    <c:if test="${day==5}">
 				<c:if test="${hospital.hos_time5S<=time and time<hospital.hos_time5C}">
-					<div class="greenCircle ms-2 mx-1"></div><div class="greenText">진료중</div>
+					<div class="greenCircle ms-2 mx-1"></div>
+					<div class="greenText">진료중</div>
 				</c:if>
 				<c:if test="${hospital.hos_time5S>time or hospital.hos_time5C<=time}">
-					<div class="redCircle ms-2 mx-1"></div><div class="redText">진료종료</div>
+					<div class="redCircle ms-2 mx-1"></div>
+					<div class="redText">진료종료</div>
 				</c:if>
 		    </c:if>
 		    <c:if test="${day==6}">
 				<c:if test="${hospital.hos_time6S<=time and time<hospital.hos_time6C}">
-					<div class="greenCircle ms-2 mx-1"></div><div class="greenText">진료중</div>
+					<div class="greenCircle ms-2 mx-1"></div>
+					<div class="greenText">진료중</div>
 				</c:if>
 				<c:if test="${hospital.hos_time6S>time or hospital.hos_time6C<=time}">
-					<div class="redCircle ms-2 mx-1"></div><div class="redText">진료종료</div>
+					<div class="redCircle ms-2 mx-1"></div>
+					<div class="redText">진료종료</div>
 				</c:if>
 		    </c:if>
 		    <c:if test="${day==7}">
 				<c:if test="${hospital.hos_time7S<=time and time<hospital.hos_time7C}">
-					<div class="greenCircle ms-2 mx-1"></div><div class="greenText">진료중</div>
+					<div class="greenCircle ms-2 mx-1"></div>
+					<div class="greenText">진료중</div>
 				</c:if>
 				<c:if test="${hospital.hos_time7S>time or hospital.hos_time7C<=time}">
-					<div class="redCircle ms-2 mx-1"></div><div class="redText">진료종료</div>
+					<div class="redCircle ms-2 mx-1"></div>
+					<div class="redText">진료종료</div>
 				</c:if>
 		    </c:if>
 		</div>
@@ -158,7 +172,7 @@
 		<p class="fs-18 fw-7">병원 위치</p>
 		<div class="fs-14 text-black-6 fw-7 mb-3">${hospital.hos_addr}</div>
 		<div class="mb-3">
-			<jsp:include page="/WEB-INF/views/common/staticMap.jsp"/>
+			<jsp:include page="/WEB-INF/views/common/staticHosMap.jsp"/>
 		</div>
 		<c:if test="${hospital.hos_mapImg!='null'}">
 			<div class="fs-15 text-black-7 fw-9 text-center">&lt;간이약도&gt;</div>
@@ -190,8 +204,8 @@
 		<c:forEach begin="1" end="3">
 			<div class="detail-hosRev-item d-flex align-items-center bg-black-1">
 				<div class="detail_hosRev_profile">
-					<img src="#" width="35" height="35" class="rounded-circle">
-					<div class="text-black-6 fw-7 fs-15 text-center">이름</div>
+					<img src="${PageContext.reqeust.contextPath }/image_bundle/face.png" width="35" height="35" class="rounded-circle">
+					<div class="text-black-6 fw-7 fs-15 text-center">김OO</div>
 				</div>
 				<div class="detail_hosRev_content">
 					진료비가 싸고 의사선생님이 너무 친절하세요!
@@ -204,4 +218,48 @@
 		</c:forEach>
 	</div>
 	
+	<div class="line"></div>
+	<div style="height:15px;" class="bg-green-1"></div>
+	
+	<div id="detail_btn_box">
+		<div class="d-flex justify-content-center align-items-center">
+			<button id="reservation_btn" data-hos-num="${hospital.hos_num}">
+                진료 예약하기
+            </button>
+			<div id="call_btn">
+				전화하기
+			</div>
+		</div>
+	</div>
 </div>
+
+<div id="reservation_page" style="display:none;">
+	<jsp:include page="/WEB-INF/views/reservation/reservation.jsp"/>
+</div>    
+<script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+$(function(){
+    $('#reservation_btn').click(function(event){
+        var reservation_page = $('#reservation_page'); // 'data-hos-num' 속성을 읽음
+        $.ajax({
+            url: '/reservation/reservation',
+            method: 'get',
+            data: { hos_num: '${hospital.hos_num}'},
+            dataType: 'json',
+            success: function(param) {
+            	if(param.status=='login'){
+            		$('#reservation_page').show();
+            		calendar.render();
+            	} else {
+            		location.href='/member/login';
+            	}
+            },
+            error: function() {
+                alert('네트워크 오류 발생');
+            }
+        });
+    });
+});
+});
+</script>
