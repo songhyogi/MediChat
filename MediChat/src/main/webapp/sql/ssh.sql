@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 CREATE TABLE Disease(
 dis_num	NUMBER	NOT NULL primary key,
 dis_name VARCHAR2(90) NOT NULL,
@@ -58,4 +58,15 @@ CREATE TABLE Healthy_Blog (
 
 create sequence health_seq;
 
->>>>>>> branch 'develop' of https://github.com/Kimseungyeon98/MediChat.git
+
+CREATE TABLE Video_Healthy (
+	video_num	NUMBER		NOT NULL primary key,
+	mem_num	NUMBER		NOT NULL,
+	video_title	VARCHAR2(90)		NOT NULL,
+	video_content	CLOB		NOT NULL,
+	v_reg_date	DATE	DEFAULT sysdate	NOT NULL,
+	v_modify_date	DATE		NULL,
+	video_hit	NUMBER(8)	DEFAULT 0	NOT NULL,
+	v_category	CHAR(2)		NOT NULL,
+    constraint v_healthy_fk1 foreign key (mem_num) references member(mem_num)
+);
