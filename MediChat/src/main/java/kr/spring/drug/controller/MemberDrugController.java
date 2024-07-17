@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.spring.drug.service.MemberDrugService;
@@ -89,7 +90,7 @@ public class MemberDrugController {
 	}
 
 	/*------회원 의약품 수정------*/
-	@GetMapping("/MemberDrug/memberDrugUpdateAjax")
+	@PostMapping("/MemberDrug/memberDrugUpdateAjax")
 	@ResponseBody
 	public Map<String, Object> memberDrugUpdateAjax(@Valid MemberDrugVO memberDrugVO, HttpSession session){
 
@@ -116,4 +117,27 @@ public class MemberDrugController {
 	}
 
 	/*------회원 의약품 삭제------*/
+	@GetMapping("/MemberDrug/memberDrugDeleteAjax")
+	@ResponseBody
+	public Map<String, Object> memverDrugDeleteAjax(long med_num, HttpSession session){
+		log.debug("<<의약품 삭제>> : ");
+		
+		Map<String, Object> mapJson = new HashMap<String, Object>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		MemberDrugVO db_drug = memberDrugService.selectDrug(med_num);
+		
+		if(user==null) {
+			mapJson.put("result", "logout");
+		}else if(user!=null && user.getMem_num()==db_drug.getMem_num()) {
+			//로그인한 회원번호와 작성자 회원번호가 일치
+			memberDrugService.deleteDrug(med_num);
+			mapJson.put("result", "success");
+		}else {
+			//로그인한 회원번호와 작성자 회원번호 불일치
+			mapJson.put("result", "wrongAccess");
+		}
+		
+		return mapJson;
+	}
 }
