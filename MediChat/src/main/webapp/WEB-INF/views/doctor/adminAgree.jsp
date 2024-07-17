@@ -17,14 +17,14 @@
 			<td><a href="/doctor/doctorDetail?mem_num=${doc.mem_num}">${doc.mem_name}</a></td>
 			<td><img src="${pageContext.request.contextPath}/upload/${doc.doc_license}"></td>
 			<td>${doc.doc_reg}</td>
-			<td><input type="button" value="승인" id="agree-btn" data-doc="${doc.doc_num}"></td>
+			<td><input type="button" value="승인" class="agree-btn" data-doc="${doc.doc_num}"></td>
 		</tr>
 		</c:forEach>
 	</table>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$('#agree-btn').click(function(){
+			$('.agree-btn').click(function(){
 				var doc_num = $(this).data('doc');
 				var $row = $(this).closest('tr');
 				$.ajax({

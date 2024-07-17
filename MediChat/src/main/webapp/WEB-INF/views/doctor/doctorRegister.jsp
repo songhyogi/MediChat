@@ -59,9 +59,9 @@
 		<div class="upload-form">
 		<ul>
 			<li>
-				<form:label path="upload">의사 면허증</form:label>
-				<input type="file" name="upload" id="upload">
-				<form:errors path="upload" cssClass="error-color"/>
+				<form:label path="doc_upload">의사 면허증</form:label>
+				<input type="file" name="doc_upload" id="doc_upload">
+				<form:errors path="doc_upload" cssClass="error-color"/>
 			</li>
 		</ul>
 		</div>
@@ -92,6 +92,7 @@
 	</form:form>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/doctor.register.js"></script>
+<script src="${pageContext.request.contextPath}/js/uploadAdapter.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 	    $('#search_button').on('click', function() {
