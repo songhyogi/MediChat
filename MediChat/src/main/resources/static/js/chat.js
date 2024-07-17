@@ -279,23 +279,35 @@ $(function(){
 	/*=======================
 		 채팅 종료 폼 파일 전송
 	=========================*/
-	$('file_input').submit(function(event){
+	$('#file_input').submit(function(event){
 		//기본 이벤트 제거
 		event.preventDefault();
 		
+		form_data = $(this).serialize();
+		
+		alert('파일 전송 이벤트 발생');
 		let file = '';
 		
 		$.ajax({
 			url:'file_input',
-			data:$(this).serialization(),
+			type:'post',
+			data:form_data,
 			dataType:'json',
 			success:function(param){
+				if(param.file_name=='null'){
+					alert('파일을 등록해주세요.');
+					$('#select_file').val('').focus();
+				}else if(param.valid_date=='null'){
+					alert('유효기간을 등록해주세요.');
+					$('#file_valid_date').focus();
+				}
+				
 				file += '	<td>';
 				file += '	</td>';
-				file += '	<td>'+map.file_name+'</td>';
-				file += '	<td>'+map.file_type+'</td>';
-				file += '	<td>'+map.valid_date+'</td>';
-				
+				file += '	<td>'+param.file_name+'</td>';
+				file += '	<td>'+param.file_type+'</td>';
+				file += '	<td>'+param.valid_date+'</td>';
+				   
 	           },
 			error(){
 				alert('파일 등록 오류 발생');

@@ -24,17 +24,17 @@
 			</table>
 		</div>
 		<div class="form-body">
-		<form action="file_input" id="file_input">
+		<form action="file_input" method="post" id="file_input" enctype="multipart/form-data">
 			<input type="hidden" name="chat_num" id="close_chat_num" value="">
 			<select name="file_type">
-				<option>처방전</option>
-				<option>소견서</option>
-				<option>진단서</option>
-				<option>진료비 세부내역서</option>
+				<option value="0">처방전</option>
+				<option value="1">소견서</option>
+				<option value="2">진단서</option>
+				<option value="3">진료비 세부내역서</option>
 			</select>
-			<label for="valid_date">유효기간</label>
-			<input type="date" name="valid_date">
-			<label for="select_image" class="">파일 선택</label>
+			<label for="file_valid_date">유효기간</label>
+			<input type="date" name="file_valid_date">
+			<label for="select_file" class="">파일 선택</label>
 			<input type="file" name="select_file" id="select_file" accept=".pdf,.doc,.docx">
 			<input type="submit" value="등록">
 		</form>
