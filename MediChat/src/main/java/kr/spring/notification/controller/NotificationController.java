@@ -20,15 +20,25 @@ public class NotificationController {
 	@Autowired
 	private NotificationService notificationService;
 	
+	
+	
 	@GetMapping("/sse")
+	public String test() {
+		return "/notification/noti";
+	}
+	
+	
+	
+	@GetMapping("/sse/notification")
 	@ResponseBody
     public SseEmitter handleSse() {
         emitter = new SseEmitter(60L * 1000 * 60);
         try {
-        	
-        	emitter.send("Message 안녕하세요");
-        	
-        	emitter.complete();
+        	for(int i=0; i<5; i++) {
+        		emitter.send("Message 안녕하세요");
+        		emitter.complete();
+        		Thread.sleep(2000);
+        	}
         } catch(Exception e) {
         	
         }

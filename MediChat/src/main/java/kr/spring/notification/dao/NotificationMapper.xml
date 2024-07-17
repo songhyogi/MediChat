@@ -11,7 +11,13 @@
 									noti_category,
 									noti_category_num,
 									noti_message,
-									noti_createdDate,
+									<if test="noti_resdate!=null || noti_resdate!=''">
+									noti_resdate,
+									</if>
+									noti_createddate,
+									<if test="noti_link!=null || noti_link!=''">
+									noti_link,
+									</if>
 									noti_priority
 									)
 								VALUES( notification_seq.nextval,
@@ -19,36 +25,43 @@
 										#{noti_category},
 										#{noti_category_num},
 										#{noti_message},
+										<if test="noti_resdate!=null || noti_resdate!=''">
+										#{noti_resdate},
+										</if>
 										SYSDATE,
+										<if test="noti_link!=null || noti_link!=''">
+										#{noti_link},
+										</if>
 										#{noti_priority}
 									)
 	</insert>
 	
 	<!-- 알림 읽음 처리 -->
 	<update id="readNotification" parameterType="long">
-		UPDATE NOTIFICATION SET noti_isRead = 1 
+		UPDATE NOTIFICATION SET noti_isRead = 1,
+								noti_readedDate = SYSDATE
 		WHERE noti_num = #{noti_num}
 	</update>
 	
 	<!-- 알림 상세 -->
-	<select id="selectNotification" parameterType="long">
+	<select id="selectNotification" parameterType="long" resultType="notificationVO">
 		SELECT * 
 		FROM NOTIFICATION
 		WHERE noti_num = #{noti_num}
 	</select>
 	
-	<!-- 개인의 알림 갯수 -->
-	<select id="selectCountNotification" parameterType="long">
+	<!-- 개인의 안 읽은 알림 갯수 -->
+	<select id="selectCountNotification" parameterType="long" resultType="integer">
 		SELECT count(*)
 		FROM notification
-		WHERE mem_num = #{mem_num}
+		WHERE mem_num = #{mem_num} and noti_isread = 0
 	</select>
 	
-	<!-- 개인의 알림 목록 -->
-	<select id="selectListNotification" parameterType="long">
+	<!-- 개인의 안 읽은 알림 목록 -->
+	<select id="selectListNotification" parameterType="long" resultType="notificationVO">
 		SELECT *
 		FROM notification
-		WHERE mem_num = #{mem_num}
+		WHERE mem_num = #{mem_num} and noti_isread = 0
 	</select>
 	
 	<!-- 알림 삭제 -->

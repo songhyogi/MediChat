@@ -7,8 +7,7 @@ import kr.spring.notification.vo.NotificationVO;
 public interface NotificationService {
 	//알림 보내기
 	public void insertNotification(NotificationVO notificationVO);
-	//알림 읽음 처리
-	public void readNotification(Long noti_num);
+		
 	//알림 보기
 	public NotificationVO selectNotification(Long noti_num);
 	//알림 갯수
@@ -19,9 +18,4 @@ public interface NotificationService {
 	//알림 삭제
 	public void deleteNotification(Long noti_num);
 	
-	
-	//링크가 있다면 에약에 추가
-	
-	
-	//예약 알림
 }
