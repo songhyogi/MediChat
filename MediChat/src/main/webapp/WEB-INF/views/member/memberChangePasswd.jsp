@@ -3,10 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- 비밀번호 변경 시작 -->
-<div>
-	<h2>비밀번호 변경</h2>
+<div class="container">
+	<h2 class="title">비밀번호 변경</h2>
+	<hr size="1" width="100%" noshade="noshade">
 	<form:form action="changePasswd" id="member_changePasswd" modelAttribute="memberVO">
 		<form:errors element="div" cssClass="error-color"/>
+		<div class="form-main">
 		<ul>
 			<li>
 				<form:label path="now_passwd">현재 비밀번호</form:label>
@@ -23,21 +25,33 @@
 				<input type="password" id="confirm_passwd">
 				<span id="message_password"></span>
 			</li>
+		</ul>
+		</div>
+		<!-- 캡챠 시작 -->
+		<hr size="1" width="100%" noshade="noshade">
+		<div class="captcha">
+		<ul>
 			<li>
+				<span style="font-weight:bold;">인증문자 입력</span>
 				<div id="captcha_div">
 					<img src="getCaptcha" id="captcha_img" width="200" height="90">
+					<input type="button" value="새로고침" id="reload_btn">
 				</div>
-				<input type="button" value="새로고침" id="reload_btn">
 			</li>
 			<li>
-				<form:label path="captcha_chars" >캡챠 문자 확인</form:label>
-				<form:input path="captcha_chars"/>
+				<form:label path="captcha_chars" >인증문자 확인</form:label>
+				<form:input path="captcha_chars" placeholder="인증문자를 입력하세요."/>
 				<form:errors path="captcha_chars" cssClass="error-color"/>
 			</li>
 		</ul>
-		<div>
-			<form:button>비밀번호 수정</form:button>
-			<input type="button" value="MY페이지" onclick="location.href='myPage'">
+		</div>
+		<div style="text-align:center">
+			<form:button class="default-btn">비밀번호 수정</form:button>
+		</div>
+		<hr size="1" width="100%" noshade="noshade">
+		<div style="text-align:right; margin-bottom:10px;">
+			<input type="button" value="MY페이지" id="reload_btn" onclick="location.href='myPage'">
+			<input type="button" value="홈으로" id="reload_btn" onclick="location.href='${pageContext.request.contextPath}/main/main'">
 		</div>
 	</form:form>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
@@ -45,16 +59,11 @@
 	<script>
 		$(function(){
 			$('#reload_btn').click(function(){
-				$.ajax({
-					url:'getCaptcha',
-					type:'get',
-					success:function(){
-						$('#captcha_div').load(location.href + ' #captcha_div');
-					},
-					error:function(){
-						alert('네트워크 오류 발생');
-					}
-				});
+			 $.get('getCaptcha', function(data) {
+		            $('#captcha_img').attr('src', 'getCaptcha?' + new Date().getTime());
+		        }).fail(function() {
+		            alert('네트워크 오류 발생');
+		        });
 			});
 		});
 	</script>

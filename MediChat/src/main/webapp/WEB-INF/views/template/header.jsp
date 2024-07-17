@@ -15,7 +15,7 @@
 				<a href="/hospitals" class="header-menu-text">병원 찾기</a>
 			</div>
 			<div class="header-menu">
-				<a href="/pharmacies/search?user_lat=${user_lat}&user_lon=${user_lon}" class="header-menu-text">약국 찾기</a>
+				<a href="#" class="header-menu-text">약국 찾기</a>
 			</div>
 			<div class="header-menu">
 				<a href="#" class="header-menu-text">건강 블로그</a>
@@ -34,8 +34,8 @@
 	</div>
 	<div class="d-flex justify-content-end align-items-center">
 		<!-- 검색 시작 -->
-		<form id="header-search-form" class="d-flex" action="/hospitals/search" method="get">
-			<input type="text" id="header-search-input" class="form-control" name="keyword" placeholder="병원 이름, 지역 + 과목, 증상">
+		<form id="header-search-form" class="d-flex">
+			<input type="text" id="header-search-input" class="form-control" placeholder="병원 이름, 지역 + 과목, 증상">
 			<i id="header-search-icon" class="bi bi-search"></i>
 		</form>
 		<!-- 검색 끝 -->
@@ -108,6 +108,22 @@
 				   </div>
 				</div>
 			</c:if>
+			<c:if test="${user.mem_auth==9}">
+				<div class="header-status-rightBox">
+					<div class="text-center">
+						<img id="header-profile" src="${pageContext.request.contextPath}/member/memPhotoView" width="40" height="40" class="border rounded-circle">
+			    	</div>
+				</div>
+				<div id="header-status-div" style="display: none;">
+					<div class="header-status-select">
+						<a href="/doctor/agree">의사회원가입 승인</a>
+					</div>
+					<div class="select-line"></div>
+					<div class="header-status-select">
+						<a href="/member/logout">로그아웃</a>
+					</div>
+				</div>
+			</c:if>
 		</div>
 		<!-- 알림 + 프로필 끝 -->
 		</c:if>
@@ -144,5 +160,4 @@
 		} else {
 			headerRegisterDiv.style.display = 'block';
 		}
-	};
 </script>
