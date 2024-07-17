@@ -10,10 +10,12 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ChatFileVO {
-	private int file_num;
+	private long chat_num;
+	private long file_num;
 	private String file_name;
-	private int mem_num;
-	private int doc_num;
+	private long mem_num;
+	private long doc_num;
 	private int file_type;
 	private Date file_reg_date;
+	private String valid_date;
 }

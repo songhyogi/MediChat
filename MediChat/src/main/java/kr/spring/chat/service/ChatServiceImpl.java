@@ -63,8 +63,7 @@ public class ChatServiceImpl implements ChatService{
 	
 	@Override
 	public void insertChatFile(ChatFileVO chatFileVO) {
-		// TODO Auto-generated method stub
-		
+		chatMapper.insertChatFile(chatFileVO);
 	}
 
 	@Override
