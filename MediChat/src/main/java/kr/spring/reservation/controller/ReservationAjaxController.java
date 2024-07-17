@@ -57,14 +57,22 @@ public class ReservationAjaxController {
 	}
 	
 	@GetMapping("/reservation/availableDoctor")
-	@ResponseBody
-	public Map<String,Object> getAvailableDoctor(Long hos_num,String date,String time,int dayOfWeek,HttpSession session){
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		Map<String,Object> map = new HashMap<>();
-		if(user==null) {
-			map.put("result", "logout");
-		}else {
-			Map<String, Object> params = new HashMap<>();
+    @ResponseBody
+    public Map<String, Object> getAvailableDoctors(@RequestParam Long hos_num, 
+                                                   @RequestParam String date,
+                                                   @RequestParam String time, 
+                                                   @RequestParam int dayOfWeek, 
+                                                   HttpSession session) {
+        MemberVO user = (MemberVO) session.getAttribute("user");
+        Map<String, Object> map = new HashMap<>();
+        if (user == null) {
+            map.put("result", "logout");
+        } else {
+        	System.out.println("Received hos_num: " + hos_num);
+            System.out.println("Received date: " + date);
+            System.out.println("Received time: " + time);
+            System.out.println("Received dayOfWeek: " + dayOfWeek);
+            Map<String, Object> params = new HashMap<>();
             params.put("hos_num", hos_num);
             params.put("date", date);
             params.put("time", time);
@@ -72,9 +80,9 @@ public class ReservationAjaxController {
             List<DoctorVO> doctors = reservationService.getAvailableDoctors(params);
             map.put("result", "success");
             map.put("doctors", doctors);
-		}
-		
-		return map;
-	}
+            System.out.println("Doctors: " + doctors); // 추가한 로그
+        }
+        return map;
+    }
 	
 }
