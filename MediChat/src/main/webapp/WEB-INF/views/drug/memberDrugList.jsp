@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet" />
 <script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/index.global.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/drug.member.js"></script>
@@ -10,7 +9,7 @@
     document.addEventListener('DOMContentLoaded', function() {//'DOMContentLoaded'이벤트는 문서 내 DOM이 완전히 로드되고 파싱되었을 때 발생
         // FullCalendar 초기화
         var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
+        window.calendar = new FullCalendar.Calendar(calendarEl, {
         	timeZone: 'Asia/Seoul',	//날짜를 한국 기준으로 설정
             selectable: true,	//날짜 선택가능
             height: 'auto',	//높이 자동 조절
@@ -36,7 +35,7 @@
             		{
             			id: '${memberDrug.med_num}',
             			title: '${memberDrug.med_title}',
-            			start: '${memberDrug.med_date}',
+            			start: '${memberDrug.med_sdate}',
             			allDay: true,
             			med_name: '${memberDrug.med_name}',
             			med_time: '${memberDrug.med_time}',
@@ -54,7 +53,7 @@
             	//console.log('시간:',today);
             	//console.log('시간2:', selectedDate);
             	if(selectedDate > today){//arg.start : 선택한 날짜의 시작 시간을 나타내는 Date 객체
-            		alert('오늘 이후의 날짜는 선택할 수 없습니다.');
+            		alert('오늘 이후 날짜는 선택할 수 없습니다.');
             	}else{
             		$('#selectedDate').val(arg.start.toISOString().slice(0, 10));
             		$('#drugModal').show();
@@ -70,8 +69,8 @@
                 var med_names = event.extendedProps.med_name;
                 modifyDrugList(med_names);
                 //
-                console.log('이벤트 클릭 의약품 목록 : ' + med_names);
-                $('#updateDrug input[name="med_date"]').val(event.start.toISOString().slice(0, 10));
+                console.log('이벤트 클릭 의약품 목록:' + med_names);
+                $('#updateDrug input[name="med_sdate"]').val(event.start.toISOString().slice(0, 10));
                 //복용시간 체크박스
                 $('#updateDrug input[name="med_time"]').each(function() {
                    $(this).prop('checked', event.extendedProps.med_time.includes($(this).val()));
@@ -97,6 +96,7 @@
     function modifyDrugList(med_names) {
         //의약품 배열 초기화
         med_list = med_names.split(',');
+        console.log(med_list);
         $('#moDrugSelect').empty(); // 이전에 추가된 의약품들을 모두 제거
         //의약품 데이터를 기반으로 <span> 요소 생성
         med_list.forEach(function(med_name) {
@@ -114,6 +114,7 @@
         //
         console.log("med_name:" + med_name);
         med_list.push(med_name);
+        console.log(med_list);
         //선택한 의약품 화면에 표시
         let choice_med = '<span class="moDrugSelect-span" data-name="' + med_name + '">';
         choice_med += med_name + '<sup>&times;</sup></span>';
@@ -152,7 +153,7 @@
 				<div id="drugSelect"></div>
 			</li>
 			<li>
-				복용일자 : <input type="date" id="selectedDate" class="check" name="med_date">
+				복용일자 : <input type="date" id="selectedDate" class="check" name="med_sdate">
 			</li>
 			<li>
 				복용시간 : 
@@ -188,12 +189,12 @@
 			</li>
 			<li>
 				<label>의약품명</label> 
-				<input type="text" id="moDrug_search" autocomplete="off" class="check" name="med_name">
+				<input type="text" id="moDrug_search" autocomplete="off" class="check">
 				<ul id="moSearchDrugList"></ul>
 				<div id="moDrugSelect"></div>
 			</li>
 			<li>
-				복용일자 : <input type="date" id="moSelectedDate" class="check" name="med_date">
+				복용일자 : <input type="date" id="moSelectedDate" class="check" name="med_sdate">
 			</li>
 			<li>
 				복용시간 : 
@@ -209,7 +210,7 @@
 		</ul>
 		<div>
 			<input type="submit" value="수정">
-			<input type="submit" value="삭제">
+			<input type="button" value="삭제" id="delete-btn">
 		</div>
 	</form>
 	</div>

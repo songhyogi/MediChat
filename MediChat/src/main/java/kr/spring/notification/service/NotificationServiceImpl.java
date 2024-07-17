@@ -16,19 +16,14 @@ public class NotificationServiceImpl implements NotificationService{
 	@Autowired
 	private NotificationMapper notificationMapper;
 	
-	
 	@Override
 	public void insertNotification(NotificationVO notificationVO) {
 		notificationMapper.insertNotification(notificationVO);
 	}
 
 	@Override
-	public void readNotification(Long noti_num) {
-		notificationMapper.readNotification(noti_num);
-	}
-
-	@Override
 	public NotificationVO selectNotification(Long noti_num) {
+		notificationMapper.readNotification(noti_num);
 		return notificationMapper.selectNotification(noti_num);
 	}
 

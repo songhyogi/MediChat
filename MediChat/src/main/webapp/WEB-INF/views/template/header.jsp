@@ -15,7 +15,7 @@
 				<a href="/hospitals" class="header-menu-text">병원 찾기</a>
 			</div>
 			<div class="header-menu">
-				<a href="#" class="header-menu-text">약국 찾기</a>
+				<a href="/pharmacies/search" class="header-menu-text">약국 찾기</a>
 			</div>
 			<div class="header-menu">
 				<a href="#" class="header-menu-text">건강 블로그</a>
@@ -160,4 +160,5 @@
 		} else {
 			headerRegisterDiv.style.display = 'block';
 		}
+	};
 </script>

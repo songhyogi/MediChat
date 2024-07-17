@@ -21,8 +21,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
-
 import kr.spring.doctor.service.DoctorService;
 import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.hospital.service.HospitalService;
@@ -63,19 +61,20 @@ public class DoctorController {
 
 	// 의사회원가입 처리
 	@PostMapping("/doctor/registerDoc")
-	public String submit(@Valid DoctorVO doctor, BindingResult result, HttpServletRequest request, HttpSession session,
+	public String submit(@Valid DoctorVO doctorVO, BindingResult result, HttpServletRequest request, HttpSession session,
 			Model model) throws IllegalStateException, IOException {
-		log.debug("<회원가입>" + doctor);
+		log.debug("<회원가입>" + doctorVO);
 
 		if (result.hasErrors()) {
 			return form();
 		}
+		
 		// ========캡챠 시작=============//
 		String code = "1";// 키 발급 0, 캡챠 이미지 비교시 1로 세팅
 		// 캡챠 키 발급시 받은 키값
 		String key = (String) session.getAttribute("captcha_key");
 		// 사용자가 입력한 캡챠 이미지 글자값
-		String value = doctor.getCaptcha_chars();
+		String value = doctorVO.getCaptcha_chars();
 		String apiURL = "https://openapi.naver.com/v1/captcha/nkey?code=" + code + "&key=" + key + "&value=" + value;
 
 		Map<String, String> requestHeaders = new HashMap<String, String>();
@@ -95,10 +94,11 @@ public class DoctorController {
 			return "doctorRegister";
 		}
 		// ========캡챠 끝=============//
+		
 		//의사 면허증 업로드 처리
-		doctor.setDoc_license(FileUtil.createFile(request,doctor.getUpload()));
+	    doctorVO.setDoc_license(FileUtil.createFile(request, doctorVO.getDoc_upload()));
 		//회원가입 처리
-		doctorService.insertDoctor(doctor);
+		doctorService.insertDoctor(doctorVO);
 		
 		model.addAttribute("message","성공적으로 회원가입 되었습니다.");
 		model.addAttribute("url",request.getContextPath()+"/main/main");
@@ -121,7 +121,8 @@ public class DoctorController {
 		log.debug("<로그인 정보> : " + doctorVO);
 
 		// 아이디와 비밀번호만 유효성 체크
-		if (result.hasFieldErrors("mem_id") || result.hasFieldErrors("doc_passwd")) {
+		if (result.hasFieldErrors("mem_id") || result.hasFieldErrors("doc_passwd")
+												|| result.hasFieldErrors("doc_agree")) {
 			return loginForm();
 		}
 		DoctorVO doctor = null;
@@ -133,6 +134,10 @@ public class DoctorController {
 				check = doctor.checkPasswd(doctorVO.getDoc_passwd());
 			} else {
 				result.reject("notFoundUser");
+				return loginForm();
+			}
+			if(doctor.getDoc_agree()!=1) {
+				result.reject("notAgree");
 				return loginForm();
 			}
 			if (check) {
@@ -486,19 +491,4 @@ public class DoctorController {
 		return "redirect:/doctor/docView"; // 성공적으로 처리된 경우 다른 페이지로 리다이렉트
 
 	}
-	/*
-	 * ============================= 의사면허증 출력 ============================
-	 * //프로필 사진출력(로그인 전용)
-	 * @GetMapping("/doctor/docLicenseView") public String getLicense(Long
-	 * mem_num,HttpSession session,HttpServletRequest request,Model model) {
-	 * 
-	 * DoctorVO doctor = doctorService.selectDoctor(mem_num);
-	 * 
-	 * docViewLicense(doctor, request, model);
-	 * 
-	 * return "imageView"; } //프로필 사진 처리를 위한 공통 코드 public void
-	 * docViewLicense(DoctorVO doctorVO,HttpServletRequest request,Model model) {
-	 * //업로드한 프로필 이미지 읽기 model.addAttribute("imageFile",doctorVO.getDoc_license());
-	 * }
-	 */
 }

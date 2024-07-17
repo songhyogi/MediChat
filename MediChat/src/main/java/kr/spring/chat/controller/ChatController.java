@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.spring.chat.service.ChatService;
+import kr.spring.chat.vo.ChatFileVO;
 import kr.spring.chat.vo.ChatMsgVO;
 import kr.spring.chat.vo.ChatVO;
 import kr.spring.doctor.vo.DoctorVO;
@@ -228,4 +229,30 @@ public class ChatController {
 
 		return map;
 	}
+	
+	/*=======================
+	 * 	   진료 파일 전송
+	 ========================*/
+	@PostMapping("file_input")
+	public Map<String,Object> insertChatFile(@ModelAttribute ChatFileVO chatFileVO,
+							   HttpServletRequest reqeust,
+							   HttpSession session
+							   ){
+
+		ChatVO chat = chatService.selectChat(chatFileVO.getChat_num());
+		
+		chatFileVO.setMem_num(chat.getMem_num());
+		chatFileVO.setDoc_num(chat.getDoc_num());
+		
+		chatService.insertChatFile(chatFileVO);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		map.put("file_name", chatFileVO.getFile_name());
+		map.put("file_type", chatFileVO.getFile_type());
+		map.put("valid_date", chatFileVO.getValid_date());
+		
+		return map;
+	}
+	
 }

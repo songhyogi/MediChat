@@ -141,7 +141,7 @@
 <!-- 카테고리 끝 -->
 <!-- 어떻게 아프신가요 시작 -->
 <div class="p-4">
-	<h4 class="text-black-7 fw-6" style="font-size: 20px;">어떻게 아프신가요?</h4>
+	<h4 class="text-black-7 fw-6 mb-4" style="font-size: 20px;">어떻게 아프신가요?</h4>
 	<div class="row justify-content-between">
 		<c:forEach items="${howSick}" var="hs">
 			<div class="col-2">

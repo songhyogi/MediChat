@@ -21,7 +21,7 @@
             member m
         JOIN
             doctor_detail dd ON m.mem_num = dd.doc_num
-        LEFT JOIN
+        LEFT OUTER JOIN
             holiday h ON m.mem_num = h.doc_num AND h.holi_date = #{date} AND h.holi_time = #{time}
         WHERE
             dd.hos_num = #{hos_num}

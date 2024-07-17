@@ -134,6 +134,9 @@ public class HealthController {
 			}
 		return  "common/resultAlert";
 	}
+		return  "common/resultAlert";
+	}
+		
 	@PostMapping("/health/healthUpdate")
 	public String getHealUpdate(HealthyBlogVO vo,HttpSession session,HttpServletRequest request,Model model) throws IllegalStateException, IOException {
 		MemberVO user = (MemberVO) session.getAttribute("user");
