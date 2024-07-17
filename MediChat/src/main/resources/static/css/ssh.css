@@ -83,6 +83,7 @@
     opacity: 0;
     display: none;
   }
+
 }
 
 a:link{
@@ -265,6 +266,7 @@ input#healthy_title{
 	margin-bottom:100px important;
 }
 
+<<<<<<< HEAD
 /*faq*/
 #checkbox {
   display: none;
@@ -328,3 +330,5 @@ input#healthy_title{
   transition-duration: .5s;
   transform: rotate(180deg);
 }
+=======
+>>>>>>> branch 'develop' of https://github.com/Kimseungyeon98/MediChat.git

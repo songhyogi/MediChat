@@ -27,7 +27,6 @@ public class ScheduleController {
 	/* =====================
 	 * 스케줄 관리
 	 *=====================*/
-	
 	@GetMapping("/schedule/list")
 	public String showScheduleList(HttpSession session, Model model) {
 		DoctorVO user = (DoctorVO) session.getAttribute("user");

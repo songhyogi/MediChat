@@ -88,6 +88,7 @@ public class HealthController {
 			service.insertHeal(vo);
 			
 			return "redirect:/health/healthBlog";
+
 		}else {
 			model.addAttribute("message","쓰기 권한이 없습니다.");
 			model.addAttribute("url",request.getContextPath()+"/heath/healthBlog");
@@ -116,6 +117,7 @@ public class HealthController {
 		MemberVO user = (MemberVO) session.getAttribute("user");
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("healthy_num", healthy_num);
+
 		
 		if(user == null) {
 			model.addAttribute("message","로그인 후 사용가능합니다.");
@@ -130,8 +132,6 @@ public class HealthController {
 			model.addAttribute("message","본인 작성 글만 수정 가능합니다.");
 			model.addAttribute("url",request.getContextPath()+"/health/healthBlog");
 			}
-		}
-		
 		return  "common/resultAlert";
 	}
 	@PostMapping("/health/healthUpdate")
@@ -187,7 +187,7 @@ public class HealthController {
 		}
 		return  "common/resultAlert";
 	}
-	
+
 	
 }
 
