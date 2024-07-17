@@ -45,6 +45,21 @@
 		<put-attribute name="css" value="/WEB-INF/views/health/healthCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/health/healthyUpdate.jsp"/>
 	</definition>
+	<definition name="video_List" extends="diseaseMain">
+		<put-attribute name="title" value="videoHealthyList"/>
+		<put-attribute name="css" value="/WEB-INF/views/video/videoCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/video/videoList.jsp"/>
+	</definition>
+	<definition name="video_Write" extends="diseaseMain">
+		<put-attribute name="title" value="videoHealthyWrite"/>
+		<put-attribute name="css" value="/WEB-INF/views/video/videoCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/video/videoWrite.jsp"/>
+	</definition>
+		<definition name="video_Detail" extends="diseaseMain">
+		<put-attribute name="title" value="videoHealthyWrite"/>
+		<put-attribute name="css" value="/WEB-INF/views/video/videoCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/video/videoDetail.jsp"/>
+	</definition>
 </tiles-definitions>
 
 
