@@ -11,7 +11,8 @@
 .nav-item{
 	width:200px;
 }
-.nav-item th, td{
+.nav-item th,
+.nav-item td{
 	padding:10px;
 	border-bottom:2px solid #cecece;
 }
@@ -147,6 +148,9 @@
     align-items: center;
     z-index:999;
 }
+.image-form .form-body{
+	margin-top:50px;
+}
 .form-title{
 	display:flex;
 	align-items: center;
@@ -182,7 +186,7 @@
 /*=======================
 	  모달창 구성(채팅종료)
 =========================*/
-.close-form{
+.close-file-form{
 	display:none;
 	position:absolute;
 	top:25%;
@@ -192,7 +196,7 @@
 	background-color:white;
 	z-index:999;
 }
-.close-form-bg{ /* 모달 뒤편 어두운 배경 */
+.close-file-form-bg{ /* 모달 뒤편 어두운 배경 */
 	position:absolute;
 	top:0;
 	left:0;
@@ -202,7 +206,7 @@
 	z-index:998;
 	display:none;
 }
-.close-form-body{
+.close-file-form .close-form-body{
 	margin:30px 10px 10px 10px;
 }
 .close-form-body .form-body{
@@ -215,13 +219,18 @@
 }
 
 #file_table{
-	height:200px;
+	border-collapse:collapse;
 }
-#file_table tr.list-head{
+#file_table tr{
 	height:40px;
 }
-
+#file_table th,
+#file_table td{
+	text-align:center;
+	border-bottom: 1px solid #ccc;
+}
 .form-list{
+	height:200px;
 	margin:10px 0;
 }
 .form-notice{
@@ -230,24 +239,23 @@
 .form-notice span{
 	display:block;
 }
-
-.list-no{
-	padding-left:5px;
-	width:50px;
-}
 .list-name{
 	width:250px;
 }
 .list-type{
-	width:135px;
+	width:150px;
 }
 .list-valid-date{
-	width:135px;
+	width:132px;
+}
+.list-delete{
+	width:20px;
+	color:rgb(76, 165, 165);
 }
 #select_file{
 	width:298px;
 }
-.form-button{
+.close-file-form .form-button{
 	display:flex;
     justify-content: center;
     align-items: center;
@@ -258,4 +266,39 @@
 	width:140px;
 	height:60px;
 	margin:3px;
+}
+/*=======================
+	모달창 구성(진료비 청구)
+=========================*/
+.close-payment-form{
+	display:none;
+	position:absolute;
+	top:25%;
+	left:37%;
+	width:600px;
+	height:400px;
+	background-color:white;
+	z-index:999;
+}
+.close-payment-form-bg{ /* 모달 뒤편 어두운 배경 */
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:140%;
+	background-color: rgba(0,0,0,0.5);
+	z-index:998;
+	display:none;
+}
+.close-payment-form .close-form-body{
+	margin:50px 55px 10px 55px;
+}
+#pay_amount{
+	width:400px;
+}
+.close-payment-form .form-button{
+	display:flex;
+    justify-content: center;
+    align-items: center;
+    margin-top:80px;
 }

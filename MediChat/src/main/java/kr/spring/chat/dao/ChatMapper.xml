@@ -66,14 +66,21 @@
 	
 	<insert id="insertChatFile" parameterType="ChatFileVO">
 		INSERT
-		INTO chat_files(file_num,file_name,mem_num,doc_num,file_type,valid_date,file_reg_date)
-		VALUES (file_seq.nextval,
+		INTO chat_files (file_num,
+						 chat_num,
+						 file_name,
+						 mem_num,
+						 doc_num,
+						 file_type,
+						 file_valid_date,
+						 file_reg_date)
+		VALUES (files_seq.nextval,
+				#{chat_num},
 				#{file_name},
 				#{mem_num},
 				#{doc_num},
 				#{file_type},
-				#{valid_date},
+				#{file_valid_date},
 				SYSDATE)
-		WEHRE chat_num=#{chat_num}"
 	</insert>
 </mapper>

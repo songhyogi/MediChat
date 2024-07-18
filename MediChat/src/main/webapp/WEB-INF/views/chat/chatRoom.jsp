@@ -44,12 +44,15 @@
 		<div class="form-body">
 		<form action="image_input" id="image_input">
 			<input type="file" name="select_image" id="select_image" accept="image/gif,image/png,image/jpeg">
-			<input type="submit" value="전송">
+			<input type="submit" value="전송" class="btn-green">
 		</form>
 		</div>
 	</div>
 <div class="image-form-bg"></div>
 <!-- 모달 창 끝 -->
-<!-- 결제 종료 모달 창 -->
+<!-- 진료 종료 모달 창(파일 전송) 시작 -->
 <jsp:include page="chatClose.jsp"/>
-<!-- 결제 종료 모달 창 끝 -->
+<!-- 진료 종료 모달 창(파일 전송) 끝 -->
+<!-- 진료 종료 모달 창(진료비 청구) 시작 -->
+<jsp:include page="chatPayment.jsp"/>
+<!-- 진료 종료 모달 창(진료비 청구) 끝 -->

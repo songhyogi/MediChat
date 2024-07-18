@@ -65,7 +65,17 @@ public class ChatServiceImpl implements ChatService{
 	public void insertChatFile(ChatFileVO chatFileVO) {
 		chatMapper.insertChatFile(chatFileVO);
 	}
-
+	
+	@Override
+	public long selectFileNum(long chat_num, String file_name) {
+		return chatMapper.selectFileNum(chat_num, file_name);
+	}
+	
+	@Override
+	public void deleteFile(long file_num) {
+		chatMapper.deleteFile(file_num);
+	}
+	
 	@Override
 	public void insertChatPayment(ChatPaymentVO chatPaymentVO) {
 		// TODO Auto-generated method stub
@@ -77,8 +87,5 @@ public class ChatServiceImpl implements ChatService{
 		// TODO Auto-generated method stub
 		
 	}
-
-	
-
 
 }
