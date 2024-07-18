@@ -17,7 +17,10 @@
 	color: blue;
 	text-decoration: none;
 }
-
+.fc-day-mon a, .fc-day-tue a, .fc-day-wed a, .fc-day-thu a, .fc-day-fri a {
+    color: black;
+    text-decoration: none;
+}
 .time-button.selected {
 	background-color: blue;
 }
@@ -212,11 +215,12 @@ function generateTimesForDay(startTime, endTime) {
 }
 //시간 버튼의 클릭 이벤트를 처리하는 함수
 function getAvailableDoctors(hos_num, date, time, dayOfWeek) {
- 	console.log('시간 버튼 클릭 이벤트');
-    console.log('hos_num:'+ hos_num);
-    console.log('date:'+ date);
-    console.log('time:'+ time);
-    console.log('dayOfWeek:'+ dayOfWeek);
+    console.log('시간 버튼 클릭 이벤트');
+    console.log('hos_num:' + hos_num);
+    console.log('date:' + date);
+    console.log('time:' + time);
+    console.log('dayOfWeek:' + dayOfWeek);
+
     $('#doctor-info').empty();
     $.ajax({
         url: '/reservation/availableDoctor',
@@ -229,26 +233,41 @@ function getAvailableDoctors(hos_num, date, time, dayOfWeek) {
         },
         dataType: 'json',
         success: function(param) {
-        	console.log('AJAX 응답 받음: ', param); // 추가한 로그
+            console.log('AJAX 응답 받음: ', param); // 전체 응답 로그 출력
             if (param.result == 'logout') {
                 alert('로그인이 필요합니다.');
             } else if (param.result == 'success') {
-            	let output = '<div class="doctor-section">';
+                let output = '<div class="doctor-section">';
                 param.doctors.forEach(function (doctor) {
-                    let imageSrc;
-                    if (doctor.mem_photo) {
-                        imageSrc = doctor.mem_photo;
-                    } else {
-                        imageSrc = '/image_bundle/face.png';
-                    }
-                    output += `
-                        <div class="doctor-card" data-doc-num="${doctor.doc_num}">
-                            <img src="${imageSrc}" alt="${doctor.mem_name}" class="doctor-image">
-                            <div class="doctor-name">${doctor.mem_name}</div>
-                        </div>
-                    `;
+                    console.log('doctor object: ', doctor); // doctor 객체 로그 출력
+                    // 프로필 이미지 경로 설정
+                    let imageSrc = doctor.mem_photo ? '${pageContext.request.contextPath}/member/viewProfile?mem_num=' + doctor.doc_num : '${pageContext.request.contextPath}/image_bundle/face.png';
+                    
+                    output += '<div class="doctor-card" data-doc-num="' + doctor.doc_num + '">';
+                    output += '<img src="' + imageSrc + '" alt="' + doctor.mem_name + '" class="doctor-image">';
+                    output += '<div class="doctor-name">' + doctor.mem_name + '</div>';
+                    output += '<div class="res-type-container">';
+                    output += '<label><input type="radio" name="res_type" value="0" class="res-type-radio"> 비대면 진료</label>';
+                    output += '<label><input type="radio" name="res_type" value="1" class="res-type-radio"> 방문 진료</label>';
+                    output += '</div>';
+                    output += '</div>';
                 });
                 output += '</div>';
+                console.log('Output HTML: ', output); // 생성된 HTML 로그 출력
+                $('#doctor-info').html(output);
+
+                // 의사 프로필 클릭 시 비대면진료/방문진료 선택하는 라디오버튼 표시
+                $('.doctor-card').click(function() {
+                    $('.doctor-card').removeClass('selected');
+                    $(this).addClass('selected');
+                    console.log('Doctor card clicked'); // 추가된 로그
+                });
+
+                // 라디오 버튼 클릭 이벤트 핸들러 추가
+                $('.res-type-radio').change(function() {
+                	console.log('Radio button changed'); // 추가된 로그
+                    enableNextButton();
+                });
             } else {
                 alert('시간 버튼 이벤트 오류 발생');
             }
@@ -258,8 +277,27 @@ function getAvailableDoctors(hos_num, date, time, dayOfWeek) {
         }
     });
 }
+
+// 다음 버튼 초기화 함수
+function initializeNextButton() {
+    const nextButton = '<input type="button" class="btn btn-primary" value="다음" style="margin-top: 20px;" disabled>';
+    $('#next-button-container').html(nextButton);
+}
+
+// 다음 버튼 활성화 함수
+function enableNextButton() {
+    $('#next-button-container input[type="button"]').prop('disabled', false).addClass('active');
+}
+
+// 페이지 로드 시 다음 버튼 초기화
+$(document).ready(function() {
+    initializeNextButton();
+});
 </script>
 
 <div id="calendar"></div>
 <div id="time-buttons"></div>
 <div id="doctor-info"></div>
+<div id="next-button-container">
+    <input type="button" class="btn btn-primary" value="다음" disabled>
+</div>
