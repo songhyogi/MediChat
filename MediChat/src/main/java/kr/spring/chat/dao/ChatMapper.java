@@ -41,7 +41,7 @@ public interface ChatMapper {
 	@Select("SELECT file_num FROM chat_files WHERE chat_num=#{chat_num} AND file_name=#{file_name}")
 	public long selectFileNum(long chat_num,String file_name);
 	//불러온 파일 번호를 토대로 파일 지우기
-	@Delete("DELETE * FROM chat_files WHERE file_num=#{file_num}")
+	@Delete("DELETE FROM chat_files WHERE file_num=#{file_num}")
 	public void deleteFile(long file_num);
 	public void insertChatPayment(ChatPaymentVO chatPaymentVO);
 	public void updateChatStatus(long chat_num);

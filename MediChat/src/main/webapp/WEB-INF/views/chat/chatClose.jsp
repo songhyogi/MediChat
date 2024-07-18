@@ -9,6 +9,7 @@
 		<div class="form-notice">
 			<span class="notice-title fw-8 fs-24">환자 열람 파일 등록</span>
 			<span class="notice-sub fs-16">등록된 진료 파일은 환자의 진료비 결제 후에 자동으로 전송됩니다.</span>
+			<span class="notice-sub fs-16">전송하지 않고 취소하는 경우, 등록된 파일이 저장되지 않습니다.</span>
 		</div>
 		<div class="form-list">
 			<table id="file_table">
