@@ -26,12 +26,12 @@
 	</div>
 	<span id="messages"></span>
 	<button onclick="ring()">흔들어</button>
-	<div><p id="cnt"></p></div>
+	<div><p id="shakeCnt">0</p></div>
 </div>
 
 
 <script>
-const cnt = 0;
+const cnt_text = document.getElementById('shakeCnt');
 
 function showNoti(){
 	if($('#notiBox').css("display")=='none'){
@@ -41,7 +41,7 @@ function showNoti(){
 	}
 }
 
-function ring(cnt) {
+function ring() {
 	var img = document.getElementById('header-notification');
 	img.src = "/images/notification-bell.png";
 	img.classList.add('bell-shake');
@@ -51,10 +51,9 @@ function ring(cnt) {
   		img.classList.remove('bell-shake');
   		img.src="/images/notification.png";
 	}, { once: true });
-	cnt = cnt + 1;
-	const cnt_text = document.getElementById('cnt');
-	cnt_text.text= cnt;
-
+	let cnt = Math.floor($('#shakeCnt').text());
+	$('#shakeCnt').text('');
+	$('#shakeCnt').text(cnt+1);
 }
 
 	
