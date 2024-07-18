@@ -52,19 +52,33 @@
             	var today = new Date(); //현재 날짜 및 시간
                 var selectedSDate = new Date(arg.start); //선택한 시작 날짜
                 var selectedEDate = new Date(arg.end); //선택한 끝 날짜
+                
+                // 끝 날짜에서 하루 빼기
+                selectedEDate.setDate(selectedEDate.getDate() - 1); //풀캘린더의 배타적 기능으로 인해 수동적으로 날짜 변경 
+
                 selectedSDate.setHours(0, 0, 0, 0);	//선택한 날짜의 시간 초기화(한국 기준으로 날짜를 선택했기 때문에)
                 selectedEDate.setHours(0, 0, 0, 0);
                 
             	console.log('오늘날짜:',today);
             	console.log('시작시간:', selectedSDate);
             	console.log('끝시간:', selectedEDate);
+            	console.log('end:', arg.end);
             	
             	if(selectedSDate > today || selectedEDate > today){//arg.start : 선택한 날짜의 시작 시간을 나타내는 Date 객체
             		alert('오늘 이후 날짜는 선택할 수 없습니다.');
             	}else{
+            		
+            		console.log('변경 전 끝시간:', selectedEDate);
+            		console.log('selectedEDate.toISOString().slice(0, 10):', selectedEDate.toISOString().slice(0, 10));
+            		
+            		selectedEDate.setDate(selectedEDate.getDate() + 1);//원상태로 되돌리기
+            		
+            		console.log('변경 후 끝시간:', selectedEDate);
+            		console.log('selectedEDate.toISOString().slice(0, 10):', selectedEDate.toISOString().slice(0, 10));
+            		
             		//선택한 날짜가 보여지도록 처리
             		$('#selectedSDate').val(arg.start.toISOString().slice(0, 10));
-            		$('#selectedEDate').val(arg.end.toISOString().slice(0, 10));//끝날짜
+            		$('#selectedEDate').val(selectedEDate.toISOString().slice(0, 10));//끝날짜
             		$('#drugModal').show();
             	}
             },
