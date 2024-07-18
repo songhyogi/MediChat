@@ -1,6 +1,34 @@
 $(function(){
-	
+	let message_socket; //웹소켓 식별자
 	console.log('페이지 로딩 완료');
+	
+	/*=======================
+	  		 웹소켓 연결
+	=========================*/
+	function connectWebSocket(){
+		message_socket = new WebSocket('ws://localhost:8000/message-ws');
+		
+		//채팅 페이지 접속 시
+		message_socket.onopen=function(evt){
+			console.log('채팅페이지 접속 : ' + $('#chat_body').length);
+			if($('#chat_body').length==1){
+				message_socket.send('msg');
+			}
+		};
+		//서버로부터 메시지를 받으면 호출되는 함수 지정
+		message_socket.onmessage=function(evt){
+			//메시지 읽기
+			let data = evt.data;
+			if($('#chat_body').length==1 
+			           && data.substring(0,3)=='msg'){
+				selectChat();
+			}
+		};
+		message_socket.onclose=function(evt){
+			//소켓이 종료된 후 부과적인 작성이 있을 경우 명시
+			console.long('chat close');
+		};
+	}
 	
 	/*=======================
 	  스크롤 채팅 최하단으로 내리기
@@ -13,7 +41,7 @@ $(function(){
 	/*=======================
 		    메시지 불러오기
 	=========================*/
-	function selectChat(chat_num,res_date,res_time,res_num){
+	function selectChat(){
         
 		//서버와 통신
 		$.ajax({
@@ -25,6 +53,7 @@ $(function(){
 				if(param.userCheck=='logout'){
 					//로그아웃 상태인 경우, 메인으로 이동
 					alert('로그인 후 이용해주십시오');
+					message_socket.close();
 					window.location.href='/main/main';
 				}else{
 					//로그인 상태인 경우
@@ -75,6 +104,8 @@ $(function(){
 						message += '	</ul>'
 						
 					}else if(param.chat=='close'){
+						//예약시간이 되지 않아서 채팅방을 사용할 수 없는 상태
+						message_socket.close();
 						message += '		<div class="close-room">';
 						message += '			<img src="../images/chat_bubble.png" width="40px" height="40px" class="chat-bubble">';
 						message += '			<span class="fs-21 chat-notice fw-8">아직 진료가 시작되지 않은 채팅방입니다</span>'
@@ -87,6 +118,7 @@ $(function(){
 			},
 			error:function(){
 				alert('네트워크 오류 발생');
+				message_socket.close();
 			}
 		}); //end of ajax
 	}; //end of selectChat
@@ -103,6 +135,7 @@ $(function(){
 	$('.chat-room').click(function(event){
 		event.preventDefault();
 		
+		connectWebSocket();
 		console.log('채팅방 선택 이벤트 발생');
 		
 		chat_num = $(this).data('chat-num');
@@ -118,7 +151,7 @@ $(function(){
         not_selected.removeClass('selected-chat bg-gray-6');
         selected.addClass('selected-chat bg-gray-6');
         
-        selectChat(chat_num, res_date, res_time, res_num);
+        selectChat();
 	});
 	
 	/*=======================
@@ -148,16 +181,17 @@ $(function(){
 				if(param.userCheck=='logout'){
 					//로그아웃 상태인 경우, 메인으로 이동
 					alert('로그인 후 이용해주십시오');
+					message_socket.close();
 					window.location.href='/main/main';
 				}else if(param.userCheck=='login'){
 					//로그인 상태인 경우
-					
-					selectChat(chat_num, res_date, res_time, res_num);
+					message_socket.send('msg');
 					initForm();	
 					console.log('메시지 입력');
 				}
 			},
 			error:function(){
+				message_socket.close();
 				alert('네트워크 오류 발생');
 			}
 			
@@ -254,21 +288,21 @@ $(function(){
 		console.log('버튼 클릭 이벤트 발생');
 		
 		$('#close_chat_num').val(chat_num);
-		$('.close-form-bg').show();
-		$('.close-form').css('display','block');
+		$('.close-file-form-bg').show();
+		$('.close-file-form').css('display','block');
 		
 	});
 	
 	//모달 창 닫기 버튼 클릭
-	$('.close-form .close-button').click(function(event){
+	$('.close-file-form .close-button').click(function(event){
 		//기본 이벤트 제거
 		event.preventDefault();
 		
 		console.log('닫기 버튼 클릭 이벤트 발생');
 		
 		
-		$('.close-form-bg').hide();
-		$('.close-form').hide();
+		$('.close-file-form-bg').hide();
+		$('.close-file-form').hide();
 	});
 	
 	//모달 창 생성 시 외부 클릭 이벤트 삭제
@@ -285,40 +319,110 @@ $(function(){
 		
 		let form_data = new FormData(this);
 		
-		alert('파일 전송 이벤트 발생');
-		
-		for (var pair of form_data.entries()) {
-        	alert(pair[0]+ ': ' + pair[1]); 
-    	}
-		
 		let file = '';
 		
 		$.ajax({
-			url:'file_input',
+			url:'/chat/chatClose',
 			type:'post',
 			data:form_data,
 			contentType: false,  // 파일 업로드시 필요
         	processData: false,
 			dataType:'json',
 			success:function(param){
-				if(param.file_name=='null'){
+				
+				file += '<tr>'
+				if(param.file_name=='emptyFile'){
+					//파일을 등록하지 않은 경우
 					alert('파일을 등록해주세요.');
 					$('#select_file').val('').focus();
-				}else if(param.valid_date=='null'){
-					alert('유효기간을 등록해주세요.');
-					$('#file_valid_date').focus();
+					return false;
+				}else{
+					file += '	<td>'+param.file_name+'</td>';
 				}
-				
-				file += '	<td>';
-				file += '	</td>';
-				file += '	<td>'+param.file_name+'</td>';
 				file += '	<td>'+param.file_type+'</td>';
-				file += '	<td>'+param.valid_date+'</td>';
-				   
+				if(param.valid_date=='emptyDate'){
+					//유효기간을 등록하지 않은 경우
+					alert('유효기간을 등록해주세요.');
+					return false;
+				}else if(param.valid_date=='pastDate'){
+					//유효기간을 지난 날짜로 설정한 경우
+					alert('유효기간은 당일 이전으로 설정할 수 없습니다.');
+					$('#file_valid_date').focus();
+					return false;
+				}else{
+					file += '	<td>'+param.valid_date+'</td>';	
+					file += '	<td><button type="button" class="list-delete" data-file_num='+param.file_num+'>&times;</button></td>'
+				}
+				file += '</tr>';
+				
+				$('#file_table').append(file);   
 	           },
-			error(){
+			error:function(){
 				alert('네트워크 오류 발생');
 			}
 		});
+	});
+	
+	/*=======================
+		채팅 종료 폼 파일 삭제
+	=========================*/
+	$('#file_table').on('click', '.list_delete', function(){
+		console.log('파일 삭제 클릭 이벤트 발생');
+        //x 표시가 속하는 file_num 가져오기
+        let file_num = $(this).data('file_num');
+		
+		$.ajax({
+			url:'/chat/deleteFile',
+			type:'post',
+			data:{'file_num':file_num},
+			dataType:'json',
+			success:function(param){
+				if(param.result=='success'){
+					$('td[data-file_num="' + fileNum + '"]').closest('tr').remove();
+				}else{
+					alert('파일 삭제에 실패했습니다.');
+				}
+			},
+			error:function(){
+				alert('네트워크 오류 발생');
+			}
+		});
+	
+	
+	});
+	
+	/*=======================
+		 진료비 청구 폼 호출
+	=========================*/
+	$(document).on('click','#close_file_next',function(event){
+		//기본 이벤트 제거
+		event.preventDefault();
+		
+		console.log('버튼 클릭 이벤트 발생');
+		
+		$('.close-file-form-bg').hide();
+		$('.close-file-form').hide();
+		
+		$('#close_chat_num').val(chat_num);
+		$('.close-payment-form-bg').show();
+		$('.close-payment-form').css('display','block');
+		
+	});
+	
+	//모달 창 닫기 버튼 클릭
+	$('.close-payment-form .close-button').click(function(event){
+		//기본 이벤트 제거
+		event.preventDefault();
+		
+		console.log('닫기 버튼 클릭 이벤트 발생');
+		
+		
+		$('.close-payment-form-bg').hide();
+		$('.close-payment-form').hide();
+	});
+	
+	//모달 창 생성 시 외부 클릭 이벤트 삭제
+	$('.close-form').click(function(event) {
+		event.stopPropagation();
 	});
 });

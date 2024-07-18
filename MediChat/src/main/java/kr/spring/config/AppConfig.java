@@ -7,12 +7,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 import kr.spring.interceptor.LoginCheckInterceptor;
+import kr.spring.websocket.SocketHandler;
 
 //자바코드 기반 설정 클래스
 @Configuration
-public class AppConfig implements WebMvcConfigurer{
+@EnableWebSocket
+public class AppConfig implements WebMvcConfigurer,WebSocketConfigurer{
 	private LoginCheckInterceptor loginCheck;
 	
 	@Bean
@@ -31,8 +36,7 @@ public class AppConfig implements WebMvcConfigurer{
 		        .addPathPatterns("/member/delete")
 		        .addPathPatterns("/board/write")
 		        .addPathPatterns("/board/update")
-		        .addPathPatterns("/board/delete")
-		        .addPathPatterns("/reservation/reservation");
+		        .addPathPatterns("/board/delete");
 	}
 	
 	@Bean
@@ -59,6 +63,13 @@ public class AppConfig implements WebMvcConfigurer{
 				                  new TilesViewResolver();
 		tilesViewResolver.setViewClass(TilesView.class);
 		return tilesViewResolver;
+	}
+	
+	//웹소켓 세팅
+	@Override
+	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+		registry.addHandler(new SocketHandler(), "message-ws")
+		        .setAllowedOrigins("*");
 	}
 }
 

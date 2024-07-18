@@ -17,5 +17,5 @@ public class ChatFileVO {
 	private long doc_num;
 	private int file_type;
 	private Date file_reg_date;
-	private String valid_date;
+	private String file_valid_date;
 }

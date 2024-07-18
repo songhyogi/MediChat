@@ -20,6 +20,8 @@ public interface ChatService {
 		public void insertMsg(ChatMsgVO chatMsgVO);
 		public void insertImage(ChatMsgVO chatMsgVO);
 		public void insertChatFile(ChatFileVO chatFileVO);
+		public long selectFileNum(long chat_num, String file_name);
+		public void deleteFile(long file_num);
 		public void insertChatPayment(ChatPaymentVO chatPaymentVO);
 		public void updateChatStatus(long chat_num);
 }

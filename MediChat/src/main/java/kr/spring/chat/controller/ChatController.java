@@ -234,8 +234,9 @@ public class ChatController {
 	/*=======================
 	 * 	   진료 파일 전송
 	 ========================*/
-	@PostMapping("file_input")
-	public Map<String,String> insertChatFile(@ModelAttribute ChatFileVO chatFileVO,
+	@PostMapping("/chat/chatClose")
+	@ResponseBody
+	public Map<String,Object> insertChatFile(@ModelAttribute ChatFileVO chatFileVO,
 											 @RequestParam("select_file") MultipartFile select_file,
 											 HttpServletRequest reqeust,
 											 HttpSession session
@@ -243,28 +244,87 @@ public class ChatController {
 		
 		log.debug("<<파일 전송 컨트롤러 진입>>");		
 		ChatVO chat = chatService.selectChat(chatFileVO.getChat_num());
-		
+	
+		//chat_num을 기준으로 일반 회원 번호와 의사 회원 번호를 저장
 		chatFileVO.setMem_num(chat.getMem_num());
 		chatFileVO.setDoc_num(chat.getDoc_num());
 		
-		
 		String file_name = FileUtil.createFile(reqeust,select_file);
+		
+		int indexFileName = file_name.indexOf("_");
+		String origin_file_name = file_name.substring(indexFileName+1);
+		
 		log.debug("<<전송한 파일의 이름 생성>>: "+file_name);
 		
 		chatFileVO.setFile_name(file_name);
 		
-		Map<String,String> map = new HashMap<String,String>();
+		Map<String,Object> map = new HashMap<String,Object>();
 		
 		if(chatFileVO.getFile_name()==null) {
-			map.put("file_name","null");
-		}
-		if(chatFileVO.getValid_date()==null) {
-			map.put("valid_date", "null");
-		}
+			//파일을 올리지 않은 경우
+			map.put("file_name","emptyFile");
+		}else {
+			if(chatFileVO.getFile_valid_date()==null||chatFileVO.getFile_valid_date().isEmpty()){
+				//유효기간을 정하지 않은 경우
+				map.put("valid_date", "emptyDate");
+				
+			}else{
+				//validDate : file_valid_date String -> Date로 변환한 값
+				LocalDate validDate = LocalDate.parse(chatFileVO.getFile_valid_date(), DateTimeFormatter.ISO_DATE);			
+				
+				if(LocalDate.now().isAfter(validDate)){
+					//유효기간을 지난 날짜로 설정한 경우
+					map.put("valid_date","pastDate");
+				}else{
+					//DB에 데이터 저장
+					chatService.insertChatFile(chatFileVO);
+				
+					map.put("valid_date", chatFileVO.getFile_valid_date());
+					map.put("file_name", origin_file_name);
+					
+					//파일 타입 반환
+					switch (chatFileVO.getFile_type()) {
+                    case 0:
+                        map.put("file_type", "처방전");
+                        break;
+                    case 1:
+                        map.put("file_type", "진단서");
+                        break;
+                    case 2:
+                        map.put("file_type", "소견서");
+                        break;
+                    case 3:
+                        map.put("file_type", "진료비 세부내역서");
+                        break;
+					}
+				}//end of not "pastDate"
+			}//end of not "emptyDate"
+		}//end of not "emptyFile"
 		
-		chatService.insertChatFile(chatFileVO);
+		long file_num = chatService.selectFileNum(chatFileVO.getChat_num(), file_name);
+		map.put("file_num", file_num);
+		
+		log.debug("<<반환한 file_num>>:"+file_num);
 		
 		return map;
 	}
 	
+	/*=======================
+	 * 	   진료 파일 삭제
+	 ========================*/
+	@PostMapping("/deleteFile")
+	@ResponseBody
+	public Map<String,String> deleteFile(@RequestParam("file_num") long file_num){
+		Map<String,String> map = new HashMap<String,String>();
+		
+		try {
+			chatService.deleteFile(file_num);
+			map.put("result", "success");
+		}catch(Exception e) {
+			log.debug("<<파일 삭제 오류>>:"+e);
+			map.put("result", "fail");
+		}
+		
+		return map;
+	}
 }
