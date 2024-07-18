@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/videoAdapter.js"></script>
+<script src="${pageContext.request.contextPath}/js/faq.total.js"></script>
  <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div class="page-main">
 <div class="page-one">
@@ -32,21 +33,31 @@
 	</c:if>
 	<c:if test="${count > 0}">
 		<c:forEach var="f" items="${list}">
-	
+				<br>
+			<div>
 					<a href="${pageContext.request.contextPath}/faq/faqDetail?faq_num=${f.faq_num}">
-							<ul style="margin:0 auto; float:left; width:80%">
+							<ul style="margin:0 auto; float:left; width:70%">
 								<li style="font-size:16pt;">${f.faq_title}</li>
 								<li> ${f.f_reg_date} 조회수 : ${f.faq_hit} &nbsp;   </li>
 							</ul>
-						</a>
-				<div>
-					 <input id="checkbox" type="checkbox">
-				    <label class="toggle" for="checkbox">
+					</a>
+			<div   style="float:right; margin-right:30px; padding-top:10px;">
+				   <input class="checkbox" type="checkbox" id="${f.faq_num}">
+				   <label class="toggle" for="${f.faq_num}">
 				        <div id="bar1" class="bars"></div>
 				        <div id="bar2" class="bars"></div>
 				        <div id="bar3" class="bars"></div>
-				    </label>
-				</div>
+				   </label>
+			</div>
+			<br>
+			<div class="items hide" style="margin:0 auto; width:80%; text-align:left;">
+					<br><br><br>
+					${f.faq_title}<br>
+					<hr width="100%" size="1">	 
+					 ${f.faq_content}
+			</div>
+		</div>
+			<br><br>
 		</c:forEach>
 		<div class="align-center float-clear">
 			${page}

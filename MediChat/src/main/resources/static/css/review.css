@@ -1,0 +1,202 @@
+@charset "UTF-8";
+.hide{
+	display:none;
+}
+.align-center{
+	text-align:center;
+}
+.align-right{
+	text-align:right;
+}
+.align-left{
+	text-align:left;
+}
+#review-table{
+	width:80%;
+	margin:0 auto;
+}
+table#review-table tr {
+	margin: 20px auto;
+}
+.checkbox {
+  display: none;
+}
+
+.toggle {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 6px;
+  transition-duration: .5s;
+}
+
+.bars {
+  width: 75%;
+  height: 4px;
+  background-color: rgb(57, 174, 164);
+  border-radius: 4px;
+}
+
+#bar2 {
+  transition-duration: .8s;
+}
+
+#bar1 {
+  width: 75%;
+  
+}
+
+#bar2 {
+  width: 75%;
+}
+
+.checkbox:checked + .toggle .bars {
+  position: absolute;
+  transition-duration: .5s;
+}
+
+.checkbox:checked + .toggle #bar2 {
+  transform: scaleX(0);
+  transition-duration: .1s;
+}
+
+.checkbox:checked + .toggle #bar1 {
+  width: 75%;
+  transform: rotate(45deg);
+  transition-duration: .5s;
+}
+
+.checkbox:checked + .toggle #bar3 {
+  width: 75%;
+  transform: rotate(-45deg);
+  transition-duration: .5s;
+}
+
+.checkbox:checked + .toggle {
+  transition-duration: .5s;
+  transform: rotate(180deg);
+}
+.hide{
+	display:none;
+}
+/*별점*/
+.rating > label {
+ 
+}
+
+.rating:not(:checked) > input {
+  display: none;
+}
+
+.rating:not(:checked) > label {
+  float: right;
+  cursor: pointer;
+  font-size: 30px;
+}
+
+.rating:not(:checked) > label > svg {
+  fill: #666;
+  transition: fill 0.3s ease;
+}
+
+.rating > input:checked ~ label > svg {
+  fill: #ffa723;
+}
+
+.rating:not(:checked) > label:hover ~ label > svg,
+.rating:not(:checked) > label:hover > svg {
+  fill: #ff9e0b;
+}
+
+#star1:hover ~ label > svg,
+#star1:hover > svg {
+  fill:#9f7e18 !important;
+}
+
+#star2:hover ~ label > svg,
+#star2:hover > svg {
+  fill: #9f7e18 !important;
+}
+
+#star3:hover ~ label > svg,
+#star3:hover > svg {
+  fill: #9f7e18 !important;
+}
+
+#star4:hover ~ label > svg,
+#star4:hover > svg {
+  fill: #9f7e18 !important;
+}
+
+#star5:hover ~ label > svg,
+#star5:hover > svg {
+  fill: #9f7e18 !important;
+}
+#star0-5:checked ~ label > svg {
+  fill: #eab308;
+}
+#star1:checked ~ label > svg {
+  fill: #eab308;
+}
+#star1-5:checked ~ label > svg {
+  fill: #eab308;
+}
+
+#star2-5:checked ~ label > svg {
+  fill: #eab308;
+}
+
+#star3-5:checked ~ label > svg {
+  fill: #eab308;
+}
+
+#star4-5:checked ~ label > svg {
+  fill: #eab308 ;
+}
+
+
+#star2:checked ~ label > svg {
+  fill: #eab308;
+}
+
+#star3:checked ~ label > svg {
+  fill: #eab308;
+}
+
+#star4:checked ~ label > svg {
+  fill: #eab308 ;
+}
+
+#star5:checked ~ label > svg {
+  fill: #eab308;
+}
+.star6 ~ label > svg {
+  fill: #eab308;
+  cursor:default;
+}
+.rating > input.star6 ~ label > svg {
+   fill:#eab308; 
+   
+   
+}
+
+.rating__label {
+	
+	width: 16.64px;/* 원본 사이즈/2 */
+	overflow: hidden;
+	cursor: pointer;
+}
+.rating__label--full  {
+	background-position: right;
+}
+.half {
+	 transform: scaleX(-1) ;
+}
+.star {
+  display: none;
+}

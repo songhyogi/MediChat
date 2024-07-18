@@ -85,6 +85,10 @@
 		<put-attribute name="css" value="/WEB-INF/views/faq/faqCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/faq/faqUpdate.jsp"/>
 	</definition>
+	<definition name="myReviewList" extends="ych">
+		<put-attribute name="title" value="myReviewList"/>
+		<put-attribute name="body" value="/WEB-INF/views/review/reviewMyList.jsp"/>
+	</definition>
 </tiles-definitions>
 
 
