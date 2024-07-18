@@ -252,6 +252,7 @@ $(function(){
             		initializeCalendar('${hospital.hos_num}');
             	}else if(param.result=='logout'){
             		alert('로그인 후 이용해주세요')
+            		location.href="/member/login";
             	}else{
             		alert('예약 신청 페이지 오류 발생');
             	}

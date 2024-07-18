@@ -17,12 +17,9 @@
 	color: blue;
 	text-decoration: none;
 }
-.fc-day-mon a, .fc-day-tue a, .fc-day-wed a, .fc-day-thu a, .fc-day-fri a {
-    color: black;
-    text-decoration: none;
-}
+
 .time-button.selected {
-	background-color: blue;
+	background-color: skyblue;
 }
 
 #time-buttons {
@@ -44,7 +41,7 @@
 }
 
 button {
-	width: 90px;
+	width: 140px;
 	height: 45px;
 	margin: 5px;
 	font-size: 16px;
@@ -66,12 +63,37 @@ button:disabled {
 .reserve-btn {
 	width: 100px;
 }
+.doctor-section {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin-top: 20px;
+}
+
+.doctor-card {
+	width: 200px;
+	margin: 10px;
+	text-align: center;
+}
+
+.doctor-image {
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.res-type-container {
+	margin-top: 10px;
+	text-align: left;
+}
 </style>
 <script src="${pageContext.request.contextPath}/js/index.global.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const hos_num = '${hos_num}';
     initializeCalendar(hos_num);
+    initializeNextButton(); // 페이지 로드 시 다음 버튼 초기화
 });
 function initializeCalendar(hos_num) {
     var calendarEl = document.getElementById('calendar');
@@ -92,6 +114,7 @@ function initializeCalendar(hos_num) {
         },
         fixedWeekCount: false,// 다음 달의 날짜가 보여지지 않게 설정
         dateClick: function(info) {
+        	resetSelections(); // 이전 선택 초기화
             // 날짜 클릭 시 호출될 함수
         	displayHosTimes(info.dateStr, info.date.getDay(), hos_num);
         }
@@ -183,6 +206,13 @@ function displayHosTimes(date, dayOfWeek, hos_num) {
     });
 }
 
+//선택된 항목들을 초기화하는 함수
+function resetSelections() {
+    $('#time-buttons').empty(); // 시간 버튼 초기화
+    $('#doctor-info').empty(); // 의사 정보 초기화
+    initializeNextButton(); // 다음 버튼 초기화
+}
+
 //시간을 "HHmm" 형식에서 "HH:mm" 형식으로 변환하는 함수
 function convertTimeFormat(timeStr) {
     console.log(`Converting time: ${timeStr}`);
@@ -248,7 +278,7 @@ function getAvailableDoctors(hos_num, date, time, dayOfWeek) {
                     output += '<div class="doctor-name">' + doctor.mem_name + '</div>';
                     output += '<div class="res-type-container">';
                     output += '<label><input type="radio" name="res_type" value="0" class="res-type-radio"> 비대면 진료</label>';
-                    output += '<label><input type="radio" name="res_type" value="1" class="res-type-radio"> 방문 진료</label>';
+                    output += ' <label><input type="radio" name="res_type" value="1" class="res-type-radio"> 방문 진료</label>';
                     output += '</div>';
                     output += '</div>';
                 });
@@ -260,12 +290,10 @@ function getAvailableDoctors(hos_num, date, time, dayOfWeek) {
                 $('.doctor-card').click(function() {
                     $('.doctor-card').removeClass('selected');
                     $(this).addClass('selected');
-                    console.log('Doctor card clicked'); // 추가된 로그
                 });
 
                 // 라디오 버튼 클릭 이벤트 핸들러 추가
                 $('.res-type-radio').change(function() {
-                	console.log('Radio button changed'); // 추가된 로그
                     enableNextButton();
                 });
             } else {
@@ -281,12 +309,21 @@ function getAvailableDoctors(hos_num, date, time, dayOfWeek) {
 // 다음 버튼 초기화 함수
 function initializeNextButton() {
     const nextButton = '<input type="button" class="btn btn-primary" value="다음" style="margin-top: 20px;" disabled>';
-    $('#next-button-container').html(nextButton);
+    const cancelButton = '<input type="button" class="btn btn-secondary" value="취소" style="margin-top: 20px;" onclick="resetAll()">';
+    $('#next-button-container').html(nextButton + cancelButton);
 }
 
 // 다음 버튼 활성화 함수
 function enableNextButton() {
     $('#next-button-container input[type="button"]').prop('disabled', false).addClass('active');
+}
+
+//모든 데이터를 초기화하는 함수
+function resetAll() {
+    $('#calendar').html('');
+    $('#time-buttons').empty();
+    $('#doctor-info').empty();
+    initializeCalendar('${hos_num}');
 }
 
 // 페이지 로드 시 다음 버튼 초기화
