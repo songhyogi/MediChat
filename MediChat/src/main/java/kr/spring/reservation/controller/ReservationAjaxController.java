@@ -68,10 +68,10 @@ public class ReservationAjaxController {
         if (user == null) {
             map.put("result", "logout");
         } else {
-        	System.out.println("Received hos_num: " + hos_num);
-            System.out.println("Received date: " + date);
-            System.out.println("Received time: " + time);
-            System.out.println("Received dayOfWeek: " + dayOfWeek);
+        	log.debug("Received hos_num: " + hos_num);
+        	log.debug("Received date: " + date);
+        	log.debug("Received time: " + time);
+        	log.debug("Received dayOfWeek: " + dayOfWeek);
             Map<String, Object> params = new HashMap<>();
             params.put("hos_num", hos_num);
             params.put("date", date);
@@ -80,7 +80,7 @@ public class ReservationAjaxController {
             List<DoctorVO> doctors = reservationService.getAvailableDoctors(params);
             map.put("result", "success");
             map.put("doctors", doctors);
-            System.out.println("Doctors: " + doctors); // 추가한 로그
+            log.debug("Doctors: " + doctors); // 추가한 로그
         }
         return map;
     }

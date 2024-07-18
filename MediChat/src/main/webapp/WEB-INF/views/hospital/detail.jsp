@@ -251,7 +251,7 @@ $(function(){
             		$('#reservation_page').show();
             		initializeCalendar('${hospital.hos_num}');
             	}else if(param.result=='logout'){
-            		location.href='/member/login';
+            		alert('로그인 후 이용해주세요')
             	}else{
             		alert('예약 신청 페이지 오류 발생');
             	}

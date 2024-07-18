@@ -25,7 +25,6 @@ public class ReservationController {
 		Map<String,String> map = new HashMap<>();
 		MemberVO user = (MemberVO) session.getAttribute("user");
 		if(user == null) {
-
 			map.put("result", "logout");
 		}else {
 			map.put("result","success");
