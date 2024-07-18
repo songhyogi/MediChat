@@ -312,7 +312,7 @@ public class ChatController {
 	/*=======================
 	 * 	   진료 파일 삭제
 	 ========================*/
-	@PostMapping("/deleteFile")
+	@PostMapping("/chat/deleteFile")
 	@ResponseBody
 	public Map<String,String> deleteFile(@RequestParam("file_num") long file_num){
 		Map<String,String> map = new HashMap<String,String>();
@@ -327,4 +327,5 @@ public class ChatController {
 		
 		return map;
 	}
+	
 }

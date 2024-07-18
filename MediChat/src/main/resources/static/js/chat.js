@@ -366,10 +366,15 @@ $(function(){
 	/*=======================
 		채팅 종료 폼 파일 삭제
 	=========================*/
-	$('#file_table').on('click', '.list_delete', function(){
+	$('#file_table').on('click', '.list-delete', function(event){
+		//기본 이벤트 제거
+		event.preventDefault();
+		
 		console.log('파일 삭제 클릭 이벤트 발생');
         //x 표시가 속하는 file_num 가져오기
         let file_num = $(this).data('file_num');
+        
+        console.log('file_num :'+file_num);
 		
 		$.ajax({
 			url:'/chat/deleteFile',
@@ -378,8 +383,10 @@ $(function(){
 			dataType:'json',
 			success:function(param){
 				if(param.result=='success'){
-					$('td[data-file_num="' + fileNum + '"]').closest('tr').remove();
+					console.log(file_num+'번 파일 삭제 성공');
+					$('td[data-file_num="' + file_num + '"]').closest('tr').remove();
 				}else{
+					console.log(file_num+'번 파일 삭제 실패');
 					alert('파일 삭제에 실패했습니다.');
 				}
 			},
