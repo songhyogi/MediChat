@@ -68,20 +68,20 @@ $(function(){
 			$('#drugSelect').val('').focus();
 			return false;
 		}
-		if($('#selectedDate').val().trim()==''){
+		if($('#selectedSDate').val().trim()==''){
 			alert('복용 일자를 입력하세요');
-			$('#selectedDate').val('').focus();
+			$('#selectedSDate').val('').focus();
 			return false;
 		}
 		
 		//날짜 오늘 이후 선택 불가
-		let selectedDate = new Date($('#selectedDate').val());
-		selectedDate.setHours(0, 0, 0, 0);
+		let selectedSDate = new Date($('#selectedSDate').val());
+		selectedSDate.setHours(0, 0, 0, 0);
 		let today = new Date();
 		
-		if(selectedDate > today){
+		if(selectedSDate > today){
 			alert('오늘 이후 날짜는 선택할 수 없습니다');
-			$('#selectedDate').val('').focus();
+			$('#selectedSDate').val('').focus();
 			return false;
 		}
 		
@@ -184,19 +184,19 @@ $(function(){
 			$('#moDrugSelect').val('').focus();
 			return false;
 		}
-		if($('#moSelectedDate').val().trim()==''){
+		if($('#moSelectedSDate').val().trim()==''){
 			alert('복용 일자를 입력하세요');
-			$('#moSelectedDate').val('').focus();
+			$('#moSelectedSDate').val('').focus();
 			return false;
 		}
 		
-		let moSelectedDate = new Date($('#moSelectedDate').val());
-		moSelectedDate.setHours(0, 0, 0, 0);
+		let moSelectedSDate = new Date($('#moSelectedSDate').val());
+		moSelectedSDate.setHours(0, 0, 0, 0);
 		let today = new Date();
 		
-		if(moSelectedDate > today){
+		if(moSelectedSDate > today){
 			alert('오늘 이후 날짜는 선택할 수 없습니다');
-			$('#moSelectedDate').val('').focus();
+			$('#moSelectedSDate').val('').focus();
 			return false;
 		}
 		

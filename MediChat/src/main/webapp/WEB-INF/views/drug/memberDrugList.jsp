@@ -14,6 +14,7 @@
             selectable: true,	//날짜 선택가능
             height: 'auto',	//높이 자동 조절
             width: 'auto',	//너비 자동 조절
+            //dayMaxEvents: true, //이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
             headerToolbar: {
             	left: 'title',
                 right: 'prev,next today,dayGridMonth,multiMonthYear'
@@ -36,6 +37,7 @@
             			id: '${memberDrug.med_num}',
             			title: '${memberDrug.med_title}',
             			start: '${memberDrug.med_sdate}',
+            			end : '${memberDrug.med_edate}',
             			allDay: true,
             			med_name: '${memberDrug.med_name}',
             			med_time: '${memberDrug.med_time}',
@@ -45,23 +47,44 @@
             	</c:forEach>
             	
             ],
-            //날짜 클릭 시
-            select:function(arg){ //오늘 이후 날짜 선택 불가
+            /*----------캘린더에서 드래그로 이벤트 생성----------*/
+            select:function(arg){
             	var today = new Date(); //현재 날짜 및 시간
-                var selectedDate = new Date(arg.start);	//선택한 날짜
-                selectedDate.setHours(0, 0, 0, 0);	//선택한 날짜의 시간 초기화(한국 기준으로 날짜를 선택했기 때문에)
-            	//console.log('시간:',today);
-            	//console.log('시간2:', selectedDate);
-            	if(selectedDate > today){//arg.start : 선택한 날짜의 시작 시간을 나타내는 Date 객체
+                var selectedSDate = new Date(arg.start); //선택한 시작 날짜
+                var selectedEDate = new Date(arg.end); //선택한 끝 날짜
+                selectedSDate.setHours(0, 0, 0, 0);	//선택한 날짜의 시간 초기화(한국 기준으로 날짜를 선택했기 때문에)
+                selectedEDate.setHours(0, 0, 0, 0);
+                
+            	console.log('오늘날짜:',today);
+            	console.log('시작시간:', selectedSDate);
+            	console.log('끝시간:', selectedEDate);
+            	
+            	if(selectedSDate > today || selectedEDate > today){//arg.start : 선택한 날짜의 시작 시간을 나타내는 Date 객체
             		alert('오늘 이후 날짜는 선택할 수 없습니다.');
             	}else{
-            		$('#selectedDate').val(arg.start.toISOString().slice(0, 10));
+            		//선택한 날짜가 보여지도록 처리
+            		$('#selectedSDate').val(arg.start.toISOString().slice(0, 10));
+            		$('#selectedEDate').val(arg.end.toISOString().slice(0, 10));//끝날짜
             		$('#drugModal').show();
             	}
             },
-            
+            /*----------캘린더에서 하루 클릭으로 이벤트 생성----------*/
+           dateClick:function(info){
+            	var today = new Date(); //현재 날짜 및 시간
+            	var clickDate = new Date(info.date); //선택한 날짜
+            	clickDate.setHours(0, 0, 0, 0);	//선택한 날짜의 시간 초기화
+            	if(clickDate > today){
+            		alert('선택 불가');
+            	}else{
+            		//선택한 날짜 보여지도록 처리
+            		$('#selectedSDate').val(info.dateStr.slice(0,10));
+            		$('#selectedEDate').val(info.dateStr.slice(0,10));
+            		$('#drugModal').show();
+            	}
+            },
+          	/*----------생성된 이벤트 클릭(수정/삭제)----------*/
           	//이벤트 클릭
-            eventClick:function(info){
+            eventClick:function(info){//이벤트 클릭 시 기존 데이터 출력
             	var event = info.event;//이벤트 객체 가져오기
                 $('#updateDrug input[name="med_num"]').val(event.id);
                 $('#updateDrug input[name="med_title"]').val(event.title);
@@ -71,6 +94,7 @@
                 //
                 console.log('이벤트 클릭 의약품 목록:' + med_names);
                 $('#updateDrug input[name="med_sdate"]').val(event.start.toISOString().slice(0, 10));
+                $('#updateDrug input[name="med_edate"]').val(event.end.toISOString().slice(0, 10));
                 //복용시간 체크박스
                 $('#updateDrug input[name="med_time"]').each(function() {
                    $(this).prop('checked', event.extendedProps.med_time.includes($(this).val()));
@@ -81,15 +105,16 @@
             }
         });
         calendar.render();
-    });
+    });//end of fullcalendar
     
+    /*====================모달창====================*/
     $(document).ready(function(){
     	$('.close').click(function(){//모달 닫기 버튼
     		 $(this).closest('.modal').hide();
     	});
     });
     
-    /*-----기존 의약품 데이터 수정폼에 출력-----*/
+    /*==========기존 의약품 데이터 수정폼에 출력==========*/
     let med_list = [];
 
     //기존 의약품 데이터를 수정 폼에 출력하는 함수
@@ -103,7 +128,6 @@
             let choice_med = '<span class="moDrugSelect-span" data-name="' + med_name + '">';
             choice_med += med_name + '<sup>&times;</sup></span>';
             $('#moDrugSelect').append(choice_med);
-            //
             console.log("의약품 기반 <span> 생성:" + med_name);
         });
     }
@@ -129,7 +153,6 @@
 		//의약품이 저장된 배열에서 의약품명 제거
 		med_list.splice(med_list.indexOf(med_name),1);
 		$(this).remove();//span 태그 삭제
-		//
 		console.log("검색 의약품 삭제:" + med_name);
 	});
 </script>
@@ -144,16 +167,18 @@
 	<form action="memberDrugSearch" method="post" id="drugSearch">
 		<ul>
 			<li>
-				증상 : <input type="text" class="check" id="title" name="med_title">
+				증상 : <input type="text" id="title" name="med_title">
 			</li>
 			<li>
 				<label>의약품명</label> 
-				<input type="text" id="drug_search" autocomplete="off" class="check">
+				<input type="text" id="drug_search" autocomplete="off">
 				<ul id="searchDrugList"></ul>
 				<div id="drugSelect"></div>
 			</li>
 			<li>
-				복용일자 : <input type="date" id="selectedDate" class="check" name="med_sdate">
+				복용일자<br>
+				<input type="date" id="selectedSDate" name="med_sdate"> ~ 
+				<input type="date" id="selectedEDate" name="med_edate">
 			</li>
 			<li>
 				복용시간 : 
@@ -163,7 +188,7 @@
 				<input type="checkbox" name="med_time" value="자기 전">자기 전
 			</li>	
 			<li>
-				복용량 : <input type="text" id="memberDosage" class="check" name="med_dosage"><br>
+				복용량 : <input type="text" id="memberDosage" name="med_dosage"><br>
 				메모 : <textarea name="med_note"></textarea>
 			</li>	
 		</ul>
@@ -185,16 +210,17 @@
 		<input type="hidden" name="med_num">
 		<ul>
 			<li>
-				증상 : <input type="text" class="check" id="mo_title" name="med_title">
+				증상 : <input type="text" id="mo_title" name="med_title">
 			</li>
 			<li>
 				<label>의약품명</label> 
-				<input type="text" id="moDrug_search" autocomplete="off" class="check">
+				<input type="text" id="moDrug_search" autocomplete="off">
 				<ul id="moSearchDrugList"></ul>
 				<div id="moDrugSelect"></div>
 			</li>
 			<li>
-				복용일자 : <input type="date" id="moSelectedDate" class="check" name="med_sdate">
+				복용일자 : <input type="date" id="moSelectedSDate" name="med_sdate">
+				<input type="date" id="moSelectedEDate" name="med_edate">
 			</li>
 			<li>
 				복용시간 : 
@@ -204,7 +230,7 @@
 				<input type="checkbox" name="med_time" value="자기 전">자기 전
 			</li>	
 			<li>
-				복용량 : <input type="text" id="moMemberDosage" class="check" name="med_dosage"><br>
+				복용량 : <input type="text" id="moMemberDosage" name="med_dosage"><br>
 				메모 : <textarea name="med_note"></textarea>
 			</li>	
 		</ul>
