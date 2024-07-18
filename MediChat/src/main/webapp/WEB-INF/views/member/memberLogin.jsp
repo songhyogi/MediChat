@@ -31,7 +31,9 @@
 	<hr size="1" width="50%" noshade="noshade" class="centered-hr">
 	<div class="social">
 		<!--  카카오 로그인시작 -->
-		<img src="${pageContext.request.contextPath}/images/kakao_login_medium_narrow.png" width="200">
+		<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&amp;client_id=c37546ec572f00c776f1b466369745f3&amp;redirect_uri=http://localhost:8000/member/kakaologin">
+			<img src="${pageContext.request.contextPath}/images/kakao_login_medium_narrow.png">
+		</a>
 		<!--  카카오 로그인 끝 -->
 		<!--  네이버 로그인 시작 -->
 		<img src="${pageContext.request.contextPath}/images/naver_login.png" width="200">

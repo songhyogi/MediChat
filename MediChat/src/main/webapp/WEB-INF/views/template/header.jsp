@@ -77,6 +77,7 @@
 				<a href="#"><img id="header-notification" src="/images/notification.png" width="35" height="35"></a>
 			</div>
 			<c:if test="${user.mem_auth==2}">
+				<c:if test="${mem_profile == null}">
 				<div class="header-status-rightBox">
 					<div class="text-center">
 						<img id="header-profile" src="${pageContext.request.contextPath}/member/memPhotoView" width="40" height="40" class="border rounded-circle">
@@ -86,11 +87,28 @@
 					<div class="header-status-select">
 						<a href="/member/myPage">내 정보</a>
 					</div>
-					<div class="select-line"></div>
+				<div class="select-line"></div>
 					<div class="header-status-select">
 						<a href="/member/logout">로그아웃</a>
 					</div>
 				</div>
+				</c:if>
+				<c:if test="${mem_profile != null}">
+				<div class="header-status-rightBox">
+					<div class="text-center">
+						<img id="header-profile" src="${mem_profile}" width="40" height="40" class="border rounded-circle">
+			    	</div>
+				</div>
+				<div id="header-status-div" style="display: none;">
+					<div class="header-status-select">
+						<a href="/member/myPage">내 정보</a>
+					</div>
+				<div class="select-line"></div>
+					<div class="header-status-select">
+						<a href="/member/kakaologout">로그아웃</a>
+					</div>
+				</div>
+				</c:if>
 			</c:if>
 			<c:if test="${user.mem_auth==3}">
 				<div class="header-status-rightBox">
