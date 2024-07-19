@@ -33,7 +33,9 @@ import kr.spring.chat.vo.ChatFileVO;
 import kr.spring.chat.vo.ChatMsgVO;
 import kr.spring.chat.vo.ChatVO;
 import kr.spring.doctor.vo.DoctorVO;
+import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
+import kr.spring.reservation.service.ReservationService;
 import kr.spring.reservation.vo.ReservationVO;
 import kr.spring.util.FileUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +45,12 @@ import lombok.extern.slf4j.Slf4j;
 public class ChatController {
 	@Autowired
 	ChatService chatService;
+	
+	@Autowired
+	MemberService memberService;
+	
+	@Autowired
+	ReservationService reservationService;
 	
 	/*=======================
 	 * 	 비대면채팅 페이지 호출
@@ -297,14 +305,13 @@ public class ChatController {
                         map.put("file_type", "진료비 세부내역서");
                         break;
 					}
+					
+					Long file_num = chatService.selectFileNum(chatFileVO.getChat_num(), file_name);
+					map.put("file_num", file_num);
+					log.debug("<<반환한 file_num>>:"+file_num);
 				}//end of not "pastDate"
 			}//end of not "emptyDate"
 		}//end of not "emptyFile"
-		
-		long file_num = chatService.selectFileNum(chatFileVO.getChat_num(), file_name);
-		map.put("file_num", file_num);
-		
-		log.debug("<<반환한 file_num>>:"+file_num);
 		
 		return map;
 	}
@@ -314,8 +321,8 @@ public class ChatController {
 	 ========================*/
 	@PostMapping("/chat/deleteFile")
 	@ResponseBody
-	public Map<String,String> deleteFile(@RequestParam("file_num") long file_num){
-		Map<String,String> map = new HashMap<String,String>();
+	public Map<String,Object> deleteFile(@RequestParam("file_num") long file_num){
+		Map<String,Object> map = new HashMap<String,Object>();
 		
 		try {
 			chatService.deleteFile(file_num);
@@ -327,5 +334,41 @@ public class ChatController {
 		
 		return map;
 	}
+
 	
+	/*=======================
+	 * 	    진료 종료 전송
+	 ========================*/
+	@PostMapping("/chat/requestPayment")
+	public Map<String,Object> requestPayment(long chat_num,
+											 @RequestParam("#pay_amount") int pay_amount){
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		ChatVO chat = chatService.selectChat(chat_num);
+		
+		//환자 번호 구하기
+		long mem_num = chat.getMem_num();
+		//의사 번호 구하기
+		long doc_num = chat.getDoc_num();
+		
+		//환자 이름 구하기
+		MemberVO member = memberService.selectMember(mem_num);
+		String mem_name = member.getMem_name();
+		
+		//의사 이름 구하기
+		MemberVO doctor = memberService.selectMember(doc_num);
+		String doc_name = doctor.getMem_name();
+		
+		
+		try {
+			map.put("result", "success");
+			map.put("mem_name", mem_name);
+			map.put("doc_name", doc_name);
+			map.put("pay_amount", pay_amount);
+		}catch(Exception e) {
+			map.put("result", "fail");
+		}
+		
+		return map;
+	}
 }
