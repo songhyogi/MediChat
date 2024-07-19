@@ -12,18 +12,22 @@ import kr.spring.notification.vo.NotificationVO;
 @Service
 @Transactional
 public class NotificationServiceImpl implements NotificationService{
-	
+
 	@Autowired
 	private NotificationMapper notificationMapper;
 	
 	@Override
 	public void insertNotification(NotificationVO notificationVO) {
-		notificationMapper.insertNotification(notificationVO);
+		notificationMapper.insertNotification(notificationVO);		
+	}
+
+	@Override
+	public void readNotification(Long noti_num) {
+		notificationMapper.readNotification(noti_num);
 	}
 
 	@Override
 	public NotificationVO selectNotification(Long noti_num) {
-		notificationMapper.readNotification(noti_num);
 		return notificationMapper.selectNotification(noti_num);
 	}
 
@@ -41,4 +45,5 @@ public class NotificationServiceImpl implements NotificationService{
 	public void deleteNotification(Long noti_num) {
 		notificationMapper.deleteNotification(noti_num);
 	}
+	
 }
