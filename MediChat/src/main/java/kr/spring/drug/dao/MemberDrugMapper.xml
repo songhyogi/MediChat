@@ -6,7 +6,7 @@
 	<!-- 회원 의약품 목용 내역 작성 -->
 	<insert id="insertDrug" parameterType="memberDrugVO">
         INSERT INTO medicine (med_num, mem_num, med_title, med_name, med_sdate, med_edate, med_time, med_dosage, med_note)
-        VALUES (drug_seq.nextval, #{mem_num}, #{med_title}, #{med_name}, #{med_sdate}, #{med_edate,jdbcType=VARCHAR}, #{med_time},
+        VALUES (drug_seq.nextval, #{mem_num}, #{med_title}, #{med_name}, #{med_sdate}, #{med_edate}, #{med_time},
                 #{med_dosage}, #{med_note})
     </insert>
     <update id="updateDrug" parameterType="memberDrugVo">

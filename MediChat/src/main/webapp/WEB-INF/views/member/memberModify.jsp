@@ -24,9 +24,15 @@
 				<form:input path="mem_birth"/>
 			</li>
 			<li>
-				<form:label path="mem_email">이메일</form:label>
-				<form:input path="mem_email"/>
-				<form:errors path="mem_email" cssClass="error-color"/>
+				<c:if test="${mem_profile == null}">
+					<form:label path="mem_email">이메일</form:label>
+					<form:input path="mem_email"/>
+					<form:errors path="mem_email" cssClass="error-color"/>			
+				</c:if>
+				<c:if test="${mem_profile != null}">
+					<form:label path="mem_email">이메일</form:label>
+					<form:input path="mem_email" class="readonly" readonly="true"/>			
+				</c:if>
 			</li>
 			<li>
 				<form:label path="mem_phone">전화번호</form:label>
@@ -62,6 +68,8 @@
 <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
 </div>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/i18n/jquery.ui.datepicker-ko.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>

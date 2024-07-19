@@ -26,6 +26,8 @@ import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.hospital.service.HospitalService;
 import kr.spring.hospital.vo.HospitalVO;
 import kr.spring.member.vo.MemberVO;
+import kr.spring.notification.service.NotificationService;
+import kr.spring.notification.vo.NotificationVO;
 import kr.spring.util.AuthCheckException;
 import kr.spring.util.CaptchaUtil;
 import kr.spring.util.FileUtil;
@@ -38,7 +40,9 @@ public class DoctorController {
 	DoctorService doctorService;
 	@Autowired
 	HospitalService hospitalService;
-
+	@Autowired
+	NotificationService notificationService;
+	
 	@Value("${API.KCY.X-Naver-Client-Id}")
 	private String X_Naver_Client_Id;
 	@Value("${API.KCY.X-Naver-Client-Secret}")
@@ -145,7 +149,14 @@ public class DoctorController {
 				// =====자동 로그인 끝=====
 				// 로그인 처리
 				session.setAttribute("user", doctor);
-
+				
+				/* ksy 알림 처리 시작 */
+				int noti_cnt = notificationService.selectCountNotification(doctor.getMem_num());
+				session.setAttribute("noti_cnt", noti_cnt);
+				List<NotificationVO> noti_list = notificationService.selectListNotification(doctor.getMem_num());
+				session.setAttribute("noti_list", noti_list);
+				/* ksy 알림 처리 끝 */
+				
 				log.debug("<로그인 인증 성공> : " + doctor);
 
 				return "redirect:/main/main";

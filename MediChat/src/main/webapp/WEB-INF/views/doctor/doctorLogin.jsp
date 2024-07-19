@@ -10,7 +10,7 @@
 <!-- 	<input type="hidden" id="lon" name="user_lon" value="" >
 		<input type="hidden" id="lat" name="user_lat" value="" > -->
 		<div class="loginLogo">
-			<img src="/images/loginLogo.png" width="100" height="100" style="margin-top:50px;">
+			<img src="/images/loginLogo.png" width="150" height="100" style="margin-top:50px;">
 		</div>
 		<ul>
 			<li>
@@ -24,7 +24,7 @@
 		</ul>
 		<div>
 			<form:errors element="div" cssClass="error-color"/>
-			<form:button class="login_btn">로그인</form:button>
+			<form:button class="login_btn fw-7 fs-17">로그인</form:button>
 		</div>
 		<div class="button-container">
 			<label for="auto">

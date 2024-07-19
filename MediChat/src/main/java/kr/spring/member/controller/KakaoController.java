@@ -89,6 +89,34 @@ public class KakaoController {
 		
 		return "main";
 	}
+	@GetMapping("/member/modifyKakao")
+	public String kakaoModifyForm(HttpSession session,Model model) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user == null) {
+	         model.addAttribute("message","로그인이 필요합니다.");
+	         model.addAttribute("url","/member/login");
+	         return "/common/resultAlert";
+	    }
+		MemberVO memberVO = memberService.selectMember(user.getMem_num());
+
+		model.addAttribute("memberVO",memberVO);
+
+		return "kakaoModify";
+	}
+	@PostMapping("/member/modifyKakao")
+	public String kakaoModifySubmit(@Valid MemberVO memberVO,BindingResult result,HttpSession session) {
+		log.debug("<<카카오회원 정보 수정>> : " + memberVO);
+		//유효성 체크
+		if(result.hasErrors()) {
+			return "kakaoModify";
+		}
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		memberVO.setMem_num(user.getMem_num());
+		//회원정보 수정
+		memberService.updateMember(memberVO);
+
+		return "myPage";
+	}
 	
 	@RequestMapping(value="/member/kakaologout")
 	public ModelAndView logout(HttpSession session) {

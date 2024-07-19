@@ -5,17 +5,17 @@
 <!-- 회원가입 시작 -->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 <div class="container">
-	<h2 class="title">회원가입</h2>
+	<h2 class="title">카카오회원 추가정보</h2>
 	<hr size="1" width="100%" noshade="noshade">
 	<span style="font-weight:bold;">정보입력</span>
 	<br>
-	<span class="title2">회원가입에 필요한 정보를 입력합니다.</span>
+	<span class="title2">추가적인 필요한 정보를 입력합니다.</span>
 	<form:form action="registerKakao" id="member_register" modelAttribute="memberVO">
 		<div class="form-main">
 		<ul>
 			<li style="margin-top:20px;">
 				<form:label path="mem_id">아이디</form:label>
-				<form:input path="mem_id" class="readonly"/>
+				<form:input path="mem_id" class="readonly" readonly="true"/>
 			</li>
 			<li>
 				<form:label path="mem_passwd">비밀번호</form:label>
@@ -33,7 +33,7 @@
 			</li>
 			<li>
 				<form:label path="mem_email">이메일</form:label>
-				<form:input path="mem_email" class="readonly"/>
+				<form:input path="mem_email" class="readonly" readonly="true"/>
 			</li>
 			<li>
 				<form:label path="mem_phone">전화번호</form:label>

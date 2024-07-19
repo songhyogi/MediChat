@@ -1,16 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/ych.css" type="text/css">
 <!-- MyPage 메뉴 시작 -->
 <div class="side-bar">
 	<ul>
 		<li>
-			<img src="${pageContext.request.contextPath}/member/memPhotoView"
-			width="150" height="150" class="my-photo border rounded-circle" 
-			onclick="location.href='${pageContext.request.contextPath}/member/myPage'">
-			<div class="camera" id="photo_btn">
-			<img src="${pageContext.request.contextPath}/images/re.png" width="25">
-			</div>
+			<c:if test="${mem_profile == null}">
+				<img src="${pageContext.request.contextPath}/member/memPhotoView"
+				width="150" height="150" class="my-photo border rounded-circle" 
+				onclick="location.href='${pageContext.request.contextPath}/member/myPage'">
+				<div class="camera" id="photo_btn">
+					<img src="${pageContext.request.contextPath}/images/re.png" width="25">
+				</div>			
+			</c:if>
+			<c:if test="${mem_profile != null}">
+				<img src="${mem_profile}" width="150" height="150" class="border rounded-circle" 
+				onclick="location.href='${pageContext.request.contextPath}/member/myPage'">
+			</c:if>
 		</li>
 		<li>
 			<div id="photo_choice" style="display:none;">
@@ -27,7 +34,7 @@
 		</li>
 		<li>
 			<input type="button" class="detail-btn" value="약 복용 내역"
-			onclick="location.href='${pageContext.request.contextPath}/drug/memberDrugList'">
+			onclick="location.href='${pageContext.request.contextPath}/mypage/medicationHistory'">
 		</li>
 		<li>
 			<input type="button" class="detail-btn" value="후기내역"
@@ -37,23 +44,13 @@
 			<input type="button" class="detail-btn" value="비대면 진료"
 			onclick="location.href='${pageContext.request.contextPath}/chat/chatView'">
 		</li>
-		<li style="margin-top:50px;">
+		<li>
 			<input type="button" class="detail-btn" value="로그아웃"
-			onclick="location.href='${pageContext.request.contextPath}/member/logout'">
+			onclick="location.href='#'">
 		</li>
 	</ul>
 </div>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/member.profile.js"></script>
 <!-- MyPage 메뉴 끝 -->
-
-
-
-
-
-
-
-
-
-
 

@@ -12,9 +12,8 @@
         window.calendar = new FullCalendar.Calendar(calendarEl, {
         	timeZone: 'Asia/Seoul',	//날짜를 한국 기준으로 설정
             selectable: true,	//날짜 선택가능
-            height: 'auto',	//높이 자동 조절
-            width: 'auto',	//너비 자동 조절
-            //dayMaxEvents: true, //이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
+            height: 800,	//높이 자동 조절
+            width: 1200,	//너비 자동 조절
             headerToolbar: {
             	left: 'title',
                 right: 'prev,next today,dayGridMonth,multiMonthYear'
@@ -37,7 +36,11 @@
             			id: '${memberDrug.med_num}',
             			title: '${memberDrug.med_title}',
             			start: '${memberDrug.med_sdate}',
-            			end : '${memberDrug.med_edate}',
+	           			end : (function() {//풀캘린더의 select end 특성으로 인해서 DB에 저장된 값 보다 하루 뒤의 값을 출력
+	           	               var date = new Date('${memberDrug.med_edate}');
+	           	               date.setDate(date.getDate() + 1);
+	           	               return date.toISOString().slice(0, 10);
+	           	            })(),
             			allDay: true,
             			med_name: '${memberDrug.med_name}',
             			med_time: '${memberDrug.med_time}',
@@ -53,7 +56,7 @@
                 var selectedSDate = new Date(arg.start); //선택한 시작 날짜
                 var selectedEDate = new Date(arg.end); //선택한 끝 날짜
                 
-                // 끝 날짜에서 하루 빼기
+                //끝 날짜에서 하루 빼기(이게 없으면 오늘 날짜 선택 불가)
                 selectedEDate.setDate(selectedEDate.getDate() - 1); //풀캘린더의 배타적 기능으로 인해 수동적으로 날짜 변경 
 
                 selectedSDate.setHours(0, 0, 0, 0);	//선택한 날짜의 시간 초기화(한국 기준으로 날짜를 선택했기 때문에)
@@ -66,8 +69,7 @@
             	
             	if(selectedSDate > today || selectedEDate > today){//arg.start : 선택한 날짜의 시작 시간을 나타내는 Date 객체
             		alert('오늘 이후 날짜는 선택할 수 없습니다.');
-            	}else{
-            		
+            	}else{   		
             		console.log('변경 전 끝시간:', selectedEDate);
             		console.log('selectedEDate.toISOString().slice(0, 10):', selectedEDate.toISOString().slice(0, 10));
             		
@@ -79,21 +81,8 @@
             		//선택한 날짜가 보여지도록 처리
             		$('#selectedSDate').val(arg.start.toISOString().slice(0, 10));
             		$('#selectedEDate').val(selectedEDate.toISOString().slice(0, 10));//끝날짜
-            		$('#drugModal').show();
-            	}
-            },
-            /*----------캘린더에서 하루 클릭으로 이벤트 생성----------*/
-           dateClick:function(info){
-            	var today = new Date(); //현재 날짜 및 시간
-            	var clickDate = new Date(info.date); //선택한 날짜
-            	clickDate.setHours(0, 0, 0, 0);	//선택한 날짜의 시간 초기화
-            	if(clickDate > today){
-            		alert('선택 불가');
-            	}else{
-            		//선택한 날짜 보여지도록 처리
-            		$('#selectedSDate').val(info.dateStr.slice(0,10));
-            		$('#selectedEDate').val(info.dateStr.slice(0,10));
-            		$('#drugModal').show();
+            		$('#drugModal').css('display', 'block'); // 모달 표시
+            	    $('.modal-bg').css('display', 'block'); // 모달 배경 표시
             	}
             },
           	/*----------생성된 이벤트 클릭(수정/삭제)----------*/
@@ -105,17 +94,22 @@
                 //의약품 목록
                 var med_names = event.extendedProps.med_name;
                 modifyDrugList(med_names);
-                //
-                console.log('이벤트 클릭 의약품 목록:' + med_names);
                 $('#updateDrug input[name="med_sdate"]').val(event.start.toISOString().slice(0, 10));
-                $('#updateDrug input[name="med_edate"]').val(event.end.toISOString().slice(0, 10));
+                
+                // end 날짜에서 하루 빼기
+                //FullCalendar의 Long Event end 특성으로 인해 하루를 빼고 출력해야 DB의 값과 동일한 값이 보여짐
+			   	var endDate = new Date(event.end);
+			   	endDate.setDate(endDate.getDate() - 1);
+			   	$('#updateDrug input[name="med_edate"]').val(endDate.toISOString().slice(0, 10));
+			   
                 //복용시간 체크박스
                 $('#updateDrug input[name="med_time"]').each(function() {
                    $(this).prop('checked', event.extendedProps.med_time.includes($(this).val()));
                 });
                 $('#updateDrug input[name="med_dosage"]').val(event.extendedProps.med_dosage);
                 $('#updateDrug textarea[name="med_note"]').val(event.extendedProps.med_note);
-                $('#updateDrug').show();
+                $('#updateDrug').css('display', 'block'); // 모달 표시
+                $('.modal-bg').css('display', 'block'); // 모달 배경 표시
             }
         });
         calendar.render();
@@ -123,8 +117,9 @@
     
     /*====================모달창====================*/
     $(document).ready(function(){
-    	$('.close').click(function(){//모달 닫기 버튼
-    		 $(this).closest('.modal').hide();
+    	$('.close-button').click(function(){//모달 닫기 버튼
+    		$(this).closest('.modal').css('display', 'none'); // 모달 숨기기
+    	    $('.modal-bg').css('display', 'none'); // 모달 배경 숨기기
     	});
     });
     
@@ -175,13 +170,14 @@
 <div class="modal" id="drugModal">
 	<div class="modal-header">
 		<div>의약품 복용 기록 등록</div>
-		<div class="close">&times;</div>
+		<div class="close-button">&times;</div>
 	</div>
 	<div class="modal-body">
 	<form action="memberDrugSearch" method="post" id="drugSearch">
 		<ul>
 			<li>
-				증상 : <input type="text" id="title" name="med_title">
+				<label>증상</label> 
+				<input type="text" id="title" name="med_title">
 			</li>
 			<li>
 				<label>의약품명</label> 
@@ -190,41 +186,48 @@
 				<div id="drugSelect"></div>
 			</li>
 			<li>
-				복용일자<br>
-				<input type="date" id="selectedSDate" name="med_sdate"> ~ 
+				<label>복용일자</label>
+				<input type="date" id="selectedSDate" name="med_sdate">
+				<label>~</label>
 				<input type="date" id="selectedEDate" name="med_edate">
 			</li>
 			<li>
-				복용시간 : 
+				<label>복용시간</label> 
 				<input type="checkbox" name="med_time" value="아침" class="drug">아침
 				<input type="checkbox" name="med_time" value="점심">점심
 				<input type="checkbox" name="med_time" value="저녁">저녁
 				<input type="checkbox" name="med_time" value="자기 전">자기 전
 			</li>	
 			<li>
-				복용량 : <input type="text" id="memberDosage" name="med_dosage"><br>
-				메모 : <textarea name="med_note"></textarea>
+				<label>복용량</label>
+				<input type="text" id="memberDosage" name="med_dosage"><br>
+			</li>
+			<li>
+				<label>메모</label>
+				<textarea name="med_note"></textarea>
 			</li>	
 		</ul>
 		<div>
-			<input type="submit" value="전송">
+			<input type="submit" value="전송" class="submit-btn">
 		</div>
 	</form>
 	</div>
 </div>
 <!-- 등록 모달 끝 -->
+<div class="modal-bg"></div>
 <!-- 수정 모달 시작 -->
 <div class="modal" id="updateDrug">
 	<div class="modal-header">
 		<div>의약품 복용 기록 수정</div>
-		<div class="close">&times;</div>
+		<div class="close-button">&times;</div>
 	</div>
 	<div class="modal-body">
 	<form action="memberDrugSearch" method="post" id="modifyDrugSearch">
 		<input type="hidden" name="med_num">
 		<ul>
 			<li>
-				증상 : <input type="text" id="mo_title" name="med_title">
+				<label>증상</label>
+				<input type="text" id="mo_title" name="med_title">
 			</li>
 			<li>
 				<label>의약품명</label> 
@@ -233,24 +236,30 @@
 				<div id="moDrugSelect"></div>
 			</li>
 			<li>
-				복용일자 : <input type="date" id="moSelectedSDate" name="med_sdate">
+				<label>복용일자</label>
+				<input type="date" id="moSelectedSDate" name="med_sdate">
+				<label>~</label>
 				<input type="date" id="moSelectedEDate" name="med_edate">
 			</li>
 			<li>
-				복용시간 : 
+				<label>복용시간</label> 
 				<input type="checkbox" name="med_time" value="아침">아침
 				<input type="checkbox" name="med_time" value="점심">점심
 				<input type="checkbox" name="med_time" value="저녁">저녁
 				<input type="checkbox" name="med_time" value="자기 전">자기 전
 			</li>	
 			<li>
-				복용량 : <input type="text" id="moMemberDosage" name="med_dosage"><br>
-				메모 : <textarea name="med_note"></textarea>
-			</li>	
+				<label>복용량</label>
+				<input type="text" id="moMemberDosage" name="med_dosage"><br>
+			</li>
+			<li>
+				<label>메모</label>
+				<textarea name="med_note"></textarea>
+			</li>
 		</ul>
 		<div>
-			<input type="submit" value="수정">
-			<input type="button" value="삭제" id="delete-btn">
+			<input type="submit" value="수정" class="submit-btn">
+			<input type="button" value="삭제" class="delete-btn">
 		</div>
 	</form>
 	</div>
@@ -262,7 +271,7 @@
 <br>
 <!-- 스타일 적용 -->
 <style>
-/*FullCalendar*/
+/*----------FullCalendar----------*/
 .fc-day-sun a {
     color: red;
     text-decoration: none;
@@ -275,7 +284,11 @@
     color: black;
     text-decoration: none;
 }
-/* 모달 스타일 */
+#calendar {
+   width: 1000px;
+   height: 2000px;
+}
+/*----------모달 스타일----------*/
 .modal {
     display: none;
     position: fixed;
@@ -283,47 +296,160 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%); /* 화면 가운데 정렬 */
-    background-color: black; /* 모달 배경색은 흰색 */
-    padding: 20px;
-    border-radius: 10px; /* 모달 테두리를 둥글게 */
+    background-color: white;
     width: 500px; /* 모달의 고정 너비 */
-    height:500px;
-    max-width: 80%; /* 반응형을 위한 최대 너비 설정 */
-    box-sizing: border-box; /* 패딩과 테두리를 포함한 너비 계산 */
+    height:620px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* 그림자 효과 */
+    border-radius: 8px; /* 모든 모서리를 둥글게 설정 */
 }
+
+.modal-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 998;
+    
+}
+
 .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-weight: bold;
-    font-size: 18px;
-    color: white;
-    background-color: rgb(179, 217, 217); /* 헤더 배경색 */
-    padding: 10px 20px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-.modal-body {
-    background-color: white; /* 모달 본문 배경색은 흰색 */
-    padding: 20px;
-}
-.close {
-    color: white;
-    cursor: pointer;
-    font-size: 24px;
-}
-.close:hover {
-    color: #ffffff99; /* 닫기 버튼에 마우스를 올렸을 때 약간 투명하게 만듭니다 */
+    background-color: rgb(76, 165, 165); /* 헤더 배경색 */
+    color: white; /* 헤더 글자색 */
+    height: 50px; /* 헤더 높이 */
 }
 
-/* 모달이 열릴 때 배경 표시 */
-.modal.show {
-    display: block;
+.modal-body {
+    background-color: white; /* 모달 본문 배경색 */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 수평 가운데 정렬 */
+    justify-content: center; /* 수직 가운데 정렬 */
+    padding: 20px;
+    height: calc(100% - 50px); /* 모달 헤더를 제외한 높이 */
+    box-sizing: border-box; /* 패딩을 높이 계산에 포함 */
+     overflow-y: auto; /* 내용이 넘칠 경우 스크롤 표시 */
 }
-/* 작은 화면에서 모달 중앙 정렬 */
-@media (max-width: 768px) {
-    .modal {
-        width: 90%; /* 화면 너비의 90%로 설정 */
-    }
+
+.close-button {
+    cursor: pointer;
+    font-size: 24px;
+    font-weight: bold;
+    margin-right: 10px;
+    color: white;
+    background: none;
+    border: none;
+}
+
+.modal-body ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.modal-body li {
+    margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="date"],
+textarea {
+    width: calc(100% - 10px);
+    padding: 5px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+/*전송 버튼*/
+.submit-btn {
+    background-color: rgb(76, 165, 165); /* 버튼 배경색 */
+    color: white; /* 버튼 글자색 */
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 10px;
+    justify-content:center;
+	align-items: center;
+}
+.delete-btn{
+	background-color: white; /* 버튼 배경색 */
+    color: rgb(76, 165, 165); /* 버튼 글자색 */
+     border: 2px solid rgb(76, 165, 165); /* 버튼 테두리 추가 */
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+input[type="submit"]:hover,
+input[type="button"]:hover {
+    background-color: #006666; /* 버튼 호버 배경색 */
+}
+
+label {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.modal-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal-body label,
+.modal-body input {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.modal-body input[type="date"] {
+    width: auto;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+/* 의약품 검색 */
+.moDrugSelect-span, .drugSelect-span {
+    display: inline-block;
+    background: #e9ecef;
+    border-radius: 4px;
+    padding: 2px 8px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+.moDrugSelect-span sup, .drugSelect-span sup {
+    margin-left: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    color: red;
+}
+#searchDrugList, #moSearchDrugList {
+    list-style-type: none; /* 기본 불릿 제거 */
+    padding: 0;
+    margin: 0;
+    max-height: 200px; /* 목록의 최대 높이 설정 */
+    overflow-y: auto; /* 내용이 넘칠 경우 스크롤 표시 */
+    border: 1px solid #ccc; /* 경계선 추가 */
+    background: white; /* 배경색 */
+    position: absolute; /* 위치 조정 */
+    width:403px;
+    z-index: 1000; /* 다른 요소들 위에 표시되도록 */
+}
+#searchDrugList li,, #moSearchDrugList li {
+    padding: 5px; /* 패딩 추가 */
+    cursor: pointer; /* 포인터 커서 적용 */
+    border-bottom: 1px solid #ddd; /* 목록 아이템의 하단 경계선 */
+}
+#searchDrugList li:hover,, #moSearchDrugList li:hover {
+    background-color: #f0f0f0; /* 마우스를 올렸을 때 배경색 변경 */
 }
 </style>
