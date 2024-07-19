@@ -7,6 +7,14 @@
 <meta charset="UTF-8">
 <title>회원정보</title>
 </head>
+<style>
+#memberInfo ul{
+	margin-top:10%;
+}
+#memberInfo ul li{
+	margin-top:15px;
+}
+</style>
 <body>
 	<div class="memberInfo">
 		<ul>
@@ -21,7 +29,7 @@
 				<li>정보 수정일 : ${member.mem_modify}</li>
 			</c:if>
 		</ul>
-		<div class="align-center">
+		<div class="align-center" style="margin-top:77px;">
 			<input type="button" value="회원정보 수정"
 				onclick="location.href='memberModify.jsp'"> <input
 				type="button" value="비밀번호 변경" onclick="location.href='#'">

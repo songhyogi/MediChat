@@ -54,13 +54,3 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/member.profile.js"></script>
 <!-- MyPage 메뉴 끝 -->
 
-
-
-
-
-
-
-
-
-
-

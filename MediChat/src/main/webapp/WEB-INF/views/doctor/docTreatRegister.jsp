@@ -3,21 +3,36 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!-- 비대면 진료 신청 시작 -->
-<div>
+<style>
+.container{
+	text-align:center;
+}
+#reload_btn{
+	margin-top:75px;
+}
+#register_treat ul li{
+	margin-top:15px;
+}
+label li{
+	postion:fixed;
+}
+</style>
+<div class="container">
 	<h2>비대면 진료 신청</h2>
-	<hr size="1" width="80%" noshade="noshade">
-	<h3>정보입력</h3>
+	<hr size="1" width="95%" noshade="noshade">
+	<span style="font-weight:bold; font-size:30px;">정보입력</span>
+	<br>
 	<span>신청에 필요한 정보를 입력합니다.</span>
-	<form:form action="registerTreat" id="register_treat"
+	<form:form action="registerTreat" id="register_treat" enctype="multipart/form-data"
 		modelAttribute="doctorVO">
 		<ul>
 			 <li>
-                <form:label path="mem_name">이름</form:label> 
+                <form:label path="mem_name" style="width:56px;">이름</form:label> 
                 <form:input path="mem_name" value="${doctor.mem_name}" readonly="true" /> 
                 <form:errors path="mem_name" cssClass="error-color" />
             </li>
             <li>
-                <form:label path="doc_email">이메일</form:label> 
+                <form:label path="doc_email" style="width:56px;">이메일</form:label> 
                 <form:input path="doc_email" value="${doctor.doc_email}" readonly="true" /> 
                 <form:errors path="doc_email" cssClass="error-color" />
             </li>
@@ -42,7 +57,7 @@
 				</div> 
 				<form:errors path="doc_off" cssClass="error-color" />
 			</li>
-			<li><form:label path="doc_stime">업무시간</form:label>
+			<li><form:label path="doc_time">업무시간</form:label>
 				<div>
 					<form:select path="doc_stime">
 						<% for (int hour = 0; hour <= 23; hour++) { %>
@@ -65,14 +80,18 @@
 				</div> 
 				<form:errors path="doc_time" cssClass="error-color" /></li>
 			<li>
-                <form:label path="doc_passwd">비밀번호</form:label> 
-                <form:password path="doc_passwd" id="doc_passwd" />
-                <form:errors path="doc_passwd" cssClass="error-color" />
+                <form:label path="now_passwd" style="width:56px;">비밀번호</form:label> 
+                <form:password path="now_passwd" id="now_passwd" />
+                <form:errors path="now_passwd" cssClass="error-color" />
             </li>
             <li>
-            	<input type="submit" value="신청" onclick="location.href='${pageContext.request.contextPath}/main/main'">
+            	<input type="button" value="홈으로" id="reload_btn" onclick="location.href='${pageContext.request.contextPath}/main/main'">
+				<form:button class="default-btn">비대면 진료 신청</form:button>
             </li>
 		</ul>
 	</form:form>
 </div>
 <!-- 비대면 진료 신청 끝 -->
+<script>
+	
+</script>

@@ -26,7 +26,7 @@
 				</div>
 			</div>
 			<ul>
-				<li>나의 활동</li>
+				<li style="margin-top:10px;">나의 활동</li>
 			</ul>
 			<div class="border p-5">
 				<div class="row mb-5">
