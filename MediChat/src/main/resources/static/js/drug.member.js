@@ -19,11 +19,15 @@ $(function(){
 					let results = param.drugList.slice(0,10);//검색어 10개까지만 출력
 					$('#searchDrugList').empty();
 					$(results).each(function(index,item){
-						let output = '';
-						output += '<li data-name="'+item.drg_name+'">';
-						output += item.drg_name;
-						output += '</li>';
-						$('#searchDrugList').append(output);
+						//한 번 선택한 약은 다시 선택하지 않도록 처리
+						if(!drug_list.includes(item.drg_name)){ 
+							let output = '';
+							output += '<li data-name="'+item.drg_name+'">';
+							output += item.drg_name;
+							output += '</li>';
+							$('#searchDrugList').append(output);
+						}
+						
 					});
 				}else{
 					alert('의약품 검색 오류 발생');
@@ -156,11 +160,14 @@ $(function(){
 					let results = param.drugList.slice(0,10);//검색어 10개까지만 출력
 					$('#moSearchDrugList').empty();
 					$(results).each(function(index,item){
-						let output = '';
-						output += '<li data-name="'+item.drg_name+'">';
-						output += item.drg_name;
-						output += '</li>';
-						$('#moSearchDrugList').append(output);
+						//한 번 선택한 약은 다시 선택하지 않도록 처리
+						if(!med_list.includes(item.drg_name)){
+							let output = '';
+							output += '<li data-name="'+item.drg_name+'">';
+							output += item.drg_name;
+							output += '</li>';
+							$('#moSearchDrugList').append(output);
+						}
 					});
 				}else{
 					alert('의약품 검색 오류 발생');
@@ -262,7 +269,7 @@ $(function(){
 	});//end of 수정
 	
 	/*------------------------------------의약품 삭제------------------------------------ */
-	$('#delete-btn').click(function(){
+	$('.delete-btn').click(function(){
 		//med_num
 		let med_num = $('#updateDrug input[name="med_num"]').val();
 		//서버와 통신
