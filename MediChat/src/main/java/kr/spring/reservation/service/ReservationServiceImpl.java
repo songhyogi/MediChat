@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.hospital.vo.HospitalVO;
 import kr.spring.reservation.dao.ReservationMapper;
+import kr.spring.reservation.vo.ReservationVO;
 
 @Service
 @Transactional
@@ -26,6 +27,11 @@ public class ReservationServiceImpl implements ReservationService{
 	@Override
 	public List<DoctorVO> getAvailableDoctors(Map<String, Object> params) {
 		return reservationMapper.getAvailableDoctors(params);
+	}
+
+	@Override
+	public void insertReservation(ReservationVO reservationVO) {
+		reservationMapper.insertReservation(reservationVO);
 	}
 
 }

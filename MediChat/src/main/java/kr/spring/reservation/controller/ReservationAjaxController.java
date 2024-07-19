@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -17,6 +18,7 @@ import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.hospital.vo.HospitalVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.reservation.service.ReservationService;
+import kr.spring.reservation.vo.ReservationVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -85,4 +87,22 @@ public class ReservationAjaxController {
         return map;
     }
 	
+	@PostMapping("/reservation/reservationcompleted")
+	@ResponseBody
+	public Map<String, Object> submitReservation(ReservationVO reservationVO, HttpSession session) {
+        Map<String, Object> map = new HashMap<>();
+        MemberVO user = (MemberVO) session.getAttribute("user");
+
+        if (user == null) {
+            map.put("result", "logout");
+        } else {
+            reservationVO.setMem_num(user.getMem_num());
+            reservationService.insertReservation(reservationVO);
+            map.put("result", "success");
+        }
+
+        return map;
+    }
 }
+	
+
