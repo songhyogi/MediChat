@@ -443,15 +443,45 @@ public class DoctorController {
 
 		return "docPage";
 	}
+	@GetMapping("/mypage/docInfo")
+	   public String process1(HttpSession session,Model model) {
+	      DoctorVO user = (DoctorVO)session.getAttribute("user");
+	      if(user == null) {
+	         return "login";
+	      }
+	      //회원정보
+	      DoctorVO doctor = doctorService.selectDoctor(user.getMem_num());
+	      
+	      log.debug("<<MY페이지>> : " + doctor);
+	      
+	      model.addAttribute("doctor", doctor);
+	        
+	      return "docInfo";
+	   }
+	   @GetMapping("/member/docReserve")
+	   public String process3(HttpSession session,Model model) {
+	      DoctorVO user = (DoctorVO)session.getAttribute("user");
+	      if(user == null) {
+	         return "login";
+	      }
+	      //회원정보
+	      DoctorVO doctor = doctorService.selectDoctor(user.getDoc_num());
+	      
+	      log.debug("<<MY페이지>> : " + doctor);
+	      
+	      model.addAttribute("doctor", doctor);
+	        
+	      return "docReserve";
+	   }
 	/*
 	 * ============================= 비대면 진료 신청 ============================
 	 */
 
 	@GetMapping("/doctor/registerTreat")
-	public String showForm(Model model, HttpSession session) {
+	public String registerTreatForm(Model model, HttpSession session) {
 
 		DoctorVO user = (DoctorVO) session.getAttribute("user");
-		DoctorVO doctor = doctorService.selectDoctor(user.getMem_num());
+		DoctorVO doctor = doctorService.selectDoctor(user.getDoc_num());
 
 		if (user != null) {
 			doctor.setMem_name(user.getMem_name());
@@ -463,13 +493,16 @@ public class DoctorController {
 	}
 
 	@PostMapping("/doctor/registerTreat")
-	public String submitDoctorForm(@Valid DoctorVO doctorVO, BindingResult result, HttpServletRequest request,
+	public String registerTreatSubmit(@Valid DoctorVO doctorVO, BindingResult result, HttpServletRequest request,
 			Model model, HttpSession session) {
 
 		log.debug("<비대면 진료 신청>" + doctorVO);
 		// 유효성 체크 결과 오류가 있다면 다시 폼으로
-		if (result.hasErrors()) {
-			return "registerTreat";
+		/*
+		 * if (result.hasErrors()) { return "registerTreat"; }
+		 */
+		if (result.hasFieldErrors("now_passwd") || result.hasFieldErrors("doc_passwd")) {
+			return registerTreatForm(model,session);
 		}
 		// 현재 로그인한 사용자의 정보 가져오기
 		DoctorVO user = (DoctorVO) session.getAttribute("user");
@@ -479,16 +512,16 @@ public class DoctorController {
 			return "redirect:/login"; // 예시로 로그인 페이지로 리다이렉트
 		}
 		// 현재 로그인한 사용자의 의사 정보 가져오기
-		DoctorVO loggedInDoctor = doctorService.selectDoctor(user.getMem_num());
+		DoctorVO loggedInDoctor = doctorService.selectDoctor(user.getDoc_num());
 		// 입력한 비밀번호와 현재 로그인한 사용자의 비밀번호 비교
-		if (!loggedInDoctor.getDoc_passwd().equals(doctorVO.getDoc_passwd())) {
-
-			result.rejectValue("doc_passwd", "password.notMatch", "비밀번호가 일치하지 않습니다.");
-
-			return "doctor/registerTreat";
+		if (loggedInDoctor == null || !loggedInDoctor.getDoc_passwd().equals(doctorVO.getDoc_passwd())) {
+		    result.rejectValue("now_passwd", "invalidPasswd");
+		    return "registerTreat";
 		}
+
 		// 비밀번호가 일치하면 처리 로직 추가
-		return "redirect:/doctor/docView"; // 성공적으로 처리된 경우 다른 페이지로 리다이렉트
+		doctorService.updateDoctorTreat(doctorVO);
+		return "redirect:/doctor/docPage"; // 성공적으로 처리된 경우 다른 페이지로 리다이렉트
 
 	}
 }

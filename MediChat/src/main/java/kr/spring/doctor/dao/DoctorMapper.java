@@ -55,6 +55,11 @@ public interface DoctorMapper {
 	//비밀번호 찾기
 	public void findPasswd(DoctorVO doctor);
 	
+	//비대면 신청
+	@Update("UPDATE doctor_detail SET doc_treat=#{doc_treat} WHERE mem_num=#{mem_num}")
+	public void updateDoctorTreat(DoctorVO doctor);
+	
+	
 	//==========관리자============
 	//의사회원가입신청 관리자 승인
 	@Update("UPDATE doctor_detail SET doc_agree=1 WHERE doc_num=#{doc_num}")

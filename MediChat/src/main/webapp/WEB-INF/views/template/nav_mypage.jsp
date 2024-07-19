@@ -27,7 +27,7 @@
 		</li>
 		<li>
 			<input type="button" class="detail-btn" value="약 복용 내역"
-			onclick="location.href='${pageContext.request.contextPath}/mypage/medicationHistory'">
+			onclick="location.href='${pageContext.request.contextPath}/drug/memberDrugList'">
 		</li>
 		<li>
 			<input type="button" class="detail-btn" value="후기내역"
@@ -37,9 +37,9 @@
 			<input type="button" class="detail-btn" value="비대면 진료"
 			onclick="location.href='${pageContext.request.contextPath}/chat/chatView'">
 		</li>
-		<li>
+		<li style="margin-top:50px;">
 			<input type="button" class="detail-btn" value="로그아웃"
-			onclick="location.href='#'">
+			onclick="location.href='${pageContext.request.contextPath}/member/logout'">
 		</li>
 	</ul>
 </div>

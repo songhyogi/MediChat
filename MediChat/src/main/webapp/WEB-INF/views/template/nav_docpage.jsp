@@ -28,15 +28,15 @@
 		</li>
 		<li>
 			<input type="button" class="detail-btn" value="스케줄관리"
-			onclick="location.href='${pageContext.request.contextPath}/mypage/docReserve'">
+			onclick="location.href='${pageContext.request.contextPath}/schedule/list'">
 		</li>
 		<li>
 			<input type="button" class="detail-btn" value="비대면진료"
-			onclick="location.href='${pageContext.request.contextPath}/mypage/docSche'">
+			onclick="location.href='${pageContext.request.contextPath}/doctor/registerTreat'">
 		</li>
 		<li>
 			<input type="button" class="detail-btn" value="로그아웃"
-			onclick="location.href='#'">
+			onclick="location.href='${pageContext.request.contextPath}/member/logout'">
 		</li>
 	</ul>
 </div>

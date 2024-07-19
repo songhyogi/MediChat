@@ -57,6 +57,6 @@ public class ScheduleController {
 		//model.addAttribute("holiday", holiday);
 		model.addAttribute("regularDayOff", regularDayOff);
 		
-        return "/schedule/scheduleList";//타일스
+        return "scheduleList";//타일스
     }
 }
