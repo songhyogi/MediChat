@@ -89,6 +89,14 @@
 		<put-attribute name="title" value="myReviewList"/>
 		<put-attribute name="body" value="/WEB-INF/views/review/reviewMyList.jsp"/>
 	</definition>
+	<definition name="myReviewWrite" extends="ych">
+		<put-attribute name="title" value="myReviewWrite"/>
+		<put-attribute name="body" value="/WEB-INF/views/review/reviewMyWrite.jsp"/>
+	</definition>
+	<definition name="myModifyReviewWrite" extends="ych">
+		<put-attribute name="title" value="myReviewWrite"/>
+		<put-attribute name="body" value="/WEB-INF/views/review/reviewMyModifyWrite.jsp"/>
+	</definition>
 </tiles-definitions>
 
 

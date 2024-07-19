@@ -45,6 +45,7 @@ public interface HealthyService {
 	public Integer selectHreFavCount(Long hre_num);
 	public HealthyReFavVO selectHreFav(HealthyReFavVO vo);
 	
-	
+	//답글 불러오기
+	public List<HealthyReplyVO> selectReHreList(Map<String,Object> map);
 	
 }

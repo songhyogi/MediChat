@@ -27,4 +27,6 @@ public class Item {
     private String sickcd;
     @XmlElement(name = "sickNm",defaultValue="")
     private String sicknm;
+    @XmlElement(name = "description",defaultValue="")
+    private String description;
 }

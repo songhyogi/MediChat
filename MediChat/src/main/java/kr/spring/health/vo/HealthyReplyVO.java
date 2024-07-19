@@ -21,7 +21,7 @@ public class HealthyReplyVO {
 	private String id;
 	private int refav_cnt;
 	private long click_num;
-    
+    private String re_id;
 	public void setHre_reg_date(String  hre_reg_date) {
 		this.hre_reg_date = DurationFromNow.getTimeDiffLabel(hre_reg_date);
 	}

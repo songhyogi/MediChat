@@ -56,7 +56,7 @@ public class HealthController {
 		return"healthy_Blog";
 	 }
 	
-	@GetMapping("/heath/healWrite")
+	@GetMapping("/health/healWrite")
 	public String getHealthWriteForm(HttpServletRequest request,HttpSession session,Model model) {
 		MemberVO user = (MemberVO) session.getAttribute("user");
 		if(user == null) {
@@ -67,12 +67,12 @@ public class HealthController {
 			return "healthy_writeForm";
 		}else {
 			model.addAttribute("message","쓰기 권한이 없습니다.");
-			model.addAttribute("url",request.getContextPath()+"/heath/healthBlog");
+			model.addAttribute("url",request.getContextPath()+"/health/healthBlog");
 		}
 		
 		return "common/resultAlert";
 	}
-	@PostMapping("/heath/healWrite")
+	@PostMapping("/health/healWrite")
 	public String getHealthWrite(HealthyBlogVO vo,HttpServletRequest request,HttpSession session,Model model) throws IllegalStateException, IOException {
 		
 		MemberVO user = (MemberVO) session.getAttribute("user");

@@ -160,6 +160,12 @@ public class HealthyServiceImpl implements HealthyService{
 		return mapper.selectHreFav(vo);
 	}
 
+	@Override
+	public List<HealthyReplyVO> selectReHreList(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mapper.selectReHreList(map);
+	}
+
 
 
 }

@@ -167,6 +167,71 @@ public class DiseaseController {
 		
 		return "diseaseMain";
 	}
+	@GetMapping("/disease/test")
+	public String insertDiseaseListtest(Model model,HttpServletRequest request) throws JAXBException, IOException {
+		List<DiseaInsertVO> list = service.selectDisCodeList();
+		
+		for(int i=0; i<2; i++) {
+			DiseaInsertVO code= list.get(i);
+			DiseaseVO vo = new DiseaseVO();
+			vo.setSickcd(code.getSickcd());
+			vo.setDis_name(code.getSicknm());
+			if(code.getDis_department()!= null) {
+				vo.setDis_department(code.getDis_department());
+			}else {
+				vo.setDis_department("병의원과 상담");
+			}
+			
+		
+			String q= null;
+			try {
+	            q = URLEncoder.encode( code.getSicknm()+" 증상", "UTF-8");
+	        } catch (UnsupportedEncodingException e) {
+	            throw new RuntimeException("검색어 인코딩 실패",e);
+	        }
+			String key_apiURL = "https://openapi.naver.com/v1/search/encyc.json?query="+q+"&display=5";
+			
+			Map<String,String> requestHeaders = new HashMap<String,String>();
+			
+			requestHeaders.put("X-Naver-Client-Id","eOOwyOu2JylwwiqE4HAO");
+			requestHeaders.put("X-Naver-Client-Secret","RZcZOCuwtq");
+			
+			String responseBody = CaptchaUtil.get(key_apiURL, requestHeaders);
+			
+
+			
+			JSONObject jObject = new JSONObject(responseBody);
+			String l = null;
+			try {
+				//https://openapi.naver.com/v1/captcha/nkey 호출해서 받은 키값
+				
+			JSONArray key = jObject.getJSONArray("items");
+			log.debug("<<<<<<<<<<<>>>>>>>>>>>>>"+ jObject.getJSONArray("items"));	
+			Item k =(Item)key.get(0);
+				l =k.getDescription();
+			
+		
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			if(l !=  null)
+			vo.setDis_symptoms(l);
+			else
+			vo.setDis_symptoms("미상");
+			
+			log.debug("<<<<<<<<<<<>>>>>>>>>>>>>"+ l);
+		}
+		
+		
+
 	
+		return "diseaseMain";
+	}
+	@GetMapping("/diaaa")
+	public String gettestss(Model model,HttpSession session) {
+		
+		
+		return "diseaseMain";
+	}
 	
 }
