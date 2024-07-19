@@ -32,6 +32,7 @@ import kr.spring.chat.service.ChatService;
 import kr.spring.chat.vo.ChatFileVO;
 import kr.spring.chat.vo.ChatMsgVO;
 import kr.spring.chat.vo.ChatVO;
+import kr.spring.doctor.service.DoctorService;
 import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
@@ -48,6 +49,9 @@ public class ChatController {
 	
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	DoctorService doctorService;
 	
 	@Autowired
 	ReservationService reservationService;
@@ -267,52 +271,44 @@ public class ChatController {
 		chatFileVO.setFile_name(file_name);
 		
 		Map<String,Object> map = new HashMap<String,Object>();
-		
-		if(chatFileVO.getFile_name()==null) {
-			//파일을 올리지 않은 경우
-			map.put("file_name","emptyFile");
-		}else {
-			if(chatFileVO.getFile_valid_date()==null||chatFileVO.getFile_valid_date().isEmpty()){
-				//유효기간을 정하지 않은 경우
-				map.put("valid_date", "emptyDate");
-				
+
+		if(chatFileVO.getFile_valid_date()!=null||!chatFileVO.getFile_valid_date().isEmpty()){
+			//validDate : file_valid_date String -> Date로 변환한 값
+			LocalDate validDate = LocalDate.parse(chatFileVO.getFile_valid_date(), DateTimeFormatter.ISO_DATE);			
+			
+			if(LocalDate.now().isAfter(validDate)){
+				//유효기간을 지난 날짜로 설정한 경우
+				map.put("valid_date","pastDate");
 			}else{
-				//validDate : file_valid_date String -> Date로 변환한 값
-				LocalDate validDate = LocalDate.parse(chatFileVO.getFile_valid_date(), DateTimeFormatter.ISO_DATE);			
+				//DB에 데이터 저장
+				chatService.insertChatFile(chatFileVO);
+			
+				map.put("valid_date", chatFileVO.getFile_valid_date());
+				map.put("file_name", origin_file_name);
 				
-				if(LocalDate.now().isAfter(validDate)){
-					//유효기간을 지난 날짜로 설정한 경우
-					map.put("valid_date","pastDate");
-				}else{
-					//DB에 데이터 저장
-					chatService.insertChatFile(chatFileVO);
+				//파일 타입 반환
+				switch (chatFileVO.getFile_type()) {
+                case 0:
+                    map.put("file_type", "처방전");
+                    break;
+                case 1:
+                    map.put("file_type", "진단서");
+                    break;
+                case 2:
+                    map.put("file_type", "소견서");
+                    break;
+                case 3:
+                    map.put("file_type", "진료비 세부내역서");
+                    break;
+				}
 				
-					map.put("valid_date", chatFileVO.getFile_valid_date());
-					map.put("file_name", origin_file_name);
-					
-					//파일 타입 반환
-					switch (chatFileVO.getFile_type()) {
-                    case 0:
-                        map.put("file_type", "처방전");
-                        break;
-                    case 1:
-                        map.put("file_type", "진단서");
-                        break;
-                    case 2:
-                        map.put("file_type", "소견서");
-                        break;
-                    case 3:
-                        map.put("file_type", "진료비 세부내역서");
-                        break;
-					}
-					
-					Long file_num = chatService.selectFileNum(chatFileVO.getChat_num(), file_name);
-					map.put("file_num", file_num);
-					log.debug("<<반환한 file_num>>:"+file_num);
-				}//end of not "pastDate"
-			}//end of not "emptyDate"
-		}//end of not "emptyFile"
-		
+				Long file_num = chatService.selectFileNum(chatFileVO.getChat_num(), file_name);
+				map.put("file_num", file_num);
+				
+				log.debug("<<반환한 file_num>>:"+file_num);
+				
+			}//end of else
+		}//end of not "pastDate"
 		return map;
 	}
 	
@@ -335,30 +331,36 @@ public class ChatController {
 		return map;
 	}
 
-	
+
 	/*=======================
 	 * 	    진료 종료 전송
 	 ========================*/
 	@PostMapping("/chat/requestPayment")
-	public Map<String,Object> requestPayment(long chat_num,
-											 @RequestParam("#pay_amount") int pay_amount){
+	@ResponseBody
+	public Map<String,Object> requestPayment(@RequestParam("chat_num") long chat_num,
+											 @RequestParam("pay_amount") int pay_amount){
 		Map<String,Object> map = new HashMap<String,Object>();
 		
 		ChatVO chat = chatService.selectChat(chat_num);
+		log.debug("<<채팅 번호>>:"+chat_num);
 		
 		//환자 번호 구하기
 		long mem_num = chat.getMem_num();
+		log.debug("<<환자 번호>>:"+mem_num);
+		
 		//의사 번호 구하기
 		long doc_num = chat.getDoc_num();
+		log.debug("<<의사 번호>>:"+doc_num);
 		
 		//환자 이름 구하기
 		MemberVO member = memberService.selectMember(mem_num);
 		String mem_name = member.getMem_name();
+		log.debug("<<환자 이름>>:"+mem_name);
 		
 		//의사 이름 구하기
-		MemberVO doctor = memberService.selectMember(doc_num);
+		DoctorVO doctor = doctorService.selectDoctor(doc_num);
 		String doc_name = doctor.getMem_name();
-		
+		log.debug("<<의사 이름>>:"+doc_num);
 		
 		try {
 			map.put("result", "success");
