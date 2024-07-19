@@ -223,7 +223,7 @@
 	
 	<div id="detail_btn_box">
 		<div class="d-flex justify-content-center align-items-center">
-			<button id="reservation_btn" data-hos-num="${hospital.hos_num}">
+			<button id="reservation_btn" data-hos-name="${hospital.hos_name}" data-hos-num="${hospital.hos_num}">
                 진료 예약하기
             </button>
 			<div id="call_btn">
@@ -235,12 +235,11 @@
 
 <div id="reservation_page" style="display:none;">
 	<jsp:include page="/WEB-INF/views/reservation/reservation.jsp"/>
-</div>    
+</div>   
 <script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <script>
 $(function(){
     $('#reservation_btn').click(function(event){
-        var reservation_page = $('#reservation_page'); 
         $.ajax({
             url: '/reservation/reservation',
             method: 'get',
