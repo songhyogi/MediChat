@@ -6,10 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title><tiles:getAsString name="title"/></title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/kcy.css" type="text/css">
-<tiles:insertAttribute name="font" ignore="true"/>
-<tiles:insertAttribute name="css" ignore="true"/>
 <tiles:insertAttribute name="bootstrap" ignore="true"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/kcy.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/common.css" type="text/css">
 </head>
 <body>
 <div id="main">
