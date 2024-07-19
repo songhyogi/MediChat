@@ -40,7 +40,7 @@ public class HealthAjaxController {
 		}
 	
 		int count = service.selectHreCount(healthy_num);
-		PagingUtil page = new PagingUtil(pageNum,count,10,10,"");
+		PagingUtil page = new PagingUtil(pageNum,count,5,10,null);
 		map.put("healthy_num", healthy_num);
 		map.put("start", page.getStartRow());
 		map.put("end", page.getEndRow());
@@ -51,7 +51,7 @@ public class HealthAjaxController {
 		jmap.put("list", list);
 		jmap.put("count", count);
 		jmap.put("user_num", user_num);
-		log.debug("로그 댓글불러오기"+jmap);
+
 		return jmap;
 	}
 	
@@ -173,4 +173,29 @@ public class HealthAjaxController {
 		return map;
 	}
 
+	//답글 보기
+	@PostMapping("/health/selectReHreply")
+	@ResponseBody
+	public Map<String,Object> selectReHreList(long hre_renum,HttpSession session){
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		MemberVO user = (MemberVO) session.getAttribute("user");
+		long user_num;
+		if(user == null) {
+			user_num=0;
+		}else{
+			user_num = user.getMem_num();
+		}
+		map.put("hre_renum", hre_renum);
+		map.put("user_num", user_num);
+		List<HealthyReplyVO> list = service.selectReHreList(map);
+	
+		Map<String,Object> jmap = new HashMap<String,Object>();
+		jmap.put("list", list);
+		jmap.put("user_num", user_num);
+		log.debug("로그 댓글불러오기"+jmap);
+		return jmap;
+	}
+	
+	
 }

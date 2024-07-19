@@ -125,6 +125,31 @@
 	 	
 	 
 	 </select>
+	 <select id="selectReHreList" parameterType="map" resultType="healthyReplyVO">
+	 	SELECT 
+	 		hre_num,
+	 		healthy_num,
+	 		mem_num,
+	 		hre_renum,
+	 		hre_content,
+	 		hre_reg_date,
+	 		hre_modify_date,
+	 		hre_level,
+	 		mem_id id,
+	 		refav_cnt,
+	 		click_num
+	 	FROM(SELECT rownum anum,
+	 							 a.* 
+	 				FROM (SELECT * 
+	 							 FROM healthy_re  JOIN member USING (mem_num)
+	 							 				  LEFT OUTER JOIN (SELECT mem_num click_num,hre_num FROM healthy_re_fav WHERE mem_num=#{user_num}) USING(hre_num)
+	 							 				  LEFT OUTER JOIN (SELECT COUNT(hre_num) refav_cnt,hre_num FROM healthy_re_fav GROUP BY hre_num ) USING(hre_num)
+	 							 <![CDATA[
+	 							  WHERE  hre_renum=#{hre_renum} AND hre_level > 0 
+	 							 ]]>
+	 							 ORDER BY hre_num ASC
+	 				) a ) 
+	 </select>
  </mapper>
 
 

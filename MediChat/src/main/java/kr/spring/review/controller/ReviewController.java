@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.spring.member.vo.MemberVO;
@@ -25,6 +27,11 @@ public class ReviewController {
 	
 	@Autowired
 	private ReviewService service;
+	
+	@ModelAttribute
+	public ReviewVO initCommand() {
+		return new ReviewVO();
+	}
 	
 	@GetMapping("/review/reviewMemList")
 	public String myReviewList(@RequestParam(defaultValue="1") int pageNum,@RequestParam(defaultValue="1") String keyfield, HttpServletRequest request,HttpSession session,Model model) {
@@ -50,4 +57,99 @@ public class ReviewController {
 		}
 		return "common/resultAlert";
 	}
+	
+	@GetMapping("/review/writeReview")
+	public String writeReviewForm(HttpSession session, HttpServletRequest request,Model model) {
+		MemberVO user= (MemberVO) session.getAttribute("user");
+		if(user == null) {
+			model.addAttribute("message","로그인 후 이용해주세요");
+			model.addAttribute("url",request.getContextPath()+"/member/login");
+		}else {
+			
+			return "myReviewWrite";
+		}
+		
+		return "common/resultAlert";
+	}
+	
+	@PostMapping("/review/writeReview")
+	public String writeReview(ReviewVO vo,HttpSession session, HttpServletRequest request,Model model) {
+		MemberVO user= (MemberVO) session.getAttribute("user");
+		if(user == null) {
+			model.addAttribute("message","로그인 후 이용해주세요");
+			model.addAttribute("url",request.getContextPath()+"/member/login");
+		}else {
+			log.debug("<<<<<<<<<<<<<<<후기작성"+vo);
+			return "redirect:/review/reviewMemList";
+		}
+		
+		return "common/resultAlert";
+	}
+	
+	@GetMapping("/review/updateReview")
+	public String writeReviewForm(long rev_num,HttpSession session, HttpServletRequest request,Model model) {
+		MemberVO user= (MemberVO) session.getAttribute("user");
+		if(user == null) {
+			model.addAttribute("message","로그인 후 이용해주세요");
+			model.addAttribute("url",request.getContextPath()+"/member/login");
+		}else {
+			ReviewVO vo = service.selectReviewDetail(rev_num);
+			if(vo.getMem_num() != user.getMem_num()) {
+				model.addAttribute("message","잘못된 접근 입니다.");
+				model.addAttribute("url",request.getContextPath()+"/review/reviewMemList");
+			}else {
+				model.addAttribute("reviewVO",vo);
+				return "myModifyReviewWrite";
+			}
+	
+		}
+		
+		return "common/resultAlert";
+	}
+	
+	@PostMapping("/review/updateReview")
+	public String updateReview(ReviewVO vo,HttpSession session, HttpServletRequest request,Model model) {
+		MemberVO user= (MemberVO) session.getAttribute("user");
+		if(user == null) {
+			model.addAttribute("message","로그인 후 이용해주세요");
+			model.addAttribute("url",request.getContextPath()+"/member/login");
+		}else {
+			ReviewVO db_vo = service.selectReviewDetail(vo.getRev_num());
+			if(db_vo.getMem_num() != user.getMem_num()) {
+				model.addAttribute("message","잘못된 접근 입니다.");
+				model.addAttribute("url",request.getContextPath()+"/review/reviewMemList");
+			}else {
+				service.updateReview(vo);
+				model.addAttribute("message","리뷰 수정이 완료되었습니다.");
+				model.addAttribute("url",request.getContextPath()+"/review/reviewMemList");
+			}
+			
+		}
+		
+		return "common/resultAlert";
+	}
+	
+	
+	@GetMapping("/review/deleteReview")
+	public String deleteReviewForm(long rev_num,HttpSession session, HttpServletRequest request,Model model) {
+		MemberVO user= (MemberVO) session.getAttribute("user");
+		if(user == null) {
+			model.addAttribute("message","로그인 후 이용해주세요");
+			model.addAttribute("url",request.getContextPath()+"/member/login");
+		}else {
+			ReviewVO vo = service.selectReviewDetail(rev_num);
+			if(vo.getMem_num() != user.getMem_num()) {
+				model.addAttribute("message","잘못된 접근 입니다.");
+				model.addAttribute("url",request.getContextPath()+"/review/reviewMemList");
+			}else {
+				service.deleteReview(rev_num);
+				model.addAttribute("message","삭제되었습니다.");
+				model.addAttribute("url",request.getContextPath()+"/review/reviewMemList");
+			}
+	
+		}
+		
+		return "common/resultAlert";
+	}
+	
 }

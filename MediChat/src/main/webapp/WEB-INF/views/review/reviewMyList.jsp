@@ -2,7 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/review.css" type="text/css">
-
+<h4>작성한 후기 리스트</h4>
+<div class="align-right">
+	<input type="button" class="default-btn"  value="글쓰기" onclick="location.href='writeReview'">
+</div>
 <div class="align-center">
 <c:if test="${count  ==0}">
 	작성한 후기가 없습니다.
@@ -33,13 +36,13 @@
 					</div>
 				</td>
 			</tr>
-			<tr class="${r.rev_num} hide">
-				<td colspan="4">
-					<div style="margin:0 auto; width:80%; text-align:left;">
+			<tr class="${r.rev_num} hide align-center">
+				<td colspan="4" class="align-center" >
+					<div style="text-align:left; padding-left:80px;">
 							<br>
-							${r.rev_title} <br>
-							<div class="rating">
-								<input type="radio" class="star" id="star5" name="rate" value="5.0" />
+							<h4>${r.rev_title}</h4> <br>
+							<div class="rating" style="pointer-events:none;">
+								<input type="radio" class="star" id="star5"  value="5.0" />
 							    <label title="Excellent!" for="star5" class="rating__label  half">
 								    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
 								      <path
@@ -47,7 +50,7 @@
 								      ></path>
 								    </svg>
 								  </label>
-							    	<input type="radio" class="star" id="star4-5" name="rate" value="4.5" />
+							    	<input type="radio" class="star" id="star4-5"  value="4.5" />
 								   <label title="Excellent!" for="star4-5"  class="rating__label">
 								    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
 								      <path
@@ -55,7 +58,7 @@
 								      ></path>
 								    </svg>
 								  </label>
-							    	<input type="radio" class="star" id="star4" name="rate" value="4.0" />
+							    	<input type="radio" class="star" id="star4"  value="4.0" />
 								 	 <label title="Excellent!" for="star4"  class="rating__label half">
 								    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
 								      <path
@@ -63,7 +66,7 @@
 								      ></path>
 								    </svg>
 								  </label>
-							    	<input type="radio" class="star" id="star3-5" name="rate" value="3.5" />
+							    	<input type="radio" class="star" id="star3-5" value="3.5" />
 								  <label title="Excellent!" for="star3-5"  class="rating__label">
 								    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
 								      <path
@@ -71,7 +74,7 @@
 								      ></path>
 								    </svg>
 								  </label>
-							    	<input type="radio" class="star" id="star3" name="rate" value="3.0" />
+							    	<input type="radio" class="star" id="star3" value="3.0" />
 							   	 <label title="Excellent!" for="star3"  class="rating__label half">
 								    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
 								      <path
@@ -79,7 +82,7 @@
 								      ></path>
 								    </svg>
 								  </label> 
-								  <input type="radio" class="star" id="star2-5" name="rate" value="2.5" />
+								  <input type="radio" class="star" id="star2-5"  value="2.5" />
 								  <label title="Excellent!" for="star2-5"  class="rating__label">
 								    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
 								      <path
@@ -87,7 +90,7 @@
 								      ></path>
 								    </svg>
 								  </label>
-								  <input type="radio" class="star" id="star2" name="rate" value="2.0" />
+								  <input type="radio" class="star" id="star2"  value="2.0" />
 								   <label title="Excellent!" for="star2"  class="rating__label half">
 								    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
 								      <path
@@ -95,7 +98,7 @@
 								      ></path>
 								    </svg>
 								  </label> 
-								  <input type="radio" class="star"   id="star1-5" name="rate" value="1.5" />
+								  <input type="radio" class="star"   id="star1-5" value="1.5" />
 								  <label title="Excellent!" for="star1-5"  class="rating__label">
 								    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
 								      <path
@@ -103,7 +106,7 @@
 								      ></path>
 								    </svg>
 								  </label>
-								  	<input type="radio" class="star"  id="star1" name="rate" value="1.0" />
+								  	<input type="radio" class="star"  id="star1"  value="1.0" />
 								   <label title="Excellent!" for="star1"  class="rating__label half">
 								    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
 								      <path
@@ -111,7 +114,7 @@
 								      ></path>
 								    </svg>
 								  </label>
-							    	<input type="radio" class="star"  id="star0-5" name="rate" value="0.5" />
+							    	<input type="radio" class="star"  id="star0-5" value="0.5" />
   									<label title="Excellent!" for="star0-5"  class="rating__label">
 								    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
 								      <path
@@ -119,23 +122,28 @@
 								      ></path>
 								    </svg>
 								  </label>
-							</div>					
-							   <script type="text/javascript">
-							   		$('input:radio[value="${r.rev_grade}"]').prop('checked',true);
-							   		$('input:radio').prop('disabled',true);
-							   		$('input:radio').prop('readonly');
-							   </script>
-								
+							</div>						
 							<span >작성일 : ${r.rev_reg} <c:if test="${!empty r.rev_modify}">수정일 : ${r.rev_modify}</c:if></span><br>
 							<hr width="100%" size="1">	 
+							 <p>
 							 ${r.rev_content}
+							 </p>
+							 <br>
+							<div class="align-right">
+								<button class="default-btn" onclick="location.href='updateReview?rev_num=${r.rev_num}'">수정</button > <button  data-num="${r.rev_num}" class="default-btn delete-btn" >삭제</button>
+						   </div>
+						    <script type="text/javascript">
+							   		$('input:radio[value="${r.rev_grade}"]').prop('checked',true);
+			
+							</script>
 					</div>
+					<br>
 				</td>
 			</tr>
 	</c:forEach>
 	</table>
-	<div>
-		<div class="rating">
+	
+						<div class="rating">
 								<input type="radio" class="star" id="star5" name="rate" value="5" />
 							    <label title="Excellent!" for="star5" class="rating__label  half">
 								    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
@@ -216,13 +224,26 @@
 								      ></path>
 								    </svg>
 								  </label>
-								  
-							</div>						    
-	</div>
+						</div>						    
 	<script type="text/javascript">
 		$('.toggle').click(function(){
-			$('.'+$(this).attr('data-num')).toggleClass('hide');
+			if($('.'+$(this).attr('data-num')).hasClass('hide')){
+				$('.'+$(this).attr('data-num')).removeClass('hide');
+			}else{
+				$('.'+$(this).attr('data-num')).addClass('hide');
+			}
 		 });
+		
+		$('.delete-btn').click(function(){
+			let choice = confirm('삭제하시겠습니까? 삭제한 리뷰는 복구할 수 없습니다.');
+			if(choice){
+				location.href='deleteReview?rev_num='+$(this).attr('data-num');
+			}
+		});
 	</script>
+	<br><br>
+	<div class="align-center">
+		${page}
+	</div>
 </c:if>
 </div>
