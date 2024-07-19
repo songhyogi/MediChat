@@ -19,7 +19,7 @@ $(function(){
 		message_socket.onmessage=function(evt){
 			//메시지 읽기
 			let data = evt.data;
-			if($('#chat_body').length==1 && data.substring(0,3)=='msg'){
+			if($('#chat_body').length==1 && (data.substring(0,3)=='msg'||data.substring(0,12)=='paymentNotice')){
 				selectChat();
 			}
 		};
@@ -27,7 +27,7 @@ $(function(){
 			//소켓이 종료된 후 부과적인 작성이 있을 경우 명시
 			console.long('chat close');
 		};
-	}
+	}//end of websocket connect
 	
 	/*=======================
 	  스크롤 채팅 최하단으로 내리기
@@ -35,7 +35,7 @@ $(function(){
 	function scrollToBottom() {
             const chatBody = document.getElementById('chat_body');
             chatBody.scrollTop = chatBody.scrollHeight;
-        };
+    }; //end of scroll
 	
 	/*=======================
 		    메시지 불러오기
@@ -70,7 +70,7 @@ $(function(){
 					res_title += '			</div>';
 					res_title += '			</div>';
 					if(param.type=='3'){
-						res_title += '			<button type="button" class="chat-close-btn" id="chat_close" disabled>진료 종료</button>';
+						res_title += '			<button type="button" class="chat-close-btn" id="chat_close">진료 종료</button>';
 					};
 
 					$('#chat_header').html(res_title);
@@ -81,7 +81,6 @@ $(function(){
 						//예약시간이 되어서 채팅방을 쓸 수 있는 상태
 						$('.chat-input input').prop('disabled', false);
 						$('.chat-input button').prop('disabled', false);
-						$('#chat_close').prop('disabled', false);
 						$(param.list).each(function(index,item){
 							if(param.type=='1'|| param.type=='2'){
 								if(item.msg_sender_type == 0){ //일반 회원이 0
@@ -155,7 +154,7 @@ $(function(){
         selected.addClass('selected-chat bg-gray-6');
         
         selectChat();
-	});
+	}); //end of chat-room click
 	
 	/*=======================
 		    메시지 입력하기
@@ -201,12 +200,10 @@ $(function(){
 		}); //end of ajax
 	});//end of insertMsg
 	
-});
-	
 	//채팅 입력 폼 초기화
 	function initForm(){
 		$('#msg_content').val('');
-	}
+	} //end of init form
 	
 	//300자 이하로 입력
 	$(document).on('keydown','#msg_content',function(){
@@ -215,6 +212,8 @@ $(function(){
 		if(inputLength>300){
 			$(this).val($(this).val().substring(0,300));
 		}
+	}); //end of keydown
+	
 	/*=======================
 		 이미지 전송 폼 노출
 	=========================*/
@@ -225,7 +224,7 @@ $(function(){
 		$('.image-form-bg').show();
 		$('.image-form').show();
 		
-	});
+	}); //end of modal show
 	
 	//모달 창 닫기 버튼 클릭
 	$('.image-form .close-form-button').click(function(event){
@@ -289,7 +288,7 @@ $(function(){
 		
 		console.log('버튼 클릭 이벤트 발생');
 		
-		//$('#close_chat_num').val(chat_num);
+		$('#close_chat_num').val(chat_num);
 		$('.close-file-form-bg').show();
 		$('.close-file-form').css('display','block');
 		
@@ -318,6 +317,7 @@ $(function(){
 	$('#file_input').submit(function(event){
 		//기본 이벤트 제거
 		event.preventDefault();
+		
 		
 		let form_data = new FormData(this);
 		
@@ -451,16 +451,24 @@ $(function(){
 	//안내문자
 	let paymentNotice = '';
 	
-	$('.close-payment-form').on(click,'#close_submit',function(event){
+	$('.close-payment-form').on('click','#close_submit',function(event){
 		//기본 이벤트 제거
 		event.preventDefault();
 		
-		if('pay_amount'.val()==''){
+		console.log('종료 폼 전송 이벤트 발생');
+		
+		if($('#pay_amount').val()==''){
 			alert('진료비를 입력하세요.');
 			return false;
 		}
 		
-		let form_data = new FormData($('#form_charge')[0]);
+		const chat_num = $('#close_chat_num').val();
+    	const pay_amount = $('#pay_amount').val();
+    
+    	const form_data = {
+        	chat_num: chat_num,
+        	pay_amount: pay_amount
+    	};
 		
 		$.ajax({
 			url:'/chat/requestPayment',
@@ -470,14 +478,26 @@ $(function(){
 			success:function(param){
 				if(param.result == 'success'){
 					paymentNotice += '예약번호 '+res_num+'의 진료비 청구가 도착했습니다.';
+					paymentNotice += '<br>'
 					paymentNotice += '환자 성명: '+param.mem_name;
+					paymentNotice += '<br>'
 					paymentNotice += '담당 의사: '+param.doc_name;
+					paymentNotice += '<br>'
 					paymentNotice += '진료 일자: '+res_date;
+					paymentNotice += '<br>'
 					paymentNotice += '진료 시각: '+res_time;
+					paymentNotice += '<br>'
 					paymentNotice += '결제 금액: '+param.pay_amount;
-					paymentNotice += '<input>'; //결제 api로 연결
 					
-					message_socket.send(paymentNotice);
+					if (message_socket.readyState === WebSocket.OPEN) {
+					    // 메시지 전송
+					    message_socket.send(paymentNotice);
+					    console.log('전송된 메시지:', paymentNotice);
+					    $('.close-payment-form-bg').hide();
+						$('.close-payment-form').hide();
+					} else {
+					    console.error('웹소켓이 열려 있지 않습니다. 상태:', message_socket.readyState);
+					}
 					
 				}else if(param.result == 'fail'){
 					alert('채팅 정보 로드 오류 발생');
@@ -489,6 +509,5 @@ $(function(){
 				alert('네트워크 오류 발생');
 			}
 		});
-		
 	});
 });
