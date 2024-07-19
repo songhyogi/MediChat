@@ -5,7 +5,7 @@
 <div class="container">
 	<form:form action="login" id="member_login" modelAttribute="memberVO">
 		<div class="loginLogo">
-			<img src="/images/loginLogo.png" width="100" height="100" style="margin-top:50px;">
+			<img src="/images/loginLogo.png" width="150" height="100" style="margin-top:50px;">
 		</div>
 		<ul>
 			<li>
@@ -19,7 +19,7 @@
 		</ul>
 		<div>
 			<form:errors element="div" cssClass="error-color"/>
-			<form:button class="login_btn">로그인</form:button>
+			<form:button class="login_btn fw-7 fs-17">로그인</form:button>
 		</div>
 		<div class="button-container">
 			<label for="auto">
@@ -36,7 +36,9 @@
 		</a>
 		<!--  카카오 로그인 끝 -->
 		<!--  네이버 로그인 시작 -->
-		<img src="${pageContext.request.contextPath}/images/naver_login.png" width="200">
+		<a href="@{|${naverURL}|}">
+			<img src="${pageContext.request.contextPath}/images/naver_login.png" width="200">		
+		</a>
 		<!--  네이버 로그인 끝 -->
 	</div>
 </div>

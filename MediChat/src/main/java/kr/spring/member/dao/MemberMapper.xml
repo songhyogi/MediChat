@@ -10,7 +10,7 @@
 	</insert>
 	<!-- 아이디 중복확인 -->
 	<select id="checkId" parameterType="string" resultType="memberVO">
-		SELECT mem_num,mem_id,mem_auth,mem_name,au_id,mem_passwd,mem_email 
+		SELECT mem_num,mem_id,mem_auth,mem_name,au_id,mem_passwd,mem_email,mem_phone 
 		FROM member 
 		LEFT OUTER JOIN member_detail USING(mem_num) 
 		WHERE mem_id=#{mem_id}
@@ -20,6 +20,17 @@
 		UPDATE member_detail SET 
 		mem_birth=#{mem_birth},
 		mem_email=#{mem_email},
+		mem_phone=#{mem_phone},
+		mem_zipcode=#{mem_zipcode},
+		mem_address1=#{mem_address1},
+		mem_address2=#{mem_address2},
+		mem_modify=SYSDATE 
+		WHERE mem_num=#{mem_num}
+	</update>
+	<!-- 카카오회원 정보 수정 -->
+	<update id="updateKakao_member" parameterType="memberVO">
+		UPDATE member_detail SET 
+		mem_birth=#{mem_birth},
 		mem_phone=#{mem_phone},
 		mem_zipcode=#{mem_zipcode},
 		mem_address1=#{mem_address1},
