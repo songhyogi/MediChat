@@ -12,8 +12,8 @@
         window.calendar = new FullCalendar.Calendar(calendarEl, {
         	timeZone: 'Asia/Seoul',	//날짜를 한국 기준으로 설정
             selectable: true,	//날짜 선택가능
-            height: 800,	//높이 자동 조절
-            width: 1200,	//너비 자동 조절
+            height: 500,	//높이 자동 조절
+            width: 500,	//너비 자동 조절
             headerToolbar: {
             	left: 'title',
                 right: 'prev,next today,dayGridMonth,multiMonthYear'
@@ -285,7 +285,7 @@
     text-decoration: none;
 }
 #calendar {
-   width: 1000px;
+   width: 700px;
    height: 2000px;
 }
 /*----------모달 스타일----------*/
