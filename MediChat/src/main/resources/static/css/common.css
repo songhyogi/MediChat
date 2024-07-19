@@ -262,8 +262,17 @@ body{
 	padding-bottom: 5px;
 	margin-bottom: 10px;
 }
-
-
+/* ================= 오버레이 ================= */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3); /* 반투명 검은색 배경 */
+    z-index: 1000; /* div 아래에 배치 */
+}
 /* ================= 헤더 ================= */
 /* --- 알림 아이콘 흔들림 --- */
 @keyframes bell-shake {
@@ -329,7 +338,59 @@ body{
 /* 로그아웃 시 */
 .header-status-leftBox{
 	width: 60px;
+	position: relative;
 }
+/* 알림창 */
+#header-notification{
+	cursor: pointer;
+}
+#header-notification-unreaded{
+	cursor: pointer;
+	position:absolute;
+	top: 3px;
+	right: 13px;
+}
+.red-circle{
+	width: 8px;
+	height: 8px;
+	border-radius: 8px;
+	border: 2px solid #E60634;
+	background-color: #FF073A;
+	margin-right: 3px;
+}
+#noti_div {
+	position:absolute;
+	right:2%;
+	top:10%;
+	width: 410px;
+	height: 610px;
+	border: 2px outset black;
+	border-radius: 10px;
+	padding: 10px 15px;
+	overflow-y: scroll;
+	z-index: 1002;
+}
+#noti_div::-webkit-scrollbar {
+  display: none;
+}
+#noti_noneNoti{
+	height: 300px;
+	line-height : 300px;
+}
+#noti_box {
+	padding: 5px;
+}
+.noti-item{
+	padding: 10px 15px;
+	border-radius: 15px;
+	border: 2px solid #757575;
+	margin-bottom: 8px;
+	cursor: pointer;
+}
+.noti-item:hover{
+	background-color: #f2f2f2;
+}
+
 .header-status-rightBox{
 	width: 70px;
 }

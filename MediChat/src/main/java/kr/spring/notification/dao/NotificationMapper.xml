@@ -54,14 +54,15 @@
 	<select id="selectCountNotification" parameterType="long" resultType="integer">
 		SELECT count(*)
 		FROM notification
-		WHERE mem_num = #{mem_num} and noti_isread = 0
+		WHERE mem_num = #{mem_num} AND noti_isread = 0
 	</select>
 	
-	<!-- 개인의 안 읽은 알림 목록 -->
+	<!-- 개인의 알림 목록 -->
 	<select id="selectListNotification" parameterType="long" resultType="notificationVO">
 		SELECT *
 		FROM notification
-		WHERE mem_num = #{mem_num} and noti_isread = 0
+		WHERE mem_num = #{mem_num}
+		ORDER BY noti_isread, noti_priority DESC, noti_createddate DESC
 	</select>
 	
 	<!-- 알림 삭제 -->
