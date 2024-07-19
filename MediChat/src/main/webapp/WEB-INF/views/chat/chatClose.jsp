@@ -3,7 +3,6 @@
 <div class="close-file-form">
 	<div class="form-title bg-green-7 fs-20 fw-4">
 		진료 종료
-		<button type="button" class="close-button">&times;</button>
 	</div>
 	<div class="close-form-body">
 		<div class="form-notice">
@@ -25,14 +24,14 @@
 		<form action="file_input" method="post" id="file_input" enctype="multipart/form-data">
 			<input type="hidden" name="chat_num" id="close_chat_num" value="">
 			<label for="file_type">파일 유형</label>
-			<select name="file_type">
+			<select name="file_type" id="file_type">
 				<option value="0">처방전</option>
 				<option value="1">소견서</option>
 				<option value="2">진단서</option>
 				<option value="3">진료비 세부내역서</option>
 			</select>
 			<label for="file_valid_date">유효기간</label>
-			<input type="date" name="file_valid_date"><br>
+			<input type="date" name="file_valid_date" id="file_valid_date"><br>
 			<label for="select_file" class="">파일 선택</label>
 			<input type="file" name="select_file" id="select_file" accept=".pdf,.doc,.docx">
 			<input type="submit" value="등록" class="btn-green">

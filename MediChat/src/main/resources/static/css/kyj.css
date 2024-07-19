@@ -121,14 +121,19 @@
 	clear:both;
 }
 .other-message{
-	width:45%;
+	max-width:55%;
 	color:white;
 	float:left;
+	word-wrap: break-word; /* 긴 단어의 줄바꿈 처리 */
+  	overflow-wrap: break-word;
 }
 .my-message{
-	width:45%;
+	overflow:auto;
+	max-width:55%;
 	color:white;
 	float:right;
+	word-wrap: break-word; /* 긴 단어의 줄바꿈 처리 */
+  	overflow-wrap: break-word;
 }
 .image-form{
 	display:none;
@@ -266,6 +271,10 @@
 	width:140px;
 	height:60px;
 	margin:3px;
+}
+.list-delete{
+	border:none;
+	background-color:none;
 }
 /*=======================
 	모달창 구성(진료비 청구)

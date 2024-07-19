@@ -19,8 +19,7 @@ $(function(){
 		message_socket.onmessage=function(evt){
 			//메시지 읽기
 			let data = evt.data;
-			if($('#chat_body').length==1 
-			           && data.substring(0,3)=='msg'){
+			if($('#chat_body').length==1 && data.substring(0,3)=='msg'){
 				selectChat();
 			}
 		};
@@ -71,7 +70,7 @@ $(function(){
 					res_title += '			</div>';
 					res_title += '			</div>';
 					if(param.type=='3'){
-						res_title += '			<button class="chat-close-btn" id="chat_close">진료 종료</button>';
+						res_title += '			<button type="button" class="chat-close-btn" id="chat_close" disabled>진료 종료</button>';
 					};
 
 					$('#chat_header').html(res_title);
@@ -80,23 +79,25 @@ $(function(){
 					message += '		<ul>';
 					if(param.chat=='open'){
 						//예약시간이 되어서 채팅방을 쓸 수 있는 상태
-						$('.chat-input input,.chat-input button').prop('disabled', false);
+						$('.chat-input input').prop('disabled', false);
+						$('.chat-input button').prop('disabled', false);
+						$('#chat_close').prop('disabled', false);
 						$(param.list).each(function(index,item){
 							if(param.type=='1'|| param.type=='2'){
 								if(item.msg_sender_type == 0){ //일반 회원이 0
 									//유저가 일반 회원이면서 일반 회원의 입력인 경우(본인이 보낸 메시지인 경우)
-									message += '			<li class="my-message bg-green-7 fs-20">'+item.msg_content+'</li>';
+									message += '			<li class="my-message bg-green-7 fs-17">'+item.msg_content+'</li>';
 								}else if(item.msg_sender_type == 1){
 									//유저가 일반 회원이면서 의사 회원의 입력인 경우(상대방이 보낸 메시지인 경우)
-									message += '			<li class="other-message bg-gray-6 fs-20">'+item.msg_content+'</li>';
+									message += '			<li class="other-message bg-gray-6 fs-17">'+item.msg_content+'</li>';
 								}
 							}else if(param.type=='3'){
 								if(item.msg_sender_type == 1){ //의사 회원이 1
 									//유저가 의사 회원이면서 일반 회원의 입력인 경우(본인이 보낸 메시지인 경우)
-									message += '			<li class="my-message bg-green-7 fs-20">'+item.msg_content+'</li>';
+									message += '			<li class="my-message bg-green-7 fs-17">'+item.msg_content+'</li>';
 								}else if(item.msg_sender_type == 0){
 									//유저가 의사 회원이면서 의사 회원의 입력인 경우(상대방이 보낸 메시지인 경우)
-									message += '			<li class="other-message bg-gray-6 fs-20">'+item.msg_content+'</li>';
+									message += '			<li class="other-message bg-gray-6 fs-17">'+item.msg_content+'</li>';
 								}
 							}//end of param.type(이용자 type)
 						}); //end of message list
@@ -110,6 +111,8 @@ $(function(){
 						message += '			<img src="../images/chat_bubble.png" width="40px" height="40px" class="chat-bubble">';
 						message += '			<span class="fs-21 chat-notice fw-8">아직 진료가 시작되지 않은 채팅방입니다</span>'
 						message += '		</div>'
+						$('.chat-input input').attr('disabled','disabled');
+						$('.chat-input button').attr('disabled','disabled');
 					}
 					
 					$('#chat_body').html(message);
@@ -198,6 +201,7 @@ $(function(){
 		}); //end of ajax
 	});//end of insertMsg
 	
+});
 	
 	//채팅 입력 폼 초기화
 	function initForm(){
@@ -205,14 +209,12 @@ $(function(){
 	}
 	
 	//300자 이하로 입력
-	$(document).on('keydown','textarea',function(){
+	$(document).on('keydown','#msg_content',function(){
 		let inputLength = $(this).val().length;
 		
 		if(inputLength>300){
 			$(this).val($(this).val().substring(0,300));
 		}
-	});
-	
 	/*=======================
 		 이미지 전송 폼 노출
 	=========================*/
@@ -226,7 +228,7 @@ $(function(){
 	});
 	
 	//모달 창 닫기 버튼 클릭
-	$('.image-form .close-button').click(function(event){
+	$('.image-form .close-form-button').click(function(event){
 		//기본 이벤트 제거
 		event.preventDefault();
 		
@@ -287,18 +289,18 @@ $(function(){
 		
 		console.log('버튼 클릭 이벤트 발생');
 		
-		$('#close_chat_num').val(chat_num);
+		//$('#close_chat_num').val(chat_num);
 		$('.close-file-form-bg').show();
 		$('.close-file-form').css('display','block');
 		
 	});
 	
-	//모달 창 닫기 버튼 클릭
-	$('.close-file-form .close-button').click(function(event){
+	//모달 취소 버튼 클릭
+	$('.close-file-form').on('click','#close_cancel',function(event){
 		//기본 이벤트 제거
 		event.preventDefault();
 		
-		console.log('닫기 버튼 클릭 이벤트 발생');
+		console.log('취소 버튼 클릭 이벤트 발생');
 		
 		
 		$('.close-file-form-bg').hide();
@@ -320,6 +322,19 @@ $(function(){
 		let form_data = new FormData(this);
 		
 		let file = '';
+		let form = this;
+		
+		file += '<tr>';
+		
+		if($('#select_file').val().trim()==''){
+			//파일을 등록하지 않은 경우
+			alert('파일을 등록해주세요.');
+			return false;
+		}else if($('#file_valid_date').val().trim()==''){
+			//유효기간을 등록하지 않은 경우
+			alert('유효기간을 등록해주세요.');
+			return false;
+		}
 		
 		$.ajax({
 			url:'/chat/chatClose',
@@ -329,39 +344,33 @@ $(function(){
         	processData: false,
 			dataType:'json',
 			success:function(param){
-				
-				file += '<tr>'
-				if(param.file_name=='emptyFile'){
-					//파일을 등록하지 않은 경우
-					alert('파일을 등록해주세요.');
-					$('#select_file').val('').focus();
-					return false;
-				}else{
-					file += '	<td>'+param.file_name+'</td>';
-				}
-				file += '	<td>'+param.file_type+'</td>';
-				if(param.valid_date=='emptyDate'){
-					//유효기간을 등록하지 않은 경우
-					alert('유효기간을 등록해주세요.');
-					return false;
-				}else if(param.valid_date=='pastDate'){
+				if(param.valid_date=='pastDate'){
 					//유효기간을 지난 날짜로 설정한 경우
 					alert('유효기간은 당일 이전으로 설정할 수 없습니다.');
 					$('#file_valid_date').focus();
 					return false;
 				}else{
+					file += '	<td>'+param.file_name+'</td>';
+					file += '	<td>'+param.file_type+'</td>';
 					file += '	<td>'+param.valid_date+'</td>';	
 					file += '	<td><button type="button" class="list-delete" data-file_num='+param.file_num+'>&times;</button></td>'
+					file += '</tr>';
+
+				$('#file_table').append(file);
 				}
-				file += '</tr>';
 				
-				$('#file_table').append(file);   
+				console.log('파일 요소 추가 후, 폼 초기화 전'); 
+								
+				form.reset();
+				// 파일 입력 초기화
+       			$('#file_input').val('');
 	           },
 			error:function(){
 				alert('네트워크 오류 발생');
 			}
 		});
 	});
+	
 	
 	/*=======================
 		채팅 종료 폼 파일 삭제
@@ -384,7 +393,10 @@ $(function(){
 			success:function(param){
 				if(param.result=='success'){
 					console.log(file_num+'번 파일 삭제 성공');
-					$('td[data-file_num="' + file_num + '"]').closest('tr').remove();
+				    let deleteRow = $('td[data-file_num="'+file_num+'"]');
+				    let parentRow = deleteRow.parent();
+				    console.log(parentRow);
+				    parentRow.remove();
 				}else{
 					console.log(file_num+'번 파일 삭제 실패');
 					alert('파일 삭제에 실패했습니다.');
@@ -431,5 +443,52 @@ $(function(){
 	//모달 창 생성 시 외부 클릭 이벤트 삭제
 	$('.close-form').click(function(event) {
 		event.stopPropagation();
+	});
+	
+	/*=======================
+		 진료비 청구 폼 제출
+	=========================*/
+	//안내문자
+	let paymentNotice = '';
+	
+	$('.close-payment-form').on(click,'#close_submit',function(event){
+		//기본 이벤트 제거
+		event.preventDefault();
+		
+		if('pay_amount'.val()==''){
+			alert('진료비를 입력하세요.');
+			return false;
+		}
+		
+		let form_data = new FormData($('#form_charge')[0]);
+		
+		$.ajax({
+			url:'/chat/requestPayment',
+			type:'post',
+			data:form_data,
+			dataType:'json',
+			success:function(param){
+				if(param.result == 'success'){
+					paymentNotice += '예약번호 '+res_num+'의 진료비 청구가 도착했습니다.';
+					paymentNotice += '환자 성명: '+param.mem_name;
+					paymentNotice += '담당 의사: '+param.doc_name;
+					paymentNotice += '진료 일자: '+res_date;
+					paymentNotice += '진료 시각: '+res_time;
+					paymentNotice += '결제 금액: '+param.pay_amount;
+					paymentNotice += '<input>'; //결제 api로 연결
+					
+					message_socket.send(paymentNotice);
+					
+				}else if(param.result == 'fail'){
+					alert('채팅 정보 로드 오류 발생');
+				}else{
+					alert('종료 처리 오류 발생');
+				}
+			},
+			error:function(){
+				alert('네트워크 오류 발생');
+			}
+		});
+		
 	});
 });
