@@ -37,7 +37,23 @@
 	</select>
 	<!-- 예약 정보 저장하기 -->
 	<insert id="insertReservation" parameterType="kr.spring.reservation.vo.ReservationVO">
-        INSERT INTO reservation (res_num, mem_num, doc_num, res_status, res_type, res_date, res_time, res_content)
-        VALUES (reservation_seq.nextval, #{mem_num}, #{doc_num}, #{res_status}, #{res_type}, #{res_date}, #{res_time}, #{res_content})
+        INSERT INTO reservation(
+        	res_num, 
+        	mem_num, 
+        	doc_num, 
+        	res_status, 
+        	res_type, 
+        	res_date, 
+        	res_time, 
+        	res_content)
+        VALUES (
+        	reservation_seq.nextval, 
+        	#{mem_num}, 
+        	#{doc_num}, 
+        	0, 
+        	#{res_type}, 
+        	#{res_date, jdbcType=VARCHAR}, 
+        	#{res_time, jdbcType=VARCHAR}, 
+        	#{res_content, jdbcType=CLOB})
     </insert>
  </mapper>

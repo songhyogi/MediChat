@@ -16,5 +16,5 @@ public interface ReservationMapper {
 	//특정 날짜와 시간에 근무하는 의사 가져오기
     public List<DoctorVO> getAvailableDoctors(Map<String, Object> params);
     //예약정보 저장하기
-    public void insertReservation(ReservationVO reservationVO);
+    public void insertReservation(ReservationVO reservation);
 }
