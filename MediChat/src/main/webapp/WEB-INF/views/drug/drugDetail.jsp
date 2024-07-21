@@ -23,7 +23,7 @@ ul li {
 <div class="page-main">
 	<div class="body-header">
 		<p class="text-lightgray fw-7 fs-13">홈 > 의약품 백과사전</p>
-		<h4>의약품 상세 정보</h4>
+		<h4>의약품 상세정보</h4>
 	</div><br>
 	<div class="drug-body">
 		<h4>제품 기본 정보</h4>

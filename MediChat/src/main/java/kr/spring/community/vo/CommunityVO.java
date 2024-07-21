@@ -14,7 +14,6 @@ import lombok.ToString;
 public class CommunityVO {
 	private long cbo_num;
 	private long mem_num;
-	@Size
 	private long cbo_type;
 	@NotBlank
 	private String cbo_title;
