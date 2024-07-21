@@ -56,4 +56,33 @@
         	#{res_time, jdbcType=VARCHAR}, 
         	#{res_content, jdbcType=CLOB})
     </insert>
+    <!-- <select id="selectResCount" parameterType="map" resultType="integer">
+    	SELECT COUNT(*)
+    	FROM reservation JOIN member USING(mem_num)
+    	WHERE mem_num = #{mem_num}
+    </select>
+    <select id="selectReservationList" parameterType="map" resultType="ReservationVO">
+    	SELECT 
+            r.res_num,
+            r.mem_num,
+            r.doc_num,
+            r.res_status,
+            r.res_type,
+            r.res_date,
+            r.res_time,
+            r.res_reg,
+            r.res_content,
+            m.mem_name AS doc_name
+        FROM 
+            reservation r
+        JOIN 
+            member m ON r.doc_num = m.mem_num
+        WHERE 
+            r.mem_num = #{mem_num}
+        ORDER BY 
+            r.res_date DESC, r.res_time DESC
+  		<![CDATA[
+	 	WHERE anum >= #{start} AND anum <= #{end}
+	 	]]>
+    </select> -->
  </mapper>

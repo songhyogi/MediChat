@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
-
 import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.hospital.vo.HospitalVO;
 import kr.spring.reservation.vo.ReservationVO;
@@ -17,4 +16,7 @@ public interface ReservationMapper {
     public List<DoctorVO> getAvailableDoctors(Map<String, Object> params);
     //예약정보 저장하기
     public void insertReservation(ReservationVO reservation);
+    //예약내역 가져오기
+    public Integer selectCountByMem(Map<String,Object>map);
+    public List<ReservationVO> getMyResList(Map<String,Object> map);
 }

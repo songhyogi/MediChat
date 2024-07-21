@@ -28,20 +28,20 @@ public class ReservationAjaxController {
 	@Autowired
 	private ReservationService reservationService;
 	
-//	@GetMapping("/reservation/reservation")
-//	public Map<String,Object> reservation(Long hos_num,Model model,HttpSession session) {
-//		MemberVO user = (MemberVO) session.getAttribute("user");
-//		Map<String,Object> map = new HashMap<String,Object>();
-//		
-//		if(user == null) {
-//			map.put("result", "logout");
-//	    }else {
-//	    	map.put("result","success");
-//	    	model.addAttribute("hos_num", hos_num);
-//	    }
-//		
-//		return map;
-//	}
+	@GetMapping("/reservation/reservation")
+	@ResponseBody
+	public Map<String,String> reservation(Long hos_num,Model model,HttpSession session) {
+		log.debug("<<ajax 컨트롤러 진입>>");
+		Map<String,String> map = new HashMap<>();
+		MemberVO user = (MemberVO) session.getAttribute("user");
+		if(user == null) {
+			map.put("result", "logout");
+		}else {
+			map.put("result","success");
+			model.addAttribute("hos_num", hos_num);
+		}
+		return map;
+	}
 
 	@GetMapping("/reservation/hosHours")
 	@ResponseBody

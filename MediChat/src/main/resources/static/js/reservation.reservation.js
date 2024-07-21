@@ -1,5 +1,8 @@
 function initializeCalendar(hos_num) {
     var calendarEl = document.getElementById('calendar');
+    var today = new Date();
+    today.setHours(0, 0, 0, 0); // 현재 시간을 00:00:00으로 설정
+    
     var calendar = new FullCalendar.Calendar(calendarEl, {
         selectable: true,// 사용자가 날짜를 선택할 수 있게 설정
         height: 'auto',
@@ -17,12 +20,25 @@ function initializeCalendar(hos_num) {
         },
         fixedWeekCount: false,// 다음 달의 날짜가 보여지지 않게 설정
         dateClick: function(info) {
-        	resetSelections(); // 이전 선택 초기화
+            // 오늘 이전 날짜는 클릭할 수 없도록 설정
+            if (info.date < today) {
+                return;
+            }
+            resetSelections(); // 이전 선택 초기화
             // 날짜 클릭 시 호출될 함수
-        	displayHosTimes(info.dateStr, info.date.getDay(), hos_num);
+            displayHosTimes(info.dateStr, info.date.getDay(), hos_num);
             // 선택된 날짜의 데이터 속성 설정
             $('td.fc-daygrid-day').removeClass('fc-daygrid-day-selected');
             $(info.dayEl).addClass('fc-daygrid-day-selected').attr('data-date', info.dateStr);
+        },
+        dayCellDidMount: function(info) {
+            // 오늘 이전 날짜는 글씨 색을 회색으로 표시
+            var date = new Date(info.date);
+            date.setHours(0, 0, 0, 0); // 시간을 00:00:00으로 설정하여 비교
+            if (date < today) {
+                $(info.el).find('.fc-daygrid-day-number').css('color', '#d6d6d6');
+                $(info.el).css('pointer-events', 'none');
+            }
         }
     });
     calendar.render();

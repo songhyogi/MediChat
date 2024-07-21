@@ -19,4 +19,5 @@ public class ReservationVO {
 	private String res_time;
 	private Date res_reg;
 	private String res_content;
+	private String doc_name;
 }
