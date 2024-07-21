@@ -32,6 +32,7 @@ function initializeCalendar(hos_num) {
 function displayHosTimes(date, dayOfWeek, hos_num) {
     // #time-buttons 요소를 비움
     $('#time-buttons').empty();
+    $('#doctor-info').empty(); // 기존에 남아있는 의사 정보 초기화
 
     // 요일에 따라 적절한 필드 이름을 매핑 (풀캘린더와 병원API의 정해진 필드가 다르기 때문)
     const dayMapping = {
@@ -63,51 +64,64 @@ function displayHosTimes(date, dayOfWeek, hos_num) {
 
                 // 시작 시간 또는 종료 시간이 없으면 경고를 표시하고 반환
                 if (!startTime || !endTime) {
-                    alert('해당 날짜에 대한 진료 시간이 없습니다.');
+                    $('#time-buttons').html('<p>해당 날짜에 대한 진료 시간이 없습니다.</p>');
                     return;
                 }
 
-                // 시작 시간과 종료 시간 사이의 30분 단위 시간을 생성
-                let times = generateTimesForDay(startTime, endTime);
-                let output = '<div class="time-section"><h5>오전</h5><div class="time-row">';
-                // 오전 시간 버튼 생성
-                times.forEach((time, index) => {
-                    if (time < "12:00") {
-                        if (index > 0 && index % 4 == 0) {
-                            output += '</div><div class="time-row">';
-                        }
-                        output += '<button class="time-button" data-time="' + time + '" data-day-of-week="' + dayOfWeek + '">' + time + '</button>';
+                // 선택한 날짜에 근무하는 의사가 있는지 확인
+                getAvailableDoctors(hos_num, date, null, dayOfWeek, function(doctors) {
+                    if (doctors.length === 0) {
+                        $('#time-buttons').html('<p>해당 날짜에 근무하는 의사가 없습니다.</p>');
+                        return;
                     }
-                });
-                output += '</div></div>';
 
-                output += '<div class="time-section"><h5>오후</h5><div class="time-row">';
-                // 오후 시간 버튼 생성
-                times.forEach((time, index) => {
-                    if (time >= "12:00") {
-                        if (index > 0 && index % 4 == 0) {
-                            output += '</div><div class="time-row">';
+                    // 시작 시간과 종료 시간 사이의 30분 단위 시간을 생성
+                    let times = generateTimesForDay(startTime, endTime);
+                    let output = '<div class="time-section"><h5>오전</h5><div class="time-row">';
+                    
+                    times.forEach((time, index) => {
+                        if (time < "12:00") {
+                            if (index > 0 && index % 4 == 0) {
+                                output += '</div><div class="time-row">';
+                            }
+                            output += '<button class="time-button" data-time="' + time + '" data-day-of-week="' + dayOfWeek + '">' + time + '</button>';
                         }
-                        output += '<button class="time-button" data-time="' + time + '" data-day-of-week="' + dayOfWeek + '">' + time + '</button>';
-                    }
-                });
-                output += '</div></div>';
-                $('#time-buttons').html(output);
+                    });
+                    output += '</div></div>';
 
-                // 시간 버튼 클릭 이벤트 핸들러 추가 - 근무 가능한 의사 정보 가져오기
-                $('.time-button').click(function() {
-                	initializeNextButton();
-                	// 모든 버튼에서 selected 클래스를 제거
-                    $('.time-button').removeClass('selected');
+                    output += '<div class="time-section"><h5>오후</h5><div class="time-row">';
+                    times.forEach((time, index) => {
+                        if (time >= "12:00") {
+                            if (index > 0 && index % 4 == 0) {
+                                output += '</div><div class="time-row">';
+                            }
+                            output += '<button class="time-button" data-time="' + time + '" data-day-of-week="' + dayOfWeek + '">' + time + '</button>';
+                        }
+                    });
+                    output += '</div></div>';
+                    $('#time-buttons').html(output);
 
-                    // 클릭한 버튼에 selected 클래스 추가
-                    $(this).addClass('selected');
-                	
-                    var selectedTime = $(this).data('time');
-                    var selectedDayOfWeek = $(this).data('day-of-week');
-                    console.log('Selected Time: ' + selectedTime);
-                    console.log('Selected DayOfWeek: ' + selectedDayOfWeek);
-                    getAvailableDoctors(hos_num, date, selectedTime, selectedDayOfWeek);
+                    // 각 시간 버튼에 대해 근무 가능한 의사가 있는지 확인
+                    times.forEach(time => {
+                        getAvailableDoctors(hos_num, date, time, dayOfWeek, function(doctors) {
+                            if (doctors.length === 0) {
+                                $(`button[data-time='${time}']`).addClass('disabled').prop('disabled', true);
+                            }
+                        });
+                    });
+
+                    // 시간 버튼 클릭 이벤트 핸들러 추가 - 근무 가능한 의사 정보 가져오기
+                    $('.time-button').not('.disabled').click(function() {
+                        initializeNextButton();
+                        $('.time-button').removeClass('selected');
+                        $(this).addClass('selected');
+
+                        var selectedTime = $(this).data('time');
+                        var selectedDayOfWeek = $(this).data('day-of-week');
+                        console.log('Selected Time: ' + selectedTime);
+                        console.log('Selected DayOfWeek: ' + selectedDayOfWeek);
+                        getAvailableDoctors(hos_num, date, selectedTime, selectedDayOfWeek);
+                    });
                 });
             } else if (param.result == "logout") {
                 alert("로그인이 필요합니다.");
@@ -118,8 +132,6 @@ function displayHosTimes(date, dayOfWeek, hos_num) {
         }
     });
 }
-
-
 
 //시간을 "HHmm" 형식에서 "HH:mm" 형식으로 변환하는 함수
 function convertTimeFormat(timeStr) {
@@ -152,7 +164,7 @@ function generateTimesForDay(startTime, endTime) {
     return times;
 }
 //시간 버튼의 클릭 이벤트를 처리하는 함수
-function getAvailableDoctors(hos_num, date, time, dayOfWeek) {
+function getAvailableDoctors(hos_num, date, time, dayOfWeek, callback) {
     console.log('시간 버튼 클릭 이벤트');
     console.log('hos_num:' + hos_num);
     console.log('date:' + date);
@@ -175,37 +187,42 @@ function getAvailableDoctors(hos_num, date, time, dayOfWeek) {
             if (param.result == 'logout') {
                 alert('로그인이 필요합니다.');
             } else if (param.result == 'success') {
-                let output = '<div class="doctor-section">';
-                param.doctors.forEach(function (doctor) {
-                    console.log('doctor object: ', doctor); // doctor 객체 로그 출력
-                    // 프로필 이미지 경로 설정
-                    let imageSrc = '${pageContext.request.contextPath}/doctor/docPhotoView?doc_num=' + doctor.doc_num;
+                if (callback) {
+                    callback(param.doctors);
+                } else {
+                    // 근무하는 의사 정보가 있을 경우 프로필 표시
+                    let output = '<div class="doctor-section">';
+                    param.doctors.forEach(function (doctor) {
+                        console.log('doctor object: ', doctor); // doctor 객체 로그 출력
+                        // 프로필 이미지 경로 설정
+                        let imageSrc = '/doctor/docPhotoView?doc_num=' + doctor.doc_num;
 
-                    output += '<div class="doctor-card" data-doc-num="' + doctor.doc_num + '">';
-                    output += '<img src="' + imageSrc + '" alt="' + doctor.mem_name + '" class="doctor-image">';
-                    output += '<div class="doctor-name">' + doctor.mem_name + '</div>';
-                    output += '<div class="res-type-container">';
-                    output += '<label><input type="radio" name="res_type" value="0" class="res-type-radio"> 비대면 진료</label>';
-                    output += ' <label><input type="radio" name="res_type" value="1" class="res-type-radio"> 방문 진료</label>';
+                        output += '<div class="doctor-card" data-doc-num="' + doctor.doc_num + '">';
+                        output += '<img src="' + imageSrc + '" alt="' + doctor.mem_name + '" class="doctor-image">';
+                        output += '<div class="doctor-name">' + doctor.mem_name + '</div>';
+                        output += '<div class="res-type-container">';
+                        output += '<label><input type="radio" name="res_type" value="0" class="res-type-radio"> 비대면 진료</label>';
+                        output += ' <label><input type="radio" name="res_type" value="1" class="res-type-radio"> 방문 진료</label>';
+                        output += '</div>';
+                        output += '</div>';
+                    });
                     output += '</div>';
-                    output += '</div>';
-                });
-                output += '</div>';
-                console.log('Output HTML: ', output); // 생성된 HTML 로그 출력
-                $('#doctor-info').html(output);
+                    console.log('Output HTML: ', output); // 생성된 HTML 로그 출력
+                    $('#doctor-info').html(output);
 
-                // 의사 프로필 클릭 시 비대면진료/방문진료 선택하는 라디오버튼 표시
-                $('.doctor-card').click(function() {
-                    $('.doctor-card').removeClass('selected');
-                    $(this).addClass('selected');
-                });
+                    // 의사 프로필 클릭 시 비대면진료/방문진료 선택하는 라디오버튼 표시
+                    $('.doctor-card').click(function() {
+                        $('.doctor-card').removeClass('selected');
+                        $(this).addClass('selected');
+                    });
 
-                // 라디오 버튼 클릭 이벤트 핸들러
-                $('.res-type-radio').change(function() {
-                    var resType = $(this).val();
-                    $('.doctor-card.selected').attr('data-resType', resType);
-                    $('#next-button-container input[type="button"]').prop('disabled', false).addClass('active');
-                });
+                    // 라디오 버튼 클릭 이벤트 핸들러
+                    $('.res-type-radio').change(function() {
+                        var resType = $(this).val();
+                        $('.doctor-card.selected').attr('data-resType', resType);
+                        $('#next-button-container input[type="button"]').prop('disabled', false).addClass('active');
+                    });
+                }
             } else {
                 alert('시간 버튼 이벤트 오류 발생');
             }
@@ -218,8 +235,8 @@ function getAvailableDoctors(hos_num, date, time, dayOfWeek) {
 
 // 다음 버튼 초기화 함수
 function initializeNextButton() {
-    const nextButton = '<input type="button" class="btn btn-primary" value="다음" style="margin-top: 20px;" disabled onclick="loadConfirmPage()">';
-    const cancelButton = '<input type="button" class="btn btn-secondary" value="취소" style="margin-top: 20px;" onclick="resetAll()">';
+    const nextButton = '<input type="button" class="btn btn-primary reserve-btn" value="다음" disabled onclick="loadConfirmPage()">';
+    const cancelButton = ' <input type="button" class="btn btn-secondary reserve-btn" value="취소" onclick="resetAll()">';
     $('#next-button-container').html(nextButton + cancelButton);
 }
 
@@ -249,7 +266,8 @@ function loadConfirmPage() {
 	const resTypeValue = $('.doctor-card.selected').attr('data-resType');
     const resType = resTypeValue == '0' ? '비대면 진료' : '방문 진료';
     
-    console.log('진료타입'+resTypeValue);
+    console.log('Selected Date:', selectedDate); // 추가된 로그
+    console.log('Selected Time:', selectedTime); // 추가된 로그
 	
     $('#confirm-hospital').text(hospitalName);
     $('#confirm-doctor').text(selectedDoctor);
@@ -272,22 +290,31 @@ function previousStep() {
 //동의하고 예약하기 클릭 시
 function submitReservation() {
     const symptoms = $('#confirm-symptoms').val();
+    const memNum = $('#user_mem_num').val(); // 숨겨진 필드에서 사용자 번호를 가져옴
+    const resType = $('.doctor-card.selected input[name="res_type"]:checked').val(); // 진료 유형 값 가져오기
+    
+    if (symptoms.trim() == '') {
+        alert('상세 증상을 입력하세요.');
+        $('#confirm-symptoms').val('').focus();
+        return;
+    }
+    
     const data = {
-        hospital: $('#confirm-hospital').text(),
-        doctor: $('#confirm-doctor').text(),
-        date: $('#confirm-date').text(),
-        name: $('#confirm-name').text(),
-        phone: $('#confirm-phone').text(),
-        symptoms: symptoms
+        mem_num: memNum,  // 사용자 번호
+        doc_num: $('.doctor-card.selected').data('doc-num'),  // 의사 번호
+        res_type: resType,  // 진료 유형
+        res_date: $('#confirm-date').text(),  // 예약 날짜
+        res_time: $('#confirm-time').text(),  // 예약 시간
+        res_content: symptoms  // 상세 증상
     };
-
+	console.log('Reservation Data:', JSON.stringify(data));  // 데이터를 콘솔에 출력
     $.ajax({
         url: '/reservation/reservationcompleted',
         method: 'post',
         data: JSON.stringify(data),
         contentType: 'application/json',
-        success: function(response) {
-            if (response.result == 'success') {
+        success: function(param) {
+            if (param.result == 'success') {
                 alert('예약이 완료되었습니다.');
                 //location.href = '/reservation/confirmation'; 예약내역페이지 만들면 수정 예정
             } else {

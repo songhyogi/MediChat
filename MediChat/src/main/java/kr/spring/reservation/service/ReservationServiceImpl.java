@@ -30,8 +30,11 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 
 	@Override
-	public void insertReservation(ReservationVO reservationVO) {
-		reservationMapper.insertReservation(reservationVO);
-	}
+    public void insertReservation(ReservationVO reservation) {
+        // 로그 추가
+        System.out.println("Inserting Reservation: " + reservation);
+        
+        reservationMapper.insertReservation(reservation);
+    }
 
 }

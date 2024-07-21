@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -89,20 +90,40 @@ public class ReservationAjaxController {
 	
 	@PostMapping("/reservation/reservationcompleted")
 	@ResponseBody
-	public Map<String, Object> submitReservation(ReservationVO reservationVO, HttpSession session) {
-        Map<String, Object> map = new HashMap<>();
-        MemberVO user = (MemberVO) session.getAttribute("user");
+	public Map<String, Object> submitReservation(@RequestBody Map<String, Object> reservationData, HttpSession session) {
+	    Map<String, Object> map = new HashMap<>();
+	    MemberVO user = (MemberVO) session.getAttribute("user");
 
-        if (user == null) {
-            map.put("result", "logout");
-        } else {
-            reservationVO.setMem_num(user.getMem_num());
-            reservationService.insertReservation(reservationVO);
-            map.put("result", "success");
-        }
+	    if (user == null) {
+	        map.put("result", "logout");
+	    } else {
+	        // 로그 추가
+	        System.out.println("Received Reservation Data: " + reservationData);
 
-        return map;
-    }
+	        ReservationVO reservationVO = new ReservationVO();
+	        reservationVO.setMem_num(user.getMem_num());
+	        reservationVO.setDoc_num(Long.parseLong(reservationData.get("doc_num").toString()));
+	        reservationVO.setRes_type(Long.parseLong(reservationData.get("res_type").toString()));
+	        reservationVO.setRes_date(reservationData.get("res_date").toString());
+	        reservationVO.setRes_time(reservationData.get("res_time").toString());
+	        reservationVO.setRes_content(reservationData.get("res_content").toString());
+
+	        // 로그 추가
+	        System.out.println("Mapped Reservation Data: " + reservationVO);
+
+	        try {
+	            reservationService.insertReservation(reservationVO);
+	            map.put("result", "success");
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            map.put("result", "error");
+	        }
+	    }
+
+	    return map;
+	}
+
+
 }
 	
 
