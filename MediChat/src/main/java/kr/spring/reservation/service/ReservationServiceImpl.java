@@ -31,10 +31,17 @@ public class ReservationServiceImpl implements ReservationService{
 
 	@Override
     public void insertReservation(ReservationVO reservation) {
-        // 로그 추가
-        System.out.println("Inserting Reservation: " + reservation);
-        
         reservationMapper.insertReservation(reservation);
     }
+
+	@Override
+	public Integer selectCountByMem(Map<String, Object> map) {
+		return reservationMapper.selectCountByMem(map);
+	}
+
+	@Override
+	public List<ReservationVO> getMyResList(Map<String, Object> map) {
+		return reservationMapper.getMyResList(map);
+	}
 
 }
