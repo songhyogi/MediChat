@@ -5,16 +5,15 @@
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 <!-- 의사회원정보 수정 시작 -->
 <div class="container">
-	<h2 class="title">회원정보수정(의사)</h2>
+	<h2>회원정보수정(의사)</h2>
 	<hr size="1" width="100%" noshade="noshade">
 	<span style="font-weight:bold;">정보입력</span>
 	<br>
 	<span class="title2">회원정보수정에 필요한 정보를 입력합니다.</span>
-	<form:form action="modifyUser" id="doctor_modify" modelAttribute="doctorVO">
+	<form:form action="modifyDoctor" id="doctor_modify" modelAttribute="doctorVO">
 		<form:hidden path="doc_num"/>
-		<div class="form-main">
 		<ul>
-			<li style="margin-top:20px;">
+			<li>
 				<form:label path="mem_name">이름</form:label>
 				<form:input path="mem_name"/>
 				<form:errors path="mem_name" cssClass="error-color"/>
@@ -41,12 +40,11 @@
             </li>
             <li>
 				<form:label path="doc_history">연혁</form:label>
-				<form:textarea path="doc_history" placeholder="연혁을 입력해주세요." style="height: 150px; vertical-align: top; margin-bottom:15px;"/>
+				<form:textarea path="doc_history" placeholder="연혁을 입력해주세요." style="height: 150px; vertical-align: top;"/>
 			</li>
 		</ul>
-		</div>
 		<hr size="1" width="100%" noshade="noshade">
-		<div style="text-align:right;">
+		<div style="text-align:right">
 			<input type="button" value="MY페이지" id="reload_btn" onclick="location.href='docPage'">
 			<form:button class="default-btn">수정</form:button>
 		</div>
