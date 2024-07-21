@@ -192,13 +192,36 @@ public class DoctorController {
 	 * ============================= 의사회원정보 수정 ============================
 	 */
 	@GetMapping("/doctor/modifyDoctor")
-	public String updateForm(HttpSession session, Model model) {
-		DoctorVO user = (DoctorVO) session.getAttribute("user");
-		DoctorVO doctorVO = doctorService.selectDoctor(user.getDoc_num());
-
-		model.addAttribute("doctorVO", doctorVO);
-
+	public String updateForm(DoctorVO doctorVO,HttpSession session,Model model) {
+		
+		DoctorVO user = (DoctorVO)session.getAttribute("user");
+		
+		log.debug("<<의사회원정보 수정 - 로그인 정보>> : " + user);
+		
+		if(user == null) {
+			return "redirect:/main/main";
+		}
+		DoctorVO doctor = doctorService.selectDoctor(user.getDoc_num());
+		
+		model.addAttribute("doctorVO",doctor);
+		
 		return "doctorModify";
+	}
+	@PostMapping("/doctor/modifyDoctor")
+	public String updateSubmit(@Valid DoctorVO doctorVO,BindingResult result,HttpSession session) {
+		
+		log.debug("<<의사회원정보 수정>> : "+doctorVO);
+		
+		if(result.hasFieldErrors("mem_name")||result.hasFieldErrors("doc_email")
+					||result.hasFieldErrors("hos_num")) {
+			return "doctorModify";
+		}
+		DoctorVO user = (DoctorVO)session.getAttribute("user");
+		doctorVO.setMem_num(user.getMem_num());
+		
+		doctorService.updateDoctor(doctorVO);
+		
+		return "redirect:/main/main";
 	}
 
 	/*
