@@ -179,8 +179,26 @@
 <!-- 검색창 + 인기 검색어 끝 -->
 
 
-
+<form id="locationForm" action="/hospitals" method="get">
+	<input type="hidden" id="lat" value="" name="user_lat">
+	<input type="hidden" id="lon" value="" name="user_lon">
+</form>
 <script>
+	//위치 정보 가져오기
+	const locationForm = document.getElementById('locationForm');
+	if((${empty user_lat} && ${empty user_lon}) || ('${user_lat}'=='37.4981646510326' && '${user_lon}'=='127.028307900881')){
+		if(navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(
+				function(position) {
+					const lat = position.coords.latitude;
+				    const lon = position.coords.longitude;
+				    document.getElementById('lat').value = lat;
+				    document.getElementById('lon').value = lon;
+				    locationForm.submit();
+				}
+			);
+		}
+	}
 	const subject = document.getElementsByClassName('subject');
 	for(let i=0; i<subject.length; i++){
 		subject[i].onclick = function(){

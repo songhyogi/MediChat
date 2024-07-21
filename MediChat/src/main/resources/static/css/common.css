@@ -280,13 +280,13 @@ body{
     transform: rotate(0deg);
   }
   25% {
-    transform: rotate(-45deg);
+    transform: rotate(-30deg);
   }
   50% {
-    transform: rotate(45deg);
+    transform: rotate(30deg);
   }
   75% {
-    transform: rotate(-45deg);
+    transform: rotate(-30deg);
   }
 }
 .bell-shake {
@@ -406,9 +406,12 @@ body{
 #header-profile,#header-login-text,#header-register-text{
 	cursor: pointer;
 }
+#header-status-logout{
+	position: relative;
+}
 #header-status-div{
 	position:absolute;
-	right: 35px;
+	right: -100px;
 	width: 80px;
 	height: auto;
 	padding: 5px 5px;
@@ -439,8 +442,8 @@ body{
 }
 #header-register-div{
 	position:absolute;
-	right:25px;
-	top:25px;
+	right:-100px;
+	top:-28px;
 	width: 90px;
 	height: auto;
 	padding: 5px 5px;
@@ -456,10 +459,13 @@ body{
 	border-top: 10px solid transparent; 
 	border-bottom: 10px solid transparent;
 }
+#header-status-login{
+	position:relative;
+}
 #header-login-div{
 	position:absolute;
-	right:180px;
-	top: 100px;
+	right:55px;
+	top: 45px;
 	width: 100px;
 	height: auto;
 	padding: 5px 5px;

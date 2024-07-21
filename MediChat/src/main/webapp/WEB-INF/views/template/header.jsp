@@ -49,6 +49,15 @@
 			<div class="header-status-rightBox">
 				<a id="header-register-text">회원가입</a>
 			</div>
+			<div id="header-login-div" style="display: none;">
+				<div class="header-login-select">
+					<a href="/member/login">일반 로그인</a>
+				</div>
+				<div class="select-line"></div>
+				<div class="header-login-select">
+					<a href="/doctor/login">의사 로그인</a>
+				</div>
+			</div>
 			<div id="header-register-div" style="display: none;">
 				<div class="header-register-select">
 					<a href="/member/registerUser">일반 회원가입</a>
@@ -59,16 +68,6 @@
 				</div>
 			</div>
 		</div>
-		<div id="header-login-div" style="display: none;">
-			<div class="header-login-select">
-				<a href="/member/login">일반 로그인</a>
-			</div>
-			<div class="select-line"></div>
-			<div class="header-login-select">
-				<a href="/doctor/login">의사 로그인</a>
-			</div>
-		</div>
-		
 		<!-- 로그인/회원가입 끝 -->
 		</c:if>
 		<c:if test="${!empty user}">
@@ -92,7 +91,7 @@
 					<div class="header-status-select">
 						<a href="/member/myPage">내 정보</a>
 					</div>
-				<div class="select-line"></div>
+					<div class="select-line"></div>
 					<div class="header-status-select">
 						<a href="/member/logout">로그아웃</a>
 					</div>

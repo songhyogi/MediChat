@@ -40,7 +40,7 @@ public class HospitalsCrawling {
 			System.out.println("<<PageNum>> : " + i);
 			try {
 				getHospitals(urlMaker(i));
-				 // 3초의 딜레이 추가
+				// API가 요구하는 Request Delay 만큼의 시간
 	            try {
 	                Thread.sleep(1500);
 	            } catch (InterruptedException e) {

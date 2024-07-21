@@ -185,28 +185,6 @@
 			<p>${pharmacy.pha_tell1}</p>
 		</div>
 	</div>
-
-	<div class="line"></div>
-	<div style="height:15px;" class="bg-green-1"></div>
-	
-	<div id="detail_hosRev">
-		<p class="fs-18 fw-7">방문 후기</p>
-		<c:forEach begin="1" end="3">
-			<div class="detail-hosRev-item d-flex align-items-center bg-black-1">
-				<div class="detail_hosRev_profile">
-					<img src="${PageContext.reqeust.contextPath }/image_bundle/face.png" width="35" height="35" class="rounded-circle">
-					<div class="text-black-6 fw-7 fs-15 text-center">박OO</div>
-				</div>
-				<div class="detail_hosRev_content">
-					약 설명을 친절하게 잘 해주세요!!!
-				</div>
-				<div class="detail_hosRev_score d-flex justify-content-center align-items-center">
-					<img src="/images/star.png" width="15" height="15">
-					<div>3.5</div>
-				</div>
-			</div>
-		</c:forEach>
-	</div>
 	
 	<div class="line"></div>
 	<div style="height:15px;" class="bg-green-1"></div>
