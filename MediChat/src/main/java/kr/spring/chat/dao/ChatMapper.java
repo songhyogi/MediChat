@@ -54,5 +54,7 @@ public interface ChatMapper {
 	@Delete("DELETE FROM chat_files WHERE file_num=#{file_num}")
 	public void deleteFile(long file_num);
 	public void insertChatPayment(ChatPaymentVO chatPaymentVO);
+	
+	public List<ChatFileVO> selectFiles(long mem_num);
 	public void updateChatStatus(long chat_num);
 }

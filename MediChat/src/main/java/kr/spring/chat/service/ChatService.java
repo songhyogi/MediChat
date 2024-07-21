@@ -23,5 +23,6 @@ public interface ChatService {
 		public long selectFileNum(long chat_num, String file_name);
 		public void deleteFile(long file_num);
 		public void insertChatPayment(ChatPaymentVO chatPaymentVO);
+		public List<ChatFileVO> selectFiles(long mem_num);
 		public void updateChatStatus(long chat_num);
 }

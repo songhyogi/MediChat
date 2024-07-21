@@ -20,6 +20,11 @@
 		<put-attribute name="nav" value="/WEB-INF/views/template/nav_docpage.jsp"/>
 	</definition>
 
+	<definition name="chatMyFiles" extends = "chatView">
+		<put-attribute name="chatNav" value="/WEB-INF/views/chat/fileNav.jsp"/>
+		<put-attribute name="chatRoom" value="/WEB-INF/views/chat/myFiles.jsp"/>
+	</definition>
+
 </tiles-definitions>
 
 
