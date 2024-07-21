@@ -1,5 +1,7 @@
 package kr.spring.notification.vo;
 
+import java.io.Serializable;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +11,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Builder
-public class NotificationVO {
+public class NotificationVO implements Serializable{
 	private Long noti_num;				//알림 식별자
 	private Long mem_num;				//받는 회원 식별자
 	private Long noti_category;			//알림의 카테고리
