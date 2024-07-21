@@ -3,31 +3,32 @@ package kr.spring.community.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.spring.community.dao.CommunityMapper;
 import kr.spring.community.vo.CommunityVO;
 
 @Service
 @Transactional
 public class CommunityServiceImpl implements CommunityService{
-
+	
+	@Autowired CommunityMapper communityMapper;
+	
 	@Override
 	public List<CommunityVO> selectCommunityList(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		return communityMapper.selectCommunityList(map);
 	}
 
 	@Override
 	public Integer selectRowCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		return communityMapper.selectRowCount(map);
 	}
 
 	@Override
-	public void insertBoard(CommunityVO community) {
-		// TODO Auto-generated method stub
-		
+	public void insertCommunity(CommunityVO community) {
+		communityMapper.insertCommunity(community);
 	}
 
 	@Override

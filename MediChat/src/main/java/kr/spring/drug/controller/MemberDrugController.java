@@ -92,7 +92,7 @@ public class MemberDrugController {
 	/*------회원 의약품 수정------*/
 	@PostMapping("/MemberDrug/memberDrugUpdateAjax")
 	@ResponseBody
-	public Map<String, Object> memberDrugUpdateAjax(@Valid MemberDrugVO memberDrugVO, HttpSession session){
+	public Map<String, Object> memberDrugUpdateAjax(MemberDrugVO memberDrugVO, HttpSession session){
 
 		log.debug("<<의약품 수정>> : " + memberDrugVO);
 

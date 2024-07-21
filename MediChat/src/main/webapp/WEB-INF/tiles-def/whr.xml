@@ -12,6 +12,7 @@
 		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/>
 		<put-attribute name="css" value="/WEB-INF/views/drug/drugCSS.jsp"/>
 	</definition>
+	
 	<!-- 의약품 목록 -->
 	<definition name="drugSearch" extends="whr">
 		<put-attribute name="title" value="의약품 검색"/>
@@ -28,6 +29,17 @@
 		<put-attribute name="body" value="/WEB-INF/views/drug/memberDrugList.jsp"/>
 		<put-attribute name="css" value="/WEB-INF/views/drug/drugCSS.jsp"/>
 		<put-attribute name="bootstrap" value="/WEB-INF/views/common/bootStrap.jsp"/>
+	</definition>
+	
+	<!-- 커뮤니티 -->
+	<definition name="cboardList" extends="whr">
+		<put-attribute name="title" value="MediChat Community"/>
+		<put-attribute name="body" value="/WEB-INF/views/community/cboardList.jsp"/>
+	</definition>
+	<!-- 커뮤니티 등록 -->
+	<definition name="cboardWrite" extends="whr">
+		<put-attribute name="title" value="MediChat Community"/>
+		<put-attribute name="body" value="/WEB-INF/views/community/cboardWrite.jsp"/>
 	</definition>
 </tiles-definitions>
 
