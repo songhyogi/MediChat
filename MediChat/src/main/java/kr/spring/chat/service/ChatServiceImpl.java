@@ -83,6 +83,11 @@ public class ChatServiceImpl implements ChatService{
 	}
 
 	@Override
+	public List<ChatFileVO> selectFiles(long mem_num) {
+		return chatMapper.selectFiles(mem_num);
+	}
+	
+	@Override
 	public void updateChatStatus(long chat_num) {
 		// TODO Auto-generated method stub
 		

@@ -68,4 +68,19 @@
 				#{file_valid_date},
 				SYSDATE)
 	</insert>
+	
+	<select id="selectFiles" parameterType="long" resultType="chatFileVO">
+		SELECT f.file_num,
+			   f.file_type,
+			   f.file_name,
+			   f.mem_num,
+			   f.doc_num,
+			   f.file_reg_date,
+			   f.file_valid_date,
+			   m.mem_name
+		FROM chat_files f
+		JOIN member m
+		ON(f.doc_num = m.mem_num)
+		WHERE f.mem_num = #{mem_num}
+	</select>
 </mapper>

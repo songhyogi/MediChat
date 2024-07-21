@@ -25,7 +25,7 @@ $(function(){
 		};
 		message_socket.onclose=function(evt){
 			//소켓이 종료된 후 부과적인 작성이 있을 경우 명시
-			console.long('chat close');
+			console.log('chat close');
 		};
 	}//end of websocket connect
 	
@@ -426,7 +426,7 @@ $(function(){
 		$('.close-payment-form-bg').show();
 		$('.close-payment-form').css('display','block');
 		
-	});
+	}); //end of click
 	
 	//모달 창 닫기 버튼 클릭
 	$('.close-payment-form .close-button').click(function(event){
@@ -448,9 +448,6 @@ $(function(){
 	/*=======================
 		 진료비 청구 폼 제출
 	=========================*/
-	//안내문자
-	let paymentNotice = '';
-	
 	$('.close-payment-form').on('click','#close_submit',function(event){
 		//기본 이벤트 제거
 		event.preventDefault();
@@ -477,6 +474,8 @@ $(function(){
 			dataType:'json',
 			success:function(param){
 				if(param.result == 'success'){
+					//안내문자
+					let paymentNotice = 'paymentNotice :';
 					paymentNotice += '예약번호 '+res_num+'의 진료비 청구가 도착했습니다.';
 					paymentNotice += '<br>'
 					paymentNotice += '환자 성명: '+param.mem_name;
@@ -496,7 +495,7 @@ $(function(){
 					    $('.close-payment-form-bg').hide();
 						$('.close-payment-form').hide();
 					} else {
-					    console.error('웹소켓이 열려 있지 않습니다. 상태:', message_socket.readyState);
+					    console.log('웹소켓이 열려 있지 않습니다. 상태:', message_socket.readyState);
 					}
 					
 				}else if(param.result == 'fail'){
@@ -508,6 +507,50 @@ $(function(){
 			error:function(){
 				alert('네트워크 오류 발생');
 			}
-		});
-	});
+		}); //end of ajax
+	}); // end of close_submit
+	
+	/*=======================
+		 	나의 서류함
+	=========================*/
+	$('.file-room').click(function(event){
+		event.preventDefault();
+		
+		console.log('채팅방 선택 이벤트 발생');
+		
+		chat_num = $(this).data('chat-num');
+        res_date = $(this).data('res-date');
+        res_time = $(this).data('res-time');
+        res_num = $(this).data('res-num');
+        
+        
+        const selected = $(this).parent().parent();
+        const not_selected = $('.file-room').parent().parent();
+        console.log(selected);
+        
+        not_selected.removeClass('selected-chat bg-gray-6');
+        selected.addClass('selected-chat bg-gray-6');
+        
+		$('#chat_num').val(chat_num);
+		$('#res_date').val(res_date);
+		$('#res_time').val(res_time);
+		$('#res_num').val(res_num);
+		
+		let res_title = '';
+		
+		res_title += '			<div class="res-title">'
+		res_title += '			<div class="chat-title fs-25 fw-8" id="chat_title">';
+		res_title += '				예약번호: '+res_num;
+		res_title += '			</div>';
+		res_title += '			<div class="chat-date fs-20">';
+		res_title += '				'+res_date+'  '+res_time;
+		res_title += '			</div>';
+		res_title += '			</div>';
+		if(param.type=='3'){
+			res_title += '			<button type="button" class="chat-close-btn" id="chat_close">진료 종료</button>';
+		};
+
+		$('#file-header').html(res_title);
+		
+	});//end of click file-room 
 });

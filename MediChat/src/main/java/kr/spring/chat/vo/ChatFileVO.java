@@ -18,4 +18,7 @@ public class ChatFileVO {
 	private int file_type;
 	private Date file_reg_date;
 	private String file_valid_date;
+	
+	//JOIN으로 생성
+	private String doc_name;
 }

@@ -373,4 +373,30 @@ public class ChatController {
 		
 		return map;
 	}
+	
+	/*=======================
+	 * 	    진료 파일 목록
+	 ========================*/
+	@GetMapping("/chat/myFiles")
+	public String selectFiles(Model model, HttpSession session) {
+		//해당 페이지는 환자만 들어올 수 있으므로 회원 등급 조회 x
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		if(user==null) {
+			model.addAttribute("message","로그인이 필요합니다.");
+			model.addAttribute("url","/member/login");
+			return "/common/resultAlert";
+		}
+		
+		
+		long mem_num = user.getMem_num();
+		
+		List<ChatVO> chat = chatService.selectChatListForMem(mem_num);
+		List<ChatFileVO> list = chatService.selectFiles(mem_num);
+		
+		model.addAttribute("chat",chat);
+		model.addAttribute("list",list);
+		
+		return "chatMyFiles";
+	}
 }
