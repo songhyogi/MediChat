@@ -1,6 +1,7 @@
 package kr.spring.member.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
+import kr.spring.notification.service.NotificationService;
+import kr.spring.notification.vo.NotificationVO;
 import kr.spring.util.AuthCheckException;
 import kr.spring.util.CaptchaUtil;
 import kr.spring.util.FileUtil;
@@ -31,6 +34,8 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 	@Autowired 
 	MemberService memberService;
+	@Autowired
+	NotificationService notificationService;
  
 	@Value("${API.KCY.X-Naver-Client-Id}")
 	private String X_Naver_Client_Id;
@@ -121,7 +126,15 @@ public class MemberController {
 				//=====자동 로그인 끝=====
 				//로그인 처리
 				session.setAttribute("user", member);
-
+				
+				/* ksy 알림 처리 시작 */
+				int noti_cnt = notificationService.selectCountNotification(member.getMem_num());
+				session.setAttribute("noti_cnt", noti_cnt);
+				List<NotificationVO> noti_list = notificationService.selectListNotification(member.getMem_num());
+				session.setAttribute("noti_list", noti_list);
+				log.debug("<<알림 갯수 >> : " + noti_cnt + "<<알림 목록 >> : " + noti_list);
+				/* ksy 알림 처리 끝 */
+				
 				log.debug("<인증 성공> : "+ member);
 
 				return "redirect:/main/main";

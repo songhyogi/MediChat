@@ -1,6 +1,7 @@
 package kr.spring.chat.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -31,8 +32,11 @@ import kr.spring.chat.service.ChatService;
 import kr.spring.chat.vo.ChatFileVO;
 import kr.spring.chat.vo.ChatMsgVO;
 import kr.spring.chat.vo.ChatVO;
+import kr.spring.doctor.service.DoctorService;
 import kr.spring.doctor.vo.DoctorVO;
+import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
+import kr.spring.reservation.service.ReservationService;
 import kr.spring.reservation.vo.ReservationVO;
 import kr.spring.util.FileUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +46,15 @@ import lombok.extern.slf4j.Slf4j;
 public class ChatController {
 	@Autowired
 	ChatService chatService;
+	
+	@Autowired
+	MemberService memberService;
+	
+	@Autowired
+	DoctorService doctorService;
+	
+	@Autowired
+	ReservationService reservationService;
 	
 	/*=======================
 	 * 	 비대면채팅 페이지 호출
@@ -233,26 +246,157 @@ public class ChatController {
 	/*=======================
 	 * 	   진료 파일 전송
 	 ========================*/
-	@PostMapping("file_input")
+	@PostMapping("/chat/chatClose")
+	@ResponseBody
 	public Map<String,Object> insertChatFile(@ModelAttribute ChatFileVO chatFileVO,
-							   HttpServletRequest reqeust,
-							   HttpSession session
-							   ){
-
-		ChatVO chat = chatService.selectChat(chatFileVO.getChat_num());
+											 @RequestParam("select_file") MultipartFile select_file,
+											 HttpServletRequest reqeust,
+											 HttpSession session
+							   				)throws IOException{
 		
+		log.debug("<<파일 전송 컨트롤러 진입>>");		
+		ChatVO chat = chatService.selectChat(chatFileVO.getChat_num());
+	
+		//chat_num을 기준으로 일반 회원 번호와 의사 회원 번호를 저장
 		chatFileVO.setMem_num(chat.getMem_num());
 		chatFileVO.setDoc_num(chat.getDoc_num());
 		
-		chatService.insertChatFile(chatFileVO);
+		String file_name = FileUtil.createFile(reqeust,select_file);
+		
+		int indexFileName = file_name.indexOf("_");
+		String origin_file_name = file_name.substring(indexFileName+1);
+		
+		log.debug("<<전송한 파일의 이름 생성>>: "+file_name);
+		
+		chatFileVO.setFile_name(file_name);
 		
 		Map<String,Object> map = new HashMap<String,Object>();
+
+		if(chatFileVO.getFile_valid_date()!=null||!chatFileVO.getFile_valid_date().isEmpty()){
+			//validDate : file_valid_date String -> Date로 변환한 값
+			LocalDate validDate = LocalDate.parse(chatFileVO.getFile_valid_date(), DateTimeFormatter.ISO_DATE);			
+			
+			if(LocalDate.now().isAfter(validDate)){
+				//유효기간을 지난 날짜로 설정한 경우
+				map.put("valid_date","pastDate");
+			}else{
+				//DB에 데이터 저장
+				chatService.insertChatFile(chatFileVO);
+			
+				map.put("valid_date", chatFileVO.getFile_valid_date());
+				map.put("file_name", origin_file_name);
+				
+				//파일 타입 반환
+				switch (chatFileVO.getFile_type()) {
+                case 0:
+                    map.put("file_type", "처방전");
+                    break;
+                case 1:
+                    map.put("file_type", "진단서");
+                    break;
+                case 2:
+                    map.put("file_type", "소견서");
+                    break;
+                case 3:
+                    map.put("file_type", "진료비 세부내역서");
+                    break;
+				}
+				
+				Long file_num = chatService.selectFileNum(chatFileVO.getChat_num(), file_name);
+				map.put("file_num", file_num);
+				
+				log.debug("<<반환한 file_num>>:"+file_num);
+				
+			}//end of else
+		}//end of not "pastDate"
+		return map;
+	}
+	
+	/*=======================
+	 * 	   진료 파일 삭제
+	 ========================*/
+	@PostMapping("/chat/deleteFile")
+	@ResponseBody
+	public Map<String,Object> deleteFile(@RequestParam("file_num") long file_num){
+		Map<String,Object> map = new HashMap<String,Object>();
 		
-		map.put("file_name", chatFileVO.getFile_name());
-		map.put("file_type", chatFileVO.getFile_type());
-		map.put("valid_date", chatFileVO.getValid_date());
+		try {
+			chatService.deleteFile(file_num);
+			map.put("result", "success");
+		}catch(Exception e) {
+			log.debug("<<파일 삭제 오류>>:"+e);
+			map.put("result", "fail");
+		}
+		
+		return map;
+	}
+
+
+	/*=======================
+	 * 	    진료 종료 전송
+	 ========================*/
+	@PostMapping("/chat/requestPayment")
+	@ResponseBody
+	public Map<String,Object> requestPayment(@RequestParam("chat_num") long chat_num,
+											 @RequestParam("pay_amount") int pay_amount){
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		ChatVO chat = chatService.selectChat(chat_num);
+		log.debug("<<채팅 번호>>:"+chat_num);
+		
+		//환자 번호 구하기
+		long mem_num = chat.getMem_num();
+		log.debug("<<환자 번호>>:"+mem_num);
+		
+		//의사 번호 구하기
+		long doc_num = chat.getDoc_num();
+		log.debug("<<의사 번호>>:"+doc_num);
+		
+		//환자 이름 구하기
+		MemberVO member = memberService.selectMember(mem_num);
+		String mem_name = member.getMem_name();
+		log.debug("<<환자 이름>>:"+mem_name);
+		
+		//의사 이름 구하기
+		DoctorVO doctor = doctorService.selectDoctor(doc_num);
+		String doc_name = doctor.getMem_name();
+		log.debug("<<의사 이름>>:"+doc_num);
+		
+		try {
+			map.put("result", "success");
+			map.put("mem_name", mem_name);
+			map.put("doc_name", doc_name);
+			map.put("pay_amount", pay_amount);
+		}catch(Exception e) {
+			map.put("result", "fail");
+		}
 		
 		return map;
 	}
 	
+	/*=======================
+	 * 	    진료 파일 목록
+	 ========================*/
+	@GetMapping("/chat/myFiles")
+	public String selectFiles(Model model, HttpSession session) {
+		//해당 페이지는 환자만 들어올 수 있으므로 회원 등급 조회 x
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		if(user==null) {
+			model.addAttribute("message","로그인이 필요합니다.");
+			model.addAttribute("url","/member/login");
+			return "/common/resultAlert";
+		}
+		
+		
+		long mem_num = user.getMem_num();
+		
+		List<ChatVO> chat = chatService.selectChatListForMem(mem_num);
+		List<ChatFileVO> list = chatService.selectFiles(mem_num);
+		
+		model.addAttribute("chat",chat);
+		model.addAttribute("list",list);
+		
+		return "chatMyFiles";
+	}
 }

@@ -6,26 +6,83 @@
 	<!-- 병원진료시간 가져오기 -->
 	<select id="getHosHours" parameterType="long" resultType="hospitalVO">
 		SELECT 
-			hos_time1c,hos_time2c,hos_time3c,hos_time4c,hos_time5c,hos_time6c,hos_time7c,
+			hos_num,hos_time1c,hos_time2c,hos_time3c,hos_time4c,hos_time5c,hos_time6c,hos_time7c,
 			hos_time1s,hos_time2s,hos_time3s,hos_time4s,hos_time5s,hos_time6s,hos_time7s 
 		FROM hospital
 		WHERE hos_num=#{hos_num}
 	</select>
 	<!-- 특정 날짜와 시간에 근무 가능한 의사 가져오기 -->
     <select id="getAvailableDoctors" parameterType="map" resultType="kr.spring.doctor.vo.DoctorVO">
-        SELECT
-            m.mem_num AS doc_num,
-            m.mem_name,
-            m.mem_photo AS image
-        FROM
-            member m
-        JOIN
-            doctor_detail dd ON m.mem_num = dd.doc_num
-        LEFT OUTER JOIN
-            holiday h ON m.mem_num = h.doc_num AND h.holi_date = #{date} AND h.holi_time = #{time}
-        WHERE
-            dd.hos_num = #{hos_num}
-            AND dd.doc_off != #{dayOfWeek}
-            AND (h.holi_status IS NULL OR h.holi_status != 1)
+	    SELECT
+		    m.mem_num AS doc_num,
+		    m.mem_name,
+		    m.mem_photo AS image
+		FROM
+		    member m
+		JOIN
+		    doctor_detail dd ON m.mem_num = dd.doc_num
+		LEFT OUTER JOIN
+		    holiday h ON m.mem_num = h.doc_num AND h.holi_date = #{date} AND h.holi_time = #{time}
+		WHERE
+		    dd.hos_num = #{hos_num}
+		    AND (
+		        (h.holi_status = 2) OR
+		        (
+		            h.doc_num IS NULL
+		            AND dd.doc_off IS NOT NULL
+		            AND dd.doc_off NOT LIKE '%' || #{dayOfWeek} || '%'
+		        )
+		    )
+
+	</select>
+	<!-- 예약 정보 저장하기 -->
+	<insert id="insertReservation" parameterType="kr.spring.reservation.vo.ReservationVO">
+        INSERT INTO reservation(
+        	res_num, 
+        	mem_num, 
+        	doc_num, 
+        	res_status, 
+        	res_type, 
+        	res_date, 
+        	res_time, 
+        	res_content)
+        VALUES (
+        	reservation_seq.nextval, 
+        	#{mem_num}, 
+        	#{doc_num}, 
+        	0, 
+        	#{res_type}, 
+        	#{res_date, jdbcType=VARCHAR}, 
+        	#{res_time, jdbcType=VARCHAR}, 
+        	#{res_content, jdbcType=CLOB})
+    </insert>
+    <!-- <select id="selectResCount" parameterType="map" resultType="integer">
+    	SELECT COUNT(*)
+    	FROM reservation JOIN member USING(mem_num)
+    	WHERE mem_num = #{mem_num}
     </select>
+    <select id="selectReservationList" parameterType="map" resultType="ReservationVO">
+    	SELECT 
+            r.res_num,
+            r.mem_num,
+            r.doc_num,
+            r.res_status,
+            r.res_type,
+            r.res_date,
+            r.res_time,
+            r.res_reg,
+            r.res_content,
+            m.mem_name AS doc_name
+        FROM 
+            reservation r
+        JOIN 
+            member m ON r.doc_num = m.mem_num
+        WHERE 
+            r.mem_num = #{mem_num}
+        ORDER BY 
+            r.res_date DESC, r.res_time DESC
+  		<![CDATA[
+	 	WHERE anum >= #{start} AND anum <= #{end}
+	 	]]>
+    </select> -->
  </mapper>

@@ -3,6 +3,7 @@ package kr.spring.member.dao;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -49,6 +50,9 @@ public interface MemberMapper {
 	//비밀번호 찾기
 	public void findPasswd(MemberVO member);
 	
+	//카카오 로그인
+	@Select("SELECT * FROM member WHERE mem_id=#{mem_id}")
+	public MemberVO checkUser(@Param("mem_id") String mem_id);
 	//==========관리자============
 	//회원등급수정
 	@Update("UPDATE member SET mem_auth=#{mem_auth} WHERE mem_num=#{mem_num}")

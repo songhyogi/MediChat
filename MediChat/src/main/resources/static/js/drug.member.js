@@ -19,11 +19,15 @@ $(function(){
 					let results = param.drugList.slice(0,10);//검색어 10개까지만 출력
 					$('#searchDrugList').empty();
 					$(results).each(function(index,item){
-						let output = '';
-						output += '<li data-name="'+item.drg_name+'">';
-						output += item.drg_name;
-						output += '</li>';
-						$('#searchDrugList').append(output);
+						//한 번 선택한 약은 다시 선택하지 않도록 처리
+						if(!drug_list.includes(item.drg_name)){ 
+							let output = '';
+							output += '<li data-name="'+item.drg_name+'">';
+							output += item.drg_name;
+							output += '</li>';
+							$('#searchDrugList').append(output);
+						}
+						
 					});
 				}else{
 					alert('의약품 검색 오류 발생');
@@ -68,20 +72,20 @@ $(function(){
 			$('#drugSelect').val('').focus();
 			return false;
 		}
-		if($('#selectedDate').val().trim()==''){
+		if($('#selectedSDate').val().trim()==''){
 			alert('복용 일자를 입력하세요');
-			$('#selectedDate').val('').focus();
+			$('#selectedSDate').val('').focus();
 			return false;
 		}
 		
 		//날짜 오늘 이후 선택 불가
-		let selectedDate = new Date($('#selectedDate').val());
-		selectedDate.setHours(0, 0, 0, 0);
+		let selectedSDate = new Date($('#selectedSDate').val());
+		selectedSDate.setHours(0, 0, 0, 0);
 		let today = new Date();
 		
-		if(selectedDate > today){
+		if(selectedSDate > today){
 			alert('오늘 이후 날짜는 선택할 수 없습니다');
-			$('#selectedDate').val('').focus();
+			$('#selectedSDate').val('').focus();
 			return false;
 		}
 		
@@ -156,11 +160,14 @@ $(function(){
 					let results = param.drugList.slice(0,10);//검색어 10개까지만 출력
 					$('#moSearchDrugList').empty();
 					$(results).each(function(index,item){
-						let output = '';
-						output += '<li data-name="'+item.drg_name+'">';
-						output += item.drg_name;
-						output += '</li>';
-						$('#moSearchDrugList').append(output);
+						//한 번 선택한 약은 다시 선택하지 않도록 처리
+						if(!med_list.includes(item.drg_name)){
+							let output = '';
+							output += '<li data-name="'+item.drg_name+'">';
+							output += item.drg_name;
+							output += '</li>';
+							$('#moSearchDrugList').append(output);
+						}
 					});
 				}else{
 					alert('의약품 검색 오류 발생');
@@ -184,19 +191,19 @@ $(function(){
 			$('#moDrugSelect').val('').focus();
 			return false;
 		}
-		if($('#moSelectedDate').val().trim()==''){
+		if($('#moSelectedSDate').val().trim()==''){
 			alert('복용 일자를 입력하세요');
-			$('#moSelectedDate').val('').focus();
+			$('#moSelectedSDate').val('').focus();
 			return false;
 		}
 		
-		let moSelectedDate = new Date($('#moSelectedDate').val());
-		moSelectedDate.setHours(0, 0, 0, 0);
+		let moSelectedSDate = new Date($('#moSelectedSDate').val());
+		moSelectedSDate.setHours(0, 0, 0, 0);
 		let today = new Date();
 		
-		if(moSelectedDate > today){
+		if(moSelectedSDate > today){
 			alert('오늘 이후 날짜는 선택할 수 없습니다');
-			$('#moSelectedDate').val('').focus();
+			$('#moSelectedSDate').val('').focus();
 			return false;
 		}
 		
@@ -262,7 +269,7 @@ $(function(){
 	});//end of 수정
 	
 	/*------------------------------------의약품 삭제------------------------------------ */
-	$('#delete-btn').click(function(){
+	$('.delete-btn').click(function(){
 		//med_num
 		let med_num = $('#updateDrug input[name="med_num"]').val();
 		//서버와 통신

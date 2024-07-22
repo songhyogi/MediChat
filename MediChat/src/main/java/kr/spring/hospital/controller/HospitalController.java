@@ -34,13 +34,7 @@ public class HospitalController {
 	
 	// 병원
 	@GetMapping("/hospitals")
-	public Model hospital(Model model,HttpSession session) {
-		if(session.getAttribute("user_lat")!=null && session.getAttribute("user_lon")!=null) {
-			String user_lat = (String)session.getAttribute("user_lat");
-			String user_lon = (String)session.getAttribute("user_lon");
-			model.addAttribute("user_lat", user_lat);
-			model.addAttribute("user_lon", user_lon);
-		}
+	public Model hospital(Model model,HttpSession session,@RequestParam(defaultValue="37.4981646510326") String user_lat, @RequestParam(defaultValue="127.028307900881") String user_lon) {
 		
 		//카카오맵 api 키
 		model.addAttribute("apiKey", apiKey);
@@ -78,6 +72,21 @@ public class HospitalController {
 		List<String> hotKeyWord = new ArrayList<>(Arrays.asList("여드름","지루성 피부염","감기","두드러기","역류성 식도염","보톡스","발열","백옥주사","당뇨"));
 		model.addAttribute("hotKeyWord", hotKeyWord);
 		
+		// 지도에 병원 마커용
+		Map<String,Object> map = new HashMap<>();
+		map.put("pageNum", 1);
+		map.put("pageItemNum", 20);
+		map.put("keyword","");
+		map.put("sortType", "NEAR");
+		map.put("around", 1000);
+		map.put("user_lat", user_lat);
+		map.put("user_lon", user_lon);
+
+		model.addAttribute("user_lat", user_lat);
+		model.addAttribute("user_lon", user_lon);
+		
+		List<HospitalVO> hosList = hospitalService.selectListHospital(map);
+		model.addAttribute("hosList", hosList);
 		
 		return model;
 	}
@@ -133,6 +142,9 @@ public class HospitalController {
 		map.put("sortType", sortType);
 		model.addAttribute("sortType", sortType);
 		
+		//around
+		map.put("around", 3000);
+		
 		// 병원 리스트 담기
 		List<HospitalVO> hosList = new ArrayList<>();
 		hosList = hospitalService.selectListHospital(map);
@@ -184,6 +196,9 @@ public class HospitalController {
 		//sortType
 		map.put("sortType", sortType);
 		model.addAttribute("sortType", sortType);
+		
+		//around
+		map.put("around", 3000);
 		
 		// 병원 리스트 담기
 		List<HospitalVO> hosList = new ArrayList<>();

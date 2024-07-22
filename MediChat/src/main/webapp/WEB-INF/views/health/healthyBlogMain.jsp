@@ -22,7 +22,7 @@
 		</form>
 		<hr size="1" width="100%">
 		<div class="align-right">
-			<button  class="default-btn" type="button"  onclick="location.href='${pageContext.request.contextPath}/heath/healWrite'">글쓰기</button>
+			<button  class="default-btn" type="button"  onclick="location.href='${pageContext.request.contextPath}/health/healWrite'">글쓰기</button>
 		</div>
 	<c:if test="${count  == 0}">
 			건강 블로그 내역이 없습니다.

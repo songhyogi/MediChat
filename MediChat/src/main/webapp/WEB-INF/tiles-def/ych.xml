@@ -66,6 +66,21 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/doctor/docTreatRegister.jsp" />
 	</definition>
+	
+	<!-- 수정해야함 -->
+	<!-- 
+   <definition name="memberDrugList" extends="ych_member">
+      <put-attribute name="title" value="회원 의약품 상세"/>
+      <put-attribute name="body" value="/WEB-INF/views/drug/memberDrugList.jsp"/>
+      <put-attribute name="css" value="/WEB-INF/views/drug/drugCSS.jsp"/>
+      <put-attribute name="bootstrap" value="/WEB-INF/views/common/bootStrap.jsp"/>
+   </definition>
+
+   <definition name="scheduleList" extends="ych_doctor">
+      <put-attribute name="title" value="스케줄 관리"/>
+      <put-attribute name="body" value="/WEB-INF/views/schedule/scheduleList.jsp"/>
+   </definition>
+    -->
 </tiles-definitions>
 
 

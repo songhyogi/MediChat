@@ -91,5 +91,11 @@ public class MemberServiceImpl implements MemberService{
 		return memberMapper.checkId(mem_id);
 	}
 
+	@Override
+	public MemberVO checkUser(String mem_id) {
+		return memberMapper.checkUser(mem_id);
+	}
+
+
 
 }

@@ -4,21 +4,6 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.spring.chat.dao.ChatMapper">
-	<insert id="createChat" parameterType="reservationVO">
-		INSERT INTO chat(
-			chat_num,
-			mem_num,
-			doc_num,
-			reg_date,
-			chat_status)
-		VALUES(
-			chat_seq.nextval,
-			mem_num=#{mem_num},
-			doc_num=#{doc_num},
-			SYSDATE,
-			0)
-	</insert>
-	
 	<select id="selectChatListForMem" parameterType="long" resultType="chatVO">
 		SELECT 
 			chat_num,
@@ -66,14 +51,36 @@
 	
 	<insert id="insertChatFile" parameterType="ChatFileVO">
 		INSERT
-		INTO chat_file(file_num,file_name,mem_num,doc_num,file_type,valid_date,file_reg_date)
-		VALUES (file_seq.nextval,
+		INTO chat_files (file_num,
+						 chat_num,
+						 file_name,
+						 mem_num,
+						 doc_num,
+						 file_type,
+						 file_valid_date,
+						 file_reg_date)
+		VALUES (files_seq.nextval,
+				#{chat_num},
 				#{file_name},
 				#{mem_num},
 				#{doc_num},
 				#{file_type},
-				#{valid_date},
+				#{file_valid_date},
 				SYSDATE)
-		WEHRE chat_num=#{chat_num}"
 	</insert>
+	
+	<select id="selectFiles" parameterType="long" resultType="chatFileVO">
+		SELECT f.file_num,
+			   f.file_type,
+			   f.file_name,
+			   f.mem_num,
+			   f.doc_num,
+			   f.file_reg_date,
+			   f.file_valid_date,
+			   m.mem_name
+		FROM chat_files f
+		JOIN member m
+		ON(f.doc_num = m.mem_num)
+		WHERE f.mem_num = #{mem_num}
+	</select>
 </mapper>

@@ -5,7 +5,7 @@
 <div class="container">
 	<form:form action="login" id="member_login" modelAttribute="memberVO">
 		<div class="loginLogo">
-			<img src="/images/loginLogo.png" width="100" height="100" style="margin-top:50px;">
+			<img src="/images/loginLogo.png" width="150" height="100" style="margin-top:50px;">
 		</div>
 		<ul>
 			<li>
@@ -19,7 +19,7 @@
 		</ul>
 		<div>
 			<form:errors element="div" cssClass="error-color"/>
-			<form:button class="login_btn">로그인</form:button>
+			<form:button class="login_btn fw-7 fs-17">로그인</form:button>
 		</div>
 		<div class="button-container">
 			<label for="auto">
@@ -31,10 +31,14 @@
 	<hr size="1" width="50%" noshade="noshade" class="centered-hr">
 	<div class="social">
 		<!--  카카오 로그인시작 -->
-		<img src="${pageContext.request.contextPath}/images/kakao_login_medium_narrow.png" width="200">
+		<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&amp;client_id=c37546ec572f00c776f1b466369745f3&amp;redirect_uri=http://localhost:8000/member/kakaologin">
+			<img src="${pageContext.request.contextPath}/images/kakao_login_medium_narrow.png">
+		</a>
 		<!--  카카오 로그인 끝 -->
 		<!--  네이버 로그인 시작 -->
-		<img src="${pageContext.request.contextPath}/images/naver_login.png" width="200">
+		<a href="@{|${naverURL}|}">
+			<img src="${pageContext.request.contextPath}/images/naver_login.png" width="200">		
+		</a>
 		<!--  네이버 로그인 끝 -->
 	</div>
 </div>

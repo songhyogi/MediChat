@@ -1,5 +1,7 @@
 package kr.spring.member.service;
 
+import org.apache.ibatis.annotations.Param;
+
 import kr.spring.member.vo.MemberVO;
  
 public interface MemberService {
@@ -30,7 +32,10 @@ public interface MemberService {
 	public void findId(MemberVO member);
 	//비밀번호 찾기
 	public void findPasswd(MemberVO member);
-
+	
+	//카카오 로그인 회원 체크
+	public MemberVO checkUser(@Param("mem_id") String mem_id);
+	
 	//==========관리자============
 	//회원등급수정
 	public void updateAuth(MemberVO member);

@@ -117,7 +117,7 @@ table#diseaseDict tr td{
 	margin-bottom:100px;
 }
 .page-one{
-	width:600px;
+	width:900px;
 	margin:0 auto;
 }
 
@@ -268,7 +268,7 @@ input#healthy_title{
 
 
 /*faq*/
-#checkbox {
+.checkbox {
   display: none;
 }
 
@@ -298,36 +298,42 @@ input#healthy_title{
 
 #bar1 {
   width: 75%;
+  
 }
 
 #bar2 {
   width: 75%;
 }
 
-#checkbox:checked + .toggle .bars {
+.checkbox:checked + .toggle .bars {
   position: absolute;
   transition-duration: .5s;
 }
 
-#checkbox:checked + .toggle #bar2 {
+.checkbox:checked + .toggle #bar2 {
   transform: scaleX(0);
   transition-duration: .1s;
 }
 
-#checkbox:checked + .toggle #bar1 {
+.checkbox:checked + .toggle #bar1 {
   width: 75%;
   transform: rotate(45deg);
   transition-duration: .5s;
 }
 
-#checkbox:checked + .toggle #bar3 {
+.checkbox:checked + .toggle #bar3 {
   width: 75%;
   transform: rotate(-45deg);
   transition-duration: .5s;
 }
 
-#checkbox:checked + .toggle {
+.checkbox:checked + .toggle {
   transition-duration: .5s;
   transform: rotate(180deg);
 }
-
+.hide{
+	display:none;
+}
+.subitems{
+	padding-left:50px;
+}

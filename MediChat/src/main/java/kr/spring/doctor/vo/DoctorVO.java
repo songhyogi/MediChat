@@ -47,6 +47,7 @@ public class DoctorVO {
 	private String doc_history;
 	private int doc_treat;
 	private String doc_off;			//휴무요일
+	private String doc_time;		//업무시간
 	private String doc_stime;		//근무시작시간
 	private String doc_etime;		//근무종료시간
 	private int doc_agree;

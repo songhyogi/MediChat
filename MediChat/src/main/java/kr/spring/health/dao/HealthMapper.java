@@ -53,7 +53,7 @@ public interface HealthMapper {
 	public void deleteHre(Long hre_num);
 	public HealthyReplyVO selectHre(Long hre_num);
 	public List<HealthyReplyVO> selectHreList(Map<String,Object> map);
-	@Select("SELECT COUNT(*) FROM healthy_re WHERE healthy_num =#{healthy_num}")
+	@Select("SELECT COUNT(*) FROM healthy_re WHERE healthy_num =#{healthy_num} AND hre_renum=0")
 	public Integer selectHreCount(Long healthy_num);
 	@Delete("DELETE FROM healthy_re WHERE healthy_num=#{healthy_num}")
 	public void deleteHReByHeal(Long healthy_num);
@@ -78,5 +78,8 @@ public interface HealthMapper {
 	public List<Long> selectDeleteByHBlog(Long healthy_num);
 	@Delete("DELETE FROM healthy_re_fav WHERE hre_num=#{hre_num}")
 	public void deleteHreFavByHeal(Long hre_num);
+	
+	//답글 불러오기
+	public List<HealthyReplyVO> selectReHreList(Map<String,Object> map);
 	
 }
