@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!-- 커뮤니티 목록 시작 -->
 <div class="page-main">	
 	<p class="text-lightgray fw-7 fs-13">홈 > 커뮤니티</p>
@@ -19,10 +20,17 @@
 			<a href="list?cbo_type=9">자유게시판</a>
 		</div>
 		<form action="list" method="get">
-			<input type="hidden" name="category" value="${param.category}">
+			<input type="hidden" name="cbo_type" value="${param.cbo_type}">
 			<ul class="search">
 				<li>
-					<input type="search" name="keyword" id="keyword" value="${param.category}">
+					<select name="keyfield" id="keyfield">
+						<option value="1" <c:if test="${param.keyfield == 1}">selected</c:if>>제목</option>
+						<option value="2" <c:if test="${param.keyfield == 2}">selected</c:if>>내용</option>
+						<option value="3" <c:if test="${param.keyfield == 3}">selected</c:if>>제목+내용</option>
+					</select>
+				</li>
+				<li>
+					<input type="search" name="keyword" id="keyword" value="${param.keyword}">
 				</li>
 				<li>
 					<input type="submit" value="검색">
@@ -59,7 +67,14 @@
 					</span>
 					<h5>${cboard.cbo_title}</h5>
 					<div>
-						${cboard.cbo_content}
+						<c:choose>
+							<c:when test="${fn:length(cboard.cbo_content) > 200}">
+								${fn:substring(cboard.cbo_content, 0, 200)}···
+							</c:when>
+							<c:otherwise>
+								${cboard.cbo_content}
+							</c:otherwise>
+						</c:choose>
 					</div>
 					<ul>
 						<li><!-- 프로필 사진 -->
@@ -67,8 +82,14 @@
 						</li>
 						<li>${cboard.mem_id}</li>
 						<li>${cboard.cbo_rdate}</li>
-						<li>${cboard.cbo_hit}</li>
-						<li>${cboard.fav_cnt}</li>
+						<li>
+							<!-- 좋아요 이미지 추가 -->
+							${cboard.cbo_hit}
+						</li>
+						<li>
+							<!-- 댓글 이미지 추가 -->
+							${cboard.fav_cnt}
+						</li>
 					</ul>
 					<hr>
 				</div>

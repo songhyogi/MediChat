@@ -19,6 +19,12 @@
 				</if>
 				<!-- 카테고리가 없는 경우 -->
 				<if test="keyfield == 1">
+					cbo_title LIKE '%' || #{keyword} || '%' 
+				</if>
+				<if test="keyfield == 2">
+					cbo_content LIKE '%' || #{keyword} || '%' 
+				</if>
+				<if test="keyfield == 3">
 					(cbo_title LIKE '%' || #{keyword} || '%' OR
 					cbo_content LIKE '%' || #{keyword} || '%')
 				</if>

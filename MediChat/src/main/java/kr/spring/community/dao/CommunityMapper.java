@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import kr.spring.community.vo.CommunityFavVO;
 import kr.spring.community.vo.CommunityVO;
 
 @Mapper
@@ -28,9 +30,18 @@ public interface CommunityMapper {
 	public void updateHit(Long cbo_num);
 	
 	/*---게시판 좋아요---*/
+	@Select("SELECT * FROM cboard_fav WHERE cbo_num=#{cbo_num}")
+	public CommunityFavVO selectFav(CommunityFavVO fav); //좋아요 목록
+	@Select("SELECT COUNT(*) FROM cboard_fav WHERE cbo_num=#{cbo_num}")
+	public Integer selectFavCount(Long cbo_num); //좋아요 개수
+	@Insert("INSERT INTO cboard_fav (cbo_num,mem_num) VALUES(#{cbo_num},#{mem_num}")
+	public void insertFav(CommunityFavVO fav);	//좋아요 처리
+	@Delete("DELETE FROM cboard_fav WHERE cbo_num=#{cbo_num} AND mem_num=#{mem_num}")
+	public void deleteFav(CommunityFavVO fav); //좋아요 삭제
 	
 	//게시판 삭제 시 좋아요 삭제
-	
+	@Delete("DELETE cboard_fav WHERE cbo_num=#{cbo_num}")
+	public void deleteFavByCommunityNum(Long cbo_num);
 	
 	/*-----------------------------댓글/답글-----------------------------*/
 	//부모글 삭제 시 댓글(답글) 삭제

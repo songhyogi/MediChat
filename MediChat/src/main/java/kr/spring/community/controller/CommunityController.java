@@ -17,12 +17,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import kr.spring.community.service.CommunityService;
+import kr.spring.community.vo.CommunityFavVO;
 import kr.spring.community.vo.CommunityVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.PagingUtil;
 import kr.spring.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Slf4j
@@ -40,13 +42,14 @@ public class CommunityController {
 	//글 목록
 	@GetMapping("/medichatCommunity/list")
 	public String getCommunityList(@RequestParam(defaultValue="1") int pageNum,@RequestParam(defaultValue="1") int order,
-								@RequestParam(defaultValue="1") String cbo_type,String keyfield,String keyword, Model model) {
+								@RequestParam(defaultValue="") String cbo_type,String keyfield,String keyword, Model model) {
 		
 		log.debug("<<커뮤니티 목록 - cbo_type >> : " + cbo_type);
 		log.debug("<<커뮤니티 목록 - order>> : " + order);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
+		map.put("cbo_type",cbo_type);
 		map.put("keyfield", keyfield);
 		map.put("keyword", keyword);
 		
@@ -164,5 +167,32 @@ public class CommunityController {
 		communityService.deleteCommunity(cbo_num);
 		
 		return "redirect:/medichatCommunity/list";
+	}
+	
+	/*==============================게시판 좋아요==============================*/
+	//좋아요 읽기
+	@GetMapping("/medichatCommunity/getFav")
+	@ResponseBody
+	public Map<String, Object> getFav(CommunityFavVO fav, HttpSession session){
+		
+		log.debug("<<게시판 좋아요>> : " + fav);
+		
+		Map<String, Object> mapJson = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		if(user==null) {
+			mapJson.put("result", "logout");
+		}else {
+			fav.setMem_num(user.getMem_num());
+			CommunityFavVO cboardFav = communityService.selectFav(fav);
+			if(cboardFav != null) {
+				mapJson.put("status", "yesFav");
+			}else {
+				mapJson.put("status", "noFav");
+			}
+		}
+		mapJson.put("count", communityService.selectFavCount(fav.getCbo_num()));
+		
+		return mapJson;
 	}
 }
