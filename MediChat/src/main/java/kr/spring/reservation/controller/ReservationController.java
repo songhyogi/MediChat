@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.reservation.service.ReservationService;
 import kr.spring.reservation.vo.ReservationVO;
@@ -43,7 +44,7 @@ public class ReservationController {
 			map.put("mem_num", user.getMem_num());
 			int count = reservationService.selectCountByMem(map);
 			map.put("keyfield", keyfield);
-			PagingUtil page = new PagingUtil(keyfield,null,pageNum,count,5,10,"myResList");
+			PagingUtil page = new PagingUtil(keyfield,null,pageNum,count,2,10,"myResList");
 			map.put("start",page.getStartRow());
 			map.put("end", page.getEndRow());
 			List<ReservationVO> list = reservationService.getMyResList(map);
@@ -53,6 +54,31 @@ public class ReservationController {
 			model.addAttribute("page",page.getPage());
 			
 			return "myReservationList";
+		}
+		return "common/resultAlert";
+	}
+	
+	@GetMapping("/reservation/docResList")
+	public String getDocResList (@RequestParam(defaultValue="1") int pageNum,@RequestParam(defaultValue="1") String keyfield, HttpServletRequest request,HttpSession session,Model model) {
+		DoctorVO user = (DoctorVO) session.getAttribute("user");
+		if(user == null) {
+			model.addAttribute("message","로그인 후 이용해주세요");
+			model.addAttribute("url",request.getContextPath()+"/member/login");
+		}else {
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("doc_num",user.getMem_num());
+			int count = reservationService.selectCountByDoc(map);
+			map.put("keyfield", keyfield);
+			PagingUtil page = new PagingUtil(keyfield,null,pageNum,count,2,10,"docResList");
+			map.put("start",page.getStartRow());
+			map.put("end", page.getEndRow());
+			List<ReservationVO> list = reservationService.getDocResList(map);
+			
+			model.addAttribute("count",count);
+			model.addAttribute("list",list);
+			model.addAttribute("page",page.getPage());
+			
+			return "docReservationList";
 		}
 		return "common/resultAlert";
 	}

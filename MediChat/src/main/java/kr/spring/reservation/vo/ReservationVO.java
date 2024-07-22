@@ -20,4 +20,6 @@ public class ReservationVO {
 	private Date res_reg;
 	private String res_content;
 	private String doc_name;
+	private String hos_name;
+	private String patient_name;
 }

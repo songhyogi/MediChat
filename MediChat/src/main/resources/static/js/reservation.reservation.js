@@ -211,10 +211,10 @@ function getAvailableDoctors(hos_num, date, time, dayOfWeek, callback) {
                     param.doctors.forEach(function (doctor) {
                         console.log('doctor object: ', doctor); // doctor 객체 로그 출력
                         // 프로필 이미지 경로 설정
-                        let imageSrc = '/doctor/docPhotoView?doc_num=' + doctor.doc_num;
+                        let imageSrc = '/doctor/docViewProfile?doc_num=' + doctor.doc_num;
 
                         output += '<div class="doctor-card" data-doc-num="' + doctor.doc_num + '">';
-                        output += '<img src="' + imageSrc + '" alt="' + doctor.mem_name + '" class="doctor-image">';
+                        output += '<img src="../member/viewProfile?mem_num='+ doctor.doc_num +'" alt="' + doctor.mem_name + '" class="doctor-image">';
                         output += '<div class="doctor-name">' + doctor.mem_name + '</div>';
                         output += '<div class="res-type-container">';
                         output += '<label><input type="radio" name="res_type" value="0" class="res-type-radio"> 비대면 진료</label>';
@@ -332,7 +332,7 @@ function submitReservation() {
         success: function(param) {
             if (param.result == 'success') {
                 alert('예약이 완료되었습니다.');
-                //location.href = '/reservation/confirmation'; 예약내역페이지 만들면 수정 예정
+                location.href = '/reservation/myResList';
             } else {
                 alert('예약에 실패했습니다. 다시 시도해 주세요.');
             }

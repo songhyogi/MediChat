@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import kr.spring.hospital.vo.HospitalVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.reservation.service.ReservationService;
 import kr.spring.reservation.vo.ReservationVO;
+import kr.spring.review.vo.ReviewVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -123,7 +125,33 @@ public class ReservationAjaxController {
 	    return map;
 	}
 
-
+	@PostMapping("/reservation/cancelReservation")
+	@ResponseBody
+	public Map<String,Object> cancelReservation(long res_num,HttpSession session,Model model) {
+		Map<String, Object> map = new HashMap<>();
+		MemberVO user = (MemberVO) session.getAttribute("user");
+		if(user == null) {
+			map.put("result", "logout");
+		}else {
+			reservationService.cancelReservation(res_num);
+			map.put("result", "success");
+		}
+		return map;
+	}
+	
+	@PostMapping("/reservation/updateReservation")
+	@ResponseBody
+	public Map<String,Object> updateReservation(long res_num,HttpSession session,Model model){
+		Map<String,Object> map = new HashMap<>();
+		DoctorVO user = (DoctorVO) session.getAttribute("user");
+		if(user == null) {
+			map.put("result", "logout");
+		}else {
+			reservationService.updateReservation(res_num);
+			map.put("result", "success");
+		}
+		return map;
+	}
 }
 	
 
