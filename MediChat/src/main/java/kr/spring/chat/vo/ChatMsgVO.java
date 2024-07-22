@@ -8,8 +8,8 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ChatMsgVO {
-	private int msg_num;
-	private int chat_num;
+	private long msg_num;
+	private long chat_num;
 	private String msg_content;
 	private int msg_sender_type;
 }

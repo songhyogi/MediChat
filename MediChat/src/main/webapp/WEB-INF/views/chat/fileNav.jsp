@@ -12,7 +12,7 @@
 		</tr>
 		<c:forEach var="item" items="${chat}">
 				<tr>
-					<td><a href="/chat/myFiles" class="chat-room fs-18 text-black-4" data-chat-num="${item.chat_num}" data-res-date="${item.res_date}" data-res-time="${item.res_time}" data-res-num="${item.res_num}">
+					<td><a href="/chat/myFiles" class="file-room fs-18 text-black-4" data-chat-num="${item.chat_num}" data-res-date="${item.res_date}" data-res-time="${item.res_time}" data-res-num="${item.res_num}">
 					${item.res_date} ${item.res_time}
 					<br>${item.mem_name} 의사</a></td>
 				</tr>
