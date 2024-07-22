@@ -113,9 +113,9 @@
 	 	FROM(SELECT rownum anum,
 	 							 a.* 
 	 				FROM (SELECT * 
-	 							 FROM healthy_re  JOIN member USING (mem_num)
+	 							 FROM healthy_re   JOIN member USING (mem_num)
 	 							 				  LEFT OUTER JOIN (SELECT mem_num click_num,hre_num FROM healthy_re_fav WHERE mem_num=#{user_num}) USING(hre_num)
-	 							 				  LEFT OUTER JOIN (SELECT COUNT(hre_num) refav_cnt,hre_num FROM healthy_re_fav GROUP BY hre_num ) USING(hre_num)
+	 							 				  LEFT OUTER JOIN (SELECT COUNT(hre_num) refav_cnt,hre_num FROM healthy_re_fav GROUP BY hre_num ) USING(hre_num) 
 	 							 WHERE healthy_num=#{healthy_num}  AND hre_renum=0 AND hre_level=0 
 	 							 ORDER BY hre_num DESC
 	 				) a )

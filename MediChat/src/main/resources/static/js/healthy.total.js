@@ -161,7 +161,7 @@ function selectReply(currentNum){
 						output+=' <input type="button"  class="re-cancle-btn default-btn hide" data-renum="'+item.hre_num+'"  value="답글 닫기">';
 					}
 					output +='</div>';
-					output +='</div><div id="subitems'+item.hre_num+'"></div><br><br><br>';
+					output +='</div><div id="subitems'+item.hre_num+'"></div><br><br><br><div class="line"></div><br>';
 					$('#replyList').append(output);
 				})
 				
@@ -363,7 +363,8 @@ $(document).on('click','.hrefav',function(event){
 		});
 		
 		$(document).on('submit','#rehreWrite',function(event){
-				let relist = $(this).parent().parent().find('.re-view-btn');
+				let relist = $(this).parent().parent('.items').find('.re-view-btn');
+				let relist2= $(this).closest('.btnspace').find('.re-view-btn');
 				if($(this).find('textarea').val().trim()==''){
 					alert('내용을 입력해주세요.');+
 					$(this).find('textarea').val('').focus();
@@ -385,6 +386,7 @@ $(document).on('click','.hrefav',function(event){
 						}else if(param.result=='success'){
 							$('#rehreWriteform').remove();
 							relist.click();
+							relist2.click();
 							//목록작업 해야됨
 						}else{
 							alert('답글 달기 오류');
@@ -458,7 +460,7 @@ $(document).on('click','.re-view-btn',function(){
 						output+=' <input type="button"  id="rereList" class="re-view-btn default-btn"data-renum="'+item.hre_num+'"  value="답글 보기">';
 					}
 					output +='</div>';
-					output +='</div><div id="subitems'+item.hre_num+'"></div>';
+					output +='</div><br><br><div class="line"></div><br></div><div id="subitems'+item.hre_num+'">';
 					 $('#subitems'+re_num).append(output);
 					 $('#rereList').click();
 					 $('#rereList').remove();
