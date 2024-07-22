@@ -20,6 +20,7 @@ import kr.spring.community.service.CommunityService;
 import kr.spring.community.vo.CommunityVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.PagingUtil;
+import kr.spring.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -61,7 +62,6 @@ public class CommunityController {
 			
 			list = communityService.selectCommunityList(map);
 		}
-		
 		model.addAttribute("count",count);
 		model.addAttribute("list",list);
 		model.addAttribute("page",page.getPage());
@@ -84,6 +84,7 @@ public class CommunityController {
 		
 		log.debug("<<커뮤니티 글 등록>> : " + communityVO);
 		
+		
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		if(user==null) {
 			model.addAttribute("message","로그인이 필요합니다.");
@@ -98,7 +99,6 @@ public class CommunityController {
 		if(result.hasErrors()) {
 			return insertForm();
 		}
-
 		
 		communityVO.setMem_num(user.getMem_num());
 		communityService.insertCommunity(communityVO);
@@ -108,6 +108,61 @@ public class CommunityController {
 		
 		return "/common/resultAlert";
 	}
-	 
 	
+	//글 상세
+	@GetMapping("/medichatCommunity/detail")
+	public String detailCommunity(long cbo_num, Model model) {
+		
+		log.debug("<<커뮤니티 글 상세>> : " + cbo_num);
+		
+		communityService.updateHit(cbo_num); //해당 글 조회시 조회수 증가
+		
+		CommunityVO cboard = communityService.selectCommunity(cbo_num);
+		cboard.setCbo_title(StringUtil.useNoHTML(cboard.getCbo_title()));
+		
+		model.addAttribute("cboard",cboard);
+		
+		return "cboardDetail";
+	}
+	
+	//수정폼 호출
+	@GetMapping("/medichatCommunity/update")
+	public String updateForm(long cbo_num, Model model) {
+		CommunityVO communityVO = communityService.selectCommunity(cbo_num);
+		model.addAttribute("communityVO",communityVO);
+		
+		return "cboardModify";
+	}
+	//글 수정
+	@PostMapping("/medichatCommunity/update")
+	public String updateCommunity(CommunityVO communityVO, HttpSession session, Model model, BindingResult result, HttpServletRequest request) {
+		
+		log.debug("<<커뮤니티 글 수정>> : " + communityVO);
+		
+		if(result.hasErrors()) {
+			CommunityVO vo = communityService.selectCommunity(communityVO.getCbo_num());
+			return "cboardModify";
+		}
+		
+		CommunityVO db_cboard = communityService.selectCommunity(communityVO.getCbo_num());
+		
+		communityService.updateCommunity(communityVO);
+		model.addAttribute("message","글이 정상적으로 수정되었습니다.");
+		model.addAttribute("url",request.getContextPath()+"/medichatCommunity/detail?cbo_num="+communityVO.getCbo_num());
+		
+		return "/common/resultAlert";
+	}
+	
+	//글 삭제
+	@GetMapping("/medichatCommunity/delete")
+	public String deleteCommunity(long cbo_num) {
+		
+		log.debug("<<커뮤니티 글 삭제>> : " + cbo_num);
+		
+		CommunityVO db_cboard = communityService.selectCommunity(cbo_num);
+		
+		communityService.deleteCommunity(cbo_num);
+		
+		return "redirect:/medichatCommunity/list";
+	}
 }

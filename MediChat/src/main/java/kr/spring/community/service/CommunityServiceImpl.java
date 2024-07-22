@@ -32,27 +32,23 @@ public class CommunityServiceImpl implements CommunityService{
 	}
 
 	@Override
-	public void selectCommunity(Long cbo_num) {
-		// TODO Auto-generated method stub
-		
+	public CommunityVO selectCommunity(Long cbo_num) {
+		return communityMapper.selectCommunity(cbo_num);
 	}
 
 	@Override
 	public void updateCommunity(CommunityVO community) {
-		// TODO Auto-generated method stub
-		
+		communityMapper.updateCommunity(community);
 	}
 
 	@Override
 	public void deleteCommunity(Long cbo_num) {
-		// TODO Auto-generated method stub
-		
+		communityMapper.deleteCommunity(cbo_num);
 	}
 
 	@Override
 	public void updateHit(Long cbo_num) {
-		// TODO Auto-generated method stub
-		
+		communityMapper.updateHit(cbo_num);
 	}
 
 }

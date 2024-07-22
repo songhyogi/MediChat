@@ -38,42 +38,41 @@
 			</div>
 		</form>
 		<c:if test="${!empty user}">
-			<input type="button" value="글쓰기" onclick="location.href='write'">
+			<input type="button" value="글쓰기" onclick="location.href='write'"><br>
 		</c:if>
 		<c:if test="${count == 0}">
 			<div>표시할 게시물이 없습니다</div>
 		</c:if>
 		<c:if test="${count > 0}">
-			<table>
-				<tr>
-					<th>카테고리</th>
-					<th>제목</th>
-					<th>작성자</th>
-					<th>작성일</th>
-					<th>조회수</th>
-					<th>공감순</th>
-				</tr>
-				<c:forEach var="cboard" items="${list}">
-					<tr>
-						<td>
-							<c:if test="${cboard.cbo_type == 1}">질환고민</c:if>
-							<c:if test="${cboard.cbo_type == 2}">다이어트·헬스</c:if>
-							<c:if test="${cboard.cbo_type == 3}">피부고민</c:if>
-							<c:if test="${cboard.cbo_type == 4}">임신·성고민</c:if>
-							<c:if test="${cboard.cbo_type == 5}">탈모고민</c:if>
-							<c:if test="${cboard.cbo_type == 6}">마음건강</c:if>
-							<c:if test="${cboard.cbo_type == 7}">뼈와관절</c:if>
-							<c:if test="${cboard.cbo_type == 8}">영앙제</c:if>
-							<c:if test="${cboard.cbo_type == 9}">자유게시판</c:if>
-						</td>
-						<td>${cboard.cbo_title}</td>
-						<td>${cboard.mem_id}</td>
-						<td>${cboard.cbo_rdate}</td>
-						<td>${cboard.cbo_hit}</td>
-						<td>${cboard.fav_cnt}</td>
-					</tr>
-				</c:forEach>
-			</table>
+			<c:forEach var="cboard" items="${list}">
+				<div class="cboard-list" onclick="location.href='detail?cbo_num=${cboard.cbo_num}'" style="cursor: pointer;">
+					<span>
+						<c:if test="${cboard.cbo_type == 1}">질환고민</c:if>
+						<c:if test="${cboard.cbo_type == 2}">다이어트·헬스</c:if>
+						<c:if test="${cboard.cbo_type == 3}">피부고민</c:if>
+						<c:if test="${cboard.cbo_type == 4}">임신·성고민</c:if>
+						<c:if test="${cboard.cbo_type == 5}">탈모고민</c:if>
+						<c:if test="${cboard.cbo_type == 6}">마음건강</c:if>
+						<c:if test="${cboard.cbo_type == 7}">뼈와관절</c:if>
+						<c:if test="${cboard.cbo_type == 8}">영앙제</c:if>
+						<c:if test="${cboard.cbo_type == 9}">자유게시판</c:if>
+					</span>
+					<h5>${cboard.cbo_title}</h5>
+					<div>
+						${cboard.cbo_content}
+					</div>
+					<ul>
+						<li><!-- 프로필 사진 -->
+						<img src="${pageContext.request.contextPath}/member/memViewProfile?mem_num=${cboard.mem_num}" width="40" height="40">	
+						</li>
+						<li>${cboard.mem_id}</li>
+						<li>${cboard.cbo_rdate}</li>
+						<li>${cboard.cbo_hit}</li>
+						<li>${cboard.fav_cnt}</li>
+					</ul>
+					<hr>
+				</div>
+			</c:forEach>
 			<div>${page}</div>
 		</c:if>
 	</div>

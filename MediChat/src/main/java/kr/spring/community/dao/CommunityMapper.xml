@@ -55,11 +55,13 @@
 			a.*,
 			rownum rnum
 			FROM (SELECT
+					cbo_type,
 					cbo_num,
 					mem_num,
 					<![CDATA[
 					REPLACE(REPLACE(cbo_title,'<','&lt;'),'>','&gt;') cbo_title,
 					]]>
+					cbo_content,
 					cbo_hit,
 					cbo_rdate,
 					mem_id,
