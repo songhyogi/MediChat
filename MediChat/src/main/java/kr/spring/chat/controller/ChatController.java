@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +20,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -430,7 +427,8 @@ public class ChatController {
 			paymentNotice += "<br>진료 일자: "+ res_date;
 			paymentNotice += "<br>진료 시각: "+ res_time;
 			paymentNotice += "<br>결제 금액: "+ pay_amount;
-			paymentNotice += "<br><button type=\"button\" class=\"btn-green\" id=\"chat_payment\" onclick=location.href='/chat/myFiles' data-pay_amount="+pay_amount+" data-chat_num="+chat_num+">";
+			paymentNotice += "<br><button type='button' class='btn-green' id='chat_payment' ";
+			paymentNotice += "data-chat_num='"+chat_num+"' data-pay_amount='"+pay_amount+"'>";
 			paymentNotice += "결제하기</button>";
 			
 			map.put("paymentNotice", paymentNotice);
@@ -455,6 +453,7 @@ public class ChatController {
 	 * 	   	결제 버튼 클릭
 	 ========================*/
 	@GetMapping("/chat/chatPayment")
+	@ResponseBody
 	public Map<String,Object> insertPayment(@RequestParam("chat_num") long chat_num){
 		
 		log.debug("<<비대면 진료 결제 chat_num>>: "+chat_num);
@@ -476,5 +475,27 @@ public class ChatController {
 		map.put("doc_name", doc_name);
 		
 		return map;
+	}
+	
+	/*=======================
+	 * 	   	결제 완료 처리
+	 ========================*/
+	@PostMapping("/chat/paymentConfirmation")
+	public void confirmPayment(@RequestParam("chat_num") long chat_num,
+									         @RequestParam("doc_name") String doc_name,
+									         @RequestParam("pay_amount") int pay_amount,
+									         @RequestParam("mem_num") long mem_num) {
+	    
+	    Map<String, Object> map = new HashMap<String,Object>();
+	    
+	    ChatPaymentVO payment = new ChatPaymentVO();
+	    
+	    payment.setChat_num(chat_num);
+	    payment.setMem_num(mem_num);
+	    payment.setPay_amount(pay_amount);
+	    payment.setDoc_name(doc_name);
+	    
+	    chatService.insertChatPayment(payment);
+	    
 	}
 }
