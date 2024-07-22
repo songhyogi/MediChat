@@ -22,14 +22,14 @@ public interface MemberService {
 
 
 	//자동 로그인
-	public void updateAu_id(String au_id,Long mem_num);
-	public void selectAu_id(String au_id);
-	public void deleteAu_id(Long mem_num);
+	public void updateMem_au_id(String mem_au_id,Long mem_num);
+	public MemberVO selectMem_au_id(String mem_au_id);
+	public void deleteMem_au_id(Long mem_num);
 	
 	//아이디 중복확인
 	public MemberVO checkId(String mem_id);
 	//아이디 찾기
-	public void findId(MemberVO member);
+	public MemberVO findId(MemberVO member);
 	//비밀번호 찾기
 	public void findPasswd(MemberVO member);
 	

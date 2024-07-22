@@ -24,8 +24,8 @@
 		<div class="button-container">
 			<label for="auto">
 			<input type="checkbox" name="auto" id="auto">자동로그인</label>
-			<input type="button" value="아이디 찾기" style="margin-right:10px;">
-			<input type="button" value="비밀번호 찾기">
+			<input type="button" value="아이디 찾기" style="margin-right:10px; margin-left:70px;" onclick="location.href='memberFindId'">
+			<input type="button" value="비밀번호 찾기" onclick="location.href='sendMemPassword'">
 		</div>
 	</form:form>
 	<hr size="1" width="50%" noshade="noshade" class="centered-hr">

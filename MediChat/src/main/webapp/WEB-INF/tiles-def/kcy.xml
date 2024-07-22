@@ -29,6 +29,14 @@
 		<put-attribute name="title" value="회원정보 수정"/>
 		<put-attribute name="body" value="/WEB-INF/views/member/memberModify.jsp"/>
 	</definition>
+	<definition name="memberFindId" extends="kcy">
+		<put-attribute name="title" value="ID 찾기"/>
+		<put-attribute name="body" value="/WEB-INF/views/member/memberFindId.jsp"/>
+	</definition>
+	<definition name="memberFindPassword" extends="kcy">
+		<put-attribute name="title" value="비밀번호 찾기"/>
+		<put-attribute name="body" value="/WEB-INF/views/member/memberFindPassword.jsp"/>
+	</definition>
 	<definition name="memberChangePasswd" extends="kcy">
 		<put-attribute name="title" value="비밀번호 변경"/>
 		<put-attribute name="body" value="/WEB-INF/views/member/memberChangePasswd.jsp"/>

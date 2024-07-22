@@ -3,8 +3,11 @@ package kr.spring.member.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -103,7 +106,8 @@ public class MemberController {
 	//전송된 데이터 처리
 	@PostMapping("/member/login")
 	public String loginSubmit(@Valid MemberVO memberVO,BindingResult result,
-											HttpServletRequest request,HttpSession session) {
+											HttpServletRequest request,HttpSession session,
+											HttpServletResponse response) {
 		log.debug("<로그인 정보> : " +memberVO);
 		
 		//아이디와 비밀번호만 유효성 체크하여 오류가 있다면 폼으로
@@ -123,6 +127,18 @@ public class MemberController {
 			}
 			if(check) {
 				//=====자동 로그인 시작=====
+				/*
+				 * boolean autoLogin = memberVO.getMem_auto()!=null &&
+				 * memberVO.getMem_auto().equals("on"); if(autoLogin) { //자동 로그인 체크한 경우 String
+				 * mem_au_id = member.getMem_au_id(); if(mem_au_id==null) { //자동로그인 체크 식별값 생성
+				 * mem_au_id = UUID.randomUUID().toString(); log.debug("<<au_id>> : " +
+				 * mem_au_id); member.setMem_au_id(mem_au_id);
+				 * memberService.updateMem_au_id(member.getMem_au_id(),member.getMem_num()); }
+				 * Cookie auto_cookie = new Cookie("au-log", mem_au_id);
+				 * auto_cookie.setMaxAge(60*60*24*7);//쿠키 유효기간은 1주일 auto_cookie.setPath("/");
+				 * 
+				 * response.addCookie(auto_cookie); }
+				 */
 				//=====자동 로그인 끝=====
 				//로그인 처리
 				session.setAttribute("user", member);
@@ -157,10 +173,16 @@ public class MemberController {
 	 * 로그아웃
 	 ============================*/
 	@GetMapping("/member/logout")
-	public String processLogout(HttpSession session) {	
+	public String processLogout(HttpSession session,HttpServletResponse response) {	
 		//로그아웃
 		session.removeAttribute("user");
 		//====== 자동로그인 체크 시작 =======//
+		/*
+		 * Cookie auto_cookie = new Cookie("au-log",""); auto_cookie.setMaxAge(0);//쿠키
+		 * 삭제 auto_cookie.setPath("/");
+		 * 
+		 * response.addCookie(auto_cookie);
+		 */
 		//====== 자동로그인 체크 끝 =======//
 
 		return "redirect:/main/main";
@@ -184,7 +206,7 @@ public class MemberController {
 		return "memberModify";
 	}
 	//회정정보 수정 폼에서 전송된 데이터 처리
-	@PostMapping("member/modifyUser")
+	@PostMapping("/member/modifyUser")
 	public String updateSubmit(@Valid MemberVO memberVO,BindingResult result,HttpSession session) {
 		log.debug("<회원정보 수정> : " + memberVO);
 		//유효성 체크
@@ -200,7 +222,36 @@ public class MemberController {
 
 		return "myPage";
 	}
-
+	/*=============================
+	 * 아이디 찾기
+	 ============================*/
+	@GetMapping("/member/memberFindId")
+	public String findMemberIdForm() {
+		return "memberFindId";
+	}
+	@PostMapping("/member/memberFindId")
+	public String findMemberIdSubmit(@Valid MemberVO memberVO,BindingResult result,HttpSession session,Model model) {
+		//유효성 체크
+		if(result.hasFieldErrors("mem_name")||result.hasFieldErrors("mem_email")) {
+			return "memberFindId";
+		}
+		//아이디 찾기
+		MemberVO member = memberService.findId(memberVO);
+		
+		log.debug("<< 아이디 찾기 결과 >> : " + member.getMem_id());
+		
+		model.addAttribute("mem_id",member.getMem_id());
+		
+		return "member/memberResultId";
+	}
+	
+	/*=============================
+	 * 비밀번호 찾기(이메일 전송)
+	 ============================*/
+	@GetMapping("/member/sendMemPassword")
+	public String sendPasswordForm() {
+		return "memberFindPassword";
+	}
 	/*=============================
 	 * 비밀번호 변경
 	 ============================*/
@@ -258,9 +309,8 @@ public class MemberController {
 		}
 		//비밀번호 수정
 		memberService.updatePasswd(memberVO);
-		
-		//==================자동 로그인 해제 시작=====================
-		//==================자동 로그인 해제 끝 =====================
+		//자동 로그인 해제
+		//memberService.deleteMem_au_id(memberVO.getMem_num());
 
 		return "redirect:/member/myPage";
 	}
@@ -453,7 +503,7 @@ public class MemberController {
         
       return "memberDrugList";
    }
-   @GetMapping("/mypage/reviewHistory")
+   @GetMapping("/review/reviewMyList")
    public String process3(HttpSession session,Model model) {
       MemberVO user = (MemberVO)session.getAttribute("user");
       if(user == null) {
@@ -466,6 +516,6 @@ public class MemberController {
       
       model.addAttribute("member", member);
         
-      return "reviewHistory";
+      return "reviewMyList";
    }
 }
