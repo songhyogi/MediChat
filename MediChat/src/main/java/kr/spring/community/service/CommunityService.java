@@ -3,6 +3,7 @@ package kr.spring.community.service;
 import java.util.List;
 import java.util.Map;
 
+import kr.spring.community.vo.CommunityFavVO;
 import kr.spring.community.vo.CommunityVO;
 
 public interface CommunityService {
@@ -19,7 +20,10 @@ public interface CommunityService {
 	public void updateHit(Long cbo_num);
 
 	//게시판 좋아요
-
+	public CommunityFavVO selectFav(CommunityFavVO fav); //좋아요 목록..?
+	public Integer selectFavCount(Long cbo_num); //좋아요 개수
+	public void insertFav(CommunityFavVO fav);	//좋아요 처리
+	public void deleteFav(CommunityFavVO fav); //좋아요 삭제
 
 	/*-----------------------------댓글-----------------------------*/
 
