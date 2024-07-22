@@ -30,5 +30,6 @@ public interface ReviewMapper {
 	@Update("UPDATE review SET rev_hit=rev_hit+1 WHERE rev_num=#{rev_num}")
 	public void clickHitReview(Long rev_num);
 	//병원삭제?
+
 	
 }

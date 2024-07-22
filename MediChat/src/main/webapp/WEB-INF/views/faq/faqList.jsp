@@ -11,15 +11,23 @@
 		<p>		
 		<h2>&nbsp;&nbsp;&nbsp;<b>자주 묻는 질문(FAQ)</b></h2>
 		<br>
-		<form action="faqList" method="get" class="align-center">
-			<div class="container-input">
-			<select name="keyfield" id="selectinput">
+		<form action="faqList"  id="form-faq" method="get" class="align-center">
+			<div class="container-input " style="width:500px; margin:0 auto;">
+			<div class="d-flex justify-content-center align-items-center " >
+			<select name="keyfield" class="form-control" id="selectinput">
+				<option disabled="disabled"  <c:if test="${empty keyfield}">selected</c:if>>선택</option>
 				<option value="1" <c:if test="${keyfield ==1}">selected</c:if>>제목</option>
 				<option value="2"<c:if test="${keyfield ==2}">selected</c:if>>내용</option>
 				<option value="3" <c:if test="${keyfield ==3}">selected</c:if>>제목 또는 내용</option>
 			</select>
-			<input type="text" name="keyword" placeholder="Search" name="text" class="input">
-				<button style="height:35px;'" class="button font" type="submit">검색</button>
+				 &nbsp;&nbsp;<input type="text" id="h-search" class="form-control"  placeholder="검색어를 입력하세요." name="keyword" value="${keyword}">
+				<i id="h-search-icon" class="bi bi-search" ></i>
+				<script type="text/javascript">
+					$('#h-search-icon').click(function(){
+						$('#form-faq').submit();
+					});
+				</script>
+			</div>
 			</div>
 		</form>
 		<hr size="1" width="100%">
@@ -45,7 +53,6 @@
 				   <input class="checkbox" type="checkbox" id="${f.faq_num}">
 				   <label class="toggle" for="${f.faq_num}">
 				        <div id="bar1" class="bars"></div>
-				        <div id="bar2" class="bars"></div>
 				        <div id="bar3" class="bars"></div>
 				   </label>
 			</div>
@@ -56,12 +63,15 @@
 					<hr width="100%" size="1">	 
 					 ${f.faq_content}
 			</div>
-		</div>
+			</div>
 			<br><br>
+			<div class="line"></div>
 		</c:forEach>
+		<br><br>
 		<div class="align-center float-clear">
 			${page}
 		</div>
 	</c:if>
+	<br><br>
 	</div>
 </div>

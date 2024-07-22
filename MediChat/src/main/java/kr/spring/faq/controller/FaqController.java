@@ -45,6 +45,8 @@ public class FaqController {
 		List<FaqVO> list = service.selectFList(map);
 		model.addAttribute("list",list);
 		model.addAttribute("count",count);
+		model.addAttribute("keyfield", keyfield);
+		model.addAttribute("keyword", keyword);
 		model.addAttribute("page",page.getPage());
 		return "faq_List";
 	}

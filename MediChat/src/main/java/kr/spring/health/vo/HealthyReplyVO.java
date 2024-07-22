@@ -17,11 +17,13 @@ public class HealthyReplyVO {
 	private String hre_reg_date;
 	private String hre_modify_date;
 	private int hre_level;
-	
 	private String id;
 	private int refav_cnt;
 	private long click_num;
     private String re_id;
+	//대댓글 갯수
+	private int rerelpy_cnt;
+    
 	public void setHre_reg_date(String  hre_reg_date) {
 		this.hre_reg_date = DurationFromNow.getTimeDiffLabel(hre_reg_date);
 	}

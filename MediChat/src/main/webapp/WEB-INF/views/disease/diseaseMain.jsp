@@ -5,5 +5,9 @@
 <input type="button" value="질병입력" onclick="location.href='${pageContext.request.contextPath}/disease/diseaseInsert'">
 <input type="button" value="코드입력" onclick="location.href='${pageContext.request.contextPath}'">
 
+
+${list}
+
 <p>
 <p>
+&nbsp;<div class="vr"></div>&nbsp;
