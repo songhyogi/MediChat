@@ -203,13 +203,11 @@
                     output += '</div>';
                     output += '<div class="noti-item-category fs-12 fw-7">';
                     if (param.list[i].noti_category == 1) {
-                        output += '진료 관련 알림'
+                        output += '진료 관련 알림';
                     } else if (param.list[i].noti_category == 2) {
-                        output += '커뮤니티 관련 알림'
+                        output += '커뮤니티 관련 알림';
                     } else if (param.list[i].noti_category == 3) {
-                        output += '시스템 관련 알림'
-                    } else if (param.list[i].noti_category == 4) {
-                        output += '정보 관련 알림'
+                        output += '정보 관련 알림';
                     } else {
                         output += '일반 관련 알림'
                     }
