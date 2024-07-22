@@ -81,6 +81,6 @@
 		FROM chat_files f
 		JOIN member m
 		ON(f.doc_num = m.mem_num)
-		WHERE f.mem_num = #{mem_num}
+		WHERE f.chat_num = #{chat_num}
 	</select>
 </mapper>

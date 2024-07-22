@@ -53,6 +53,9 @@ public interface ChatMapper {
 	//불러온 파일 번호를 토대로 파일 지우기
 	@Delete("DELETE FROM chat_files WHERE file_num=#{file_num}")
 	public void deleteFile(long file_num);
+	
+	//결제 정보 입력
+	@Insert("INSERT INTO chat_payment(pay_num,chat_num,mem_num,pay_amount) VALUES (payment_seq.nextval,#{chat_num},#{mem_num},#{pay_amount})")
 	public void insertChatPayment(ChatPaymentVO chatPaymentVO);
 	
 	public List<ChatFileVO> selectFiles(long mem_num);

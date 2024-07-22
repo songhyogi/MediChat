@@ -42,8 +42,7 @@ public class SocketHandler extends TextWebSocketHandler {
 	 * 다시 그 메시지를 받아서 화면에 보여주게 된다.
 	 */
 	@Override
-	protected void handleTextMessage(
-			WebSocketSession session, TextMessage message) throws Exception {
+	protected void handleTextMessage(WebSocketSession session, TextMessage message)throws Exception {
 		log.debug(session.getId() + "로부터 메시지 수신: " + message.getPayload());
 		
 		log.debug("[접속 user 수 : " + users.values().size()+"]");

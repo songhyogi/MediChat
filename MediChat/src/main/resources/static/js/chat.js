@@ -19,7 +19,7 @@ $(function(){
 		message_socket.onmessage=function(evt){
 			//메시지 읽기
 			let data = evt.data;
-			if($('#chat_body').length==1 && (data.substring(0,3)=='msg'||data.substring(0,12)=='paymentNotice')){
+			if($('#chat_body').length==1 && (data.substring(0,3)=='msg'||data.startsWith=='paymentNotice')){
 				selectChat();
 			}
 		};
@@ -445,7 +445,70 @@ $(function(){
 		event.stopPropagation();
 	});
 	
+	
 	/*=======================
+		해당 채팅 파일 목록 가져오기
+	=========================*/
+	function selectFileList(){
+		
+		console.log('채팅 파일 목록 이벤트 발생');
+		console.log('chat_num:'+chat_num);
+		let fileList = '';
+		
+		$.ajax({
+			url:'/chat/fileDetail',
+			type:'GET',
+			data:{chat_num:chat_num},
+			dataType:'json',
+			success:function(param){
+				if(param.userCheck=='logout'){
+					//로그아웃 상태인 경우, 메인으로 이동
+					alert('로그인 후 이용해주십시오');
+					window.location.href='/main/main';
+				}
+				
+				if(param.list == 'null'){
+					//해당 채팅방 파일 목록이 없는 경우
+					fileList+='<div class="close-room">';
+					fileList+='		해당 채팅방에 열람할 자료가 없습니다.';
+					fileList+='</div>';
+				}else{
+					//해당 채팅방 파일 목록이 있는 경우
+					$(param.list).each(function(index,item){
+						fileList+='<table>';
+						fileList+='	<tr class="list-head bg-gray-3">';
+						fileList+='					<th>진료의사</th>';
+						fileList+='					<th>서류유형</th>';
+						fileList+='					<th>발급일자</th>';
+						fileList+='					<th>유효일자</th>';
+						fileList+='	</tr>';
+						fileList+='	<tr>';
+						fileList+='					<td>'+item.doc_num+'</td>';
+						if(item.file_type == 0){ //파일 유형이 처방전
+							fileList+='					<td>처방전</td>';
+						}else if(item.file_type == 1){ //파일 유형이 소견서
+							fileList+='					<td>소견서</td>';
+						}else if(item.file_type == 2){ //파일 유형이 진단서
+							fileList+='					<td>진단서</td>';
+						}else if(item.file_type == 3){ //파일 유형이 진료비 세부내역서
+							fileList+='					<td>진료비 세부내역서</td>';
+						}
+						fileList+='					<td>'+item.file_reg_date+'</td>';
+						fileList+='					<td>'+item.file_valid_date+'</td>';
+						fileList+='	</tr>';
+						fileList+='<button type="button" class="btn-green" onclick="/chat/downloadFile?file_num=${list.file_num}">다운로드</button>'
+						fileList+='</table>';
+					}); //end of list each
+				}//end of else
+				$('.chat-body').html(fileList);
+			}, // end of success
+			error:function(){
+				alert('네트워크 오류 발생');
+			}
+		}); //end of ajax
+	}
+	
+		/*=======================
 		 진료비 청구 폼 제출
 	=========================*/
 	$('.close-payment-form').on('click','#close_submit',function(event){
@@ -459,44 +522,25 @@ $(function(){
 			return false;
 		}
 		
-		const chat_num = $('#close_chat_num').val();
-    	const pay_amount = $('#pay_amount').val();
+		chat_num = $('#close_chat_num').val();
+    	pay_amount = $('#pay_amount').val();
     
     	const form_data = {
         	chat_num: chat_num,
         	pay_amount: pay_amount
     	};
-		
+    	
 		$.ajax({
 			url:'/chat/requestPayment',
 			type:'post',
 			data:form_data,
 			dataType:'json',
 			success:function(param){
-				if(param.result == 'success'){
-					//안내문자
-					let paymentNotice = 'paymentNotice :';
-					paymentNotice += '예약번호 '+res_num+'의 진료비 청구가 도착했습니다.';
-					paymentNotice += '<br>'
-					paymentNotice += '환자 성명: '+param.mem_name;
-					paymentNotice += '<br>'
-					paymentNotice += '담당 의사: '+param.doc_name;
-					paymentNotice += '<br>'
-					paymentNotice += '진료 일자: '+res_date;
-					paymentNotice += '<br>'
-					paymentNotice += '진료 시각: '+res_time;
-					paymentNotice += '<br>'
-					paymentNotice += '결제 금액: '+param.pay_amount;
-					
-					if (message_socket.readyState === WebSocket.OPEN) {
-					    // 메시지 전송
-					    message_socket.send(paymentNotice);
-					    console.log('전송된 메시지:', paymentNotice);
-					    $('.close-payment-form-bg').hide();
-						$('.close-payment-form').hide();
-					} else {
-					    console.log('웹소켓이 열려 있지 않습니다. 상태:', message_socket.readyState);
-					}
+				if(param.result == 'success'){				
+					selectChat();
+					console.log('전송된 메시지:', param.paymentNotice);
+					$('.close-payment-form-bg').hide();
+					$('.close-payment-form').hide();
 					
 				}else if(param.result == 'fail'){
 					alert('채팅 정보 로드 오류 발생');
@@ -523,6 +567,7 @@ $(function(){
         res_time = $(this).data('res-time');
         res_num = $(this).data('res-num');
         
+        console.log(chat_num+','+res_date+','+res_time+','+res_num);
         
         const selected = $(this).parent().parent();
         const not_selected = $('.file-room').parent().parent();
@@ -545,12 +590,65 @@ $(function(){
 		res_title += '			<div class="chat-date fs-20">';
 		res_title += '				'+res_date+'  '+res_time;
 		res_title += '			</div>';
-		res_title += '			</div>';
-		if(param.type=='3'){
-			res_title += '			<button type="button" class="chat-close-btn" id="chat_close">진료 종료</button>';
-		};
+		res_title += '		</div>';
 
-		$('#file-header').html(res_title);
+		$('#file_header').html(res_title); 
+
+		let fileList = '';
 		
-	});//end of click file-room 
+		$.ajax({
+			url:'/chat/fileDetail',
+			type:'GET',
+			data:{chat_num:chat_num},
+			dataType:'json',
+			success:function(param){
+				if(param.userCheck=='logout'){
+					//로그아웃 상태인 경우, 메인으로 이동
+					alert('로그인 후 이용해주십시오');
+					window.location.href='/main/main';
+				}
+				
+				if(param.list == 'null'){
+					//해당 채팅방 파일 목록이 없는 경우
+					fileList+='<div class="close-room">';
+					fileList+='		해당 채팅방에 열람할 자료가 없습니다.';
+					fileList+='</div>';
+				}else{
+					//해당 채팅방 파일 목록이 있는 경우
+					$(param.list).each(function(index,item){
+						fileList+='<table>';
+						fileList+='	<tr class="list-head bg-gray-3">';
+						fileList+='					<th>진료의사</th>';
+						fileList+='					<th>서류유형</th>';
+						fileList+='					<th>발급일자</th>';
+						fileList+='					<th>유효일자</th>';
+						fileList+='	</tr>';
+						fileList+='	<tr>';
+						fileList+='					<td>'+item.doc_num+'</td>';
+						if(item.file_type == 0){ //파일 유형이 처방전
+							fileList+='					<td>처방전</td>';
+						}else if(item.file_type == 1){ //파일 유형이 소견서
+							fileList+='					<td>소견서</td>';
+						}else if(item.file_type == 2){ //파일 유형이 진단서
+							fileList+='					<td>진단서</td>';
+						}else if(item.file_type == 3){ //파일 유형이 진료비 세부내역서
+							fileList+='					<td>진료비 세부내역서</td>';
+						}
+						fileList+='					<td>'+item.file_reg_date+'</td>';
+						fileList+='					<td>'+item.file_valid_date+'</td>';
+						fileList+='	</tr>';
+						fileList+='<button type="button" class="btn-green" onclick="/chat/downloadFile?file_num=${list.file_num}">다운로드</button>'
+						fileList+='</table>';
+					}); //end of list each
+				}//end of else
+				$('.chat-body').html(fileList);
+			}, // end of success
+			error:function(){
+				alert('네트워크 오류 발생');
+			}
+		}); //end of ajax
+		
+	});//end of click file-room
+	
+	
 });
