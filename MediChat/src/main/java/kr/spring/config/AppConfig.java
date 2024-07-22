@@ -52,7 +52,8 @@ public class AppConfig implements WebMvcConfigurer,WebSocketConfigurer{
 				"/WEB-INF/tiles-def/shg.xml",
 				"/WEB-INF/tiles-def/ssh.xml",
 				"/WEB-INF/tiles-def/whr.xml",
-				"/WEB-INF/tiles-def/ych.xml"
+				"/WEB-INF/tiles-def/ychmember.xml",
+				"/WEB-INF/tiles-def/ychdoctor.xml"
 		});
 		configurer.setCheckRefresh(true);
 		return configurer;
