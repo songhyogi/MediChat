@@ -26,7 +26,6 @@ public class CommunityVO {
 	
 	//JOIN을 통해 사용
 	private String mem_id;
-	private String mem_photo;
 	
 	private int re_cnt;			//댓글 개수
 	private int fav_cnt;			//좋아요 개수
