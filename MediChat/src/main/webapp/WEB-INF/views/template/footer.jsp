@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <div class="line-footer"></div>
 <div class="bg-green-1 p-3">
-	<div class="row justify-content-center">
+	<div class="row d-flex justify-content-center text-center">
 		<div class="col-3">
 			<p class="footer-title">MediChat</p>
 			<a href="#" class="footer-text">소개</a><br>

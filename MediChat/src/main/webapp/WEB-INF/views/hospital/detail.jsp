@@ -223,9 +223,11 @@
 	
 	<div id="detail_btn_box">
 		<div class="d-flex justify-content-center align-items-center">
+			<c:if test="${hospital.doc_cnt>0}">
 			<button id="reservation_btn" data-hos-name="${hospital.hos_name}" data-hos-num="${hospital.hos_num}">
                 진료 예약하기
             </button>
+            </c:if>
 			<div id="call_btn">
 				전화하기
 			</div>

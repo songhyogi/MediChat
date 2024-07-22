@@ -177,7 +177,11 @@
 <!-- ========================= 병원 리스트 끝 ========================= -->
 
 	<select id="selectHospital" parameterType="long" resultType="hospitalVO">
-		SELECT * FROM hospital WHERE hos_num=#{hos_num}
+		select h.*, d.doc_cnt from hospital h LEFT JOIN ( SELECT hos_num, COUNT(*) AS doc_cnt
+		                                                 FROM doctor_detail
+		                                                 WHERE doc_treat = 1
+		                                                 GROUP BY hos_num
+		                                               ) d  ON h.hos_num = d.hos_num where h.hos_num=#{hos_num}
 	</select>
 	
 	<update id="updateHitHospital" parameterType="long">

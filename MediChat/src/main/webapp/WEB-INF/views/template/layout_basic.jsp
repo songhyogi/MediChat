@@ -10,14 +10,14 @@
 <tiles:insertAttribute name="css" ignore="true"/>
 </head>
 <body>
-<div id="">
-	<div id="main_header">
+<div>
+	<div>
 		<tiles:insertAttribute name="header" ignore="true"/>
 	</div>
-	<div id="main_body">
+	<div>
 		<tiles:insertAttribute name="body"/>
 	</div>
-	<div id="main_footer">
+	<div>
 		<tiles:insertAttribute name="footer"/>
 	</div>
 </div>
