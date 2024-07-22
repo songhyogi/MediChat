@@ -11,7 +11,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Builder
-public class NotificationVO implements Serializable{
+public class NotificationVO {
 	private Long noti_num;				//알림 식별자
 	private Long mem_num;				//받는 회원 식별자
 	private Long noti_category;			//알림의 카테고리
