@@ -23,13 +23,6 @@
 		<put-attribute name="body" value="/WEB-INF/views/drug/drugDetail.jsp"/>
 		<put-attribute name="bootstrap" value="/WEB-INF/views/common/bootStrap.jsp"/>
 	</definition>
-	<!-- 회원 의약품 목록 -->
-	<definition name="memberDrugList" extends="myPage">
-		<put-attribute name="title" value="회원 의약품 상세"/>
-		<put-attribute name="body" value="/WEB-INF/views/drug/memberDrugList.jsp"/>
-		<put-attribute name="css" value="/WEB-INF/views/drug/drugCSS.jsp"/>
-		<put-attribute name="bootstrap" value="/WEB-INF/views/common/bootStrap.jsp"/>
-	</definition>
 	
 	<!-- 커뮤니티 -->
 	<definition name="cboardList" extends="whr">
@@ -40,6 +33,14 @@
 	<definition name="cboardWrite" extends="whr">
 		<put-attribute name="title" value="MediChat Community"/>
 		<put-attribute name="body" value="/WEB-INF/views/community/cboardWrite.jsp"/>
+	</definition>
+	<definition name="cboardDetail" extends="whr">
+		<put-attribute name="title" value="MediChat Community"/>
+		<put-attribute name="body" value="/WEB-INF/views/community/cboardDetail.jsp"/>
+	</definition>
+	<definition name="cboardModify" extends="whr">
+		<put-attribute name="title" value="MediChat Community"/>
+		<put-attribute name="body" value="/WEB-INF/views/community/cboardUpdate.jsp"/>
 	</definition>
 </tiles-definitions>
 

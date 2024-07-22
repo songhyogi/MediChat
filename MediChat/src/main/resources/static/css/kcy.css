@@ -34,18 +34,12 @@ span.title2{
 .doctor-register-body {
     height: 1000px; /* 원하는 높이로 설정 */
 }
-#member_register ul,#doctor_register ul,
-#member_modify ul,#doctor_modify ul,
-#member_changePasswd ul,#member_delete ul,
-#doctor_changePasswd ul,#doctor_delete ul{
+ul{
     padding:0;
     margin:0;
 	list-style:none;
 }
-#member_register li,#doctor_register li,
-#member_modify li,#doctor_modify li,
-#member_changePasswd li,#member_delete li,
-#doctor_changePasswd li,#doctor_delete li{
+li{
     margin-bottom:15px;
 }
 #member_register label,#doctor_register label,
@@ -66,28 +60,9 @@ span.title2{
     margin-left:70px;
     text-align:right;
 }
-#member_register input[type="text"],
-#member_register input[type="password"],
-#member_register input[type="email"],
-#doctor_register input[type="text"],
-#doctor_register input[type="password"],
-#doctor_register input[type="email"],
-#member_modify input[type="text"],
-#member_modify input[type="password"],
-#member_modify input[type="email"],
-#doctor_modify input[type="text"],
-#doctor_modify input[type="password"],
-#doctor_modify input[type="email"],
-#member_changePasswd input[type="password"],
-#member_changePasswd input[type="text"],
-#member_delete input[type="text"],
-#member_delete input[type="password"],
-#member_delete input[type="email"],
-#doctor_changePasswd input[type="password"],
-#doctor_changePasswd input[type="text"],
-#doctor_delete input[type="text"],
-#doctor_delete input[type="password"],
-#doctor_delete input[type="email"]{
+input[type="text"],
+input[type="password"],
+input[type="email"]{
     width:350px;
     padding: 5px;
     border: 1px solid #ccc;
@@ -119,24 +94,10 @@ span.title2{
     cursor: pointer;
     width: 300px;
 }
-#member_register .default-btn:hover,
-#doctor_register .default-btn:hover,
-#member_modify .default-btn:hover,
-#doctor_modify .default-btn:hover,
-#member_changePasswd .default-btn:hover,
-#member_delete .defalut-btn:hover,
-#doctor_changePasswd .default-btn:hover,
-#doctor_delete .default-btn:hover{
+.default-btn:hover{
     background-color:gray;
 }
-#member_register .error-color,
-#doctor_register .error-color,
-#member_modify .error-color,
-#doctor_modify .error-color,
-#member_changePasswd .error-color,
-#member_delete .error-color,
-#doctor_changePasswd .error-color,
-#doctor_delete .error-color{
+.error-color{
 	font-size: 12px;
     color: red;
 }
@@ -147,12 +108,10 @@ span.title2{
     margin-left:205px;	
     font-size: 12px;
 }
-#member_register input[id="mem_zipcode"],
-#member_modify input[id="mem_zipcode"] {
+input[id="mem_zipcode"] {
     width:100px;
 }
-#member_register input[id="mem_address1"],
-#member_modify input[id="mem_address1"]{
+input[id="mem_address1"]{
 	margin-left:205px;
 	margin-top:10px;
 }
@@ -227,14 +186,7 @@ input#mem_address1 {
 	margin-top:10px;
 	margin-left:50px;
 }
-#member_register #reload_btn,
-#doctor_register #reload_btn,
-#member_modify #reload_btn,
-#doctor_modify #reload_btn,
-#member_changePasswd #reload_btn,
-#member_delete #reload_btn,
-#doctor_changePasswd #reload_btn,
-#doctor_delete #reload_btn{
+#reload_btn{
 	background-color:#9c9c9c;
 	font-weight: 100 !important;
 	font-size: 16px;
@@ -246,12 +198,9 @@ input#mem_address1 {
     cursor: pointer;
     width: 100px;
 }
-#doctor_register input[type="search"],
-#doctor_register textarea,
-#doctor_register select,
-#doctor_modify input[type="search"],
-#doctor_modify textarea,
-#doctor_modify select {
+input[type="search"],
+textarea,
+select{
     width: 350px;
     padding: 8px;
     border: 1px solid #ccc;
@@ -294,13 +243,15 @@ input#mem_address1 {
     cursor: pointer;
 }
 /* 로그인 */
-form#member_login,form#doctor_login{
+form#member_login,form#doctor_login,
+form#member_findId,form#member_findPasswd{
     width: 320px;
     margin: 0 auto;
     padding: 0;
     border: none;
 }
-#member_login ul,#doctor_login ul{
+#member_login ul,#doctor_login ul,
+#member_findId ul{
     padding: 0;
     list-style:none;
 }
@@ -333,15 +284,16 @@ input#auto{
     padding: 0 0 5px 0;
 }
 .button-container {
-    display: flex;
+	margin-top:10px;
+    display:flex;
+    width:350px;
+    justify-content: flex-end;
 }
 .button-container input[type="button"] {
-    width: 120px;
     border: none;
     background-color: transparent;
     padding: 0;
     cursor: pointer;
-    text-align: center;
 }
 #member_login .error-color,#doctor_login .error-color{
 	margin-bottom:15px;

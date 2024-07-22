@@ -31,6 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.spring.chat.service.ChatService;
 import kr.spring.chat.vo.ChatFileVO;
 import kr.spring.chat.vo.ChatMsgVO;
+import kr.spring.chat.vo.ChatPaymentVO;
 import kr.spring.chat.vo.ChatVO;
 import kr.spring.doctor.service.DoctorService;
 import kr.spring.doctor.vo.DoctorVO;
@@ -165,6 +166,8 @@ public class ChatController {
 			log.debug("<<채팅방 사용 불가>> - 예약 날짜/시간: "+resDate+"/"+resTime);
 			map.put("chat","close");
 		}
+		
+		model.addAttribute("chat_num",chat_num);
 		
 	 return map;
 		
@@ -332,47 +335,6 @@ public class ChatController {
 	}
 
 
-	/*=======================
-	 * 	    진료 종료 전송
-	 ========================*/
-	@PostMapping("/chat/requestPayment")
-	@ResponseBody
-	public Map<String,Object> requestPayment(@RequestParam("chat_num") long chat_num,
-											 @RequestParam("pay_amount") int pay_amount){
-		Map<String,Object> map = new HashMap<String,Object>();
-		
-		ChatVO chat = chatService.selectChat(chat_num);
-		log.debug("<<채팅 번호>>:"+chat_num);
-		
-		//환자 번호 구하기
-		long mem_num = chat.getMem_num();
-		log.debug("<<환자 번호>>:"+mem_num);
-		
-		//의사 번호 구하기
-		long doc_num = chat.getDoc_num();
-		log.debug("<<의사 번호>>:"+doc_num);
-		
-		//환자 이름 구하기
-		MemberVO member = memberService.selectMember(mem_num);
-		String mem_name = member.getMem_name();
-		log.debug("<<환자 이름>>:"+mem_name);
-		
-		//의사 이름 구하기
-		DoctorVO doctor = doctorService.selectDoctor(doc_num);
-		String doc_name = doctor.getMem_name();
-		log.debug("<<의사 이름>>:"+doc_num);
-		
-		try {
-			map.put("result", "success");
-			map.put("mem_name", mem_name);
-			map.put("doc_name", doc_name);
-			map.put("pay_amount", pay_amount);
-		}catch(Exception e) {
-			map.put("result", "fail");
-		}
-		
-		return map;
-	}
 	
 	/*=======================
 	 * 	    진료 파일 목록
@@ -392,11 +354,127 @@ public class ChatController {
 		long mem_num = user.getMem_num();
 		
 		List<ChatVO> chat = chatService.selectChatListForMem(mem_num);
-		List<ChatFileVO> list = chatService.selectFiles(mem_num);
 		
 		model.addAttribute("chat",chat);
-		model.addAttribute("list",list);
 		
 		return "chatMyFiles";
+	}
+	
+	/*=======================
+	 * 	    진료 파일 목록
+	 ========================*/
+	@GetMapping("/chat/fileDetail")
+	public Map<String,Object> selectFilesDetail(HttpSession session, long chat_num){
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		if(user == null) {
+			map.put("userCheck", "logout");
+		}
+		
+		List<ChatFileVO> list = chatService.selectFiles(chat_num);
+		
+		if(list == null) {
+			map.put("list", "null");
+		}else {
+			map.put("list", list);
+		}
+		
+		return map;
+	}
+	
+
+	/*=======================
+	 * 	    진료 종료 전송
+	 ========================*/
+	@PostMapping("/chat/requestPayment")
+	@ResponseBody
+	public Map<String,Object> requestPayment(@RequestParam("chat_num") long chat_num,
+											 @RequestParam("pay_amount") int pay_amount
+											 ){
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		ChatVO chat = chatService.selectChat(chat_num);
+		log.debug("<<채팅 번호>>:"+chat_num);
+		
+		ReservationVO res = chatService.selectReservationByChatNum(chat_num);
+		long res_num = chat.getRes_num();
+		log.debug("<<예약 번호>>:"+res_num);
+		
+		String res_date = res.getRes_date();
+		String res_time = res.getRes_time();
+		
+		//환자 번호 구하기
+		long mem_num = chat.getMem_num();
+		log.debug("<<환자 번호>>:"+mem_num);
+		
+		//의사 번호 구하기
+		long doc_num = chat.getDoc_num();
+		log.debug("<<의사 번호>>:"+doc_num);
+		
+		//환자 이름 구하기
+		MemberVO member = memberService.selectMember(mem_num);
+		String mem_name = member.getMem_name();
+		log.debug("<<환자 이름>>:"+mem_name);
+		
+		//의사 이름 구하기
+		DoctorVO doctor = doctorService.selectDoctor(doc_num);
+		String doc_name = doctor.getMem_name();
+		log.debug("<<의사 이름>>:"+doc_name);
+		
+		try {
+			String paymentNotice = "예약번호:" + res_num + "의 진료비 청구가 도착했습니다.";
+			paymentNotice += "<br>환자 성명: "+ mem_name;
+			paymentNotice += "<br>담당 의사: "+ doc_name;
+			paymentNotice += "<br>진료 일자: "+ res_date;
+			paymentNotice += "<br>진료 시각: "+ res_time;
+			paymentNotice += "<br>결제 금액: "+ pay_amount;
+			paymentNotice += "<br><button type=\"button\" class=\"btn-green\" id=\"chat_payment\" onclick=location.href='/chat/myFiles' data-pay_amount="+pay_amount+" data-chat_num="+chat_num+">";
+			paymentNotice += "결제하기</button>";
+			
+			map.put("paymentNotice", paymentNotice);
+			
+			ChatMsgVO paymentNoticeMSG = new ChatMsgVO();
+			paymentNoticeMSG.setChat_num(chat_num);
+			paymentNoticeMSG.setMsg_content(paymentNotice);
+			paymentNoticeMSG.setMsg_sender_type(1);
+			
+			chatService.insertMsg(paymentNoticeMSG);
+			map.put("result", "success");
+			
+		}catch(Exception e) {
+			map.put("result", "fail");
+		}
+		
+		return map;
+	}
+	
+	
+	/*=======================
+	 * 	   	결제 버튼 클릭
+	 ========================*/
+	@GetMapping("/chat/chatPayment")
+	public Map<String,Object> insertPayment(@RequestParam("chat_num") long chat_num){
+		
+		log.debug("<<비대면 진료 결제 chat_num>>: "+chat_num);
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		ChatPaymentVO payment = new ChatPaymentVO();
+		
+		ChatVO chat = chatService.selectChat(chat_num);
+		payment.setChat_num(chat.getChat_num());
+		payment.setMem_num(chat.getMem_num());
+		
+		MemberVO member = memberService.selectMember(chat.getMem_num());
+		payment.setMem_phone(member.getMem_phone());
+		DoctorVO doctor = doctorService.selectDoctor(chat.getDoc_num());
+		
+		String doc_name = doctor.getMem_name();
+		
+		map.put("payment", payment);
+		map.put("doc_name", doc_name);
+		
+		return map;
 	}
 }

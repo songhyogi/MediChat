@@ -8,8 +8,11 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ChatPaymentVO {
-	private int pay_num;
-	private int chat_num;
-	private int mem_num;
-	private int pay_amount;
+	private long pay_num;
+	private long chat_num;
+	private long mem_num; //결제인
+	private int pay_amount; //결제금액
+	
+	//api에 전달해야하는 mem_phone 값
+	private String mem_phone;
 }

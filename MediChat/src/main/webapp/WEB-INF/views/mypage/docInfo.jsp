@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>회원정보</title>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <style>
 ul{
@@ -18,20 +19,28 @@ ul li{
 <body>
 	<div class="docInfo">
 		<ul>
-			<li>이름 : ${user.mem_name}</li>
-			<li>이메일 : ${user.doc_email}</li>
-			<li>병원정보 : ${user.hos_num}</li>
-			<li>비대면 진료 여부 : ${user.doc_treat}</li>
-			<li><a href="#" class="dropdown-toggle" data-toggle="dropdown">연혁
-					<span class="caret"></span></a>
+			<li>이름 : ${doctor.mem_name}</li>
+			<li>이메일 : ${doctor.doc_email}</li>
+			<li>병원정보 : ${hospital.hos_name}</li>
+			<c:if test="${doctor.doc_treat==0}">
+				<li>비대면 진료 여부 : 불가능</li>
+			</c:if>
+			<c:if test="${doctor.doc_treat==1}">
+				<li>비대면 진료 여부 : 가능</li>
+			</c:if>
+			<li>
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">연혁<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li>${user.doc_history}</li>
-				</ul></li>
-			<li>가입일 : ${user.doc_reg}</li>
+					<li>
+						${doctor.doc_history}
+					</li>
+				</ul>
+			</li>
+			<li>가입일 : ${doctor.doc_reg}</li>
 		</ul>
 		<div class="align-center" style="margin-top:77px;">
 			<input type="button" value="회원정보 수정"
-				onclick="location.href='memberModify.jsp'"> <input
+				onclick="location.href='${pageContext.request.contextPath}/doctor/modifyDoctor'"> <input
 				type="button" value="비밀번호 변경" onclick="location.href='#'">
 		</div>
 	</div>

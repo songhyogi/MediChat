@@ -30,7 +30,6 @@
 				   <input class="checkbox" type="checkbox" id="${r.rev_num}">
 				   <label class="toggle" for="${r.rev_num}" data-num="${r.rev_num}">
 				        <div id="bar1" class="bars"></div>
-				        <div id="bar2" class="bars"></div>
 				        <div id="bar3" class="bars"></div>
 				   </label>
 					</div>

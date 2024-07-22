@@ -28,7 +28,8 @@ public class MemberVO {
    private byte[] mem_photo;      //프로필 사진
    private String mem_photoname;   //프로필 사진명
    private int mem_auth;         //권한 등급(0:탈퇴,1:정지,2:일반,3:의사,9:관리자)
-   private String au_id;         //자동로그인ID
+   private String mem_auto;
+   private String mem_au_id;         //자동로그인ID
    @Pattern(regexp="^[A-Za-z0-9]{4,12}$")
    //영문자와 숫자의 조합이며 길이가 4에서 12 사이
    /* @Pattern(regexp="^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{4,12}$") */

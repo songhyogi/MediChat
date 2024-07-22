@@ -48,11 +48,11 @@
 		<div id="main_body" class="col-9">
 			<tiles:insertAttribute name="body"/>
 		</div>
-		<div id="main_footer">
-			<tiles:insertAttribute name="footer"/>
-		</div>
 
-		</div>
+	</div>
+	<div id="main_footer">
+		<tiles:insertAttribute name="footer"/>
+	</div>
 </div>
 </div>
 </body>

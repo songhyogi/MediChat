@@ -17,6 +17,8 @@ import kr.spring.health.vo.HealthyFavVO;
 import kr.spring.health.vo.HealthyReFavVO;
 import kr.spring.health.vo.HealthyReplyVO;
 import kr.spring.member.vo.MemberVO;
+import kr.spring.notification.service.NotificationService;
+import kr.spring.notification.vo.NotificationVO;
 import kr.spring.util.PagingUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,7 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 public class HealthAjaxController {
 	@Autowired 
 	private HealthyService service ;
-	
+	@Autowired
+	private NotificationService notificationService;
 	@PostMapping("/health/selectHReply")
 	@ResponseBody
 	public Map<String,Object> selectHreList(long healthy_num,@RequestParam(defaultValue="1") int pageNum,HttpSession session){

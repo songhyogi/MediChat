@@ -39,15 +39,20 @@ public interface MemberMapper {
 	
 	
 	//자동 로그인
-	public void updateAu_id(String au_id,Long mem_num);
-	public void selectAu_id(String au_id);
-	public void deleteAu_id(Long mem_num);
+	@Update("UPDATE member_detail SET mem_au_id=#{mem_au_id} WHERE mem_num=#{mem_num}")
+	public void updateMem_au_id(String au_id,Long mem_num);
+	@Select("SELECT m.mem_num,m.mem_id,m.mem_auth,d.mem_au_id,d.passwd,m.mem_name,d.mem_email FROM member m JOIN member_detail d ON m.mem_num=d.mem_num WHERE mem_num=#{mem_num}")
+	public MemberVO selectMem_au_id(String au_id);
+	@Update("UPDATE member_detail SET mem_au_id='' WHERE mem_num=#{mem_num}")
+	public void deleteMem_au_id(Long mem_num);
 	
 	//아이디 중복확인
 	public MemberVO checkId(String mem_id);
 	//아이디 찾기
-	public void findId(MemberVO member);
+	@Select("SELECT m.mem_id FROM member m JOIN member_detail d ON m.mem_num=d.mem_num WHERE mem_name=#{mem_name} AND mem_email=#{mem_email}")
+	public MemberVO findId(MemberVO member);
 	//비밀번호 찾기
+	@Update("UPDATE member_detail SET mem_passwd=#{mem_passwd} WHERE mem_num=#{mem_num}")
 	public void findPasswd(MemberVO member);
 	
 	//카카오 로그인

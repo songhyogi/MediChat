@@ -48,7 +48,8 @@ public class HealthController {
 		map.put("end", page.getEndRow());
 		
 		List<HealthyBlogVO> list = service.selectHealList(map);
-		
+		model.addAttribute("keyfield", keyfield);
+		model.addAttribute("keyword", keyword);
 		model.addAttribute("list",list);
 		model.addAttribute("count",count);
 		model.addAttribute("page",page.getPage());

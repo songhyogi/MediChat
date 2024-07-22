@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<!-- CK 에디터 -->
+<script src="${pageContext.request.contextPath}/js/ckeditor.js"></script>
+<script src="${pageContext.request.contextPath}/js/uploadAdapter.js"></script>
 <!-- 커뮤니티 글쓰기 시작 -->
 <div class="page-main">
 	<div class="body-header">
@@ -31,9 +34,26 @@
 					<form:errors path="cbo_title" cssClass="error-color"/>
 				</li>
 				<li>
-					<form:label path="cbo_content">내용</form:label>
 					<form:textarea path="cbo_content"/>
 					<form:errors path="cbo_content" cssClass="error-color"/>
+					<script>
+					 function MyCustomUploadAdapterPlugin(editor) {
+						    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+						        return new UploadAdapter(loader);
+						    }
+						}
+					 
+					 ClassicEditor
+			            .create( document.querySelector( '#cbo_content' ),{
+			            	extraPlugins: [MyCustomUploadAdapterPlugin]
+			            })
+			            .then( editor => {
+							window.editor = editor;
+						} )
+			            .catch( error => {
+			                console.error( error );
+			            } );
+				    </script>
 				</li>
 			</ul>
 			<div>

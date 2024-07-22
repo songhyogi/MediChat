@@ -44,4 +44,24 @@ public class ReservationServiceImpl implements ReservationService{
 		return reservationMapper.getMyResList(map);
 	}
 
+	@Override
+	public void cancelReservation(Long res_num) {
+		reservationMapper.cancelReservation(res_num);
+	}
+
+	@Override
+	public Integer selectCountByDoc(Map<String, Object> map) {
+		return reservationMapper.selectCountByDoc(map);
+	}
+
+	@Override
+	public List<ReservationVO> getDocResList(Map<String, Object> map) {
+		return reservationMapper.getDocResList(map);
+	}
+
+	@Override
+	public void updateReservation(Long res_num) {
+		reservationMapper.updateReservation(res_num);
+	}
+
 }

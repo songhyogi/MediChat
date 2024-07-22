@@ -85,15 +85,15 @@
 		<put-attribute name="css" value="/WEB-INF/views/faq/faqCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/faq/faqUpdate.jsp"/>
 	</definition>
-	<definition name="myReviewList" extends="ych">
+	<definition name="myReviewList" extends="ychmember">
 		<put-attribute name="title" value="myReviewList"/>
 		<put-attribute name="body" value="/WEB-INF/views/review/reviewMyList.jsp"/>
 	</definition>
-	<definition name="myReviewWrite" extends="ych">
+	<definition name="myReviewWrite" extends="ychmember">
 		<put-attribute name="title" value="myReviewWrite"/>
 		<put-attribute name="body" value="/WEB-INF/views/review/reviewMyWrite.jsp"/>
 	</definition>
-	<definition name="myModifyReviewWrite" extends="ych">
+	<definition name="myModifyReviewWrite" extends="ychmember">
 		<put-attribute name="title" value="myReviewWrite"/>
 		<put-attribute name="body" value="/WEB-INF/views/review/reviewMyModifyWrite.jsp"/>
 	</definition>

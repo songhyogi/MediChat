@@ -78,8 +78,7 @@ public class ChatServiceImpl implements ChatService{
 	
 	@Override
 	public void insertChatPayment(ChatPaymentVO chatPaymentVO) {
-		// TODO Auto-generated method stub
-		
+		chatMapper.insertChatPayment(chatPaymentVO);
 	}
 
 	@Override

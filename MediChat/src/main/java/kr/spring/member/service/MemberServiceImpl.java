@@ -52,33 +52,28 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	@Override
-	public void updateAu_id(String au_id, Long mem_num) {
-		// TODO Auto-generated method stub
-		
+	public void updateMem_au_id(String mem_au_id, Long mem_num) {
+		memberMapper.updateMem_au_id(mem_au_id, mem_num);
 	}
 
 	@Override
-	public void selectAu_id(String au_id) {
-		// TODO Auto-generated method stub
-		
+	public MemberVO selectMem_au_id(String mem_au_id) {
+		return memberMapper.selectMem_au_id(mem_au_id);
 	}
 
 	@Override
-	public void deleteAu_id(Long mem_num) {
-		// TODO Auto-generated method stub
-		
+	public void deleteMem_au_id(Long mem_num) {
+		memberMapper.deleteMem_au_id(mem_num);
 	}
 
 	@Override
-	public void findId(MemberVO member) {
-		// TODO Auto-generated method stub
-		
+	public MemberVO findId(MemberVO member) {
+		return memberMapper.findId(member);
 	}
 
 	@Override
 	public void findPasswd(MemberVO member) {
-		// TODO Auto-generated method stub
-		
+		memberMapper.findPasswd(member);
 	}
 
 	@Override

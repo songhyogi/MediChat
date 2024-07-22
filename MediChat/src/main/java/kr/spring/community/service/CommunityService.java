@@ -11,7 +11,7 @@ public interface CommunityService {
 	public List<CommunityVO> selectCommunityList (Map<String, Object> map);//목록
 	public Integer selectRowCount(Map<String, Object> map);//개수
 	public void insertCommunity(CommunityVO community);//등록
-	public void selectCommunity(Long cbo_num); //상세
+	public CommunityVO selectCommunity(Long cbo_num); //상세
 	public void updateCommunity(CommunityVO community);//수정
 	public void deleteCommunity(Long cbo_num);//삭제
 

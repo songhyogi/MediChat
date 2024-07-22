@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import kr.spring.holiday.vo.HolidayVO;
+import kr.spring.reservation.vo.ReservationVO;
 
 @Mapper
 public interface ScheduleMapper {
@@ -35,4 +36,5 @@ public interface ScheduleMapper {
     // 개별휴무일 존재 여부 확인
     @Select("SELECT COUNT(*) FROM holiday WHERE doc_num = #{doc_num} AND holi_date = #{holi_date} AND holi_time = #{holi_time}")
     public int countHoliday(HolidayVO holiday);
+    
 }

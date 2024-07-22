@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.time.Duration;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -17,9 +19,15 @@ import javax.xml.bind.JAXBException;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import kr.spring.disease.service.DiseaseService;
@@ -31,6 +39,7 @@ import kr.spring.disease.vo.Item;
 import kr.spring.disease.vo.Response;
 import kr.spring.util.CaptchaUtil;
 import kr.spring.util.PagingUtil;
+import kr.spring.util.WebDriverUtil;
 import kr.spring.util.XUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -227,11 +236,30 @@ public class DiseaseController {
 	
 		return "diseaseMain";
 	}
-	@GetMapping("/diaaa")
+	@GetMapping("/disease/diseamain")
 	public String gettestss(Model model,HttpSession session) {
+		WebDriver driver = null;
+		ChromeOptions optins = new ChromeOptions();
+		//optins.addArguments("headless");  설정시 눈에 보이지 않는다.  드라이버 생성자에 넣으면된다.
+		try {
+		System.setProperty("webdriver.chrome.driver", "C:/YOU_0622/selenium/libs/chromedriver.exe");
+		 driver = new ChromeDriver();
 		
-		
+		} catch( Exception e) {
+			e.printStackTrace();
+		}
+		// 크롬 설정을 담은 객체 생성 
+		String url="https://blog.naver.com/PostList.naver?blogId=taehee129&from=postList&categoryNo=13";
+
+
 		return "diseaseMain";
 	}
+	
+	
+	
+
+	
+	
+
 	
 }

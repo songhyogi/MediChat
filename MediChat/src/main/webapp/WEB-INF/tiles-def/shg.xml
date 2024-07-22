@@ -10,10 +10,6 @@
 		<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/main/main.jsp"/>
 	</definition>
-	<definition name="myReservationList" extends="ych">
-      <put-attribute name="title" value="나의 예약 내역"/>
-      <put-attribute name="body" value="/WEB-INF/views/reservation/myReservationList.jsp"/>
-   </definition>
 </tiles-definitions>
 
 
