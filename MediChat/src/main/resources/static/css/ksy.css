@@ -265,7 +265,7 @@
 	overflow: hidden;
 	margin-right: 40px;
 }
-#res_btn,#call_btn{
+#reservation_btn,#call_btn{
 	display: flex;
 	background-color: rgb(102, 178, 178);
 	width: 300px;
@@ -282,6 +282,6 @@
 	align-items:center;
 	margin: 0 25px;
 }
-#res_btn:hover,#call_btn:hover{
+#reservation_btn:hover,#call_btn:hover{
 	background-color: rgb(76, 165, 165);
 }

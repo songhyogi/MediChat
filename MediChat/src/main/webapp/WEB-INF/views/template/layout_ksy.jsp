@@ -11,19 +11,19 @@
 <tiles:insertAttribute name="css" ignore="true"/>
 </head>
 <body>
-<div id="main">
-	<div id="main_header">
+<div>
+	<div>
 		<tiles:insertAttribute name="header"/>
 	</div>
 	<div class="custom-container pt-4 border">
-		<div id="main_body" class="row">
-			<div class="col-9 border-end">
+		<div class="row">
+			<div class="col-9">
 				<tiles:insertAttribute name="body"/>
-				<div id="main_footer">
+				<div>
 					<tiles:insertAttribute name="footer"/>
 				</div>
 			</div>
-			<div id="main_right_nav" class="col-3">
+			<div class="col-3">
 				<tiles:insertAttribute name="right_nav"/>
 			</div>
 		</div>
