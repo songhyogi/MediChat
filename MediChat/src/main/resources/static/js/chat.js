@@ -508,7 +508,7 @@ $(function(){
 		}); //end of ajax
 	}
 	
-		/*=======================
+	/*=======================
 		 진료비 청구 폼 제출
 	=========================*/
 	$('.close-payment-form').on('click','#close_submit',function(event){
