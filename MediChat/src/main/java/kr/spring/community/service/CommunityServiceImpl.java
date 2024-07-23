@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.community.dao.CommunityMapper;
 import kr.spring.community.vo.CommunityFavVO;
+import kr.spring.community.vo.CommunityReplyVO;
 import kr.spring.community.vo.CommunityVO;
 
 @Service
@@ -77,6 +78,66 @@ public class CommunityServiceImpl implements CommunityService{
 	@Override
 	public void deleteFav(CommunityFavVO fav) {
 		communityMapper.deleteFav(fav);
+	}
+
+	/*-----------------------------게시판글 댓글-----------------------------*/
+	
+	@Override
+	public List<CommunityReplyVO> selectListCommentAndReply(Map<String, Object> map) {
+		return communityMapper.selectListCommentAndReply(map);
+	}
+	
+	@Override
+	public Integer selectRowCountCommentAndReply(Map<String, Object> map) {
+		return communityMapper.selectRowCountCommentAndReply(map);
+	}
+
+	@Override
+	public CommunityReplyVO selectComment(Long cre_num) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void insertComment(CommunityReplyVO communityReply) {
+		communityMapper.insertComment(communityReply);
+	}
+
+	@Override
+	public void updateComment(CommunityReplyVO communityReply) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteComment(Long cre_num) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	/*-----------------------------게시판글 대댓글-----------------------------*/
+	@Override
+	public CommunityReplyVO selectReply(Long cre_num) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void insertReply(CommunityReplyVO communityReply) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateReply(CommunityReplyVO communityReply) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteReply(Long cre_num) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
