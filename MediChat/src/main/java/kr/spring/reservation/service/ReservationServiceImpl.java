@@ -64,4 +64,9 @@ public class ReservationServiceImpl implements ReservationService{
 		reservationMapper.updateReservation(res_num,res_status);
 	}
 
+	@Override
+	public Integer getResExist(Map<String, Object> map) {
+		return reservationMapper.getResExist(map);
+	}
+
 }
