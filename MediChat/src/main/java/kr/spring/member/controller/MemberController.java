@@ -27,6 +27,7 @@ import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.notification.service.NotificationService;
 import kr.spring.notification.vo.NotificationVO;
+import kr.spring.reservation.service.ReservationService;
 import kr.spring.util.AuthCheckException;
 import kr.spring.util.CaptchaUtil;
 import kr.spring.util.FileUtil;
@@ -39,7 +40,9 @@ public class MemberController {
 	MemberService memberService;
 	@Autowired
 	NotificationService notificationService;
- 
+	@Autowired
+	private ReservationService reservationService;
+	
 	@Value("${API.KCY.X-Naver-Client-Id}")
 	private String X_Naver_Client_Id;
 	@Value("${API.KCY.X-Naver-Client-Secret}")
@@ -462,17 +465,28 @@ public class MemberController {
 	 * MyPage
     ============================*/
 	@GetMapping("/member/myPage")
-	public String process(HttpSession session,Model model) {
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		//회원정보
-		MemberVO member = memberService.selectMember(user.getMem_num());
-		
-		log.debug("<<MY페이지>> : " + member);
-      
-		model.addAttribute("member", member);
-        
-		return "myPage";
+	public String process(HttpSession session, Model model) {
+	    MemberVO user = (MemberVO) session.getAttribute("user");
+	    if(user == null) {
+	        return "redirect:/login";
+	    }
+	    try{
+	        MemberVO member = memberService.selectMember(user.getMem_num());
+	        if(member != null) {
+	            int count = reservationService.selectCountByMem(user.getMem_num());
+	            member.setReservationCount(count);
+	            log.debug("<<MY페이지>> : " + member);
+	            model.addAttribute("member", member);
+	            model.addAttribute("count", count);
+	            return "myPage";
+	        }else{
+	            return "redirect:/login";
+	        }
+	    }catch(Exception e) {
+	        return "redirect:/login";
+	    }
 	}
+
 	@GetMapping("/mypage/memberInfo")
    public String process1(HttpSession session,Model model) {
       MemberVO user = (MemberVO)session.getAttribute("user");
@@ -488,22 +502,7 @@ public class MemberController {
         
       return "memberInfo";
    }
-   @GetMapping("/drug/memberDrugList")
-   public String process2(HttpSession session,Model model) {
-      MemberVO user = (MemberVO)session.getAttribute("user");
-      if(user == null) {
-         return "login";
-      }
-      //회원정보
-      MemberVO member = memberService.selectMember(user.getMem_num());
-      
-      log.debug("<<MY페이지>> : " + member);
-      
-      model.addAttribute("member", member);
-        
-      return "memberDrugList";
-   }
-   @GetMapping("/review/reviewMyList")
+     @GetMapping("/review/reviewMyList")
    public String process3(HttpSession session,Model model) {
       MemberVO user = (MemberVO)session.getAttribute("user");
       if(user == null) {

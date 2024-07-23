@@ -8,31 +8,54 @@
 <title>회원정보</title>
 </head>
 <style>
-#memberInfo ul{
-	margin-top:10%;
-}
-#memberInfo ul li{
-	margin-top:15px;
-}
+.memberInfo {
+        display: flex;
+        margin-top:70px;
+    }
+
+    .leftInfo, .rightInfo {
+        flex: 1;
+        padding: 0 10px;
+    }
+
+    .leftInfo li, .rightInfo li {
+        list-style-type: none;
+        margin-bottom: 10px;
+    }
+
+    @media (max-width: 768px) {
+        .memberInfo {
+            flex-direction: column;
+        }
+    }
 </style>
 <body>
 	<div class="memberInfo">
-		<ul>
-			<li>이름 : ${member.mem_name}</li>
-			<li>생년월일 : ${member.mem_birth}</li>
-			<li>전화번호 : ${member.mem_phone}</li>
-			<li>이메일 : ${member.mem_email}</li>
-			<li>우편번호 : ${member.mem_zipcode}</li>
-			<li>주소 : ${member.mem_address1} ${member.mem_address2}</li>
-			<li>가입일 : ${member.mem_reg}</li>
-			<c:if test="${!empty member.mem_modify}">
-				<li>정보 수정일 : ${member.mem_modify}</li>
-			</c:if>
-		</ul>
-		<div class="align-center" style="margin-top:77px;">
-			<input type="button" value="회원정보 수정"
-				onclick="location.href='${pageContext.request.contextPath}/member/modifyUser'"> <input
-				type="button" value="비밀번호 변경" onclick="location.href='${pageContext.request.contextPath}/member/changePasswd'">
+		<div class="leftInfo">
+			<ul>
+				<li style="font-size:25px; font-weight:bold;">이름</li>
+				<li style=font-size:15px;>${member.mem_name}</li>
+				<li style="font-size:25px; font-weight:bold;">전화번호</li>
+				<li style=font-size:15px;>${member.mem_phone}</li>
+				<li style="font-size:25px; font-weight:bold;">생년월일</li>
+				<li style=font-size:15px;>${member.mem_birth}</li>
+				<li style="font-size:25px; font-weight:bold;">이메일</li>
+				<li style=font-size:15px;>${member.mem_email}</li>
+			</ul>
+			</div>
+		<div class="rightInfo">
+			<ul>	
+				<li style="font-size:25px; font-weight:bold;">우편번호</li>
+				<li style=font-size:15px;>${member.mem_zipcode}
+				<li style="font-size:25px; font-weight:bold;">주소</li>
+				<li style=font-size:15px;>${member.mem_address1} ${member.mem_address2}
+				<li style="font-size:25px; font-weight:bold;">가입일</li>
+				<li style=font-size:15px;>${member.mem_reg}</li>
+				<c:if test="${!empty member.mem_modify}">
+					<li style="font-size:25px; font-weight:bold;">정보 수정일</li>
+					<li style=font-size:15px;>${member.mem_modify}</li>
+				</c:if>
+			</ul>
 		</div>
 	</div>
 </body>

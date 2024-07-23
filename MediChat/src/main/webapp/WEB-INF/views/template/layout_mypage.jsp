@@ -20,19 +20,7 @@
 	margin-top:5%;
 	background-color:#fff;
 }
-#main_body {
-    width: 800px; 
-    height: 600px;
-    position: relative;
-    margin-top:5%;
-    background-color:#fff;
-}
-#background{
-	background-color:rgba(57, 174, 164, 0.21);
-	position:relative;
-	width:auto;
-	height:300px;
-}
+
 </style>
 </head>
 <body>
