@@ -153,9 +153,9 @@
 	</div>
 </div>
 <!-- 어떻게 아프신가요 끝 -->
-<div class="line"></div>
+<div class="my-3"></div>
 <!-- 검색창 + 인기 검색어 시작 -->
-<div class="bg-green-1 p-5">
+<div class="p-5">
 	<form id="search_form" class="d-flex" method="get" action="/hospitals/search">
 		<input type="text" id="h-search" name="keyword" class="form-control" placeholder="병원 이름, 지역 + 과목, 증상">
 		<i id="h-search-icon" class="bi bi-search"></i>
@@ -168,7 +168,9 @@
 			</div>
 		</c:forEach>
 	</div>
-	
+</div>
+<div class="my-3"></div>
+<div>
 	<!-- 지도 시작 -->
 	<div id="mapDiv">
 		<h4 class="fw-7 my-4 fs-22">내 주변 병원</h4>
@@ -180,8 +182,8 @@
 
 
 <form id="locationForm" action="/hospitals" method="get">
-	<input type="hidden" id="lat" value="" name="user_lat">
-	<input type="hidden" id="lon" value="" name="user_lon">
+	<input type="hidden" id="lat" value="${user_lat}" name="user_lat">
+	<input type="hidden" id="lon" value="${user_lon}" name="user_lon">
 </form>
 <script>
 	//위치 정보 가져오기

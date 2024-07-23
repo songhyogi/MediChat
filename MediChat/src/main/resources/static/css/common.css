@@ -191,29 +191,29 @@ body{
 
 /* 녹색 7단계 */
 .bg-green-1 {
- 	background-color: rgb(230, 244, 244); /* 가장 연한 녹색 */
+ 	background-color: #d8f3dc; /* 가장 연한 녹색 */
 }
 .bg-green-2 {
- 	background-color: rgb(204, 231, 231);
+ 	background-color: #b7e4c7;
 }
 .bg-green-3 {
- 	background-color: rgb(179, 217, 217);
+ 	background-color: #95d5b2;
 }
 .bg-green-4 {
- 	background-color: rgb(153, 204, 204);
+ 	background-color: #74c69d;
 }
 .bg-green-5 {
- 	background-color: rgb(128, 191, 191);
+ 	background-color: #52b788;
 }
 .bg-green-6 {
- 	background-color: rgb(102, 178, 178);
+ 	background-color: #40916c;
 }
 .bg-green-7 {
-    background-color: rgb(76, 165, 165); /* 가장 진한 녹색 */
+    background-color: #2d6a4f; /* 가장 진한 녹색 */
 }
 /* ================= 컨테이너 (반응형 없앰) ================= */
 .custom-container {
-	width: 1200px; /* 원하는 고정 너비 */
+	width: 1400px; /* 원하는 고정 너비 */
 	margin-left: auto;
 	margin-right: auto;
 	padding-left: 15px;
@@ -655,9 +655,17 @@ body{
 	margin-bottom: 5px;
 }
 /* ================= 오른쪽 메뉴 ================= */
-#right-nave-img{
+
+#right_nav{
+	position: fixed;
+	right: 2%;
+}
+#right-nav-img{
 	text-decoration: none;
 	color: gray;
+}
+#right-nav-img img{
+	border-radius: 20px;
 }
 .right-nav-text{
 	height: 20px;
