@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<script src="${pageContext.request.contextPath}/js/community.reply.js"></script>
 <!-- 커뮤니티 글상세 시작 -->
 <div class="page-main">
 	<div class="body-header">
@@ -22,11 +23,9 @@
 			<li>
 				<img src="${pageContext.request.contextPath}/member/memViewProfile?mem_num=${cboard.mem_num}" width="40" height="40">
 			</li>
-			<li>
-				${cboard.mem_id}
-				${cboard.cbo_rdate}
-				${cboard.cbo_hit}
-			</li>
+			<li>${cboard.mem_id}</li>
+			<li>${cboard.cbo_rdate}</li>
+			<li>${cboard.cbo_hit}</li>
 		</ul>
 		<div>
 			${cboard.cbo_content}
@@ -46,6 +45,23 @@
 			</script>
 			</c:if>
 		</div>
+		<hr>
 	</div>
+	<!-- 댓글 -->
+	<div>
+		<span>댓글쓰기</span>
+		<form id="comment_form">
+			<input type="hidden" name="cbo_num" value="${cboard.cbo_num}">
+			<textarea rows="3" cols="50" name="cre_content" id="cre_content"
+				<c:if test="${empty user}">disabled="disabled"</c:if>
+				><c:if test="${empty user}">댓글을 작성하려면 로그인 해주세요.</c:if></textarea>
+			<c:if test="${!empty user}">
+				<div id="re_first"><span class="letter-count">300/300</span></div>
+				<div id="re_second"><input type="submit" value="전송"></div>
+			</c:if>
+		</form>
+	</div>
+	<!-- 댓글목록 -->
+	<div id="comment_list"></div>
 </div>
 <!-- 커뮤니티 글상세 끝 -->

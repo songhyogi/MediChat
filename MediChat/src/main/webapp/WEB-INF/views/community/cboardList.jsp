@@ -68,8 +68,8 @@
 					<h5>${cboard.cbo_title}</h5>
 					<div>
 						<c:choose>
-							<c:when test="${fn:length(cboard.cbo_content) > 200}">
-								${fn:substring(cboard.cbo_content, 0, 200)}···
+							<c:when test="${fn:length(cboard.cbo_content) > 150}">
+								${fn:substring(cboard.cbo_content, 0, 150)}···
 							</c:when>
 							<c:otherwise>
 								${cboard.cbo_content}

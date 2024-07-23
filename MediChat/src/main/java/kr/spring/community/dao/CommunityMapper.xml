@@ -111,7 +111,36 @@
 	</update>
 	
 	<!-- =================댓글================= -->
-	
+	<!-- 댓글 목록 -->
+	<select id="selectListCommentAndReply">
+		SELECT
+			*
+		FROM (SELECT
+				a.*,
+			 	rownum rnum
+			  FROM (SELECT
+			  			*
+			  		FROM cboard_re
+			  		JOIN member USING(mem_num)
+			  		WHERE cbo_num=#{cbo_num}
+			  		ORDER BY cre_num DESC)a)
+		<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= #{end}
+		]]>
+	</select>
+	<!-- 댓글 등록 -->
+	<insert id="insertComment">
+		INSERT INTO cboard_re(
+			cre_num,
+			cbo_num,
+			mem_num,
+			cre_content)
+		VALUES(
+			cboard_re_seq.nextval,
+			#{cbo_num},
+			#{mem_num},
+			#{cre_content})
+	</insert>
 	
 	<!-- =================답글/대댓글================= -->
 	

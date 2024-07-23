@@ -110,7 +110,12 @@
                 $('#updateDrug textarea[name="med_note"]').val(event.extendedProps.med_note);
                 $('#updateDrug').css('display', 'block'); // 모달 표시
                 $('.modal-bg').css('display', 'block'); // 모달 배경 표시
-            }
+            },
+            eventSourceFailure(error) {
+                if (error instanceof JsonRequestError) {
+                  console.log(`Request to ${error.response.url} failed`)
+                }
+              }
         });
         calendar.render();
     });//end of fullcalendar
