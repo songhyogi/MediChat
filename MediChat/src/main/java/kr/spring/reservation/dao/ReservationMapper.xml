@@ -14,25 +14,29 @@
 	<!-- 특정 날짜와 시간에 근무 가능한 의사 가져오기 -->
     <select id="getAvailableDoctors" parameterType="map" resultType="kr.spring.doctor.vo.DoctorVO">
 	    SELECT
-		    m.mem_num AS doc_num,
-		    m.mem_name,
-		    m.mem_photo AS image
-		FROM
-		    member m
-		JOIN
-		    doctor_detail dd ON m.mem_num = dd.doc_num
-		LEFT OUTER JOIN
-		    holiday h ON m.mem_num = h.doc_num AND h.holi_date = #{date} AND h.holi_time = #{time}
-		WHERE
-		    dd.hos_num = #{hos_num}
-		    AND (
-		        (h.holi_status = 2) OR
-		        (
-		            h.doc_num IS NULL
-		            AND dd.doc_off IS NOT NULL
-		            AND dd.doc_off NOT LIKE '%' || #{dayOfWeek} || '%'
-		        )
-		    )
+	        m.mem_num AS doc_num,
+	        m.mem_name,
+	        m.mem_photo AS image
+	    FROM
+	        member m
+	    JOIN
+	        doctor_detail dd ON m.mem_num = dd.doc_num
+	    LEFT OUTER JOIN
+	        holiday h ON m.mem_num = h.doc_num AND h.holi_date = #{date} AND h.holi_time = #{time}
+	    WHERE
+	        dd.hos_num = #{hos_num}
+	        AND (
+	            (h.holi_status = 2) OR
+	            	(
+	                h.doc_num IS NULL
+	                AND (dd.doc_off IS NULL OR dd.doc_off NOT LIKE '%' || #{dayOfWeek} || '%')
+	            	)
+	        	)
+	        AND m.mem_num NOT IN (
+	            SELECT doc_num 
+	            FROM reservation 
+	            WHERE res_date = #{date} AND res_time = #{time}
+	        )
 
 	</select>
 	<!-- 예약 정보 저장하기 -->
