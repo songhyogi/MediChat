@@ -19,7 +19,7 @@ $(function(){
 		message_socket.onmessage=function(evt){
 			//메시지 읽기
 			let data = evt.data;
-			if($('#chat_body').length==1 && (data.substring(0,3)=='msg'||data.startsWith=='paymentNotice')){
+			if($('#chat_body').length==1 && (data.substring(0,3)=='msg')){
 				selectChat();
 			}
 		};
@@ -107,7 +107,7 @@ $(function(){
 						//예약시간이 되지 않아서 채팅방을 사용할 수 없는 상태
 						message_socket.close();
 						message += '		<div class="close-room">';
-						message += '			<img src="../images/chat_bubble.png" width="40px" height="40px" class="chat-bubble">';
+						message += '			<img src="../images/chat_bubble.png" width="60px" height="60px" class="chat-bubble">';
 						message += '			<span class="fs-21 chat-notice fw-8">아직 진료가 시작되지 않은 채팅방입니다</span>'
 						message += '		</div>'
 						$('.chat-input input').attr('disabled','disabled');
@@ -321,10 +321,7 @@ $(function(){
 		
 		let form_data = new FormData(this);
 		
-		let file = '';
 		let form = this;
-		
-		file += '<tr>';
 		
 		if($('#select_file').val().trim()==''){
 			//파일을 등록하지 않은 경우
@@ -350,6 +347,7 @@ $(function(){
 					$('#file_valid_date').focus();
 					return false;
 				}else{
+					let file = '<tr>';
 					file += '	<td>'+param.file_name+'</td>';
 					file += '	<td>'+param.file_type+'</td>';
 					file += '	<td>'+param.valid_date+'</td>';	
@@ -375,9 +373,9 @@ $(function(){
 	/*=======================
 		채팅 종료 폼 파일 삭제
 	=========================*/
-	$('#file_table').on('click', '.list-delete', function(event){
+	$('#file_table').on('click', '.list-delete', function(){
 		//기본 이벤트 제거
-		event.preventDefault();
+		//event.preventDefault();
 		
 		console.log('파일 삭제 클릭 이벤트 발생');
         //x 표시가 속하는 file_num 가져오기
@@ -393,10 +391,11 @@ $(function(){
 			success:function(param){
 				if(param.result=='success'){
 					console.log(file_num+'번 파일 삭제 성공');
-				    let deleteRow = $('td[data-file_num="'+file_num+'"]');
-				    let parentRow = deleteRow.parent();
-				    console.log(parentRow);
-				    parentRow.remove();
+				    let deleteRow = $('button[data-file_num="' + file_num + '"]').parent().parent();
+				    console.log('삭제 후 파일번호 확인: '+file_num);
+				    console.log('삭제 대상 행: '+deleteRow.length); 
+				   
+				    deleteRow.remove();
 				}else{
 					console.log(file_num+'번 파일 삭제 실패');
 					alert('파일 삭제에 실패했습니다.');
@@ -445,69 +444,6 @@ $(function(){
 		event.stopPropagation();
 	});
 	
-	
-	/*=======================
-		해당 채팅 파일 목록 가져오기
-	=========================*/
-	function selectFileList(){
-		
-		console.log('채팅 파일 목록 이벤트 발생');
-		console.log('chat_num:'+chat_num);
-		let fileList = '';
-		
-		$.ajax({
-			url:'/chat/fileDetail',
-			type:'GET',
-			data:{chat_num:chat_num},
-			dataType:'json',
-			success:function(param){
-				if(param.userCheck=='logout'){
-					//로그아웃 상태인 경우, 메인으로 이동
-					alert('로그인 후 이용해주십시오');
-					window.location.href='/main/main';
-				}
-				
-				if(param.list == 'null'){
-					//해당 채팅방 파일 목록이 없는 경우
-					fileList+='<div class="close-room">';
-					fileList+='		해당 채팅방에 열람할 자료가 없습니다.';
-					fileList+='</div>';
-				}else{
-					//해당 채팅방 파일 목록이 있는 경우
-					$(param.list).each(function(index,item){
-						fileList+='<table>';
-						fileList+='	<tr class="list-head bg-gray-3">';
-						fileList+='					<th>진료의사</th>';
-						fileList+='					<th>서류유형</th>';
-						fileList+='					<th>발급일자</th>';
-						fileList+='					<th>유효일자</th>';
-						fileList+='	</tr>';
-						fileList+='	<tr>';
-						fileList+='					<td>'+item.doc_num+'</td>';
-						if(item.file_type == 0){ //파일 유형이 처방전
-							fileList+='					<td>처방전</td>';
-						}else if(item.file_type == 1){ //파일 유형이 소견서
-							fileList+='					<td>소견서</td>';
-						}else if(item.file_type == 2){ //파일 유형이 진단서
-							fileList+='					<td>진단서</td>';
-						}else if(item.file_type == 3){ //파일 유형이 진료비 세부내역서
-							fileList+='					<td>진료비 세부내역서</td>';
-						}
-						fileList+='					<td>'+item.file_reg_date+'</td>';
-						fileList+='					<td>'+item.file_valid_date+'</td>';
-						fileList+='	</tr>';
-						fileList+='<button type="button" class="btn-green" onclick="/chat/downloadFile?file_num=${list.file_num}">다운로드</button>'
-						fileList+='</table>';
-					}); //end of list each
-				}//end of else
-				$('.chat-body').html(fileList);
-			}, // end of success
-			error:function(){
-				alert('네트워크 오류 발생');
-			}
-		}); //end of ajax
-	}
-	
 	/*=======================
 		 진료비 청구 폼 제출
 	=========================*/
@@ -541,7 +477,7 @@ $(function(){
 					console.log('전송된 메시지:', param.paymentNotice);
 					$('.close-payment-form-bg').hide();
 					$('.close-payment-form').hide();
-					
+					message_socket.send('msg');
 				}else if(param.result == 'fail'){
 					alert('채팅 정보 로드 오류 발생');
 				}else{
@@ -553,6 +489,19 @@ $(function(){
 			}
 		}); //end of ajax
 	}); // end of close_submit
+	
+	//이전으로 버튼 클릭
+	$('.close-payment-form').on('click','#close_previous',function(event){
+		//기본 이벤트 제거
+		event.preventDefault();
+		
+		$('.close-payment-form-bg').hide();
+		$('.close-payment-form').hide();
+		$('#close_chat_num').val(chat_num);
+		$('.close-file-form-bg').show();
+		$('.close-file-form').css('display','block');
+	});
+	
 	
 	/*=======================
 		 	나의 서류함
@@ -611,7 +560,8 @@ $(function(){
 				if(param.list == 'null'){
 					//해당 채팅방 파일 목록이 없는 경우
 					fileList+='<div class="close-room">';
-					fileList+='		해당 채팅방에 열람할 자료가 없습니다.';
+					fileList+='		<img src="../images/myFiles.png" width="60px" height="60px" class="chat-bubble">';
+					fileList+='		<span class="fs-21 chat-notice fw-5">해당 채팅방에 열람할 자료가 없습니다.</span>';
 					fileList+='</div>';
 				}else{
 					//해당 채팅방 파일 목록이 있는 경우
@@ -624,7 +574,7 @@ $(function(){
 						fileList+='					<th>유효일자</th>';
 						fileList+='	</tr>';
 						fileList+='	<tr>';
-						fileList+='					<td>'+item.doc_num+'</td>';
+						fileList+='					<td>'+item.mem_name+'</td>';
 						if(item.file_type == 0){ //파일 유형이 처방전
 							fileList+='					<td>처방전</td>';
 						}else if(item.file_type == 1){ //파일 유형이 소견서
@@ -637,7 +587,11 @@ $(function(){
 						fileList+='					<td>'+item.file_reg_date+'</td>';
 						fileList+='					<td>'+item.file_valid_date+'</td>';
 						fileList+='	</tr>';
-						fileList+='<button type="button" class="btn-green" onclick="/chat/downloadFile?file_num=${list.file_num}">다운로드</button>'
+						fileList+='	<tr>';
+						fileList+='		<td>';
+						fileList+='			<button type="button" class="btn-green" onclick="location.href=\'/chat/downloadFile?file_num='+item.file_num+'\'">다운로드</button>';
+						fileList+='		</td>';
+						fileList+='	</tr>';
 						fileList+='</table>';
 					}); //end of list each
 				}//end of else
