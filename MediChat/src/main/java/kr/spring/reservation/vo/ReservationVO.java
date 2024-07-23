@@ -22,4 +22,5 @@ public class ReservationVO {
 	private String doc_name;
 	private String hos_name;
 	private String patient_name;
+	private long hos_num;
 }
