@@ -149,8 +149,6 @@ public class HospitalController {
 		map.put("sortType", sortType);
 		model.addAttribute("sortType", sortType);
 		
-		//around
-		map.put("around", 3000);
 		
 		// 병원 리스트 담기
 		List<HospitalVO> hosList = new ArrayList<>();
@@ -204,8 +202,6 @@ public class HospitalController {
 		map.put("sortType", sortType);
 		model.addAttribute("sortType", sortType);
 		
-		//around
-		map.put("around", 3000);
 		
 		// 병원 리스트 담기
 		List<HospitalVO> hosList = new ArrayList<>();

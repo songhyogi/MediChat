@@ -19,7 +19,7 @@
 	</div>
 	
 	<div class="line"></div>
-	<div style="height:15px;" class="bg-green-1"></div>
+	<div style="height:15px;" class="bg-gray-0"></div>
 	
 	
 	<div id="detail_hosTime">
@@ -152,7 +152,7 @@
 	</div>
 	
 	<div class="line"></div>
-	<div style="height:15px;" class="bg-green-1"></div>
+	<div style="height:18px;" class="bg-gray-0"></div>
 	
 	<div id="detail_hosSub">
 		<p class="fs-18 fw-7">병원 정보</p>
@@ -167,7 +167,7 @@
 	</div>
 	
 	<div class="line"></div>
-	<div style="height:15px;" class="bg-green-1"></div>
+	<div style="height:15px;" class="bg-gray-0"></div>
 	
 	<div id="detail_hosPosition">
 		<p class="fs-18 fw-7">병원 위치</p>
@@ -182,7 +182,7 @@
 	</div>
 	
 	<div class="line"></div>
-	<div style="height:15px;" class="bg-green-1"></div>
+	<div style="height:20px;" class="bg-gray-0"></div>
 	
 	<div id="detail_hosTell" class="d-flex">
 		<div class="col-6">
@@ -198,7 +198,7 @@
 	</div>
 
 	<div class="line"></div>
-	<div style="height:15px;" class="bg-green-1"></div>
+	<div style="height:18px;" class="bg-gray-0"></div>
 	
 	<div id="detail_hosRev">
 		<p class="fs-18 fw-7">진료 후기</p>
@@ -251,7 +251,7 @@
 	</div>
 	
 	<div class="line"></div>
-	<div style="height:15px;" class="bg-green-1"></div>
+	<div style="height:20px;" class="bg-gray-0"></div>
 	
 	<div id="detail_btn_box">
 		<div class="d-flex justify-content-center align-items-center">

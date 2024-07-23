@@ -60,5 +60,7 @@ kakao.maps.load(function(){
 	    });
 	    infowindow.open(map,marker);
 	}
+	// 지도 중심 좌표를 강제로 다시 설정
+	map.setCenter(new kakao.maps.LatLng('${user_lat}', '${user_lon}'));
 });
 </script>

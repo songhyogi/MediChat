@@ -19,7 +19,7 @@
 				<a href="/pharmacies/search?user_lat=${user_lat}&user_lon=${user_lon}" class="header-menu-text">약국 찾기</a>
 			</div>
 			<div class="header-menu">
-				<a href="#" class="header-menu-text">건강 블로그</a>
+				<a href="/health/healthBlog" class="header-menu-text">건강 블로그</a>
 			</div>
 			<div class="header-menu">
 				<a href="/disease/diseaseDictionary" class="header-menu-text">질병 백과사전</a>
@@ -28,7 +28,7 @@
 				<a href="/drug/search" class="header-menu-text">의약품 백과사전</a>
 			</div>
 			<div class="header-menu">
-				<a href="#" class="header-menu-text">고객센터</a>
+				<a href="/faq/faqList" class="header-menu-text">고객센터</a>
 			</div>
 		</div>
 		<!-- 메뉴 끝 -->
