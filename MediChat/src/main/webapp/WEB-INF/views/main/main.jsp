@@ -80,20 +80,20 @@
 				<div class="main-titleAndMore-more"><a href="#">더보기</a></div>
 			</div>
 			<div class="row d-flex justify-content-between">
-				<c:forEach begin="1" end="4">
+				<c:forEach var="healthy" items="${list}">
 				<div class="main-magagine-item col-5">
 					<div class="row d-flex align-items-center">
 						<div class="col-9">
 							<div class="main-magagine-item-title">
-								제목
+								${healthy.healthy_title}
 							</div>
 							<div class="main-magagine-item-date">
-								날짜
+								${healthy.h_reg_date}
 							</div>
 						</div>
 						<div class="col-3">
 							<div>
-								<img class="main-magagine-item-img" src="/images/mainCarousel/003.png" width="80px" height="80px">
+								<c:if test="${!empty healthy.h_filename}"><img  width="80" height="80" src="${pageContext.request.contextPath}/upload/${healthy.h_filename}"/></c:if>
 							</div>
 						</div>
 					</div>
