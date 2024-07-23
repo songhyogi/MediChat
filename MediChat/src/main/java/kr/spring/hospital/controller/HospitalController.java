@@ -36,6 +36,9 @@ public class HospitalController {
 	@GetMapping("/hospitals")
 	public Model hospital(Model model,HttpSession session,@RequestParam(defaultValue="37.4981646510326") String user_lat, @RequestParam(defaultValue="127.028307900881") String user_lon) {
 		
+		session.setAttribute("user_lat", user_lat);
+		session.setAttribute("user_lon", user_lon);
+		
 		//카카오맵 api 키
 		model.addAttribute("apiKey", apiKey);
 		
@@ -98,10 +101,8 @@ public class HospitalController {
 							@RequestParam(required = false) String commonFilter, @RequestParam(defaultValue="NEAR") String sortType,
 							@RequestParam(defaultValue="37.4981646510326") String user_lat, @RequestParam(defaultValue="127.028307900881") String user_lon) {
 		
-		if(!user_lat.equals("37.4981646510326") && !user_lon.equals("127.028307900881")) {
-			session.setAttribute("user_lat", user_lat);
-			session.setAttribute("user_lon", user_lon);
-		}
+		session.setAttribute("user_lat", user_lat);
+		session.setAttribute("user_lon", user_lon);
 		
 		Map<String, Object> map = new HashMap<>();
 		

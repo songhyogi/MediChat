@@ -158,7 +158,7 @@
 		                                                 GROUP BY hos_num
 		                                               ) r 
 		                                     ON h.hos_num = r.hos_num
-		                     where 1=1
+		                     where hos_lat between 37.4923615-0.04 and 37.4923615+0.04 and hos_lon between 127.0292881-0.04 and 127.0292881+0.04
 		                     <include refid="searchHospitalByKeyword"/>
 							 <include refid="searchHospitalByCommonFilter"/>
 		                   ) t

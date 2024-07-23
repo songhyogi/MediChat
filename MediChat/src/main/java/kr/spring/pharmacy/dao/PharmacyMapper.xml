@@ -130,7 +130,7 @@
 		              FROM ( SELECT p.*, 
 		                            ROUND((6378137 * ACOS(LEAST(1,GREATEST (-1, COS(RADIANS(#{user_lat})) * COS(RADIANS(p.pha_lat)) * COS(RADIANS(p.pha_lon) - RADIANS(#{user_lon})) + SIN(RADIANS(#{user_lat})) * SIN(RADIANS(p.pha_lat))))))) AS around
 		                     FROM pharmacy p
-		                     where 1=1
+		                     where pha_lat between 37.4923615-0.04 and 37.4923615+0.04 and pha_lon between 127.0292881-0.04 and 127.0292881+0.04
 		                     <include refid="searchPharmacyByKeyword"/>
 							 <include refid="searchPharmacyByCommonFilter"/>
 		                   ) t
