@@ -3,7 +3,6 @@
 <div class="close-payment-form">
 	<div class="form-title bg-green-7 fs-20 fw-4">
 		진료 종료
-		<button type="button" class="close-button">&times;</button>
 	</div>
 	<div class="close-form-body">
 		<div class="form-notice">

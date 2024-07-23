@@ -6,7 +6,7 @@
 <input type="button" value="코드입력" onclick="location.href='${pageContext.request.contextPath}'">
 
 
-${list}
+${test}
 
 <p>
 <p>

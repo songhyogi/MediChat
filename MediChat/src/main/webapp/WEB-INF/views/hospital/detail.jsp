@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/hos.css" type="text/css">
 <div>
 	<span class="text-lightgray fw-7 fs-13">홈 > 병원 찾기 > 검색 결과 > 병원 상세</span>
 	<div id="detail_hosName">
@@ -18,7 +19,7 @@
 	</div>
 	
 	<div class="line"></div>
-	<div style="height:15px;" class="bg-green-1"></div>
+	<div style="height:15px;" class="bg-gray-0"></div>
 	
 	
 	<div id="detail_hosTime">
@@ -151,7 +152,7 @@
 	</div>
 	
 	<div class="line"></div>
-	<div style="height:15px;" class="bg-green-1"></div>
+	<div style="height:18px;" class="bg-gray-0"></div>
 	
 	<div id="detail_hosSub">
 		<p class="fs-18 fw-7">병원 정보</p>
@@ -166,7 +167,7 @@
 	</div>
 	
 	<div class="line"></div>
-	<div style="height:15px;" class="bg-green-1"></div>
+	<div style="height:15px;" class="bg-gray-0"></div>
 	
 	<div id="detail_hosPosition">
 		<p class="fs-18 fw-7">병원 위치</p>
@@ -181,7 +182,7 @@
 	</div>
 	
 	<div class="line"></div>
-	<div style="height:15px;" class="bg-green-1"></div>
+	<div style="height:20px;" class="bg-gray-0"></div>
 	
 	<div id="detail_hosTell" class="d-flex">
 		<div class="col-6">
@@ -197,29 +198,60 @@
 	</div>
 
 	<div class="line"></div>
-	<div style="height:15px;" class="bg-green-1"></div>
+	<div style="height:18px;" class="bg-gray-0"></div>
 	
 	<div id="detail_hosRev">
 		<p class="fs-18 fw-7">진료 후기</p>
-		<c:forEach begin="1" end="3">
-			<div class="detail-hosRev-item d-flex align-items-center bg-black-1">
-				<div class="detail_hosRev_profile">
-					<img src="${PageContext.reqeust.contextPath }/image_bundle/face.png" width="35" height="35" class="rounded-circle">
-					<div class="text-black-6 fw-7 fs-15 text-center">김OO</div>
-				</div>
-				<div class="detail_hosRev_content">
-					진료비가 싸고 의사선생님이 너무 친절하세요!
-				</div>
-				<div class="detail_hosRev_score d-flex justify-content-center align-items-center">
-					<img src="/images/star.png" width="15" height="15">
-					<div>3.5</div>
-				</div>
+		<c:if test="${reviewCount == 0}">
+			<div class="align-center">
+				<p>등록된 후기가 없습니다.
 			</div>
-		</c:forEach>
+		</c:if>
+		<c:if test="${reviewCount >0}">
+			<c:forEach var="r" items="${reviewList}">
+				<div class="detail-hosRev-item d-flex align-items-center bg-black-1" style="margin:0 15%;">
+					<div class="detail_hosRev_profile">
+						<img src="${pageContext.request.contextPath}/member/memViewProfile?mem_num=${r.mem_num}" width="35" height="35" class="rounded-circle">
+						<div class="text-black-6 fw-7 fs-15 text-center">${r.mem_id}</div>
+					</div>
+					<div class="detail_hosRev_content">
+						${r.rev_title}
+					</div>
+					<div class="detail_hosRev_score d-flex justify-content-center align-items-center">
+						<img src="/images/star.png" width="15" height="15">
+						<div>${r.rev_grade}</div>
+					</div>
+					<div   style="float:right; margin-left:60px; padding-top:10px;">
+					   <input class="checkbox" type="checkbox" id="${r.rev_num}">
+					   <label class="toggle" for="${r.rev_num}" data-num="${r.rev_num}">
+					        <div id="bar1" class="bars"></div>
+					        <div id="bar3" class="bars"></div>
+					   </label>
+					</div>
+				</div>
+				<div  id="review_content" class="hide"  style="margin:0 20%;">
+					<div class="align-right" style="width:95%;" ><c:if test="${empty r.rev_modify}">작성일 : ${r.rev_reg}</c:if><c:if test="${!empty r.rev_modify}">수정일 : ${r.rev_modify}</c:if></div>
+					<hr width="100%" size="1">
+					<div style="margin:0 15px;"> ${r.rev_content}</div>
+				</div>
+			</c:forEach>
+			<div style="text-align:center;">
+				${reviewPage}
+			</div>
+			<script type="text/javascript">
+				$('div .toggle').click(function(){
+					if($('#review_content').hasClass('hide')){
+						$('#review_content').removeClass('hide');
+					}else{
+						$('#review_content').addClass('hide');
+					}
+				 });
+		</script>
+		</c:if>
 	</div>
 	
 	<div class="line"></div>
-	<div style="height:15px;" class="bg-green-1"></div>
+	<div style="height:20px;" class="bg-gray-0"></div>
 	
 	<div id="detail_btn_box">
 		<div class="d-flex justify-content-center align-items-center">

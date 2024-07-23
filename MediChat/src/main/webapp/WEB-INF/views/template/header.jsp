@@ -6,20 +6,20 @@
 <div id="header_box" class="d-flex justify-content-between">
 	<div class="d-flex justify-content-start">
 		<!-- 로고 시작 -->
-		<div>
+		<div class="me-5">
 			<a href="/main/main"><img src="/images/logo8.png" width="220" height="70"></a>
 		</div>
 		<!-- 로고 끝 -->
 		<!-- 메뉴 시작 -->
 		<div class="d-flex justify-content-between align-items-center">
 			<div class="header-menu">
-				<a href="/hospitals" class="header-menu-text">병원 찾기</a>
+				<a href="/hospitals?user_lat=${user_lat}&user_lon=${user_lon}" class="header-menu-text">병원 찾기</a>
 			</div>
 			<div class="header-menu">
-				<a href="/pharmacies/search" class="header-menu-text">약국 찾기</a>
+				<a href="/pharmacies/search?user_lat=${user_lat}&user_lon=${user_lon}" class="header-menu-text">약국 찾기</a>
 			</div>
 			<div class="header-menu">
-				<a href="#" class="header-menu-text">건강 블로그</a>
+				<a href="/health/healthBlog" class="header-menu-text">건강 블로그</a>
 			</div>
 			<div class="header-menu">
 				<a href="/disease/diseaseDictionary" class="header-menu-text">질병 백과사전</a>
@@ -28,7 +28,7 @@
 				<a href="/drug/search" class="header-menu-text">의약품 백과사전</a>
 			</div>
 			<div class="header-menu">
-				<a href="#" class="header-menu-text">고객센터</a>
+				<a href="/faq/faqList" class="header-menu-text">고객센터</a>
 			</div>
 		</div>
 		<!-- 메뉴 끝 -->

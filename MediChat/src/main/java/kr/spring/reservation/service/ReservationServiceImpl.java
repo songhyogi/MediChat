@@ -35,8 +35,8 @@ public class ReservationServiceImpl implements ReservationService{
     }
 
 	@Override
-	public Integer selectCountByMem(Map<String, Object> map) {
-		return reservationMapper.selectCountByMem(map);
+	public Integer selectCountByMem(long mem_num) {
+		return reservationMapper.selectCountByMem(mem_num);
 	}
 
 	@Override
@@ -60,8 +60,13 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 
 	@Override
-	public void updateReservation(Long res_num) {
-		reservationMapper.updateReservation(res_num);
+	public void updateReservation(Long res_num,Long res_status) {
+		reservationMapper.updateReservation(res_num,res_status);
+	}
+
+	@Override
+	public Integer getResExist(Map<String, Object> map) {
+		return reservationMapper.getResExist(map);
 	}
 
 }

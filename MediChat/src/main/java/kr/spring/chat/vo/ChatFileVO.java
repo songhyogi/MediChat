@@ -20,5 +20,5 @@ public class ChatFileVO {
 	private String file_valid_date;
 	
 	//JOIN으로 생성
-	private String doc_name;
+	private String mem_name;
 }

@@ -14,7 +14,7 @@
 	</div>
 	
 	<div class="line"></div>
-	<div style="height:15px;" class="bg-green-1"></div>
+	<div style="height:15px;" class="bg-gray-0"></div>
 	
 	
 	<div id="detail_hosTime">
@@ -147,7 +147,7 @@
 	</div>
 	
 	<div class="line"></div>
-	<div style="height:15px;" class="bg-green-1"></div>
+	<div style="height:15px;" class="bg-gray-0"></div>
 	
 	<div id="detail_hosSub">
 		<p class="fs-18 fw-7">약국 정보</p>
@@ -162,7 +162,7 @@
 	</div>
 	
 	<div class="line"></div>
-	<div style="height:15px;" class="bg-green-1"></div>
+	<div style="height:15px;" class="bg-gray-0"></div>
 	
 	<div id="detail_hosPosition">
 		<p class="fs-18 fw-7">약국 위치</p>
@@ -177,7 +177,7 @@
 	</div>
 	
 	<div class="line"></div>
-	<div style="height:15px;" class="bg-green-1"></div>
+	<div style="height:15px;" class="bg-gray-0"></div>
 	
 	<div id="detail_hosTell" class="d-flex">
 		<div class="col-6">
@@ -187,7 +187,7 @@
 	</div>
 	
 	<div class="line"></div>
-	<div style="height:15px;" class="bg-green-1"></div>
+	<div style="height:15px;" class="bg-gray-0"></div>
 	
 	<div id="detail_btn_box">
 		<div class="d-flex justify-content-center align-items-center">

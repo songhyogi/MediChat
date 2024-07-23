@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlValue;
 
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -37,11 +38,13 @@ import kr.spring.disease.vo.Response;
 
 
 public class XUtil {
-	
+	@Value("${API.SSH.SecretKey}")
+	static
+	String serviceKey1;
 	public static Response getCountList(HttpServletRequest request) throws JAXBException,IOException{
 
-		String serviceKey = "bBcw2bsbnZbe4NBgjrT8%2BVhedqNa8T3RaUHbuxCtnu4X6kiDo4KVAyGMWXZRwklSJba6SMoFiKmJwzYUcex6Gw%3D%3D"; //키 발급시 0, 캡챠 이미지 비교시 1로 세팅
-		String key_apiURL = "http://apis.data.go.kr/1790387/vcninfo/getCondVcnCd?serviceKey=" + serviceKey  ;
+	 
+		String key_apiURL = "http://apis.data.go.kr/1790387/vcninfo/getCondVcnCd?serviceKey=" + serviceKey1  ;
 		
 		Map<String,String> requestHeaders = 
 				           new HashMap<String,String>();
@@ -90,19 +93,24 @@ public class XUtil {
 	}
 	
 	
-	
-	
+	@Value("${API.SSH.SecretKey2}")
+	static
+	String serviceKey2;
+	@Value("${API.SSH.X-Naver-Client-Id2}")
+	private static String apiKey1;
+	@Value("${API.SSH.X-Naver-Client-Secret2}")
+	private static String apiKey2;
 	
 	public static Response getDetailList(HttpServletRequest request,String selectCd) throws JAXBException,IOException{
 
-		String serviceKey = "bBcw2bsbnZbe4NBgjrT8%2BVhedqNa8T3RaUHbuxCtnu4X6kiDo4KVAyGMWXZRwklSJba6SMoFiKmJwzYUcex6Gw%3D%3D"; //키 발급시 0, 캡챠 이미지 비교시 1로 세팅
+		
 		String vcnCd =  selectCd;
-		String key_apiURL = "http://apis.data.go.kr/1790387/vcninfo/getVcnInfo?serviceKey=" + serviceKey +"&vcnCd="+vcnCd  ;
+		String key_apiURL = "http://apis.data.go.kr/1790387/vcninfo/getVcnInfo?serviceKey=" + serviceKey2 +"&vcnCd="+vcnCd  ;
 		
 		Map<String,String> requestHeaders = 
 				           new HashMap<String,String>();
-		requestHeaders.put("X-Naver-Client-Id", "PPJDiC3BNDi3uGhs0FV3");
-		requestHeaders.put("X-Naver-Client-Secret", "bVFWG1tBcn");
+		requestHeaders.put("X-Naver-Client-Id", apiKey1);
+		requestHeaders.put("X-Naver-Client-Secret", apiKey2);
 		HttpURLConnection con = null;
 		try {
 			URL url = new URL(key_apiURL);
@@ -147,14 +155,14 @@ public class XUtil {
 	
 	public static Response getDiseaseDepart(HttpServletRequest request) throws JAXBException,IOException{
 
-		String serviceKey = "bBcw2bsbnZbe4NBgjrT8%2BVhedqNa8T3RaUHbuxCtnu4X6kiDo4KVAyGMWXZRwklSJba6SMoFiKmJwzYUcex6Gw%3D%3D"; //키 발급시 0, 캡챠 이미지 비교시 1로 세팅
+		String serviceKey =  serviceKey1 ;
 	
 		String key_apiURL = "https://apis.data.go.kr/B551182/diseaseInfoService/getDissNameCodeList?sickType=1&medTp=1&numOfRows=2065&ServiceKey=" + serviceKey;
 		
 		Map<String,String> requestHeaders = 
 				           new HashMap<String,String>();
-		requestHeaders.put("X-Naver-Client-Id", "PPJDiC3BNDi3uGhs0FV3");
-		requestHeaders.put("X-Naver-Client-Secret", "bVFWG1tBcn");
+		requestHeaders.put("X-Naver-Client-Id", apiKey1);
+		requestHeaders.put("X-Naver-Client-Secret", apiKey2);
 		HttpURLConnection con = null;
 		try {
 			URL url = new URL(key_apiURL);

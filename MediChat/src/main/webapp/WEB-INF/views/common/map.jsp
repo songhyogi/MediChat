@@ -11,7 +11,7 @@ kakao.maps.load(function(){
 	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 	var options = { //지도를 생성할 때 필요한 기본 옵션
 			center: new kakao.maps.LatLng('${user_lat}','${user_lon}'), //중심 좌표 (필수)
-			level: 3 //확대 수준 (기본값: 3)			
+			level: 2 //확대 수준 (기본값: 3)			
 	};
 	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 	// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
@@ -60,5 +60,7 @@ kakao.maps.load(function(){
 	    });
 	    infowindow.open(map,marker);
 	}
+	// 지도 중심 좌표를 강제로 다시 설정
+	map.setCenter(new kakao.maps.LatLng('${user_lat}', '${user_lon}'));
 });
 </script>

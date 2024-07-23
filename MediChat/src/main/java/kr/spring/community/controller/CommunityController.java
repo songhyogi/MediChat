@@ -1,5 +1,6 @@
 package kr.spring.community.controller;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,12 +18,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import kr.spring.community.service.CommunityService;
+import kr.spring.community.vo.CommunityFavVO;
+import kr.spring.community.vo.CommunityReplyVO;
 import kr.spring.community.vo.CommunityVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.PagingUtil;
 import kr.spring.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Slf4j
@@ -40,13 +44,14 @@ public class CommunityController {
 	//글 목록
 	@GetMapping("/medichatCommunity/list")
 	public String getCommunityList(@RequestParam(defaultValue="1") int pageNum,@RequestParam(defaultValue="1") int order,
-								@RequestParam(defaultValue="1") String cbo_type,String keyfield,String keyword, Model model) {
+								@RequestParam(defaultValue="") String cbo_type,String keyfield,String keyword, Model model) {
 		
 		log.debug("<<커뮤니티 목록 - cbo_type >> : " + cbo_type);
 		log.debug("<<커뮤니티 목록 - order>> : " + order);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
+		map.put("cbo_type",cbo_type);
 		map.put("keyfield", keyfield);
 		map.put("keyword", keyword);
 		
@@ -165,4 +170,111 @@ public class CommunityController {
 		
 		return "redirect:/medichatCommunity/list";
 	}
+	
+	/*==============================게시판 좋아요==============================*/
+	//좋아요 읽기
+	@GetMapping("/medichatCommunity/getFav")
+	@ResponseBody
+	public Map<String, Object> getFav(CommunityFavVO fav, HttpSession session){
+		
+		log.debug("<<게시판 좋아요>> : " + fav);
+		
+		Map<String, Object> mapJson = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		if(user==null) {
+			mapJson.put("result", "logout");
+		}else {
+			fav.setMem_num(user.getMem_num());
+			CommunityFavVO cboardFav = communityService.selectFav(fav);
+			if(cboardFav != null) {
+				mapJson.put("status", "yesFav");
+			}else {
+				mapJson.put("status", "noFav");
+			}
+		}
+		mapJson.put("count", communityService.selectFavCount(fav.getCbo_num()));
+		
+		return mapJson;
+	}
+	
+	
+	/*==============================댓글==============================*/
+	//댓글 목록
+	@GetMapping("/medichatCommunity/listComment")
+	@ResponseBody
+	public Map<String, Object> getLIst(int cbo_num, @RequestParam(defaultValue="1")int pageNum, @RequestParam int rowCount, HttpSession session){
+		log.debug("<<댓글 목록 - cbo_num>> : " + cbo_num);
+		log.debug("<<댓글 목록 - pageNum>> : " + pageNum);
+		log.debug("<<댓글 목록 - rowCount>> : " + rowCount);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("cbo_num", cbo_num);
+		
+		int count = communityService.selectRowCountCommentAndReply(map); //총 글의 개수
+		
+		//페이지 처리
+		PagingUtil page = new PagingUtil(pageNum, count, rowCount);
+		map.put("start", page.getStartRow());
+		map.put("end", page.getEndRow());
+		
+		//좋아요 작업을 위해 mem_num 호출
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user!=null) {
+			map.put("mem_num", user.getMem_num());
+		}else {
+			map.put("mem_num",0);
+		}
+		
+		List<CommunityReplyVO> list = null;
+		if(count > 0) { //댓글이 있는 경우
+			list = communityService.selectListCommentAndReply(map);
+		}else {
+			list = Collections.emptyList();//null이 아닌 비어있는 배열로 인식되게 처리
+		}
+		
+		Map<String, Object> mapJson = new HashMap<String, Object>();
+		mapJson.put("count", count);
+		mapJson.put("list", list);
+		
+		return mapJson;
+	}
+	
+	//댓글 등록
+	@PostMapping("/medichatCommunity/writeComment")
+	@ResponseBody
+	public Map<String, String> writeComment(CommunityReplyVO communityReply, HttpSession session){
+		
+		log.debug("<<댓글 등록>> : " + communityReply);
+		
+		Map<String, String> mapJson = new HashMap<String, String>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		if(user == null) {
+			mapJson.put("result", "logout");
+		}else {
+			communityReply.setMem_num(user.getMem_num());
+			
+			communityService.insertComment(communityReply);
+			mapJson.put("result", "success");
+		}
+		return mapJson;
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

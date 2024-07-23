@@ -158,13 +158,10 @@
 		                                                 GROUP BY hos_num
 		                                               ) r 
 		                                     ON h.hos_num = r.hos_num
-		                     where 1=1
+		                     where hos_lat between #{user_lat}-0.04 and #{user_lat}+0.04 and hos_lon between #{user_lon}-0.04 and #{user_lon}+0.04
 		                     <include refid="searchHospitalByKeyword"/>
 							 <include refid="searchHospitalByCommonFilter"/>
 		                   ) t
-		              <![CDATA[
-		              WHERE around <= #{around}
-		              ]]>
 		              ORDER BY around
 		              <include refid="searchHospitalBySortType"/>
 		            ) a

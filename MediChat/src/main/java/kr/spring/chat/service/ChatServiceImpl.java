@@ -67,6 +67,11 @@ public class ChatServiceImpl implements ChatService{
 	}
 	
 	@Override
+	public ChatFileVO selectFile(long file_num) {
+		return chatMapper.selectFile(file_num);
+	}
+	
+	@Override
 	public long selectFileNum(long chat_num, String file_name) {
 		return chatMapper.selectFileNum(chat_num, file_name);
 	}

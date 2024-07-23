@@ -10,12 +10,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Builder
 public class NotificationVO {
 	private Long noti_num;				//알림 식별자
 	private Long mem_num;				//받는 회원 식별자
 	private Long noti_category;			//알림의 카테고리
-	private Long noti_category_num;		//알림의 카테고리 식별자
 	private String noti_message;		//알림 내용
 	private int noti_isRead;			//알림 읽었는지 여부
 	private String noti_readDate;		//알림 읽은 날짜

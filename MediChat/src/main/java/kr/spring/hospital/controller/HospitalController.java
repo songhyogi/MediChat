@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.spring.hospital.service.HospitalService;
 import kr.spring.hospital.vo.HospitalVO;
+import kr.spring.review.service.ReviewService;
+import kr.spring.review.vo.ReviewVO;
+import kr.spring.util.PagingUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -30,11 +33,17 @@ public class HospitalController {
 	private String apiKey;
 	
 	@Autowired
+	private ReviewService service;
+	
+	@Autowired
 	private HospitalService hospitalService;
 	
 	// 병원
 	@GetMapping("/hospitals")
 	public Model hospital(Model model,HttpSession session,@RequestParam(defaultValue="37.4981646510326") String user_lat, @RequestParam(defaultValue="127.028307900881") String user_lon) {
+		
+		session.setAttribute("user_lat", user_lat);
+		session.setAttribute("user_lon", user_lon);
 		
 		//카카오맵 api 키
 		model.addAttribute("apiKey", apiKey);
@@ -98,10 +107,8 @@ public class HospitalController {
 							@RequestParam(required = false) String commonFilter, @RequestParam(defaultValue="NEAR") String sortType,
 							@RequestParam(defaultValue="37.4981646510326") String user_lat, @RequestParam(defaultValue="127.028307900881") String user_lon) {
 		
-		if(!user_lat.equals("37.4981646510326") && !user_lon.equals("127.028307900881")) {
-			session.setAttribute("user_lat", user_lat);
-			session.setAttribute("user_lon", user_lon);
-		}
+		session.setAttribute("user_lat", user_lat);
+		session.setAttribute("user_lon", user_lon);
 		
 		Map<String, Object> map = new HashMap<>();
 		
@@ -142,8 +149,6 @@ public class HospitalController {
 		map.put("sortType", sortType);
 		model.addAttribute("sortType", sortType);
 		
-		//around
-		map.put("around", 3000);
 		
 		// 병원 리스트 담기
 		List<HospitalVO> hosList = new ArrayList<>();
@@ -197,8 +202,6 @@ public class HospitalController {
 		map.put("sortType", sortType);
 		model.addAttribute("sortType", sortType);
 		
-		//around
-		map.put("around", 3000);
 		
 		// 병원 리스트 담기
 		List<HospitalVO> hosList = new ArrayList<>();
@@ -210,7 +213,7 @@ public class HospitalController {
 	
 	// 병원 > 검색 결과 > 상세 페이지
 	@GetMapping("/hospitals/search/detail/{hos_num}")
-	public String detail(Model model, @PathVariable Long hos_num) {
+	public String detail(@RequestParam(defaultValue="1") int pageNum,@RequestParam(defaultValue="1") String  keyfield,Model model, @PathVariable Long hos_num) {
 		model.addAttribute("apiKey", apiKey);
 		
 		HospitalVO hospital = hospitalService.selectHospital(hos_num);
@@ -224,6 +227,16 @@ public class HospitalController {
 		model.addAttribute("day", day);
 		log.debug("<<시간>> = " + "day: " + day + ", time: " +time);
 		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("hos_num", hos_num);
+		int reviewCount = service.selectCountByHos(map);
+		PagingUtil page = new PagingUtil(pageNum,reviewCount, 5, 10,"/hospitals/search/detail/{hos_num}");
+		map.put("start", page.getStartRow());
+		map.put("end", page.getEndRow());
+		List<ReviewVO> list = service.selectReviewListByHos(map);
+		model.addAttribute("reviewList",list);
+		model.addAttribute("reviewCount", reviewCount);
+		model.addAttribute("reviewPage", page.getPage());
 		return "detail";
 	}
 }

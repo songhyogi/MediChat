@@ -9,7 +9,6 @@
 		INSERT INTO notification (  noti_num,
 									mem_num,
 									noti_category,
-									noti_category_num,
 									noti_message,
 									<if test="noti_resdate!=null || noti_resdate!=''">
 									noti_resdate,
@@ -23,7 +22,6 @@
 								VALUES( notification_seq.nextval,
 										#{mem_num},
 										#{noti_category},
-										#{noti_category_num},
 										#{noti_message},
 										<if test="noti_resdate!=null || noti_resdate!=''">
 										#{noti_resdate},

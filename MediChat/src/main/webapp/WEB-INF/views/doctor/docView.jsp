@@ -21,7 +21,7 @@
 				</div>
 				<div class="row mt-5">
 					<div class="col-4 d-flex justify-content-center align-items-center"><input type="button" value="0" onclick="location.href='#'"></div>
-					<div class="col-4 d-flex justify-content-center align-items-center"><input type="button" value="0" onclick="location.href='#'"></div>
+					<div class="col-4 d-flex justify-content-center align-items-center"><input type="button" value="${count}" onclick="location.href='${pageContext.request.contextPath}/reservation/docResList'"></div>
 					<div class="col-4 d-flex justify-content-center align-items-center"><input type="button" value="0" onclick="location.href='#'"></div>
 				</div>
 			</div>

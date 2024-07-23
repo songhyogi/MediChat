@@ -130,13 +130,10 @@
 		              FROM ( SELECT p.*, 
 		                            ROUND((6378137 * ACOS(LEAST(1,GREATEST (-1, COS(RADIANS(#{user_lat})) * COS(RADIANS(p.pha_lat)) * COS(RADIANS(p.pha_lon) - RADIANS(#{user_lon})) + SIN(RADIANS(#{user_lat})) * SIN(RADIANS(p.pha_lat))))))) AS around
 		                     FROM pharmacy p
-		                     where 1=1
+		                     where pha_lat between #{user_lat}-0.04 and #{user_lat}+0.04 and pha_lon between #{user_lon}-0.04 and #{user_lon}+0.04
 		                     <include refid="searchPharmacyByKeyword"/>
 							 <include refid="searchPharmacyByCommonFilter"/>
 		                   ) t
-		              <![CDATA[
-		              WHERE around <= 3000
-		              ]]>
 		              ORDER BY around
 		              <include refid="searchPharmacyBySortType"/>
 		            ) a

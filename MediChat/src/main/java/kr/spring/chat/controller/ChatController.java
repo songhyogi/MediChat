@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +20,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -364,6 +361,7 @@ public class ChatController {
 	 * 	    진료 파일 목록
 	 ========================*/
 	@GetMapping("/chat/fileDetail")
+	@ResponseBody
 	public Map<String,Object> selectFilesDetail(HttpSession session, long chat_num){
 		Map<String,Object> map = new HashMap<String,Object>();
 		
@@ -375,13 +373,36 @@ public class ChatController {
 		
 		List<ChatFileVO> list = chatService.selectFiles(chat_num);
 		
-		if(list == null) {
+		
+		if(list == null || list.isEmpty()) {
 			map.put("list", "null");
 		}else {
 			map.put("list", list);
 		}
 		
 		return map;
+	}
+	
+	/*=======================
+	 * 	    진료 종료 전송
+	 ========================*/
+	@GetMapping("/chat/downloadFile")
+	public String download(long file_num, HttpServletRequest request, Model model) {
+		ChatFileVO file = chatService.selectFile(file_num);
+		
+		byte[] downloadFile = FileUtil.getBytes(request.getServletContext().getRealPath("/upload")+"/"+file.getFile_name());
+		
+		String file_name = file.getFile_name();
+		
+		int indexFileName = file_name.indexOf("_");
+		String origin_file_name = file_name.substring(indexFileName+1);
+		
+		log.debug("<<파일 다운로드>>: "+origin_file_name);
+		
+		model.addAttribute("downloadFile",downloadFile);
+		model.addAttribute("filename",origin_file_name);
+		
+		return "downloadView";
 	}
 	
 
@@ -430,7 +451,8 @@ public class ChatController {
 			paymentNotice += "<br>진료 일자: "+ res_date;
 			paymentNotice += "<br>진료 시각: "+ res_time;
 			paymentNotice += "<br>결제 금액: "+ pay_amount;
-			paymentNotice += "<br><button type=\"button\" class=\"btn-green\" id=\"chat_payment\" onclick=location.href='/chat/myFiles' data-pay_amount="+pay_amount+" data-chat_num="+chat_num+">";
+			paymentNotice += "<br><button type='button' class='btn-green' id='chat_payment' ";
+			paymentNotice += "data-chat_num='"+chat_num+"' data-pay_amount='"+pay_amount+"'>";
 			paymentNotice += "결제하기</button>";
 			
 			map.put("paymentNotice", paymentNotice);
@@ -455,6 +477,7 @@ public class ChatController {
 	 * 	   	결제 버튼 클릭
 	 ========================*/
 	@GetMapping("/chat/chatPayment")
+	@ResponseBody
 	public Map<String,Object> insertPayment(@RequestParam("chat_num") long chat_num){
 		
 		log.debug("<<비대면 진료 결제 chat_num>>: "+chat_num);
@@ -476,5 +499,35 @@ public class ChatController {
 		map.put("doc_name", doc_name);
 		
 		return map;
+	}
+	
+	/*=======================
+	 * 	   	결제 완료 처리
+	 ========================*/
+	@PostMapping("/chat/paymentConfirmation")
+	public Map<String,String> confirmPayment(@RequestParam("chat_num") long chat_num,
+									         @RequestParam("doc_name") String doc_name,
+									         @RequestParam("pay_amount") int pay_amount,
+									         @RequestParam("mem_num") long mem_num) {
+	    
+	    Map<String, String> map = new HashMap<String,String>();
+	    
+	    ChatPaymentVO payment = new ChatPaymentVO();
+	    
+	    payment.setChat_num(chat_num);
+	    payment.setMem_num(mem_num);
+	    payment.setPay_amount(pay_amount);
+	    payment.setDoc_name(doc_name);
+	    
+	    try {
+	        chatService.insertChatPayment(payment);
+	        map.put("result", "paySuccess");
+	    } catch (Exception e) {
+	        map.put("result", "fail");
+	        // 로그에 예외 메시지를 기록
+	        e.printStackTrace();
+	    }
+	    
+	    return map;
 	}
 }

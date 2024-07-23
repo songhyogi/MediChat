@@ -97,7 +97,7 @@
                     <input type="button" class="cancel-button" data-resnum="${reservation.res_num}" value="예약 취소">
                 </c:when>
                 <c:when test="${reservation.res_status == 2}">
-                    <input type="button" class="review-button" data-resnum="${reservation.res_num}" data-hosnum="${reservation.hos_num}" onclick="/review/writeReview" value="리뷰 쓰기">
+                    <input type="button" class="review-button" onclick="location.href='/review/writeReview?res_num=${reservation.res_num}&hos_num=${reservation.hos_num}'"  value="리뷰 쓰기">
                 </c:when>
             </c:choose>
         </div>

@@ -90,7 +90,7 @@ function displayHosTimes(date, dayOfWeek, hos_num) {
                         $('#time-buttons').html('<p>해당 날짜에 근무하는 의사가 없습니다.</p>');
                         return;
                     }
-
+                    
                     // 시작 시간과 종료 시간 사이의 30분 단위 시간을 생성
                     let times = generateTimesForDay(startTime, endTime);
                     let output = '<div class="time-section"><h5>오전</h5><div class="time-row">';
@@ -116,6 +116,9 @@ function displayHosTimes(date, dayOfWeek, hos_num) {
                     });
                     output += '</div></div>';
                     $('#time-buttons').html(output);
+
+					//이미 그 시간에 예약 내역이 있는지 확인
+					
 
                     // 각 시간 버튼에 대해 근무 가능한 의사가 있는지 확인
                     times.forEach(time => {
@@ -214,7 +217,7 @@ function getAvailableDoctors(hos_num, date, time, dayOfWeek, callback) {
                         let imageSrc = '/doctor/docViewProfile?doc_num=' + doctor.doc_num;
 
                         output += '<div class="doctor-card" data-doc-num="' + doctor.doc_num + '">';
-                        output += '<img src="../member/viewProfile?mem_num='+ doctor.doc_num +'" alt="' + doctor.mem_name + '" class="doctor-image">';
+                        output += '<img src="/doctor/docViewProfile?mem_num=' + doctor.doc_num + '" alt="' + doctor.mem_name + '" class="doctor-image">';
                         output += '<div class="doctor-name">' + doctor.mem_name + '</div>';
                         output += '<div class="res-type-container">';
                         output += '<label><input type="radio" name="res_type" value="0" class="res-type-radio"> 비대면 진료</label>';
@@ -251,8 +254,8 @@ function getAvailableDoctors(hos_num, date, time, dayOfWeek, callback) {
 
 // 다음 버튼 초기화 함수
 function initializeNextButton() {
-    const nextButton = '<input type="button" class="btn btn-primary reserve-btn" value="다음" disabled onclick="loadConfirmPage()">';
-    const cancelButton = ' <input type="button" class="btn btn-secondary reserve-btn" value="취소" onclick="resetAll()">';
+    const nextButton = '<input type="button" class="next-btn" value="다음" disabled onclick="loadConfirmPage()">';
+    const cancelButton = ' <input type="button" class="cancel-btn" value="취소" onclick="resetAll()">';
     $('#next-button-container').html(nextButton + cancelButton);
 }
 
