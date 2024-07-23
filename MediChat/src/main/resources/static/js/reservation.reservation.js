@@ -214,7 +214,7 @@ function getAvailableDoctors(hos_num, date, time, dayOfWeek, callback) {
                         let imageSrc = '/doctor/docViewProfile?doc_num=' + doctor.doc_num;
 
                         output += '<div class="doctor-card" data-doc-num="' + doctor.doc_num + '">';
-                        output += '<img src="../member/viewProfile?mem_num='+ doctor.doc_num +'" alt="' + doctor.mem_name + '" class="doctor-image">';
+                        output += '<img src="/doctor/docViewProfile?mem_num=' + doctor.doc_num + '" alt="' + doctor.mem_name + '" class="doctor-image">';
                         output += '<div class="doctor-name">' + doctor.mem_name + '</div>';
                         output += '<div class="res-type-container">';
                         output += '<label><input type="radio" name="res_type" value="0" class="res-type-radio"> 비대면 진료</label>';

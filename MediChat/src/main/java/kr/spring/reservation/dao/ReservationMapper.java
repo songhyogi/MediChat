@@ -20,7 +20,7 @@ public interface ReservationMapper {
     //예약정보 저장하기
     public void insertReservation(ReservationVO reservation);
     //예약내역 가져오기(회원)
-    public Integer selectCountByMem(Map<String,Object>map);
+    public Integer selectCountByMem(long mem_num);
     public List<ReservationVO> getMyResList(Map<String,Object> map);
     //예약내역 삭제하기
     @Delete("DELETE FROM reservation WHERE res_num=#{res_num}")
