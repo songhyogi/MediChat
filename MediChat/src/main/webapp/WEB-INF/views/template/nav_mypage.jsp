@@ -3,8 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/ych.css" type="text/css">
 <!-- MyPage 메뉴 시작 -->
+<style>
+
+</style>
 <div class="side-bar">
-	<ul>
+	<h1 style="padding-top:30px;">마이페이지</h1>
+	<ul style="padding: 0 0 !important; margin-top:20px;">
 		<li>
 			<c:if test="${mem_profile == null}">
 				<img src="${pageContext.request.contextPath}/member/memPhotoView"
@@ -26,28 +30,22 @@
 				<input type="button" value="취소" id="photo_reset"> 
 			</div>
 		</li>
-	</ul>
-	<ul>
-		<li>
-			<input type="button" class="detail-btn" value="회원정보"
-			onclick="location.href='${pageContext.request.contextPath}/mypage/memberInfo'">
-		</li>
-		<li>
-			<input type="button" class="detail-btn" value="약 복용 내역"
-			onclick="location.href='${pageContext.request.contextPath}/drug/memberDrugList'">
-		</li>
-		<li>
-			<input type="button" class="detail-btn" value="후기내역"
-			onclick="location.href='${pageContext.request.contextPath}/mypage/reviewHistory'">
-		</li>
-		<li>
-			<input type="button" class="detail-btn" value="비대면 진료"
-			onclick="location.href='${pageContext.request.contextPath}/chat/chatView'">
-		</li>
-		<li style="margin-top:50px;">
-			<input type="button" class="detail-btn" value="로그아웃"
-			onclick="location.href='${pageContext.request.contextPath}/member/logout'">
-		</li>
+
+        <li style="margin-bottom:10px;">
+            <a href="${pageContext.request.contextPath}/memberDrug/list" class="detail-btn">약 복용 내역</a>
+        </li>
+        <li style="margin-bottom:10px;">
+            <a href="${pageContext.request.contextPath}/review/reviewMemList" class="detail-btn">후기내역</a>
+        </li>
+        <li style="margin-bottom:10px;">
+            <a href="${pageContext.request.contextPath}/chat/chatView" class="detail-btn">비대면 진료</a>
+        </li>
+		<li style="margin-bottom:10px;">
+            <a href="${pageContext.request.contextPath}/member/modifyUser" class="detail-btn">회원정보 수정</a>
+        </li>
+        <li style="margin-top:50px;">
+            <a href="${pageContext.request.contextPath}/member/logout" class="detail-btn">로그아웃</a>
+        </li>
 	</ul>
 </div>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>

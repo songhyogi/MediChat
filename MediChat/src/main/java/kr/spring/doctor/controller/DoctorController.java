@@ -25,8 +25,10 @@ import kr.spring.doctor.service.DoctorService;
 import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.hospital.service.HospitalService;
 import kr.spring.hospital.vo.HospitalVO;
+import kr.spring.member.vo.MemberVO;
 import kr.spring.notification.service.NotificationService;
 import kr.spring.notification.vo.NotificationVO;
+import kr.spring.reservation.service.ReservationService;
 import kr.spring.util.AuthCheckException;
 import kr.spring.util.CaptchaUtil;
 import kr.spring.util.FileUtil;
@@ -41,6 +43,8 @@ public class DoctorController {
 	HospitalService hospitalService;
 	@Autowired
 	NotificationService notificationService;
+	@Autowired
+	private ReservationService reservationService;
 	
 	@Value("${API.KCY.X-Naver-Client-Id}")
 	private String X_Naver_Client_Id;
@@ -466,15 +470,25 @@ public class DoctorController {
 	 */
 	@GetMapping("/doctor/docPage")
 	public String process(HttpSession session, Model model) {
-		DoctorVO user = (DoctorVO) session.getAttribute("user");
-		// 회원정보
-		DoctorVO doctor = doctorService.selectDoctor(user.getDoc_num());
-
-		log.debug("<<MY페이지>> : " + doctor);
-
-		model.addAttribute("doctor", doctor);
-
-		return "docPage";
+	    DoctorVO user = (DoctorVO) session.getAttribute("user");
+	    if(user == null) {
+	        return "redirect:/login";
+	    }
+	    try{
+	        DoctorVO doctor = doctorService.selectDoctor(user.getDoc_num());
+	        if(doctor != null) {
+	            int count = reservationService.selectCountByMem(user.getDoc_num());
+	            doctor.setReservationCount(count);
+	            log.debug("<<MY페이지>> : " + doctor);
+	            model.addAttribute("doctor", doctor);
+	            model.addAttribute("count", count);
+	            return "myPage";
+	        }else{
+	            return "redirect:/login";
+	        }
+	    }catch(Exception e) {
+	        return "redirect:/login";
+	    }
 	}
 	@GetMapping("/mypage/docInfo")
 	   public String process1(HttpSession session,Model model) {
@@ -557,6 +571,5 @@ public class DoctorController {
 	       doctorService.updateDoctorTreat(doctorVO); // 비밀번호가 일치하면 진료 정보 업데이트
 	       return "redirect:/doctor/docPage"; // 성공적으로 처리된 경우 다른 페이지로 리다이렉트
 	   }
-
 
 }

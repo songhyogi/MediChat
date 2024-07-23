@@ -51,7 +51,8 @@ public class DoctorVO {
 	private String doc_stime;		//근무시작시간
 	private String doc_etime;		//근무종료시간
 	private int doc_agree;
-
+	private int reservationCount;
+	
 //	@NotBlank(message = "비밀번호를 입력해주세요.")
 //  private String password; // 사용자가 입력한 비밀번호
 	

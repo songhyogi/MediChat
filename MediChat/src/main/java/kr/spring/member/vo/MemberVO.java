@@ -49,6 +49,7 @@ public class MemberVO {
    private String mem_address2;
    private Date mem_reg;
    private Date mem_modify;
+   private int reservationCount;
    
    //비밀번호 변경시 현재 비밀번호를 저장하는 용도로 사용
    @Pattern(regexp="^[A-Za-z0-9]{4,12}$")
