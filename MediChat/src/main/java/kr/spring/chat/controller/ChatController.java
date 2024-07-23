@@ -361,6 +361,7 @@ public class ChatController {
 	 * 	    진료 파일 목록
 	 ========================*/
 	@GetMapping("/chat/fileDetail")
+	@ResponseBody
 	public Map<String,Object> selectFilesDetail(HttpSession session, long chat_num){
 		Map<String,Object> map = new HashMap<String,Object>();
 		
@@ -372,13 +373,36 @@ public class ChatController {
 		
 		List<ChatFileVO> list = chatService.selectFiles(chat_num);
 		
-		if(list == null) {
+		
+		if(list == null || list.isEmpty()) {
 			map.put("list", "null");
 		}else {
 			map.put("list", list);
 		}
 		
 		return map;
+	}
+	
+	/*=======================
+	 * 	    진료 종료 전송
+	 ========================*/
+	@GetMapping("/chat/downloadFile")
+	public String download(long file_num, HttpServletRequest request, Model model) {
+		ChatFileVO file = chatService.selectFile(file_num);
+		
+		byte[] downloadFile = FileUtil.getBytes(request.getServletContext().getRealPath("/upload")+"/"+file.getFile_name());
+		
+		String file_name = file.getFile_name();
+		
+		int indexFileName = file_name.indexOf("_");
+		String origin_file_name = file_name.substring(indexFileName+1);
+		
+		log.debug("<<파일 다운로드>>: "+origin_file_name);
+		
+		model.addAttribute("downloadFile",downloadFile);
+		model.addAttribute("filename",origin_file_name);
+		
+		return "downloadView";
 	}
 	
 
@@ -481,12 +505,12 @@ public class ChatController {
 	 * 	   	결제 완료 처리
 	 ========================*/
 	@PostMapping("/chat/paymentConfirmation")
-	public void confirmPayment(@RequestParam("chat_num") long chat_num,
+	public Map<String,String> confirmPayment(@RequestParam("chat_num") long chat_num,
 									         @RequestParam("doc_name") String doc_name,
 									         @RequestParam("pay_amount") int pay_amount,
 									         @RequestParam("mem_num") long mem_num) {
 	    
-	    Map<String, Object> map = new HashMap<String,Object>();
+	    Map<String, String> map = new HashMap<String,String>();
 	    
 	    ChatPaymentVO payment = new ChatPaymentVO();
 	    
@@ -495,7 +519,15 @@ public class ChatController {
 	    payment.setPay_amount(pay_amount);
 	    payment.setDoc_name(doc_name);
 	    
-	    chatService.insertChatPayment(payment);
+	    try {
+	        chatService.insertChatPayment(payment);
+	        map.put("result", "paySuccess");
+	    } catch (Exception e) {
+	        map.put("result", "fail");
+	        // 로그에 예외 메시지를 기록
+	        e.printStackTrace();
+	    }
 	    
+	    return map;
 	}
 }

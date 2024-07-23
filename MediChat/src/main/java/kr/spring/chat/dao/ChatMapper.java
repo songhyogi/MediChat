@@ -46,6 +46,10 @@ public interface ChatMapper {
 	//진료 종료 시 파일 전송
 	public void insertChatFile(ChatFileVO chatFileVO);
 	
+	//파일 다운로드를 위한 파일 정보 불러오기
+	@Select("SELECT * FROM chat_files WHERE file_num=#{file_num}")
+	public ChatFileVO selectFile(long file_num);
+	
 	//파일 번호 불러오기
 	@Select("SELECT file_num FROM chat_files WHERE chat_num=#{chat_num} AND file_name=#{file_name}")
 	public Long selectFileNum(long chat_num,String file_name);

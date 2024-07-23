@@ -116,7 +116,6 @@
 }
 .chat-body ul li{
 	border-radius:10px;
-	padding:5px;
 	margin:5px 0;
 	clear:both;
 }
@@ -126,6 +125,7 @@
 	float:left;
 	word-wrap: break-word; /* 긴 단어의 줄바꿈 처리 */
   	overflow-wrap: break-word;
+  	padding:10px;
 }
 .my-message{
 	overflow:auto;
@@ -134,6 +134,7 @@
 	float:right;
 	word-wrap: break-word; /* 긴 단어의 줄바꿈 처리 */
   	overflow-wrap: break-word;
+  	padding:10px;
 }
 .image-form{
 	display:none;
@@ -276,7 +277,6 @@
 	border:none;
 	background-color:none;
 }
-/*피드백 추가 사항*/
 
 /*=======================
 	모달창 구성(진료비 청구)

@@ -27,9 +27,9 @@
 				<tiles:insertAttribute name="chatNav"/>
 				<tiles:insertAttribute name="chatRoom"/>
 		</div>
-		<div id="main_footer">
-			<tiles:insertAttribute name="footer"/>
-		</div>
+	</div>
+	<div id="main_footer">
+		<tiles:insertAttribute name="footer"/>
 	</div>
 </div>
 </body>

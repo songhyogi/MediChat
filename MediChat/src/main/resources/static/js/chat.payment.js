@@ -58,9 +58,11 @@ $(function(){
                         		mem_num:mem_num
                     		},
                     		dataType: 'json',
-                    		success: function(response) {
+                    		success: function(param) {
+								if(param.result == "paySuccess"){
                         		alert("결제가 완료되었습니다.");
-                        		console.log('서버 응답:', response);
+                        		console.log('서버 응답:', param);
+                        		}
                     		},
                         	error: function(xhr, status, error) {
                             	alert('결제 완료 후 서버 통신 오류');
