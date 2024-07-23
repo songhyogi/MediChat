@@ -30,6 +30,8 @@
 		<div>
 			${cboard.cbo_content}
 		</div>
+		<!-- 좋아요 -->
+		<!-- 댓글수 -->
 		<div>
 			<c:if test="${!empty user && user.mem_num == cboard.mem_num}">
 				<input type="button" value="수정" onclick="location.href='update?cbo_num=${cboard.cbo_num}'">
@@ -51,17 +53,20 @@
 	<div>
 		<span>댓글쓰기</span>
 		<form id="comment_form">
-			<input type="hidden" name="cbo_num" value="${cboard.cbo_num}">
+			<input type="hidden" name="cbo_num" value="${cboard.cbo_num}" id="cbo_num">
 			<textarea rows="3" cols="50" name="cre_content" id="cre_content"
 				<c:if test="${empty user}">disabled="disabled"</c:if>
 				><c:if test="${empty user}">댓글을 작성하려면 로그인 해주세요.</c:if></textarea>
 			<c:if test="${!empty user}">
-				<div id="re_first"><span class="letter-count">300/300</span></div>
+				<div id="re_first"><span class="letter-count">0/300</span></div>
 				<div id="re_second"><input type="submit" value="전송"></div>
 			</c:if>
 		</form>
 	</div>
 	<!-- 댓글목록 -->
-	<div id="comment_list"></div>
+	<div id="output"></div>
+	<div class="paging-button" style="display:none;">
+		<input type="button" value="더보기">
+	</div>
 </div>
 <!-- 커뮤니티 글상세 끝 -->

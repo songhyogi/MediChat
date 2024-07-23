@@ -50,23 +50,14 @@ a {
 	<c:if test="${count > 0}">
 		<table class="table table-hover">
 			<tr class="table-light align-center">
-				<th>식별</th>
+				<th>번호</th>
 				<th>제품명</th>
 				<th>회사명</th>
 				<th>효능</th>
 			</tr>
 			<c:forEach var="drug" items="${list}">
 			<tr>
-				<td>
-					<div class="align-center">
-						<c:if test="${empty drug.drg_img}">
-							<img src="${pageContext.request.contextPath}/images/noIMG.png" width="20">
-						</c:if>
-						<c:if test="${!empty drug.drg_img}">
-							<img class="img" src="${drug.drg_img}" width="40">
-						</c:if>
-					</div>
-				</td>
+				<td>${drug.drg_num}</td>
 				<td><a href="detail?drg_num=${drug.drg_num}"> ${drug.drg_name}</a></td>
 				<td class="align-center">${drug.drg_company}</td>
 				<td class="align-center"><img src="${pageContext.request.contextPath}/images/magnifier.png" width="20"></td>
