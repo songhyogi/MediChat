@@ -62,6 +62,8 @@ public interface ChatMapper {
 	@Insert("INSERT INTO chat_payment(pay_num,chat_num,mem_num,pay_amount) VALUES (payment_seq.nextval,#{chat_num},#{mem_num},#{pay_amount})")
 	public void insertChatPayment(ChatPaymentVO chatPaymentVO);
 	
+	//나의 서류함 파일 리스트 불러오기
 	public List<ChatFileVO> selectFiles(long mem_num);
+	
 	public void updateChatStatus(long chat_num);
 }

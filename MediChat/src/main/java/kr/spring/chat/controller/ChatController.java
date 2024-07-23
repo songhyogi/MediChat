@@ -317,10 +317,15 @@ public class ChatController {
 	 ========================*/
 	@PostMapping("/chat/deleteFile")
 	@ResponseBody
-	public Map<String,Object> deleteFile(@RequestParam("file_num") long file_num){
+	public Map<String,Object> deleteFile(@RequestParam("file_num") long file_num,
+										 HttpServletRequest request){
 		Map<String,Object> map = new HashMap<String,Object>();
 		
+		ChatFileVO file = chatService.selectFile(file_num);
+		String file_name = file.getFile_name();
+		
 		try {
+			FileUtil.removeFile(request, file_name);
 			chatService.deleteFile(file_num);
 			map.put("result", "success");
 		}catch(Exception e) {

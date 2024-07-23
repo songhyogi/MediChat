@@ -27,7 +27,7 @@
 	cursor:pointer;
 }
 .nav-title th{
-	height:130px;
+	height:110px;
 	color: rgb(76, 165, 165);
 }
 .selected-chat td a{
@@ -43,7 +43,7 @@
 .chat-header{
 	padding:10px;
 	width:600px;
-	height:130px;
+	height:110px;
 	display:flex;
 	align-items: center;
 }
