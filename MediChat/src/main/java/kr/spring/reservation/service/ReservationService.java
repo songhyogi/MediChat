@@ -17,7 +17,7 @@ public interface ReservationService {
 	//예약정보 저장하기
     public void insertReservation(ReservationVO reservationVO);
     //예약내역 가져오기
-    public Integer selectCountByMem(Map<String,Object>map);
+    public Integer selectCountByMem(long mem_num);
     public List<ReservationVO> getMyResList(Map<String,Object> map);
     //예약내역 삭제하기
     public void cancelReservation(Long res_num);

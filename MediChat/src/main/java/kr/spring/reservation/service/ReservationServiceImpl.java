@@ -35,8 +35,8 @@ public class ReservationServiceImpl implements ReservationService{
     }
 
 	@Override
-	public Integer selectCountByMem(Map<String, Object> map) {
-		return reservationMapper.selectCountByMem(map);
+	public Integer selectCountByMem(long mem_num) {
+		return reservationMapper.selectCountByMem(mem_num);
 	}
 
 	@Override

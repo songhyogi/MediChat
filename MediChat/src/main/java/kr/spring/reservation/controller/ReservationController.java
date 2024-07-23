@@ -42,7 +42,7 @@ public class ReservationController {
 		}else {
 			Map<String,Object> map = new HashMap<String,Object>();
 			map.put("mem_num", user.getMem_num());
-			int count = reservationService.selectCountByMem(map);
+			int count = reservationService.selectCountByMem(user.getMem_num());
 			map.put("keyfield", keyfield);
 			PagingUtil page = new PagingUtil(keyfield,null,pageNum,count,2,10,"myResList");
 			map.put("start",page.getStartRow());

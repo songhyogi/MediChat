@@ -57,7 +57,7 @@
         	#{res_content, jdbcType=CLOB})
     </insert>
     <!-- 예약 목록(회원)  -->
-    <select id="selectCountByMem" parameterType="map" resultType="integer">
+    <select id="selectCountByMem" parameterType="long" resultType="integer">
     	SELECT COUNT(*)
     	FROM reservation JOIN member USING(mem_num)
     	WHERE mem_num = #{mem_num}
