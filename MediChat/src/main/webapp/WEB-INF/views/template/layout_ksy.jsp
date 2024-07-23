@@ -19,13 +19,14 @@
 		<div class="row">
 			<div class="col-9">
 				<tiles:insertAttribute name="body"/>
-				<div>
-					<tiles:insertAttribute name="footer"/>
-				</div>
+				
 			</div>
 			<div id="right_nav" class="col-3">
 				<tiles:insertAttribute name="right_nav"/>
 			</div>
+		</div>
+		<div>
+			<tiles:insertAttribute name="footer"/>
 		</div>
 	</div>
 </div>
