@@ -112,7 +112,7 @@
 	
 	<!-- =================댓글================= -->
 	<!-- 댓글 목록 -->
-	<select id="selectListCommentAndReply">
+	<select id="selectListCommentAndReply" parameterType="map" resultType="communityReplyVO">
 		SELECT
 			*
 		FROM (SELECT

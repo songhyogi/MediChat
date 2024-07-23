@@ -203,7 +203,7 @@ public class CommunityController {
 	//댓글 목록
 	@GetMapping("/medichatCommunity/listComment")
 	@ResponseBody
-	public Map<String, Object> getLIst(int cbo_num, @RequestParam(defaultValue="1")int pageNum, @RequestParam int rowCount, HttpSession session){
+	public Map<String, Object> getLIst(int cbo_num, int pageNum,int rowCount, HttpSession session){
 		log.debug("<<댓글 목록 - cbo_num>> : " + cbo_num);
 		log.debug("<<댓글 목록 - pageNum>> : " + pageNum);
 		log.debug("<<댓글 목록 - rowCount>> : " + rowCount);
@@ -236,7 +236,9 @@ public class CommunityController {
 		Map<String, Object> mapJson = new HashMap<String, Object>();
 		mapJson.put("count", count);
 		mapJson.put("list", list);
-		
+		if(user!=null) {
+			mapJson.put("user_num", user.getMem_num());
+		}
 		return mapJson;
 	}
 	
