@@ -9,6 +9,9 @@
 	<div class="page-one">
 		<h4>홈 > 건강 블로그 > ${healthy.healthy_title}</h4> 		
 		<h2>&nbsp;&nbsp;&nbsp;${healthy.healthy_title}</h2>
+		<ul>
+			<li><img src="${pageContext.request.contextPath}/member/memViewProfile?mem_num=${r.mem_num}" width="35" height="35" class="rounded-circle"></li>
+		</ul>
 		${healthy.h_reg_date}  조회수 :  ${healthy.healthy_hit} <br>
 		<c:if test="${!empty healthy.h_filename}">
 		<img  width="120" height="120" src="${pageContext.request.contextPath}/upload/${healthy.h_filename}"/>

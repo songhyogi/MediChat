@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.spring.hospital.service.HospitalService;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.review.service.ReviewService;
 import kr.spring.review.vo.ReviewVO;
@@ -28,12 +29,15 @@ public class ReviewController {
 	@Autowired
 	private ReviewService service;
 	
+	@Autowired
+	private HospitalService hospitalService;
+	
 	@ModelAttribute
 	public ReviewVO initCommand() {
 		return new ReviewVO();
 	}
 	
-	@GetMapping("/review/reviewMemList")
+	@GetMapping("/mypage/reviewHistory")
 	public String myReviewList(@RequestParam(defaultValue="1") int pageNum,@RequestParam(defaultValue="1") String keyfield, HttpServletRequest request,HttpSession session,Model model) {
 		MemberVO user= (MemberVO) session.getAttribute("user");
 		if(user == null) {
@@ -59,13 +63,14 @@ public class ReviewController {
 	}
 	
 	@GetMapping("/review/writeReview")
-	public String writeReviewForm(HttpSession session, HttpServletRequest request,Model model) {
+	public String writeReviewForm(ReviewVO vo, HttpSession session, HttpServletRequest request,Model model) {
 		MemberVO user= (MemberVO) session.getAttribute("user");
 		if(user == null) {
 			model.addAttribute("message","로그인 후 이용해주세요");
 			model.addAttribute("url",request.getContextPath()+"/member/login");
 		}else {
-			
+			model.addAttribute("reviewVO",vo);
+			model.addAttribute("hos_name",hospitalService.selectHospital(vo.getHos_num()).getHos_name());
 			return "myReviewWrite";
 		}
 		
@@ -79,8 +84,9 @@ public class ReviewController {
 			model.addAttribute("message","로그인 후 이용해주세요");
 			model.addAttribute("url",request.getContextPath()+"/member/login");
 		}else {
-			log.debug("<<<<<<<<<<<<<<<후기작성"+vo);
-			return "redirect:/review/reviewMemList";
+			vo.setMem_num(user.getMem_num());
+			service.insertReview(vo);
+			return "redirect:/mypage/reviewHistory";
 		}
 		
 		return "common/resultAlert";
@@ -96,8 +102,9 @@ public class ReviewController {
 			ReviewVO vo = service.selectReviewDetail(rev_num);
 			if(vo.getMem_num() != user.getMem_num()) {
 				model.addAttribute("message","잘못된 접근 입니다.");
-				model.addAttribute("url",request.getContextPath()+"/review/reviewMemList");
+				model.addAttribute("url",request.getContextPath()+"/mypage/reviewHistory");
 			}else {
+				model.addAttribute("hos_name",hospitalService.selectHospital(vo.getHos_num()).getHos_name());
 				model.addAttribute("reviewVO",vo);
 				return "myModifyReviewWrite";
 			}
@@ -117,11 +124,11 @@ public class ReviewController {
 			ReviewVO db_vo = service.selectReviewDetail(vo.getRev_num());
 			if(db_vo.getMem_num() != user.getMem_num()) {
 				model.addAttribute("message","잘못된 접근 입니다.");
-				model.addAttribute("url",request.getContextPath()+"/review/reviewMemList");
+				model.addAttribute("url",request.getContextPath()+"/mypage/reviewHistory");
 			}else {
 				service.updateReview(vo);
 				model.addAttribute("message","리뷰 수정이 완료되었습니다.");
-				model.addAttribute("url",request.getContextPath()+"/review/reviewMemList");
+				model.addAttribute("url",request.getContextPath()+"/mypage/reviewHistory");
 			}
 			
 		}
@@ -140,11 +147,11 @@ public class ReviewController {
 			ReviewVO vo = service.selectReviewDetail(rev_num);
 			if(vo.getMem_num() != user.getMem_num()) {
 				model.addAttribute("message","잘못된 접근 입니다.");
-				model.addAttribute("url",request.getContextPath()+"/review/reviewMemList");
+				model.addAttribute("url",request.getContextPath()+"/mypage/reviewHistory");
 			}else {
 				service.deleteReview(rev_num);
 				model.addAttribute("message","삭제되었습니다.");
-				model.addAttribute("url",request.getContextPath()+"/review/reviewMemList");
+				model.addAttribute("url",request.getContextPath()+"/mypage/reviewHistory");
 			}
 	
 		}

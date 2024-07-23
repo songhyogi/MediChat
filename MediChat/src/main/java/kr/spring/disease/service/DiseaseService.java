@@ -21,4 +21,5 @@ public interface DiseaseService {
 	public List<DiseaseVO> selectDisList(Map<String,Object> map);
 	public Integer selectDisCount(Map<String,Object> map);
 	public DiseaseVO getDis(String sickcd);
+	public void updateDisHit(String sickcd);
 }

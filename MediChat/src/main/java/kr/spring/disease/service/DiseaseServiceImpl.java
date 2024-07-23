@@ -67,6 +67,12 @@ public class DiseaseServiceImpl implements DiseaseService{
 		return mapper.selectDisCodeList();
 	}
 
+	@Override
+	public void updateDisHit(String sickcd) {
+		// TODO Auto-generated method stub
+		mapper.updateDisHit(sickcd);
+	}
+
 
 
 }
