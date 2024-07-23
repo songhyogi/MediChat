@@ -141,13 +141,13 @@ public class ReservationAjaxController {
 	
 	@PostMapping("/reservation/updateReservation")
 	@ResponseBody
-	public Map<String,Object> updateReservation(long res_num,HttpSession session,Model model){
+	public Map<String,Object> updateReservation(long res_num,long res_status,HttpSession session,Model model){
 		Map<String,Object> map = new HashMap<>();
 		DoctorVO user = (DoctorVO) session.getAttribute("user");
 		if(user == null) {
 			map.put("result", "logout");
 		}else {
-			reservationService.updateReservation(res_num);
+			reservationService.updateReservation(res_num,res_status);
 			map.put("result", "success");
 		}
 		return map;

@@ -63,7 +63,7 @@ public class ReservationController {
 		DoctorVO user = (DoctorVO) session.getAttribute("user");
 		if(user == null) {
 			model.addAttribute("message","로그인 후 이용해주세요");
-			model.addAttribute("url",request.getContextPath()+"/member/login");
+			model.addAttribute("url",request.getContextPath()+"/doctor/login");
 		}else {
 			Map<String,Object> map = new HashMap<String,Object>();
 			map.put("doc_num",user.getMem_num());

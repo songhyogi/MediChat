@@ -60,8 +60,8 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 
 	@Override
-	public void updateReservation(Long res_num) {
-		reservationMapper.updateReservation(res_num);
+	public void updateReservation(Long res_num,Long res_status) {
+		reservationMapper.updateReservation(res_num,res_status);
 	}
 
 }

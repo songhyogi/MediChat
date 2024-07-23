@@ -25,5 +25,5 @@ public interface ReservationService {
     public Integer selectCountByDoc(Map<String,Object> map);
     public List<ReservationVO> getDocResList(Map<String,Object> map);
     //예약내역 업데이트 (0:예약승인대기, 1:진료예정, 2:진료완료, 3:예약취소)
-    public void updateReservation(Long res_num);
+    public void updateReservation(Long res_num,Long res_status);
 }
