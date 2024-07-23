@@ -3,6 +3,29 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+<style>
+.btn.green{
+	background-color:rgb(102, 178, 178);
+}
+.rounded {
+	border-radius: 10px;
+}
+.btn {
+	position: relative;
+	border: 0;
+	display: inline-block;
+	text-align: center;
+	color: white;
+}
+#calendarButton {
+    width: 30px;
+    height: 30px;
+    margin:0 auto;
+    border: none;
+    cursor: pointer;
+    text-align:center;
+}
+</style>
 <!-- 회원정보 수정 시작 -->
 <div class="container">
 	<h2 class="title">회원정보 수정</h2>
@@ -20,8 +43,11 @@
 				<form:errors path="mem_name" cssClass="error-color"/>
 			</li>
 			<li>
-				<form:label path="mem_birth">생년월일</form:label>
-				<form:input path="mem_birth"/>
+			    <form:label path="mem_birth">생년월일</form:label>
+			    <input type="text" id="mem_birth" placeholder="년-월-일">
+			    <button id="calendarButton" type="button">
+			    	<img src="${pageContext.request.contextPath}/images/calendar.jpg" style="width:30px; height:30px;">
+			    </button>
 			</li>
 			<li>
 				<c:if test="${mem_profile == null}">
@@ -42,9 +68,8 @@
 			<li >
 				<form:label path="mem_zipcode">주소</form:label>
 				<form:input path="mem_zipcode"/>
-				<input type="button" onclick="execDaumPostcode()" value="우편번호" class="default-btn">
+				<input type="button" onclick="execDaumPostcode()" value="우편번호" class="btn green rounded" style="margin:0 2px;">
 				<form:errors path="mem_zipcode" cssClass="error-color"/>
-				<form:label path="mem_address1"></form:label>
 				<form:input path="mem_address1"/>
 				<form:errors path="mem_address1" cssClass="error-color"/>
 			</li>

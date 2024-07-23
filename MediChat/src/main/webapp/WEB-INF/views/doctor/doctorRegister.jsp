@@ -14,14 +14,14 @@
 		<ul>
 			<li style="margin-top:20px;">
 				<form:label path="mem_id">아이디</form:label>
-				<form:input path="mem_id" placeholder="영문or숫자사용하여 4~12자 입력하세요." autocomplete="off" style="width:250px;"/>
+				<form:input path="mem_id" placeholder="영문or숫자 사용하여 4~12자 입력" autocomplete="off" style="width:250px;"/>
 				<input type="button" id="confirmId" value="중복확인" class="default-btn" style="margin-left:0px;">
 				<form:errors path="mem_id" cssClass="error-color" style="display:inline;"/><br>
 				<span id="message_id" style=""></span>
 			</li>
 			<li>
 				<form:label path="doc_passwd">비밀번호</form:label>
-				<form:password path="doc_passwd" placeholder="영문,숫자 조합하여 4~12자 입력하세요."/>
+				<form:password path="doc_passwd" placeholder="영문,숫자 사용하여 4~12자 입력"/>
 				<form:errors path="doc_passwd" cssClass="error-color"/>
 			</li>
 			<li>
@@ -31,7 +31,7 @@
 			</li>
 			<li>
 				<form:label path="doc_email">이메일</form:label>
-				<form:input path="doc_email" placeholder="test@test.com 형식으로 입력하세요."/>
+				<form:input path="doc_email" placeholder="test@test.com 형식으로 입력"/>
 				<form:errors path="doc_email" cssClass="error-color"/>
 			</li>
 			<li>
@@ -84,7 +84,7 @@
 		</ul>
 		</div>
 		<!-- 캡챠 끝 -->
-		<hr size="1" width="80%" noshade="noshade">
+		<hr size="1" width="100%" noshade="noshade">
 		<div style="text-align:right;">
 			<input type="button" value="홈으로" id="reload_btn" onclick="location.href='${pageContext.request.contextPath}/main/main'">
 			<form:button class="default-btn">가입신청</form:button>

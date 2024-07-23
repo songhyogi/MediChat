@@ -2,43 +2,71 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<div class="container">
-	<form:form action="login" id="member_login" modelAttribute="memberVO">
-		<div class="loginLogo">
-			<img src="/images/loginLogo.png" width="150" height="100" style="margin-top:50px;">
+<style>
+img{
+  width: 100%;
+}
+.login-container {
+     width: 800px;
+     margin-left: auto;
+     margin-right: auto;
+     margin-bottom: 100px;
+     padding-left: 15px;
+     padding-right: 15px;
+     padding-bottom:15px;
+     position: relative;
+     top:60px;
+}
+</style>
+<div class="login-container">
+	<section class="login">
+		<div class="login_box">
+			<div class="left">
+				<div class="contact">		
+				<form:form action="login" id="member_login" modelAttribute="memberVO">
+					<ul>
+						<li>
+							<form:input path="mem_id" placeholder="아이디" autocomplete="off"/>
+							<form:errors path="mem_id" cssClass="error-color"/>
+						</li>
+						<li>
+							<form:password path="mem_passwd" placeholder="비밀번호"/>
+							<form:errors path="mem_passwd" cssClass="error-color"/>
+						</li>
+					</ul>
+					<div class="flame">
+						<form:errors element="div" cssClass="error-color"/>
+						<form:button style="display: block; margin: 0 auto;" class="submit custom-btn btn-15">로그인</form:button>
+					</div>
+					<div class="button-container">
+						<label for="auto">
+						<input type="checkbox" name="auto" id="auto">자동로그인</label>
+						<input type="button" value="아이디 찾기" style="margin-right:10px; margin-left:80px;" onclick="location.href='memberFindId'">
+						<input type="button" value="비밀번호 찾기" onclick="location.href='sendMemPassword'">
+					</div>
+					<hr class="hr-text" data-content="OR">
+					<div class="social">
+						<!--  카카오 로그인시작 -->
+						<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&amp;client_id=c37546ec572f00c776f1b466369745f3&amp;redirect_uri=http://localhost:8000/member/kakaologin">
+							<img src="${pageContext.request.contextPath}/images/kakao_login_medium_narrow.png">
+						</a>
+						<!--  카카오 로그인 끝 -->
+						<!--  네이버 로그인 시작 -->
+						<a href="@{|${naverURL}|}">
+							<img src="${pageContext.request.contextPath}/images/naver_login.png" width="200">		
+						</a>
+						<!--  네이버 로그인 끝 -->
+					</div>
+				</form:form>
+				</div>
+			</div>
+			<div class="right">
+				<div class="right-text">
+					<h2>MediChat</h2>
+		      		<h5>비대면진료</h5>
+				</div>
+			</div>
 		</div>
-		<ul>
-			<li>
-				<form:input path="mem_id" placeholder="아이디" autocomplete="off" style="margin-top:50px;"/>
-				<form:errors path="mem_id" cssClass="error-color"/>
-			</li>
-			<li>
-				<form:password path="mem_passwd" placeholder="비밀번호" style="margin-top:15px;"/>
-				<form:errors path="mem_passwd" cssClass="error-color"/>
-			</li>
-		</ul>
-		<div>
-			<form:errors element="div" cssClass="error-color"/>
-			<form:button class="login_btn fw-7 fs-17">로그인</form:button>
-		</div>
-		<div class="button-container">
-			<label for="auto">
-			<input type="checkbox" name="auto" id="auto">자동로그인</label>
-			<input type="button" value="아이디 찾기" style="margin-right:10px; margin-left:70px;" onclick="location.href='memberFindId'">
-			<input type="button" value="비밀번호 찾기" onclick="location.href='sendMemPassword'">
-		</div>
-	</form:form>
-	<hr size="1" width="50%" noshade="noshade" class="centered-hr">
-	<div class="social">
-		<!--  카카오 로그인시작 -->
-		<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&amp;client_id=c37546ec572f00c776f1b466369745f3&amp;redirect_uri=http://localhost:8000/member/kakaologin">
-			<img src="${pageContext.request.contextPath}/images/kakao_login_medium_narrow.png">
-		</a>
-		<!--  카카오 로그인 끝 -->
-		<!--  네이버 로그인 시작 -->
-		<a href="@{|${naverURL}|}">
-			<img src="${pageContext.request.contextPath}/images/naver_login.png" width="200">		
-		</a>
-		<!--  네이버 로그인 끝 -->
-	</div>
+	</section>
+	
 </div>
