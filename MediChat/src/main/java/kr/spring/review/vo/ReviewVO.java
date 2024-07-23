@@ -1,5 +1,7 @@
 package kr.spring.review.vo;
 
+import java.sql.Date;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,11 +17,10 @@ public class ReviewVO {
 	private float rev_grade;
 	private String rev_title;
 	private String rev_content;
-	private String rev_reg;
-	private String rev_modify;
+	private Date rev_reg;
+	private Date rev_modify;
 	private int rev_hit;
 	private int rev_report;
-	
 	private String mem_id;
 	
 	private String hos_name;

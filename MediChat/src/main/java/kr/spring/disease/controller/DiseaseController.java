@@ -19,12 +19,15 @@ import javax.xml.bind.JAXBException;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
@@ -38,8 +41,8 @@ import kr.spring.disease.vo.DiseaseVO;
 import kr.spring.disease.vo.Item;
 import kr.spring.disease.vo.Response;
 import kr.spring.util.CaptchaUtil;
+import kr.spring.util.CrawlingUtils;
 import kr.spring.util.PagingUtil;
-import kr.spring.util.WebDriverUtil;
 import kr.spring.util.XUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,6 +54,11 @@ public class DiseaseController {
 	private DiseaseService service;
 	@Autowired
 	HospitalService hservice;
+	
+	@Value("${API.SSH.X-Naver-Client-Id}")
+	private String apiKey1;
+	@Value("${API.SSH.X-Naver-Client-Secret}")
+	private String apiKey2;
 	
 	@GetMapping("/disease/diseaseDictionary")
 	public String getList(String keyword,String keyfield, @RequestParam(defaultValue="1") int pageNum, Model model,HttpServletRequest request) throws JAXBException, IOException {
@@ -72,8 +80,12 @@ public class DiseaseController {
 	//질병사전 상세 페이지
 	@GetMapping("/disease/diseaseDictDetail")
 	public String getDictDetail(String sickcd,Model model) {
+		service.updateDisHit(sickcd);
+		
 		DiseaseVO disease = service.getDis(sickcd);
+		
 		model.addAttribute("disease",disease);
+		
 		return "disease_Detail";
 	}
 	
@@ -123,7 +135,7 @@ public class DiseaseController {
 		
 			String q= null;
 			try {
-	            q = URLEncoder.encode( code.getSicknm()+" 증상", "UTF-8");
+	            q = URLEncoder.encode( code.getSicknm()+"증상", "UTF-8");
 	        } catch (UnsupportedEncodingException e) {
 	            throw new RuntimeException("검색어 인코딩 실패",e);
 	        }
@@ -131,42 +143,41 @@ public class DiseaseController {
 			
 			Map<String,String> requestHeaders = new HashMap<String,String>();
 			
-			requestHeaders.put("X-Naver-Client-Id","eOOwyOu2JylwwiqE4HAO");
-			requestHeaders.put("X-Naver-Client-Secret","RZcZOCuwtq");
+			requestHeaders.put("X-Naver-Client-Id",apiKey1);
+			requestHeaders.put("X-Naver-Client-Secret",apiKey2);
 			
 			String responseBody = CaptchaUtil.get(key_apiURL, requestHeaders);
 			
 
 			
 			JSONObject jObject = new JSONObject(responseBody);
-			String l = null;
+			String l = "";
 			try {
 				//https://openapi.naver.com/v1/captcha/nkey 호출해서 받은 키값
 				
 			JSONArray key = jObject.getJSONArray("items");
-				String k =key.get(0).toString();
-				String m =k.substring(k.indexOf("\"description\":\""),k.indexOf("..")).replace("\\", "").replace("\"", "").replace(":", "").replace("</b>", "").replace("<b>", "").replace("description", "");
-				if(m.substring(m.indexOf(":")+1) != null) {
-					l = m.substring(m.indexOf(":")+1);
-				}else if(k.substring(k.indexOf("\"description\":\"")) != null){
-					l=k.substring(k.indexOf("\"description\":\"")).replace("\\", "").replace("\"", "").replace(":", "").replace("</b>", "").replace("<b>", "").replace("...", "").replace("description", "");
-				}else {
-					l="원인미상";
-				}
+			String str =key.get(0).toString();
 			
+			String viewerUrl = str.substring(str.indexOf("link")+6,str.indexOf("description")).replaceAll("\"","").replaceAll(",","");
 		
+			Document document = CrawlingUtils.getJsoupElements(null, viewerUrl);
+			Elements titleUrlElements = document.getElementsByClass("txt");   
+			for(int j=0; j< titleUrlElements.size(); j++)
+			l+=titleUrlElements.get(j).text()+"<br>";
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
-			if(l !=  null)
+			if(!l.equals(""))
 			vo.setDis_symptoms(l);
 			else
 			vo.setDis_symptoms("미상");
+			
 			service.insertDis(vo);
 		}
 		
 		
-
+		
+		
 	
 		return "diseaseMain";
 	}
@@ -202,8 +213,8 @@ public class DiseaseController {
 			
 			Map<String,String> requestHeaders = new HashMap<String,String>();
 			
-			requestHeaders.put("X-Naver-Client-Id","eOOwyOu2JylwwiqE4HAO");
-			requestHeaders.put("X-Naver-Client-Secret","RZcZOCuwtq");
+			requestHeaders.put("X-Naver-Client-Id",apiKey1);
+			requestHeaders.put("X-Naver-Client-Secret",apiKey2);
 			
 			String responseBody = CaptchaUtil.get(key_apiURL, requestHeaders);
 			
@@ -237,22 +248,18 @@ public class DiseaseController {
 		return "diseaseMain";
 	}
 	@GetMapping("/disease/diseamain")
-	public String gettestss(Model model,HttpSession session) {
-		WebDriver driver = null;
-		ChromeOptions optins = new ChromeOptions();
-		//optins.addArguments("headless");  설정시 눈에 보이지 않는다.  드라이버 생성자에 넣으면된다.
-		try {
-		System.setProperty("webdriver.chrome.driver", "C:/YOU_0622/selenium/libs/chromedriver.exe");
-		 driver = new ChromeDriver();
-		
-		} catch( Exception e) {
-			e.printStackTrace();
+	public String gettestss(Model model,HttpSession session) throws Exception {
+		String viewerUrl = "https://terms.naver.com/entry.naver?docId=2835424&cid=56755&categoryId=56755";
+		String query = ".txt";
+		Document document = CrawlingUtils.getJsoupElements(null, viewerUrl);
+		Elements titleUrlElements = document.getElementsByClass("txt");   
+		Elements titleElements2 = document.select("div");
+		Elements titleElements3 = document.select("img");
+		for(int i=0; i<titleUrlElements.size(); i++) {
+		System.out.println(titleUrlElements.get(i).text());
+
 		}
-		// 크롬 설정을 담은 객체 생성 
-		String url="https://blog.naver.com/PostList.naver?blogId=taehee129&from=postList&categoryNo=13";
-
-
-		return "diseaseMain";
+				return "diseaseMain";
 	}
 	
 	

@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.spring.hospital.service.HospitalService;
 import kr.spring.hospital.vo.HospitalVO;
+import kr.spring.review.service.ReviewService;
+import kr.spring.review.vo.ReviewVO;
+import kr.spring.util.PagingUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -28,6 +31,9 @@ public class HospitalController {
 	
 	@Value("${API.KSY.KAKAO-API-KEY}")
 	private String apiKey;
+	
+	@Autowired
+	private ReviewService service;
 	
 	@Autowired
 	private HospitalService hospitalService;
@@ -210,7 +216,7 @@ public class HospitalController {
 	
 	// 병원 > 검색 결과 > 상세 페이지
 	@GetMapping("/hospitals/search/detail/{hos_num}")
-	public String detail(Model model, @PathVariable Long hos_num) {
+	public String detail(@RequestParam(defaultValue="1") int pageNum,@RequestParam(defaultValue="1") String  keyfield,Model model, @PathVariable Long hos_num) {
 		model.addAttribute("apiKey", apiKey);
 		
 		HospitalVO hospital = hospitalService.selectHospital(hos_num);
@@ -224,6 +230,16 @@ public class HospitalController {
 		model.addAttribute("day", day);
 		log.debug("<<시간>> = " + "day: " + day + ", time: " +time);
 		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("hos_num", hos_num);
+		int reviewCount = service.selectCountByHos(map);
+		PagingUtil page = new PagingUtil(pageNum,reviewCount, 5, 10,"/hospitals/search/detail/{hos_num}");
+		map.put("start", page.getStartRow());
+		map.put("end", page.getEndRow());
+		List<ReviewVO> list = service.selectReviewListByHos(map);
+		model.addAttribute("reviewList",list);
+		model.addAttribute("reviewCount", reviewCount);
+		model.addAttribute("reviewPage", page.getPage());
 		return "detail";
 	}
 }

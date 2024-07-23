@@ -8,9 +8,10 @@
 <div class="align-center" style="padding: 0 auto;">
 	<div class="align-left" style="margin: 0 auto; width: 60%;">
 		<form:form action="updateReview" method="post" modelAttribute="reviewVO">
-		<h4>후기수정</h4>
+		<br><br>
+		<h4>후기 수정</h4>
 		<br>
-		<h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;병원명 : 병원명이 나오게할거임</h2>
+		<h2><b>&nbsp;&nbsp;&nbsp;&nbsp;병원명 : ${hos_name}</b></h2>
 		<br>
 		<div class="align-center float-clear" style="position:relative;">
 		<div class="align-center" style="width: 330px; margin: 0 auto;">
@@ -95,8 +96,8 @@
 		</div>
 		<br><br><br><br><span style="position:relative;">별점을 클릭하여 선택</span><br><br><br>
 				<form:hidden path="rev_num"/>
-				<form:input  path="rev_title" placeholder="리뷰 제목을 입력해주세요" style="width:620px; height:40px;  border-radius:5px;" /><br><br>
-				<form:textarea rows="8" cols="80" path="rev_content"  style="resize:none; border-radius:5px;" placeholder="리뷰 내용은 300자까지 입력가능합니다." ></form:textarea>
+				<form:input  path="rev_title" placeholder="리뷰 제목을 입력해주세요" style="width:95%; height: 40px; border-radius: 5px;" /><br><br>
+				<form:textarea rows="8" cols="51" path="rev_content"  style="resize:none; border-radius:5px;" placeholder="리뷰 내용은 300자까지 입력가능합니다." ></form:textarea>
 				<br><br>
 				<input type="submit" value="후기수정" class="default-btn">
 		</div>
