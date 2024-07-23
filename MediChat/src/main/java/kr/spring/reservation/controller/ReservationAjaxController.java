@@ -54,6 +54,7 @@ public class ReservationAjaxController {
 			map.put("result", "logout");
 		}else {
 			HospitalVO hospitalVO = reservationService.getHosHours(hos_num);
+			//이미 그 시간에 예약이 존재하는지
 			map.put("result", "success");
 			map.put("hospitalVO", hospitalVO);
 		}

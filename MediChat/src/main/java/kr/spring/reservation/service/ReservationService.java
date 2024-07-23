@@ -3,6 +3,7 @@ package kr.spring.reservation.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import kr.spring.doctor.vo.DoctorVO;
@@ -26,4 +27,6 @@ public interface ReservationService {
     public List<ReservationVO> getDocResList(Map<String,Object> map);
     //예약내역 업데이트 (0:예약승인대기, 1:진료예정, 2:진료완료, 3:예약취소)
     public void updateReservation(Long res_num,Long res_status);
+    //예약내역 존재 여부
+    public Integer getResExist(Map<String,Object> map);
 }

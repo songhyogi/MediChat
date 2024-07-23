@@ -198,12 +198,11 @@ button:disabled {
     cursor: pointer;
 }
 
-.btn-primary {
+.next-btn {
     background-color: #007bff;
     color: #fff;
 }
-
-.btn-secondary {
+.cancel-btn {
     background-color: #6c757d;
     color: #fff;
 }
@@ -270,8 +269,8 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
 	<div class="reservation-footer">
-        <input type="button" class="btn btn-secondary" value="이전" onclick="previousStep()">
-        <input type="button" class="btn btn-primary" value="동의하고 예약하기" onclick="submitReservation()">
+        <input type="button" class="btn prev-btn" value="이전" onclick="previousStep()">
+        <input type="button" class="btn agree-btn" value="동의하고 예약하기" onclick="submitReservation()">
     </div>
     
 </div>
