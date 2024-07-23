@@ -165,7 +165,7 @@ body{
 /* ================= 배경 색상 ================= */
 /* 회색 7단계 */
 .bg-gray-0 {
-	background-color: rgb(247, 249, 250);
+	background-color: #f7f9fa;
 }
 .bg-gray-1 {
     background-color: #f2f2f2; /* 매우 연한 회색 */
@@ -279,7 +279,7 @@ body{
 }
 /* ================= 메인 바디 ================= */
 #main_container{
-	width: 800px; /* 원하는 고정 너비 */
+	width: 1000px; /* 원하는 고정 너비 */
 	margin-left: auto;
 	margin-right: auto;
 	padding-left: 15px;
@@ -344,6 +344,7 @@ body{
 }
 	
 .main-consult-item{
+	width:450px;
 	margin-top: 15px;
 	margin-bottom: 30px;
 }
@@ -370,7 +371,7 @@ body{
 
 
 .main-magagine-item{
-	width: 350px;
+	width: 450px;
 	margin: 30px 0;
 }
 .main-magagine-item-title{
@@ -552,7 +553,7 @@ body{
 	width: 80px;
 	height: auto;
 	padding: 5px 5px;
-	border: 1px solid rgb(76, 165, 165);
+	border: 1px solid #40916c;
 	border-radius: 10px;
 	z-index: 999;
 	background-color: white;
@@ -562,7 +563,7 @@ body{
 	position: absolute;
 	top: 27px; 
 	left: -15px; 
-	border-right: 15px solid rgb(76, 165, 165); 
+	border-right: 15px solid #40916c; 
 	border-top: 10px solid transparent; 
 	border-bottom: 10px solid transparent;
 }
@@ -586,7 +587,7 @@ body{
 	width: 90px;
 	height: auto;
 	padding: 5px 5px;
-	border: 1px solid rgb(76, 165, 165);
+	border: 1px solid #40916c;
 	border-radius: 10px;
 	z-index: 999;
 	background-color: white;
@@ -596,7 +597,7 @@ body{
 	position: absolute;
 	top: 29px; 
 	left: -15px; 
-	border-right: 15px solid rgb(76, 165, 165); 
+	border-right: 15px solid #40916c; 
 	border-top: 10px solid transparent; 
 	border-bottom: 10px solid transparent;
 }
@@ -610,7 +611,7 @@ body{
 	width: 100px;
 	height: auto;
 	padding: 5px 5px;
-	border: 1px solid rgb(76, 165, 165);
+	border: 1px solid #40916c;
 	border-radius: 10px;
 	z-index: 999;
 	background-color: white;
@@ -622,7 +623,7 @@ body{
 	top: -20px; 
 	border-left: 10px solid transparent; 
 	border-right: 10px solid transparent;
-	border-bottom: 20px solid rgb(76, 165, 165);
+	border-bottom: 20px solid #40916c;
 }
 
 /* ================= 푸터 ================= */
@@ -657,8 +658,7 @@ body{
 /* ================= 오른쪽 메뉴 ================= */
 
 #right_nav{
-	position: fixed;
-	right: 5%;
+	text-align: center;
 }
 #right-nav-img{
 	text-decoration: none;
@@ -667,16 +667,14 @@ body{
 #right-nav-img img{
 	border-radius: 20px;
 }
-.right-nav-text{
-	height: 20px;
-	margin: 23px 0;
-	overflow: hidden;	
-}
 .right-nav-q {
-	height: 20px;
 	text-decoration: none;
 	font-weight: 700;
 	color: #8c8c8c;
+	height: 24px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 #detail_timeAndEtc{

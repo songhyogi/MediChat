@@ -15,7 +15,7 @@
 		<div class="d-flex justify-content-center align-items-center">
 			<img id="search_back" src="/images/back.png" width="20" height="20">
 			<input type="text" id="h-search" class="form-control" placeholder="병원 이름, 지역 + 과목, 증상" name="keyword" value="${keyword}">
-			<i id="h-search-icon" class="bi bi-search"></i>
+			<img id="h-search-icon" src="/images/search.png" width="30" height="30">
 		</div>
 		<!-- 검색 모드 시작 -->
 		<div class="d-flex justify-content-start align-items-center m-3">

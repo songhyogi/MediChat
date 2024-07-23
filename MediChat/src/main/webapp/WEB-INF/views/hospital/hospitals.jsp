@@ -136,9 +136,8 @@
     </script>
 	<!-- 더 보기 끝 -->
 </div>
-
-<div style="height:20px;" class="bg-color"></div>
 <!-- 카테고리 끝 -->
+<div style="height:17px;" class="bg-gray-0"></div>
 <!-- 어떻게 아프신가요 시작 -->
 <div class="p-4">
 	<h4 class="text-black-7 fw-6 mb-4" style="font-size: 20px;">어떻게 아프신가요?</h4>
@@ -153,12 +152,15 @@
 	</div>
 </div>
 <!-- 어떻게 아프신가요 끝 -->
-<div class="my-3"></div>
+
+<div class="line"></div>
+<div style="height:14px;" class="bg-gray-0"></div>
+
 <!-- 검색창 + 인기 검색어 시작 -->
 <div class="p-5">
 	<form id="search_form" class="d-flex" method="get" action="/hospitals/search">
 		<input type="text" id="h-search" name="keyword" class="form-control" placeholder="병원 이름, 지역 + 과목, 증상">
-		<i id="h-search-icon" class="bi bi-search"></i>
+		<img id="h-search-icon" src="/images/search.png" width="30" height="30">
 	</form>
 	<p class="text-lightgray fw-7 mt-3">인기 검색어</p>
 	<div class="d-inline">
@@ -169,7 +171,10 @@
 		</c:forEach>
 	</div>
 </div>
-<div class="my-3"></div>
+
+<div class="line"></div>
+<div style="height:20px;" class="bg-gray-0"></div>
+
 <div>
 	<!-- 지도 시작 -->
 	<div id="mapDiv">
@@ -179,7 +184,6 @@
 	<!-- 지도 끝 -->
 </div>
 <!-- 검색창 + 인기 검색어 끝 -->
-
 
 <form id="locationForm" action="/hospitals" method="get">
 	<input type="hidden" id="lat" value="${user_lat}" name="user_lat">

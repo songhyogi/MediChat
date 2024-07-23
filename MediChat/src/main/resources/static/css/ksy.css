@@ -35,7 +35,7 @@
 .subject{
 	margin: 5px;
 	cursor: pointer;
-	width: 110px;
+	width: 140px;
 	height: 70px;
 	padding: 5px;
 }
@@ -45,7 +45,8 @@
 
 /* 더보기 */
 #more{
-	height: 40px;
+	height: 50px;
+	margin-top: 10px;
 	cursor: pointer;
 }
 #more p{
@@ -94,7 +95,7 @@
 	align-content: center;
 }
 .hs-item:hover {
-	background-color: rgb(47, 154, 144);
+	background-color: #52b788;
 	transform: scale(1.05);
 }
 .hs-item:hover p{
@@ -179,8 +180,8 @@
 	width: 40px;
 	margin-right: 10px;
 	border-radius: 50px;
-	border: 2px solid rgb(76, 165, 165);
-	background-color: rgb(153, 204, 204);
+	border: 2px solid #52b788;
+	background-color: #74c69d;
 	align-content: center;
 	text-align: center;
 	cursor: pointer;
@@ -267,7 +268,7 @@
 }
 #reservation_btn,#call_btn{
 	display: flex;
-	background-color: rgb(102, 178, 178);
+	background-color: #40916c;
 	width: 300px;
 	height: 60px;
 	padding: 5px 15px;
@@ -283,5 +284,5 @@
 	margin: 0 25px;
 }
 #reservation_btn:hover,#call_btn:hover{
-	background-color: rgb(76, 165, 165);
+	background-color: #52b788;
 }
