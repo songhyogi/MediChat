@@ -2,37 +2,64 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<div class="container">
-	<div style="text-align:right;">
-	    <span style="display:block; font-weight:bold;">의사회원 로그인</span>
-	</div>
-	<form:form action="login" id="doctor_login" modelAttribute="doctorVO" style="padding-bottom:50px;">
-<!-- 	<input type="hidden" id="lon" name="user_lon" value="" >
-		<input type="hidden" id="lat" name="user_lat" value="" > -->
-		<div class="loginLogo">
-			<img src="/images/loginLogo.png" width="150" height="100" style="margin-top:50px;">
+<style>
+img{
+	width: 100%;
+}
+.login-container {
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 100px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom:15px;
+    position: relative;
+    top:60px;
+}
+</style>
+<div class="login-container">
+	<section class="login">
+		<div class="login_box">
+			<div class="left">
+				<div style="text-align:right;">
+				    <span style="display:block; font-weight:bold;">의사회원 로그인</span>
+				</div>
+				<div class="contact">	
+				<form:form action="login" id="doctor_login" modelAttribute="doctorVO">
+					<!-- 	<input type="hidden" id="lon" name="user_lon" value="" >
+					<input type="hidden" id="lat" name="user_lat" value="" > -->
+					<ul>
+						<li>
+							<form:input path="mem_id" placeholder="아이디" autocomplete="off"/>
+							<form:errors path="mem_id" cssClass="error-color"/>
+						</li>
+						<li>
+							<form:password path="doc_passwd" placeholder="비밀번호"/>
+							<form:errors path="doc_passwd" cssClass="error-color"/>
+						</li>
+					</ul>
+					<div class="flame">
+						<form:errors element="div" cssClass="error-color"/>
+						<form:button style="display: block; margin: 0 auto;" class="submit custom-btn btn-15">로그인</form:button>
+					</div>
+					<div class="button-container">
+						<label for="auto">
+						<input type="checkbox" name="auto" id="auto">자동로그인</label>
+						<input type="button" value="아이디 찾기" style="margin-right:10px; margin-left:80px;" onclick="location.href='memberFindId'">
+						<input type="button" value="비밀번호 찾기" onclick="location.href='sendMemPassword'">
+					</div>
+				</form:form>
+				</div>
+			</div>
+			<div class="right">
+				<div class="right-text">
+					<h2>MediChat</h2>
+		      		<h5>비대면진료</h5>
+				</div>
+			</div>
 		</div>
-		<ul>
-			<li>
-				<form:input path="mem_id" placeholder="아이디" autocomplete="off" style="margin-top:50px;"/>
-				<form:errors path="mem_id" cssClass="error-color"/>
-			</li>
-			<li>
-				<form:password path="doc_passwd" placeholder="비밀번호" style="margin-top:15px;"/>
-				<form:errors path="doc_passwd" cssClass="error-color"/>
-			</li>
-		</ul>
-		<div>
-			<form:errors element="div" cssClass="error-color"/>
-			<form:button class="login_btn fw-7 fs-17">로그인</form:button>
-		</div>
-		<div class="button-container">
-			<label for="auto">
-			<input type="checkbox" name="auto" id="auto">자동로그인</label>
-			<input type="button" value="아이디 찾기" style="margin-right:10px;">
-			<input type="button" value="비밀번호 찾기">
-		</div>
-	</form:form>
+	</section>
 </div>
 <!-- 위도 경도 보내기 -->
 <!-- <script>

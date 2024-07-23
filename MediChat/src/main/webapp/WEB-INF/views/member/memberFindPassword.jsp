@@ -20,11 +20,12 @@
             </li>
         </ul>
         <div>
-            <form:button class="login_btn fw-7 fs-17">이메일 전송</form:button>
+            <form:button class="submit fw-7 fs-17">이메일 전송</form:button>
         </div>
+        <hr size="1" width="100%" noshade="noshade">
         <div class="button-container">
-            <input type="button" value="홈으로" style="margin-right:10px;">
-            <input type="button" value="로그인">
+            <input type="button" value="홈으로" style="margin-right:20px;" onclick="location.href='${pageContext.request.contextPath}/main/main'">
+            <input type="button" value="로그인" onclick="location.href='login'">
         </div>
     </form:form>
 </div>

@@ -4,6 +4,29 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- 회원가입 시작 -->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+<style>
+.btn.green{
+	background-color:rgb(102, 178, 178);
+}
+.rounded {
+	border-radius: 10px;
+}
+.btn {
+	position: relative;
+	border: 0;
+	display: inline-block;
+	text-align: center;
+	color: white;
+}
+#calendarButton {
+    width: 30px;
+    height: 30px;
+    margin:0 auto;
+    border: none;
+    cursor: pointer;
+    text-align:center;
+}
+</style>
 <div class="container">
 	<h2 class="title">회원가입</h2>
 	<hr size="1" width="100%" noshade="noshade">
@@ -22,7 +45,7 @@
 			</li>
 			<li>
 				<form:label path="mem_passwd">비밀번호</form:label>
-				<form:password path="mem_passwd" placeholder="영문,숫자 조합하여 4~12자 입력"/>
+				<form:password path="mem_passwd" placeholder="영문,숫자 사용하여 4~12자 입력"/>
 				<form:errors path="mem_passwd" cssClass="error-color"/>
 			</li>
 			<li>
@@ -31,27 +54,29 @@
 				<form:errors path="mem_name" cssClass="error-color"/>
 			</li>
 			<li>
-				<form:label path="mem_birth">생년월일</form:label>
-				<form:input path="mem_birth" placeholder="년-월-일"/>
+			    <form:label path="mem_birth">생년월일</form:label>
+			    <input type="text" id="mem_birth" placeholder="년-월-일">
+			    <button id="calendarButton" type="button">
+			    	<img src="${pageContext.request.contextPath}/images/calendar.jpg" style="width:30px; height:30px;">
+			    </button>
 			</li>
 			<li>
 				<form:label path="mem_email">이메일</form:label>
-				<form:input path="mem_email" placeholder="test@test.com 형식으로 입력하세요."/>
+				<form:input path="mem_email" placeholder="test@test.com 형식으로 입력"/>
 				<form:errors path="mem_email" cssClass="error-color"/>
 			</li>
 			<li>
 				<form:label path="mem_phone">전화번호</form:label>
-				<form:input path="mem_phone" placeholder="'-' 를 제외하고 입력하세요."/>
+				<form:input path="mem_phone" placeholder=" '-' 를 제외하고 입력"/>
 				<form:errors path="mem_phone" cssClass="error-color"/>
 			</li>
 			<li>
-			   <form:label path="mem_zipcode">주소</form:label>
-			   <form:input path="mem_zipcode"/>
-			   <input type="button" onclick="execDaumPostcode()" value="우편번호" class="default-btn">
-			   <form:errors path="mem_zipcode" cssClass="error-color"/>
-			   <form:label path="mem_address1"></form:label>
-			   <form:input path="mem_address1"/>
-			   <form:errors path="mem_address1" cssClass="error-color"/>
+			    <form:label path="mem_zipcode">주소</form:label>
+			    <form:input path="mem_zipcode"/>
+			    <input type="button" onclick="execDaumPostcode()" value="우편번호" class="btn green rounded" style="margin:0 2px;">
+			    <form:errors path="mem_zipcode" cssClass="error-color"/>
+			    <form:input path="mem_address1"/>
+			    <form:errors path="mem_address1" cssClass="error-color"/>
 			</li>
 			<li>
 				<form:label path="mem_address2">상세주소</form:label>
