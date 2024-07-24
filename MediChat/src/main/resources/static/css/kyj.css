@@ -1,4 +1,12 @@
 @charset "UTF-8";
+.margin-top-5{
+	margin-top:5px;
+}
+
+.margin-left-15{
+	margin-left:15px;
+}
+
 .display{
 	display:flex;
 	padding:0 10px 10px 10px;
@@ -28,7 +36,7 @@
 }
 .nav-title th{
 	height:110px;
-	color: rgb(76, 165, 165);
+	color: #2d6a4f;
 }
 .selected-chat td a{
 	color:white;
@@ -78,7 +86,7 @@
 	width:100px;
 	height:50px;
 	background-color:white;
-	color:rgb(76, 165, 165);
+	color:#2d6a4f;
 	display:flex;
 	justify-content:center;
 	align-items: center;
@@ -111,7 +119,6 @@
 	height:50px;
 	padding:0 10px;
 	border-width:thin;
-	border-color:rgb(68, 207, 195);
 	border-radius:5px;
 }
 .chat-body ul li{
@@ -138,6 +145,34 @@
 }
 .image-form{
 	display:none;
+}
+.btn-chat{
+	background-color: #40916c;
+    color: #fff; /* 버튼 텍스트를 하얀색으로 */
+    border: none; /* 기본 테두리 제거 */
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.btn-chat:hover{
+	background-color: #74c69d;
+    transform: scale(1.02);
+}
+.btn-message{
+	font-size:15px;
+	font-weight:500;
+	width:290px;
+	background-color: #fff;
+    color: #40916c; /* 버튼 텍스트를 어두운 초록으로 */
+    border: none; /* 기본 테두리 제거 */
+    margin-top:20px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.btn-message:hover{
+	background-color: #d8f3dc;
+    transform: scale(1.02);
 }
 /*===========================
 		모달창 구성(이미지 전송)
@@ -225,6 +260,7 @@
 }
 
 #file_table{
+	margin-left:15px;
 	border-collapse:collapse;
 }
 #file_table tr{
@@ -235,7 +271,7 @@
 	text-align:center;
 	border-bottom: 1px solid #ccc;
 }
-.form-list{
+.form-list{ 
 	height:200px;
 	margin:10px 0;
 }
@@ -259,7 +295,16 @@
 	color:rgb(76, 165, 165);
 }
 #select_file{
-	width:298px;
+	width:305px;
+}
+select#file_type{
+	height:38px;
+}
+label[for="file_valid_date"]{
+	margin-left:12px;
+}
+#form_charge{
+	margin-bottom:10px;
 }
 .close-file-form .form-button{
 	display:flex;
@@ -316,3 +361,36 @@
 /*=======================
 		나의 서류함
 =========================*/
+.file-body{
+	width:100%;
+	height:77%;
+	padding:0;
+	margin-bottom:5px;
+	overflow:auto;
+	display:flex;
+	vertical-align:center;
+}
+.file-table{
+	width:550px;
+	margin:auto;
+}
+.file-table th:first-child,
+.file-table td:first-child {
+	border-left: 0;
+}
+.file-table th:last-child,
+.file-table td:last-child {
+	border-right: 0;
+}
+.file-table tr th,
+.file-table tr td{
+	text-align:center;
+	border:1px solid #f2f2f2;
+}
+.list-head th{
+	padding: 10px 0;
+}
+.btn-td{
+	text-align:center;
+	padding: 12px 0;
+}

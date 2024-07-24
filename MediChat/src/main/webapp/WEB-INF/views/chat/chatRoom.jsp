@@ -5,7 +5,6 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/uploadAdapter.js"></script>
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/chat.payment.js"></script>
 <!-- 비대면진료 채팅창 시작 -->
 	<div class="chat-main col-9">
 		<div class="chat-header bg-green-7" id="chat_header">
@@ -27,11 +26,11 @@
 				<c:if test="${user.mem_auth==3}">
 					<input type="hidden" name="msg_sender_type" value="1">
 				</c:if>
-				<button type="button" class="chat-image bg-green-7" id="chat_image" disabled>
+				<button type="button" class="chat-image bg-green-6" id="chat_image" disabled>
 					<img src="${pageContext.request.contextPath}/images/chat_image.png" width="40px" height="40px">
 				</button>
 				<input type="text" name="msg_content" id="msg_content" disabled>
-				<input type="submit" value="전송" id="message_btn" class="btn-green" disabled>
+				<input type="submit" value="전송" id="message_btn" class="btn-chat" disabled>
 			</form>
 		</div>
 	</div>
@@ -45,8 +44,9 @@
 		</div>
 		<div class="form-body">
 		<form action="image_input" id="image_input">
+			<input type="hidden" name="chat_num" id="image_chat_num" value="">
 			<input type="file" name="select_image" id="select_image" accept="image/gif,image/png,image/jpeg">
-			<input type="submit" value="전송" class="btn-green">
+			<input type="submit" value="전송" class="btn-chat">
 		</form>
 		</div>
 	</div>

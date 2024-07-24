@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.spring.chat.service.ChatService;
+import kr.spring.chat.vo.ChatVO;
 import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.hospital.vo.HospitalVO;
 import kr.spring.member.vo.MemberVO;
@@ -31,7 +32,7 @@ public class ReservationAjaxController {
 	@Autowired
 	private ReservationService reservationService;
 	@Autowired
-	private ChatService chatSerivce;
+	private ChatService chatService;
 	
 	@GetMapping("/reservation/reservation")
 	@ResponseBody
@@ -164,6 +165,23 @@ public class ReservationAjaxController {
 		if(user == null) {
 			map.put("result", "logout");
 		}else {
+
+			long res_type = chatService.selectResType(res_num);
+			
+			if(res_type == 0){
+				long mem_num = chatService.selectMem_num(res_num);
+
+				ChatVO chatVO = new ChatVO();
+
+				chatVO.setMem_num(mem_num);
+				chatVO.setDoc_num(user.getMem_num());
+				chatVO.setRes_num(res_num);
+
+				chatService.createChat(chatVO);
+			}
+
+
+			
 			reservationService.updateReservation(res_num,res_status);
 			map.put("result", "success");
 		}

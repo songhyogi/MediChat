@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -209,37 +210,23 @@ public class ChatController {
 	/*=======================
 	 * 	   이미지 폼 전송
 	 ========================*/
-	//계속..수정...
-	@PostMapping("image_input")
+	@PostMapping("/chat/image_input")
 	@ResponseBody
-	public Map<String,Object> insertImage(@RequestParam("select_image") MultipartFile select_image,
-										  HttpSession session,
-										  HttpServletRequest request,
-										  ChatMsgVO chatMsgVO)
-										  throws Exception{
+	public Map<String, Object> insertImage(@RequestParam("chat_num") long chat_num,
+										   @RequestParam("select_image") MultipartFile select_image,
+	                                       HttpSession session,
+	                                       HttpServletRequest request
+	                                       ) throws Exception {
+		
 		Map<String,Object> map = new HashMap<String,Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		Object user = session.getAttribute("user");
-		
-		if(user==null) {
-			map.put("userCheck", "logout");
+		if(user == null) {
+			map.put("userCheck","logout");
 		}else {
-			map.put("userCheck", "login");
+			
+		
 		}
-		
-		String image_name = FileUtil.createFile(request, select_image);
-		byte[] image = FileUtil.getBytes(request.getServletContext().getRealPath(image_name));
-		
-		chatMsgVO.setMsg_content("<img src="+image+"class='upload-image'>");
-		
-		if(user instanceof MemberVO) {
-			chatMsgVO.setMsg_sender_type(0); //일반회원이 0
-			chatService.insertImage(chatMsgVO);
-		}else if(user instanceof DoctorVO) {
-			chatMsgVO.setMsg_sender_type(1); //의사회원이 1
-			chatService.insertImage(chatMsgVO);
-			}
-
 		return map;
 	}
 	
@@ -339,7 +326,7 @@ public class ChatController {
 
 	
 	/*=======================
-	 * 	    진료 파일 목록
+	 * 	    진료 파일 목록1
 	 ========================*/
 	@GetMapping("/chat/myFiles")
 	public String selectFiles(Model model, HttpSession session) {
@@ -363,7 +350,7 @@ public class ChatController {
 	}
 	
 	/*=======================
-	 * 	    진료 파일 목록
+	 * 	    진료 파일 목록2
 	 ========================*/
 	@GetMapping("/chat/fileDetail")
 	@ResponseBody
@@ -389,7 +376,7 @@ public class ChatController {
 	}
 	
 	/*=======================
-	 * 	    진료 종료 전송
+	 * 	  진료 파일 다운로드
 	 ========================*/
 	@GetMapping("/chat/downloadFile")
 	public String download(long file_num, HttpServletRequest request, Model model) {
@@ -450,13 +437,13 @@ public class ChatController {
 		log.debug("<<의사 이름>>:"+doc_name);
 		
 		try {
-			String paymentNotice = "예약번호:" + res_num + "의 진료비 청구가 도착했습니다.";
+			String paymentNotice = "예약번호: " + res_num + "의 진료비 청구가 도착했습니다.";
 			paymentNotice += "<br>환자 성명: "+ mem_name;
 			paymentNotice += "<br>담당 의사: "+ doc_name;
 			paymentNotice += "<br>진료 일자: "+ res_date;
 			paymentNotice += "<br>진료 시각: "+ res_time;
 			paymentNotice += "<br>결제 금액: "+ pay_amount;
-			paymentNotice += "<br><button type='button' class='btn-green' id='chat_payment' ";
+			paymentNotice += "<br><button type='button' class='btn-message' id='chat_payment' ";
 			paymentNotice += "data-chat_num='"+chat_num+"' data-pay_amount='"+pay_amount+"'>";
 			paymentNotice += "결제하기</button>";
 			
@@ -510,12 +497,13 @@ public class ChatController {
 	 * 	   	결제 완료 처리
 	 ========================*/
 	@PostMapping("/chat/paymentConfirmation")
-	public Map<String,String> confirmPayment(@RequestParam("chat_num") long chat_num,
-									         @RequestParam("doc_name") String doc_name,
-									         @RequestParam("pay_amount") int pay_amount,
-									         @RequestParam("mem_num") long mem_num) {
+	@ResponseBody
+	public Map<String,Object> confirmPayment(@RequestParam("chat_num") long chat_num,
+            								@RequestParam("doc_name") String doc_name,
+            								@RequestParam("pay_amount") int pay_amount,
+            								@RequestParam("mem_num") long mem_num) {
 	    
-	    Map<String, String> map = new HashMap<String,String>();
+	    Map<String, Object> map = new HashMap<String,Object>();
 	    
 	    ChatPaymentVO payment = new ChatPaymentVO();
 	    
@@ -524,9 +512,36 @@ public class ChatController {
 	    payment.setPay_amount(pay_amount);
 	    payment.setDoc_name(doc_name);
 	    
+	    ChatVO chat = chatService.selectChat(chat_num);
+	    
+	    long res_num = chat.getRes_num();
+		log.debug("<<예약 번호>>:"+res_num);
+		
 	    try {
+	    	log.debug("<<try문 진입>>");
+	    	String fileNotice = "예약번호: " +res_num+"의 결제가 완료되었습니다.";
+		    fileNotice += "<br>진단 서류가 도착했습니다.";
+		    fileNotice += "<br><button type='button' class='btn-message' id='btn_file' ";
+		    fileNotice += "data-mem_num='"+mem_num+"'>";
+		    fileNotice += "나의 서류함으로</button>";
+		   
+		    ChatMsgVO msg = new ChatMsgVO();
+		    msg.setChat_num(chat_num);
+		    msg.setMsg_sender_type(1); //의사가 보낸 메시지
+		    msg.setMsg_content(fileNotice);
+		    
+		    log.debug("<<안내메시지 설정 중>>");
+		    log.debug("<<결제 완료 후 chat_num>>: "+chat_num);
+		    log.debug("<<결제 완료 후 doc_name>>: "+doc_name);
+		    log.debug("<<결제 완료 후 pay_amount>>: "+pay_amount);
+		    log.debug("<<결제 완료 후 mem_num>>: "+mem_num);
+		    
+		    chatService.insertMsg(msg); //안내메시지 DB에 저장
 	        chatService.insertChatPayment(payment);
+	        chatService.updateChatStatus(chat_num);
 	        map.put("result", "paySuccess");
+	        
+	        log.debug("<<결제 완료 fileNotice>>: "+ fileNotice);
 	    } catch (Exception e) {
 	        map.put("result", "fail");
 	        // 로그에 예외 메시지를 기록

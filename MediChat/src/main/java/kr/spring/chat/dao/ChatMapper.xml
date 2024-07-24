@@ -4,6 +4,23 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.spring.chat.dao.ChatMapper">
+	<insert id="createChat" parameterType="chatVO">
+		INSERT 
+		INTO
+			chat(chat_num,
+				 mem_num,
+				 doc_num,
+				 chat_reg_date,
+				 chat_status,
+				 res_num)
+		VALUES(chat_seq.nextval,
+			   #{mem_num},
+			   #{doc_num},
+			   SYSDATE,
+			   0,
+			   #{res_num})
+	</insert>
+
 	<select id="selectChatListForMem" parameterType="long" resultType="chatVO">
 		SELECT 
 			chat_num,

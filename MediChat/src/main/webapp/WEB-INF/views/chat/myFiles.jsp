@@ -8,7 +8,7 @@
 	<div class="chat-header bg-green-7" id="file_header">
 		<!-- 예약내역을 클릭한 경우에만 예약번호와 진료일시, 의사 표시 -->
 	</div>
-	<div class="chat-body">
+	<div class="file-body">
 	</div>
 </div>
 <!-- 파일 목록 끝 -->

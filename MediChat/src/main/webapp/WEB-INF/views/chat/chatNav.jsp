@@ -7,7 +7,7 @@
 <div class="nav-body bg-gray-1">
 	<table class="nav-item">
 		<tr class="nav-title">
-			<th class="fs-24 text-black-7">나의 비대면 진료</th>
+			<th class="fs-24">나의 비대면 진료</th>
 		</tr>
 		
 		<c:forEach var="item" items="${list}">
