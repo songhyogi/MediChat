@@ -14,11 +14,11 @@
 				<input type="number" name="pay_amount" id="pay_amount" placeholder="진료비 청구 금액을 숫자만 입력해주세요">
 			</form>
 			<div class="fs-16">&#8251;진료비 청구 전송 이후에는 청구 금액 변경이 불가능합니다.</div>
-				<div class="fs-16">&#8251;진료비 청구 전송 이후 종료 확정을 누르면 채팅창 입력이 비활성화됩니다.</div>
+			<div class="fs-16">&#8251;진료비 청구 전송 이후 종료 확정을 누르면 채팅창 입력이 비활성화됩니다.</div>
 		</div>
 		<div class="form-button">
-		<button type="button" class="close-form-btn btn-green fs-20" id="close_previous">이전으로</button>
-		<button type="button" class="close-form-btn btn-green fs-20" id="close_submit">전송</button>
+		<button type="button" class="close-form-btn btn-chat fs-20" id="close_previous">이전으로</button>
+		<button type="button" class="close-form-btn btn-chat  fs-20" id="close_submit">전송</button>
 		</div>
 	</div>
 </div>

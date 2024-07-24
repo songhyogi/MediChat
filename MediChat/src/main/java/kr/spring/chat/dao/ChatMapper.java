@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import kr.spring.chat.vo.ChatFileVO;
 import kr.spring.chat.vo.ChatMsgVO;
@@ -21,8 +22,16 @@ public interface ChatMapper {
 	//해당 회원 채팅방 목록 불러오기 - 의사회원
 	public List<ChatVO> selectChatListForDoc(long mem_num);
 	
-	//예약 내역을 기반으로 채팅방 만들기
-	public void createChat(ReservationVO reservationVO);
+	//예약 번호를 기반으로 멤버 번호 가져오기
+	@Select("SELECT mem_num FROM reservation WHERE res_num=#{res_num}")
+	public long selectMem_num(long res_num);
+	
+	//비대면 예약 구분하기
+	@Select("SELECT res_type FROM reservation WHERE res_num=#{res_num}")
+	public long selectResType(long res_num);
+	
+	//채팅방 만들기
+	public void createChat(ChatVO chatVO);
 	
 	//채팅방 정보 구하기
 	@Select("SELECT * FROM chat WHERE chat_num=#{chat_num}")
@@ -65,5 +74,7 @@ public interface ChatMapper {
 	//나의 서류함 파일 리스트 불러오기
 	public List<ChatFileVO> selectFiles(long mem_num);
 	
+	//채팅방 비활성화
+	@Update("UPDATE chat SET chat_status=1 WHERE chat_num=#{chat_num}")
 	public void updateChatStatus(long chat_num);
 }
