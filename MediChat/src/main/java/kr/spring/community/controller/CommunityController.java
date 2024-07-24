@@ -111,7 +111,8 @@ public class CommunityController {
 		Object user = session.getAttribute("user"); 
 		if(user==null) {
 			model.addAttribute("message","로그인이 필요합니다.");
-			model.addAttribute("url","/member/login"); return "/common/resultAlert";
+			model.addAttribute("url","/member/login"); 
+			return "/common/resultAlert";
 		}
 		
 		if(user instanceof DoctorVO) {
