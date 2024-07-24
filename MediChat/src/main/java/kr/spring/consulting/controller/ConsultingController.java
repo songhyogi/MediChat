@@ -20,6 +20,7 @@ import kr.spring.consulting.vo.Con_ReVO;
 import kr.spring.consulting.vo.ConsultingVO;
 import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.member.vo.MemberVO;
+import kr.spring.util.DurationFromNow;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -83,6 +84,7 @@ public class ConsultingController {
 	@GetMapping("/consultings/detail/{con_num}")
 	public String detail(@PathVariable Long con_num, Model model) {
 		ConsultingVO consulting = consultingService.getConsulting(con_num);
+		consulting.setCon_rDate(DurationFromNow.getTimeDiffLabel(consulting.getCon_rDate()));
 		model.addAttribute("consulting",consulting);
 		
 		Map<String,Object> map = new HashMap<>();
@@ -90,7 +92,7 @@ public class ConsultingController {
 		map.put("pageItemNum", 5);
 		map.put("con_num", con_num);
 		List<Con_ReVO> cReList = consultingService.getListCon_Re(map);
-		System.out.println(cReList);
+
 		model.addAttribute("cReList", cReList);
 		return "cDetail";
 	}
