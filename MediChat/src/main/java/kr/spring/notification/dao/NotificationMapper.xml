@@ -10,11 +10,11 @@
 									mem_num,
 									noti_category,
 									noti_message,
-									<if test="noti_resdate!=null || noti_resdate!=''">
+									<if test="noti_resDate!=null and noti_resDate!=''">
 									noti_resdate,
 									</if>
 									noti_createddate,
-									<if test="noti_link!=null || noti_link!=''">
+									<if test="noti_link!=null and noti_link!=''">
 									noti_link,
 									</if>
 									noti_priority
@@ -23,11 +23,11 @@
 										#{mem_num},
 										#{noti_category},
 										#{noti_message},
-										<if test="noti_resdate!=null || noti_resdate!=''">
-										#{noti_resdate},
+										<if test="noti_resDate!=null and noti_resDate!=''">
+										#{noti_resDate},
 										</if>
 										SYSDATE,
-										<if test="noti_link!=null || noti_link!=''">
+										<if test="noti_link!=null and noti_link!=''">
 										#{noti_link},
 										</if>
 										#{noti_priority}

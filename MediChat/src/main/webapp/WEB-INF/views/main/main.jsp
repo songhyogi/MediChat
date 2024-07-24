@@ -81,23 +81,23 @@
 			</div>
 			<div class="row d-flex justify-content-between">
 				<c:forEach var="healthy" items="${hList}">
-				<div class="main-magagine-item col-5">
-					<div class="row d-flex align-items-center">
-						<div class="col-9">
-							<div class="main-magagine-item-title">
-								${healthy.healthy_title}
+					<div class="main-magagine-item col-5">
+						<div class="row d-flex align-items-center" onclick="location.href='${pageContext.request.contextPath}/health/healthDetail?healthy_num=${healthy.healthy_num}'">
+							<div class="col-9">
+								<div class="main-magagine-item-title">
+									<a href="${pageContext.request.contextPath}/health/healthDetail?healthy_num=${healthy.healthy_num}">${healthy.healthy_title}</a>
+								</div>
+								<div class="main-magagine-item-date">
+									${healthy.h_reg_date}
+								</div>
 							</div>
-							<div class="main-magagine-item-date">
-								${healthy.h_reg_date}
-							</div>
-						</div>
-						<div class="col-3">
-							<div>
-								<c:if test="${!empty healthy.h_filename}"><img  width="80" height="80" src="${pageContext.request.contextPath}/upload/${healthy.h_filename}"/></c:if>
+							<div class="col-3">
+								<div>
+									<c:if test="${!empty healthy.h_filename}"><img  width="80" height="80" style="border-radius:10px;" src="${pageContext.request.contextPath}/upload/${healthy.h_filename}"/></c:if>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 				</c:forEach>
 			</div>
 		</div>

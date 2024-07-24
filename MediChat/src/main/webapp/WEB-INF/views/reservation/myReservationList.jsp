@@ -75,7 +75,7 @@
     <input type="hidden" id="hos_num" value="${reservation.hos_num}">
         <div class="reservation-header">
             <img src="/images/hos_icon.png">
-            <h3>${reservation.hos_name}</h3>
+            <h3><a href="/hospitals/search/detail/${reservation.hos_num}">${reservation.hos_name}</a></h3>
         </div>
         <div class="reservation-body">
             <p><strong><c:choose>

@@ -18,13 +18,12 @@
 		<form:form action="faqWrite" id="register_form" method="post" modelAttribute="faqVO" enctype="multipart/form-data">
 				<ul>
 					<li>
-						<select name="f_category" id="selectinput">
+						<select name="f_category" id="selectinputw">
 							<option value="a" >건강</option>
 							<option value="b">미용</option>
 							<option value="c" >홍보</option>
 						</select>
-					</li>
-					<li>
+		
 						<form:input path="faq_title" placeholder="제목을 입력하세요"/>
 						<form:errors path="faq_title" cssClass="error-color"/>
 					</li>
