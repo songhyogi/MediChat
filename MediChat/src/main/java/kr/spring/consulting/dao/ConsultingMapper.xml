@@ -52,19 +52,20 @@
 		            SELECT * 
 		            FROM MEMBER 
 		            LEFT JOIN MEMBER_DETAIL 
-		            USING (MEM_NUM)
-		            )m on c.MEM_NUM = m.mem_num
+		            USING (mem_num)
+		            )m on c.mem_num = m.mem_num
 		        WHERE #{pageNum} * #{pageItemNum} >= ROWNUM 
 		        <include refid="searchConsultingByType"/>
 		        ORDER BY con_num DESC
 		    ) a
 		WHERE rnum > (#{pageNum} - 1) * #{pageItemNum}
 	</select>
-	
-	
-	<select id="selectConsulting" parameterType="long" resultType="consultingVO">
+
+	<select id="selectConsulting" parameterType="long" resultMap="consulting">
 		SELECT *
 		FROM consulting
+		LEFT JOIN MEMBER USING (MEM_NUM)
+		LEFT JOIN MEMBER_DETAIL USING (MEM_NUM)
 		WHERE con_num = #{con_num}
 	</select>
 	
