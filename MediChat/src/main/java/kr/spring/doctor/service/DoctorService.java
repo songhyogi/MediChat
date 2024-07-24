@@ -36,7 +36,7 @@ public interface DoctorService {
 	//아이디 중복확인
 	public DoctorVO checkId(String mem_id);
 	//아이디 찾기
-	public void findId(DoctorVO doctor);
+	public DoctorVO findId(DoctorVO doctor);
 	//비밀번호 찾기
 	public void findPasswd(DoctorVO doctor);
 	

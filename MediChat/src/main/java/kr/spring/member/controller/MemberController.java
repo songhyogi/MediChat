@@ -1,4 +1,4 @@
-package kr.spring.member.controller;
+ package kr.spring.member.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -245,7 +245,7 @@ public class MemberController {
 		
 		model.addAttribute("mem_id",member.getMem_id());
 		
-		return "member/memberResultId";
+		return "/member/memberResultId";
 	}
 	
 	/*=============================

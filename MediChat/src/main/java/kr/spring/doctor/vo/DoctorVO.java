@@ -41,6 +41,7 @@ public class DoctorVO {
 	@NotBlank
 	private String doc_email;
 	private Date doc_reg;
+	@NotNull(message = "의사면허증은 필수 첨부")
 	private MultipartFile doc_upload;	//파일
 	private String doc_license;		//의사 면허증
 

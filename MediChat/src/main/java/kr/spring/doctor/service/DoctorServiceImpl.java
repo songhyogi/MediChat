@@ -62,15 +62,13 @@ public class DoctorServiceImpl implements DoctorService{
 	}
 
 	@Override
-	public void findId(DoctorVO doctor) {
-		// TODO Auto-generated method stub
-		
+	public DoctorVO findId(DoctorVO doctor) {
+		return doctorMapper.findId(doctor);
 	}
 
 	@Override
 	public void findPasswd(DoctorVO doctor) {
-		// TODO Auto-generated method stub
-		
+		doctorMapper.findPasswd(doctor);
 	}
 
 	@Override

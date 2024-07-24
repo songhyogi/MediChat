@@ -29,12 +29,12 @@
 }
 </style>
 <div class="container">
-	<h2 class="title">카카오회원 추가정보</h2>
+	<h2 class="title">네이버회원 추가정보</h2>
 	<hr size="1" width="100%" noshade="noshade">
 	<span style="font-weight:bold;">정보입력</span>
 	<br>
 	<span class="title2">추가적인 필요한 정보를 입력합니다.</span>
-	<form:form action="registerKakao" id="member_register" modelAttribute="memberVO">
+	<form:form action="registerNaver" id="member_register" modelAttribute="memberVO">
 		<div class="form-main">
 		<ul>
 			<li style="margin-top:20px;">
@@ -43,7 +43,7 @@
 			</li>
 			<li>
 				<form:label path="mem_passwd">비밀번호</form:label>
-				<form:password path="mem_passwd" placeholder="영문,숫자 조합하여 4~12자 입력하세요."/>
+				<form:password path="mem_passwd" placeholder="영문,숫자 조합하여 4~12자 입력"/>
 				<form:errors path="mem_passwd" cssClass="error-color"/>
 			</li>
 			<li>
@@ -64,7 +64,7 @@
 			</li>
 			<li>
 				<form:label path="mem_phone">전화번호</form:label>
-				<form:input path="mem_phone" placeholder="'-' 를 제외하고 입력하세요."/>
+				<form:input path="mem_phone" placeholder="'-' 를 제외하고 입력"/>
 				<form:errors path="mem_phone" cssClass="error-color"/>
 			</li>
 			<li>

@@ -225,10 +225,16 @@ input#mem_zipcode {
     cursor: pointer;
     width: 100px;
 }
-input[type="search"],
-textarea,
-select{
+input[type="search"]{
     width: 350px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+select,textarea{
+    width: 400px;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -414,13 +420,14 @@ select{
     background: rgb(251, 250, 250);
   }
 }
-form#member_findId,form#member_findPasswd{
+form#member_findId,form#member_findPasswd,
+form#doctor_findId,form#doctor_findPasswd{
     width: 400px;
     margin: 0 auto;
     padding: 0;
     border: none;
 }
-#member_findId ul{
+#member_findId ul,#doctor_findId ul{
     padding: 0;
     list-style:none;
 }

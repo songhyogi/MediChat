@@ -51,8 +51,10 @@ public interface DoctorMapper {
 	//아이디 중복확인
 	public DoctorVO checkId(String mem_id);
 	//아이디 찾기
-	public void findId(DoctorVO doctor);
+	@Select("SELECT m.mem_id FROM member m JOIN doctor_detail d ON m.mem_num=d.doc_num WHERE mem_name=#{mem_name} AND doc_email=#{doc_email}")
+	public DoctorVO findId(DoctorVO doctor);
 	//비밀번호 찾기
+	@Update("UPDATE doctor_detail SET doc_passwd=#{doc_passwd} WHERE doc_num=#{mem_num}")
 	public void findPasswd(DoctorVO doctor);
 	
 	//비대면 신청
