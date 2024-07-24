@@ -20,44 +20,24 @@
 	margin-top:5%;
 	background-color:#fff;
 }
-#main_body {
-    width: 800px; 
-    height: 600px;
-    position: relative;
-    margin-top:5%;
-    background-color:#fff;
-    overflow-y: scroll;
-}
-#main_body::-webkit-scrollbar {
-	display: none;
-}
-#background{
-	background-color:rgba(57, 174, 164, 0.21);
-	position:relative;
-	width:auto;
-	height:300px;
-}
 </style>
 </head>
 <body>
-<div id="main">
-	<div id="main_header">
-		<tiles:insertAttribute name="header"/>
-	</div>
-	<div id="background">
-	<div class="custom-container row d-flex justify-content-center pt-4">
-		<div id="main_leftNav" class="col-3">
-			<tiles:insertAttribute name="navDoc"/>
+	<div id="main">
+		<div id="main_header">
+			<tiles:insertAttribute name="header"/>
 		</div>
-		<div id="main_body" class="col-9">
-			<tiles:insertAttribute name="body"/>
+		<div class="custom-container row d-flex justify-content-center pt-4">
+			<div id="main_leftNav" class="col-3">
+				<tiles:insertAttribute name="navDoc"/>
+			</div>
+			<div id="main_body" class="col-9">
+				<tiles:insertAttribute name="body"/>
+			</div>
 		</div>
 		<div id="main_footer">
 			<tiles:insertAttribute name="footer"/>
 		</div>
-
-		</div>
-</div>
-</div>
+	</div>
 </body>
 </html>
