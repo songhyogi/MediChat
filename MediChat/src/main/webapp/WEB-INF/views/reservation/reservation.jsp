@@ -259,10 +259,12 @@ document.addEventListener('DOMContentLoaded', function() {
             <label>이름 | </label>
             <span id="confirm-name">${user.mem_name}</span>
         </div>
+        <c:if test="${user_type != 'doctor'}">
         <div class="detail-item">
             <label>전화번호 | </label>
             <span id="confirm-phone">${user.mem_phone}</span>
         </div>
+        </c:if>
         <div class="detail-item">
             <label>상세 증상 | </label>
             <textarea id="confirm-symptoms"></textarea>
