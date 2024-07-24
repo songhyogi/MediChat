@@ -19,7 +19,7 @@
 				<form:hidden path="video_num"/>
 				<ul>
 					<li>
-						<select name="f_category" id="selectinput">
+						<select name="f_category" id="selectinputw">
 							<option value="a"<c:if test="${faqVO.f_category =='a'}">selected</c:if> >건강</option>
 							<option value="b" <c:if test="${faqVO.f_category =='b'}">selected</c:if>>미용</option>
 							<option value="c" <c:if test="${faqVO.f_category =='c'}">selected</c:if>>홍보</option>

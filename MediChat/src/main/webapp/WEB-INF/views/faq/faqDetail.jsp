@@ -9,7 +9,10 @@
 	<div class="page-one">
 		<h4>홈 > 자주 묻는 질문(FAQ) > ${faq.faq_title}</h4> 		
 		<h2>&nbsp;&nbsp;&nbsp;${faq.faq_title}</h2>
-		${faq.f_reg_date}  조회수 :  ${faq.faq_hit} <br>
+		<br>
+		${faq.f_reg_date} &nbsp; 조회수 :  ${faq.faq_hit} <br>
+		<div class="line"></div>
+		<br><br>
 		
 		
 				${faq.faq_content}

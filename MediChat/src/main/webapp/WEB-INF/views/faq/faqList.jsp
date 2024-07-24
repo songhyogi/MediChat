@@ -52,7 +52,7 @@
 						href="${pageContext.request.contextPath}/faq/faqDetail?faq_num=${f.faq_num}">
 						<ul style="margin: 0 auto; float: left; width: 70%">
 							<li style="font-size: 16pt;">${f.faq_title}</li>
-							<li>${f.f_reg_date} 조회수 : ${f.faq_hit} &nbsp;</li>
+							<li>${f.f_reg_date} &nbsp;조회수 : ${f.faq_hit} &nbsp;</li>
 						</ul>
 					</a>
 					<div style="float: right; margin-right: 30px; padding-top: 30px;">
@@ -69,7 +69,7 @@
 						style="margin: 0 auto; width: 80%; text-align: left;">
 						<br>
 						<br>
-						<br> ${f.faq_title}<br>
+						<br><br><h4>${f.faq_title}</h4>
 						<hr width="100%" size="1">
 						${f.faq_content}
 					</div>

@@ -363,8 +363,7 @@ $(document).on('click','.hrefav',function(event){
 		});
 		
 		$(document).on('submit','#rehreWrite',function(event){
-				let relist = $(this).parent().parent('.items').find('.re-view-btn');
-				let relist2= $(this).closest('.btnspace').find('.re-view-btn');
+				
 				if($(this).find('textarea').val().trim()==''){
 					alert('내용을 입력해주세요.');+
 					$(this).find('textarea').val('').focus();
@@ -384,6 +383,9 @@ $(document).on('click','.hrefav',function(event){
 							alert('로그인 후 이용해주세요');
 			
 						}else if(param.result=='success'){
+							selectReply(pageNum);
+							let relist = $(this).parent().parent('.items').find('.re-view-btn');
+							let relist2= $(this).closest('.btnspace').find('.re-view-btn');
 							$('#rehreWriteform').remove();
 							relist.click();
 							relist2.click();

@@ -61,7 +61,6 @@
 		})
 	</script>
 </c:if>
-
 		<div class="align-center">
 			<c:if test="${empty user}">
 				<form >
@@ -84,7 +83,8 @@
 				</div>
 				</form>
 			</c:if>
-			
+		<div class="line"></div>
+		<br>
 		</div>
 		<input type="hidden"  id="user_num" value="${user.mem_num}">
 			<div id="replyList" data-num="${healthy.healthy_num}">

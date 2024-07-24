@@ -26,5 +26,6 @@ public class HealthyBlogVO {
 	private String id;
 	private int fav_cnt;
 	private int click_num;
+	private int re_cnt;
 }
 
