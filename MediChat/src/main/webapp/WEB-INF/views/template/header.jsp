@@ -19,6 +19,9 @@
 				<a href="/pharmacies/search?user_lat=${user_lat}&user_lon=${user_lon}" class="header-menu-text">약국 찾기</a>
 			</div>
 			<div class="header-menu">
+				<a href="/consultings" class="header-menu-text">의료상담</a>
+			</div>
+			<div class="header-menu">
 				<a href="/health/healthBlog" class="header-menu-text">건강 블로그</a>
 			</div>
 			<div class="header-menu">

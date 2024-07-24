@@ -70,7 +70,8 @@ public class HospitalController {
 		subList.add(new ArrayList<>(Arrays.asList("치과","치아질환, 잇몸질환, 턱 관절 등", "tooth")));
 		subList.add(new ArrayList<>(Arrays.asList("피부과","두드러기, 가려움증, 탈모 등", "skin")));
 		subList.add(new ArrayList<>(Arrays.asList("한의원","한방 진료, 다이어트, 경옥고 등", "treatment")));
-
+		
+		
 		model.addAttribute("subList",subList);
 
 		// 병원 (어떻게 아프신가요) 리스트 생성 후 값 넣기 (미완성)

@@ -37,4 +37,24 @@
 		<put-attribute name="title" value="약국 위치 · 정보 · 후기"/>
 		<put-attribute name="body" value="/WEB-INF/views/pharmacy/detail.jsp"/>
 	</definition>
+	
+	
+	<definition name="consultings" extends="ksy">
+		<put-attribute name="title" value="상담 글 목록"/>
+		<put-attribute name="body" value="/WEB-INF/views/consulting/consultings.jsp"/>
+	</definition>
+	<definition name="cWrite" extends="ksy">
+		<put-attribute name="title" value="상담 글 작성"/>
+		<put-attribute name="body" value="/WEB-INF/views/consulting/write.jsp"/>
+	</definition>
+	<definition name="cDetail" extends="ksy">
+		<put-attribute name="title" value="상담 글 상세"/>
+		<put-attribute name="body" value="/WEB-INF/views/consulting/detail.jsp"/>
+	</definition>
+	<definition name="cUpdate" extends="ksy">
+		<put-attribute name="title" value="상담 글 수정"/>
+		<put-attribute name="body" value="/WEB-INF/views/consulting/update.jsp"/>
+	</definition>
+	
+	
 </tiles-definitions>

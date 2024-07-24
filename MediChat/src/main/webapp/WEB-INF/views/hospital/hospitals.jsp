@@ -201,6 +201,12 @@
 				    document.getElementById('lat').value = lat;
 				    document.getElementById('lon').value = lon;
 				    locationForm.submit();
+				},
+				function(error) {
+					console.error("Error Code = " + error.code + " - " + error.message);
+				},
+				{
+					enableHighAccuracy: true
 				}
 			);
 		}
