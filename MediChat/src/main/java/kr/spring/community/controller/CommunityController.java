@@ -90,24 +90,6 @@ public class CommunityController {
 		
 		log.debug("<<커뮤니티 글 등록>> : " + communityVO);
 		
-		
-		/*
-		 * MemberVO user = (MemberVO)session.getAttribute("user"); if(user==null) {
-		 * model.addAttribute("message","로그인이 필요합니다.");
-		 * model.addAttribute("url","/member/login"); return "/common/resultAlert";
-		 * }else if(user.getMem_auth() < 2) {
-		 * model.addAttribute("message","권한이 없는 계정입니다. 자세한 사항은 관리자에게 문의하시기 바랍니다.");
-		 * model.addAttribute("url","/member/login"); return "/common/resultAlert"; }
-		 * 
-		 * if(result.hasErrors()) { return insertForm(); }
-		 * 
-		 * communityVO.setMem_num(user.getMem_num());
-		 * communityService.insertCommunity(communityVO);
-		 * 
-		 * model.addAttribute("message","글이 성공적으로 등록되었습니다");
-		 * model.addAttribute("url",request.getContextPath()+"/medichatCommunity/list");
-		 */
-		
 		Object user = session.getAttribute("user"); 
 		if(user==null) {
 			model.addAttribute("message","로그인이 필요합니다.");
@@ -194,6 +176,8 @@ public class CommunityController {
 	@ResponseBody
 	public Map<String, Object> getFav(CommunityFavVO fav, HttpSession session){
 		
+		//조건체크 닥터 고려해서 다시 작성 필요
+		
 		log.debug("<<게시판 좋아요>> : " + fav);
 		
 		Map<String, Object> mapJson = new HashMap<String, Object>();
@@ -236,12 +220,19 @@ public class CommunityController {
 		map.put("end", page.getEndRow());
 		
 		//좋아요 작업을 위해 mem_num 호출
-		MemberVO user = (MemberVO)session.getAttribute("user");
+		Object user = session.getAttribute("user");
 		if(user!=null) {
-			map.put("mem_num", user.getMem_num());
+			if(user instanceof DoctorVO) { 
+				DoctorVO doctor = (DoctorVO) user;
+				map.put("mem_num", doctor.getMem_num());
+			}else if(user instanceof MemberVO) {
+				MemberVO member = (MemberVO) user;
+				map.put("mem_num", member.getMem_num());
+			}
 		}else {
 			map.put("mem_num",0);
 		}
+		
 		
 		List<CommunityReplyVO> list = null;
 		if(count > 0) { //댓글이 있는 경우
@@ -254,7 +245,13 @@ public class CommunityController {
 		mapJson.put("count", count);
 		mapJson.put("list", list);
 		if(user!=null) {
-			mapJson.put("user_num", user.getMem_num());
+			if(user instanceof DoctorVO) { 
+				DoctorVO doctor = (DoctorVO) user;
+				map.put("user_num", doctor.getMem_num());
+			}else if(user instanceof MemberVO) {
+				MemberVO member = (MemberVO) user;
+				map.put("user_num", member.getMem_num());
+			}
 		}
 		return mapJson;
 	}
@@ -268,12 +265,19 @@ public class CommunityController {
 		
 		Map<String, String> mapJson = new HashMap<String, String>();
 		
-		MemberVO user = (MemberVO)session.getAttribute("user");
+		Object user = session.getAttribute("user");
 		
 		if(user == null) {
 			mapJson.put("result", "logout");
-		}else {
-			communityReply.setMem_num(user.getMem_num());
+		}else if(user instanceof DoctorVO){
+			DoctorVO doctor = (DoctorVO) user;
+			communityReply.setMem_num(doctor.getMem_num());
+			
+			communityService.insertComment(communityReply);
+			mapJson.put("result", "success");
+		}else if(user instanceof MemberVO){
+			MemberVO member = (MemberVO) user;
+			communityReply.setMem_num(member.getMem_num());
 			
 			communityService.insertComment(communityReply);
 			mapJson.put("result", "success");
@@ -290,15 +294,24 @@ public class CommunityController {
 		
 		Map<String, String> mapJson = new HashMap<String, String>();
 		
-		MemberVO user = (MemberVO)session.getAttribute("user");
+		Object user = session.getAttribute("user");
 		CommunityReplyVO db_reply = communityService.selectComment(commuityReply.getCre_num());
 		
 		if(user == null) {
 			mapJson.put("result", "logout");
-		}else if(user != null && user.getMem_num()==db_reply.getMem_num()){
-			communityService.updateComment(commuityReply);
-			
-			mapJson.put("result", "success");
+		}else if(user instanceof DoctorVO){
+			DoctorVO doctor = (DoctorVO) user;
+			if(user != null && doctor.getMem_num()==db_reply.getMem_num()) {
+				communityService.updateComment(commuityReply);
+				
+				mapJson.put("result", "success");
+			}
+		}else if(user instanceof MemberVO){
+			MemberVO member = (MemberVO) user;
+			if(user != null && member.getMem_num()==db_reply.getMem_num()) {
+				communityService.updateComment(commuityReply);
+				mapJson.put("result", "success");
+			}
 		}else {//로그인 회원번호와 작성자 회원번호 불일치
 			mapJson.put("result", "wrongAccess");
 		}
@@ -314,15 +327,24 @@ public class CommunityController {
 		log.debug("<<댓글 삭제>> : " + cre_num);
 		
 		Map<String, String> mapJson = new HashMap<String, String>();
-		
-		MemberVO user = (MemberVO)session.getAttribute("user");
+
+		Object user = session.getAttribute("user");
 		CommunityReplyVO db_reply = communityService.selectComment(cre_num);
 		
 		if(user == null) {
 			mapJson.put("result", "logout");
-		}else if(user != null && user.getMem_num()==db_reply.getMem_num()){
-			communityService.deleteComment(cre_num);
-			mapJson.put("result", "success");
+		}else if(user instanceof DoctorVO){
+			DoctorVO doctor = (DoctorVO) user;
+			if(user != null && doctor.getMem_num()==db_reply.getMem_num()) {
+				communityService.deleteComment(cre_num);
+				mapJson.put("result", "success");
+			}
+		}else if(user instanceof MemberVO){
+			MemberVO member = (MemberVO) user;
+			if(user != null && member.getMem_num()==db_reply.getMem_num()) {
+				communityService.deleteComment(cre_num);
+				mapJson.put("result", "success");
+			}
 		}else {//로그인 회원번호와 작성자 회원번호 불일치
 			mapJson.put("result", "wrongAccess");
 		}
@@ -343,16 +365,24 @@ public class CommunityController {
 		
 		Map<String, String> mapJson = new HashMap<String, String>();
 		
-		MemberVO user = (MemberVO)session.getAttribute("user");
+		Object user = session.getAttribute("user");
 		
 		if(user == null) {
 			mapJson.put("result", "logout");
-		}else {
-			communityReplyVO.setMem_num(user.getMem_num());
+		}else if(user instanceof DoctorVO){
+			DoctorVO doctor = (DoctorVO) user;
+			communityReplyVO.setMem_num(doctor.getMem_num());
+			
+			communityService.insertReply(communityReplyVO);
+			mapJson.put("result", "success");
+		}else if(user instanceof MemberVO){
+			MemberVO member = (MemberVO) user;
+			communityReplyVO.setMem_num(member.getMem_num());
 			
 			communityService.insertReply(communityReplyVO);
 			mapJson.put("result", "success");
 		}
+
 		return mapJson;
 	}
 }

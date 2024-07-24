@@ -3,6 +3,7 @@ $(function(){
 	let currentPage;
 	let count;
 	
+	
 	/*==============================댓글==============================*/
 	/*-----댓글 목록-----*/
 	function selectList(pageNum){
@@ -21,6 +22,7 @@ $(function(){
 					$('#output').empty();
 				}
 				console.log("<<댓글 목록 데이터>>", param.list);
+				console.log("<<댓글 목록 데이터 - user_num>>", param.user_num);
 
 				//댓글수 읽어 오기
 				//displayReplyCount(param.count);
