@@ -123,7 +123,12 @@
 			  		FROM cboard_re
 			  		JOIN member USING(mem_num)
 			  		WHERE cbo_num=#{cbo_num}
-			  		ORDER BY cre_num DESC)a)
+			  		ORDER BY 
+			  			/*cre_ref ASC, -- 답글이 속한 댓글 기준으로 정렬
+                		cre_level ASC, -- 댓글 및 답글의 레벨 기준으로 정렬
+                		cre_rdate DESC -- 작성일 기준으로 정렬*/
+			  			cre_num DESC /* (기존에 작성한 코드)*/
+			  		)a)
 		<![CDATA[
 		WHERE rnum >= #{start} AND rnum <= #{end}
 		]]>
@@ -143,6 +148,22 @@
 	</insert>
 	
 	<!-- =================답글/대댓글================= -->
-	
+	<!-- 답글 등록 -->
+	<insert id="insertReply" parameterType="communityReplyVO">
+		INSERT INTO cboard_re(
+			cre_num,
+			cbo_num,
+			mem_num,
+			cre_content,
+			cre_level,
+			cre_ref)
+		VALUES(
+			cboard_re_seq.nextval,
+			#{cbo_num},
+			#{mem_num},
+			#{cre_content},
+			#{cre_level},
+			#{cre_ref})
+	</insert>
 </mapper>
 
