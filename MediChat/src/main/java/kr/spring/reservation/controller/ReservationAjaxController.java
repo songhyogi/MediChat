@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.spring.chat.service.ChatService;
 import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.hospital.vo.HospitalVO;
 import kr.spring.member.vo.MemberVO;
@@ -29,21 +30,36 @@ import lombok.extern.slf4j.Slf4j;
 public class ReservationAjaxController {
 	@Autowired
 	private ReservationService reservationService;
+	@Autowired
+	private ChatService chatSerivce;
 	
 	@GetMapping("/reservation/reservation")
 	@ResponseBody
-	public Map<String,String> reservation(Long hos_num,Model model,HttpSession session) {
-		log.debug("<<ajax 컨트롤러 진입>>");
-		Map<String,String> map = new HashMap<>();
-		MemberVO user = (MemberVO) session.getAttribute("user");
-		if(user == null) {
-			map.put("result", "logout");
-		}else {
-			map.put("result","success");
-			model.addAttribute("hos_num", hos_num);
-		}
-		return map;
-	}
+	public Map<String, String> reservation(Long hos_num, Model model, HttpSession session) {
+        log.debug("<<ajax 컨트롤러 진입>>");
+        Map<String, String> map = new HashMap<>();
+        Object user = session.getAttribute("user");
+
+        if (user == null) {
+            map.put("result", "logout");
+        } else if (user instanceof DoctorVO) {
+            map.put("result", "doctor");
+        } else if (user instanceof MemberVO) {
+            MemberVO member = (MemberVO) user;
+            if (member.getMem_auth() == 1) {
+                map.put("result", "suspended");
+            } else if (member.getMem_auth() == 2) {
+                map.put("result", "success");
+                model.addAttribute("hos_num", hos_num);
+            } else {
+                map.put("result", "unauthorized");
+            }
+        } else {
+            map.put("result", "unknown");
+        }
+
+        return map;
+    }
 
 	@GetMapping("/reservation/hosHours")
 	@ResponseBody

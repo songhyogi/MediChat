@@ -32,7 +32,7 @@ public interface ReservationMapper {
     //예약내역 업데이트 (0:예약승인대기, 1:진료예정, 2:진료완료, 3:예약취소)
     @Update("UPDATE reservation SET res_status=#{res_status} WHERE res_num=#{res_num}")
     public void updateReservation(Long res_num,Long res_status);
-    //예약내역 존재 여부
-    @Select("SELECT COUNT(*) FROM reservation WHERE res_date=#{res_date} AND res_time=#{res_time} AND doc_num=#{doc_num}")
-    public Integer getResExist(Map<String,Object> map);
+    //예약내역 존재 여부 (의사가 스케줄 수정할 때 사용)
+    @Select("SELECT res_time FROM reservation WHERE res_date=#{res_date} AND doc_num=#{doc_num}")
+    public List<String> getResExist(Map<String,Object> map);
 }

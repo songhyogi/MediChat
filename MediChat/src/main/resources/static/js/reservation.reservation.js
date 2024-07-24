@@ -117,9 +117,6 @@ function displayHosTimes(date, dayOfWeek, hos_num) {
                     output += '</div></div>';
                     $('#time-buttons').html(output);
 
-					//이미 그 시간에 예약 내역이 있는지 확인
-					
-
                     // 각 시간 버튼에 대해 근무 가능한 의사가 있는지 확인
                     times.forEach(time => {
                         getAvailableDoctors(hos_num, date, time, dayOfWeek, function(doctors) {
