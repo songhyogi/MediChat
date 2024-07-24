@@ -37,7 +37,7 @@ public class ReviewController {
 		return new ReviewVO();
 	}
 	
-	@GetMapping("/mypage/reviewHistory")
+	@GetMapping("/review/reviewMemList")
 	public String myReviewList(@RequestParam(defaultValue="1") int pageNum,@RequestParam(defaultValue="1") String keyfield, HttpServletRequest request,HttpSession session,Model model) {
 		MemberVO user= (MemberVO) session.getAttribute("user");
 		if(user == null) {
@@ -86,7 +86,7 @@ public class ReviewController {
 		}else {
 			vo.setMem_num(user.getMem_num());
 			service.insertReview(vo);
-			return "redirect:/mypage/reviewHistory";
+			return "redirect:/review/reviewMemList";
 		}
 		
 		return "common/resultAlert";
@@ -102,7 +102,7 @@ public class ReviewController {
 			ReviewVO vo = service.selectReviewDetail(rev_num);
 			if(vo.getMem_num() != user.getMem_num()) {
 				model.addAttribute("message","잘못된 접근 입니다.");
-				model.addAttribute("url",request.getContextPath()+"/mypage/reviewHistory");
+				model.addAttribute("url",request.getContextPath()+"/review/reviewMemList");
 			}else {
 				model.addAttribute("hos_name",hospitalService.selectHospital(vo.getHos_num()).getHos_name());
 				model.addAttribute("reviewVO",vo);
@@ -124,11 +124,11 @@ public class ReviewController {
 			ReviewVO db_vo = service.selectReviewDetail(vo.getRev_num());
 			if(db_vo.getMem_num() != user.getMem_num()) {
 				model.addAttribute("message","잘못된 접근 입니다.");
-				model.addAttribute("url",request.getContextPath()+"/mypage/reviewHistory");
+				model.addAttribute("url",request.getContextPath()+"/review/reviewMemList");
 			}else {
 				service.updateReview(vo);
 				model.addAttribute("message","리뷰 수정이 완료되었습니다.");
-				model.addAttribute("url",request.getContextPath()+"/mypage/reviewHistory");
+				model.addAttribute("url",request.getContextPath()+"/review/reviewMemList");
 			}
 			
 		}
@@ -147,11 +147,11 @@ public class ReviewController {
 			ReviewVO vo = service.selectReviewDetail(rev_num);
 			if(vo.getMem_num() != user.getMem_num()) {
 				model.addAttribute("message","잘못된 접근 입니다.");
-				model.addAttribute("url",request.getContextPath()+"/mypage/reviewHistory");
+				model.addAttribute("url",request.getContextPath()+"/review/reviewMemList");
 			}else {
 				service.deleteReview(rev_num);
 				model.addAttribute("message","삭제되었습니다.");
-				model.addAttribute("url",request.getContextPath()+"/mypage/reviewHistory");
+				model.addAttribute("url",request.getContextPath()+"/review/reviewMemList");
 			}
 	
 		}

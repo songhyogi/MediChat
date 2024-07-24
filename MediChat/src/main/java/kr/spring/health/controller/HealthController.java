@@ -22,6 +22,8 @@ import kr.spring.health.vo.HealthyBlogVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.FileUtil;
 import kr.spring.util.PagingUtil;
+import kr.spring.video.service.VideoService;
+import kr.spring.video.vo.VideoVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -31,12 +33,15 @@ public class HealthController {
 	@Autowired
 	private HealthyService service;
 	
+	@Autowired
+	private VideoService videoservice;
+	
 	@ModelAttribute
 	public HealthyBlogVO initCommand() {
 		return new HealthyBlogVO();
 	}
 	@GetMapping("/health/healthBlog")
-	 public String getHeathList(@RequestParam(defaultValue="1") int pageNum,String keyword, String keyfield,Model model) {
+	 public String getHeathList(@RequestParam(defaultValue="1") int pageNum,String keyword, String keyfield,@RequestParam(defaultValue="1") int vpageNum,String vkeyword, String vkeyfield,Model model) {
 		Map<String,Object> map =new HashMap<String,Object>();
 		map.put("keyfield", keyfield);
 		map.put("keyword", keyword);
@@ -53,6 +58,17 @@ public class HealthController {
 		model.addAttribute("list",list);
 		model.addAttribute("count",count);
 		model.addAttribute("page",page.getPage());
+		
+		map.put("vkeyword", vkeyword);
+		map.put("vkeyfield", vkeyfield);
+		int vcount = videoservice.selectCountV(map);
+		PagingUtil vpage = new PagingUtil(keyfield,keyword,vpageNum,vcount,3,vcount,"healthyBlog");
+		map.put("start", vpage.getStartRow());
+		map.put("end", vpage.getEndRow());
+		List<VideoVO> vlist = videoservice.selectVList(map);
+		model.addAttribute("vlist",vlist);
+		model.addAttribute("vcount",vcount);
+		model.addAttribute("vpage",vpage.getPage());
 		
 		return"healthy_Blog";
 	 }
