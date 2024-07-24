@@ -19,13 +19,11 @@
 				<form:hidden path="video_num"/>
 				<ul>
 					<li>
-						<select name="v_category" id="selectinput">
+						<select name="v_category" id="selectinputw">
 							<option value="a"<c:if test="${videoVO.v_category =='a'}">selected</c:if> >건강</option>
 							<option value="b" <c:if test="${videoVO.v_category =='b'}">selected</c:if>>미용</option>
 							<option value="c" <c:if test="${videoVO.v_category =='c'}">selected</c:if>>홍보</option>
 						</select>
-					</li>
-					<li>
 						<form:input path="video_title" placeholder="제목을 입력하세요"/>
 						<form:errors path="video_title" cssClass="error-color"/>
 					</li>
