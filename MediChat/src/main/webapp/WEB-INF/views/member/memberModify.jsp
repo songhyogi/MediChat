@@ -24,6 +24,7 @@
     border: none;
     cursor: pointer;
     text-align:center;
+    background-color:rgb(251, 250, 250);
 }
 </style>
 <!-- 회원정보 수정 시작 -->
@@ -44,9 +45,9 @@
 			</li>
 			<li>
 			    <form:label path="mem_birth">생년월일</form:label>
-			    <input type="text" id="mem_birth" placeholder="년-월-일">
+			    <input type="text" id="mem_birth" value="${memberVO.mem_birth}">
 			    <button id="calendarButton" type="button">
-			    	<img src="${pageContext.request.contextPath}/images/calendar.jpg" style="width:30px; height:30px;">
+			        <img src="${pageContext.request.contextPath}/images/calendar.jpg" style="width:30px; height:30px;">
 			    </button>
 			</li>
 			<li>

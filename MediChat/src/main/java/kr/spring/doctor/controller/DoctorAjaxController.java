@@ -17,11 +17,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.spring.doctor.service.DoctorService;
 import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.hospital.vo.HospitalVO;
+import kr.spring.member.email.Email;
+import kr.spring.member.email.EmailSender;
+import kr.spring.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
 public class DoctorAjaxController {
+	@Autowired
+	private EmailSender emailSender;
+	@Autowired
+	private Email email;
 	@Autowired
 	private DoctorService doctorService;
 	
@@ -103,5 +110,47 @@ public class DoctorAjaxController {
 		
 		return mapJson;
 	}
-
+	/*===================
+	  비밀번호 이메일 전송
+	===================*/
+	@PostMapping("/doctor/getPasswordInfo")
+	@ResponseBody
+	public Map<String, String> sendEmailAction(DoctorVO doctorVO){
+		log.debug("<<비밀번호 찾기>> : " + doctorVO);
+		
+		Map<String, String> mapJson = new HashMap<String, String>();
+		
+		DoctorVO doctor = doctorService.checkId(doctorVO.getMem_id());
+		
+		if(doctor!=null && doctor.getMem_auth()>1 && doctor.getDoc_email().equals(doctorVO.getDoc_email())) {
+			//오류를 대비해서 원래 비밀번호 저장
+			String origin_passwd = doctor.getDoc_passwd();
+			//임시비밀번호로 변경
+			String doc_passwd = StringUtil.randomPassword(10);
+			doctor.setDoc_passwd(doc_passwd);
+			//임시비밀번호 DB에 저장
+			doctorService.findPasswd(doctor);
+			
+			email.setContent("임시 비밀번호는 "+doc_passwd+" 입니다.");
+			email.setReceiver(doctor.getDoc_email());
+			email.setSubject(doctor.getMem_id()+" 님 비밀번호 찾기 메일입니다.");
+			try {
+				emailSender.sendEmail(email);
+				mapJson.put("result", "success");
+				
+			}catch(Exception e) {
+				log.error("<<비밀번호 찾기>> : " + e.toString());
+				//오류 발생시 비밀번호 원상복구
+				doctor.setDoc_passwd(origin_passwd);
+				doctorService.findPasswd(doctor);
+				mapJson.put("result", "failure");
+			}
+		}else if(doctor!=null && doctor.getMem_auth()==1) {
+			//정지회원
+			mapJson.put("result", "noAuthority");
+		}else {
+			mapJson.put("result", "invalidInfo");
+		}
+		return mapJson;
+	}
 }

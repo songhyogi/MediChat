@@ -21,7 +21,7 @@ import lombok.ToString;
 @ToString(exclude = {"mem_photo"})
 public class MemberVO {
    private long mem_num;
-   @Pattern(regexp="^[A-Za-z0-9]{4,12}$")
+   @Pattern(regexp="^[A-Za-z0-9-]{4,}$")
    private String mem_id;
    @NotBlank
    private String mem_name;

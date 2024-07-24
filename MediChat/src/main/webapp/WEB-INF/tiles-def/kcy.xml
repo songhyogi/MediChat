@@ -21,12 +21,16 @@
 		<put-attribute name="title" value="카카오회원가입"/>
 		<put-attribute name="body" value="/WEB-INF/views/member/kakaoRegister.jsp"/>
 	</definition>
+	<definition name="registerNaver" extends="kcy">
+		<put-attribute name="title" value="네이버회원가입"/>
+		<put-attribute name="body" value="/WEB-INF/views/member/naverRegister.jsp"/>
+	</definition>
 	<definition name="memberLogin" extends="kcy">
 		<put-attribute name="title" value="로그인"/>
 		<put-attribute name="body" value="/WEB-INF/views/member/memberLogin.jsp"/>
 	</definition>
 	<definition name="memberModify" extends="kcy">
-		<put-attribute name="title" value="회원정보 수정"/>
+		<put-attribute name="title" value="회원정보수정(의사)"/>
 		<put-attribute name="body" value="/WEB-INF/views/member/memberModify.jsp"/>
 	</definition>
 	<definition name="memberFindId" extends="kcy">
@@ -54,6 +58,14 @@
 	<definition name="doctorLogin" extends="kcy">
 		<put-attribute name="title" value="로그인(의사)"/>
 		<put-attribute name="body" value="/WEB-INF/views/doctor/doctorLogin.jsp"/>
+	</definition>
+	<definition name="doctorFindId" extends="kcy">
+		<put-attribute name="title" value="ID 찾기(의사)"/>
+		<put-attribute name="body" value="/WEB-INF/views/doctor/doctorFindId.jsp"/>
+	</definition>
+	<definition name="doctorFindPassword" extends="kcy">
+		<put-attribute name="title" value="비밀번호 찾기"/>
+		<put-attribute name="body" value="/WEB-INF/views/doctor/doctorFindPassword.jsp"/>
 	</definition>
 	<definition name="doctorModify" extends="kcy">
 		<put-attribute name="title" value="회원정보수정(의사)"/>

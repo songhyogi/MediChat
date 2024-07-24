@@ -78,7 +78,7 @@ public class KakaoController {
 	}
 	@PostMapping("/member/registerKakao")
 	public String kakaoSubmit(@Valid MemberVO memberVO,BindingResult result,Model model,HttpServletRequest request) {
-		log.debug("<<회원가입>> : " + memberVO);
+		log.debug("<<카카오 회원가입>> : " + memberVO);
 		
 		//유효성 체크 결과 오류가 있으면 폼 호출
 		if(result.hasErrors()) {

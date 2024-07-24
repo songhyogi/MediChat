@@ -14,7 +14,7 @@
 		<ul>
 			<li style="margin-top:20px;">
 				<form:label path="mem_id">아이디</form:label>
-				<form:input path="mem_id" placeholder="영문or숫자 사용하여 4~12자 입력" autocomplete="off" style="width:250px;"/>
+				<form:input path="mem_id" placeholder="영문or숫자 사용하여 4~12자 입력" autocomplete="off" style="width:300px;"/>
 				<input type="button" id="confirmId" value="중복확인" class="default-btn" style="margin-left:0px;">
 				<form:errors path="mem_id" cssClass="error-color" style="display:inline;"/><br>
 				<span id="message_id" style=""></span>
@@ -55,6 +55,7 @@
 			</li>
 		</ul>
 		</div>
+		<br>
 		<hr size="1" width="100%" noshade="noshade">
 		<div class="upload-form">
 		<ul>

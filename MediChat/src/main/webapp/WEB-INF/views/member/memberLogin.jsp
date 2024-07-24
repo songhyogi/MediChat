@@ -52,7 +52,7 @@ img{
 						</a>
 						<!--  카카오 로그인 끝 -->
 						<!--  네이버 로그인 시작 -->
-						<a href="@{|${naverURL}|}">
+						<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=RNP28hanNjPbrV17UuZb	&state=STATE_STRING&redirect_uri=http://localhost:8000/member/naverlogin">
 							<img src="${pageContext.request.contextPath}/images/naver_login.png" width="200">		
 						</a>
 						<!--  네이버 로그인 끝 -->
