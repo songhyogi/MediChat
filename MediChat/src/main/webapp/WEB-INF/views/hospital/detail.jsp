@@ -268,9 +268,7 @@
 	</div>
 </div>
 
-<div id="reservation_page" style="display:none;">
-	<jsp:include page="/WEB-INF/views/reservation/reservation.jsp"/>
-</div>   
+<div id="reservation_page" style="display:none;"></div>   
 <script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <script>
 $(function(){
@@ -278,25 +276,30 @@ $(function(){
         $.ajax({
             url: '/reservation/reservation',
             method: 'get',
-            data: { hos_num: '${hospital.hos_num}'},
+            data: {hos_num: '${hospital.hos_num}'},
             dataType: 'json',
             success: function(param) {
-            	if(param.result=='success'){
-            		$('#reservation_page').show();
-            		initializeCalendar('${hospital.hos_num}');
-            	}else if(param.result=='logout'){
-            		alert('로그인 후 이용해주세요')
-            		location.href="/member/login";
-            	}else{
-            		alert('예약 신청 페이지 오류 발생');
-            	}
+                if(param.result == 'success'){
+                    // 예약 페이지를 동적으로 로드
+                	$('#reservation_page').html();
+                    initializeCalendar(hos_num);
+                } else if(param.result == 'logout'){
+                    alert('로그인 후 이용해주세요');
+                    location.href = "${pageContext.request.contextPath}/member/login";
+                } else if(param.result == 'doctor') {
+                    alert('의사회원은 이용할 수 없습니다.');
+                } else if(param.result == 'suspended') {
+                    alert('정지회원입니다. 일반회원의 경우에만 이용할 수 있습니다.');
+                } else if(param.result == 'unauthorized') {
+                    alert('해당 서비스는 이용할 수 없습니다.');
+                } else {
+                    alert('예약 신청 페이지 오류 발생');
+                }
             },
             error: function() {
                 alert('네트워크 오류 발생');
             }
         });
     });
-    
 });
-
 </script>
