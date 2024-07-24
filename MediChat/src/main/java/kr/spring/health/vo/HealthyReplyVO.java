@@ -22,7 +22,7 @@ public class HealthyReplyVO {
 	private long click_num;
     private String re_id;
 	//대댓글 갯수
-	private int rerelpy_cnt;
+	private int rereply_cnt;
     
 	public void setHre_reg_date(String  hre_reg_date) {
 		this.hre_reg_date = DurationFromNow.getTimeDiffLabel(hre_reg_date);

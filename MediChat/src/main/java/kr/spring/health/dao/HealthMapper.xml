@@ -109,13 +109,15 @@
 	 		hre_level,
 	 		mem_id id,
 	 		refav_cnt,
-	 		click_num
+	 		click_num,
+	 		rereply_cnt
 	 	FROM(SELECT rownum anum,
 	 							 a.* 
 	 				FROM (SELECT * 
 	 							 FROM healthy_re   JOIN member USING (mem_num)
 	 							 				  LEFT OUTER JOIN (SELECT mem_num click_num,hre_num FROM healthy_re_fav WHERE mem_num=#{user_num}) USING(hre_num)
-	 							 				  LEFT OUTER JOIN (SELECT COUNT(hre_num) refav_cnt,hre_num FROM healthy_re_fav GROUP BY hre_num ) USING(hre_num) 
+	 							 				  LEFT OUTER JOIN (SELECT COUNT(hre_num) refav_cnt,hre_num FROM healthy_re_fav GROUP BY hre_num ) USING(hre_num)
+	 							 				  LEFT OUTER JOIN (SELECT COUNT(*) rereply_cnt,  hre_renum hm  FROM healthy_re Group by hre_renum) ON hm=hre_num
 	 							 WHERE healthy_num=#{healthy_num}  AND hre_renum=0 AND hre_level=0 
 	 							 ORDER BY hre_num DESC
 	 				) a )

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.spring.health.service.HealthyService;
+import kr.spring.health.vo.HealthyBlogVO;
 import kr.spring.health.vo.HealthyFavVO;
 import kr.spring.health.vo.HealthyReFavVO;
 import kr.spring.health.vo.HealthyReplyVO;
@@ -27,8 +28,10 @@ import lombok.extern.slf4j.Slf4j;
 public class HealthAjaxController {
 	@Autowired 
 	private HealthyService service ;
+	
 	@Autowired
 	private NotificationService notificationService;
+	
 	@PostMapping("/health/selectHReply")
 	@ResponseBody
 	public Map<String,Object> selectHreList(long healthy_num,@RequestParam(defaultValue="1") int pageNum,HttpSession session){
@@ -92,6 +95,15 @@ public class HealthAjaxController {
 		if(user == null) {
 			map.put("result", "logout");
 		}else {
+			NotificationVO notice = new NotificationVO ();
+			map.put("healthy_num", vo.getHealthy_num());
+			map.put("user_num", user.getMem_num());
+			HealthyBlogVO health = service.getHealthy(map);
+			notice.setMem_num(health.getMem_num());
+			notice.setNoti_category(2L);
+			notice.setNoti_message(health.getHealthy_title()+" 게시글에 댓글이 달렸습니다.");
+			notice.setNoti_link("/health/healthDetail?healthy_num="+health.getHealthy_num());
+			notificationService.insertNotification(notice);
 			vo.setMem_num(user.getMem_num());
 			service.insertHre(vo);
 			map.put("result", "success");
@@ -167,6 +179,14 @@ public class HealthAjaxController {
 		if(user == null) {
 			map.put("result", "logout");
 		}else {
+			NotificationVO notice = new NotificationVO ();
+			
+			HealthyReplyVO health = service.selectHre(vo.getHre_renum());
+			notice.setMem_num(health.getMem_num());
+			notice.setNoti_category(2L);
+			notice.setNoti_message(health.getHre_content()+" 댓글에 답글이 달렸습니다.");
+			notice.setNoti_link("/health/healthDetail?healthy_num="+health.getHealthy_num());
+			notificationService.insertNotification(notice);
 			vo.setMem_num(user.getMem_num());
 			
 			service.insertHre(vo);

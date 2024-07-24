@@ -156,8 +156,8 @@ function selectReply(currentNum){
 					}
 					if(param.user_num != 0)
 						output+=' <input type="button"  class="re-wirte-btn default-btn" data-id="'+item.id+'" data-renum="'+item.hre_num+'" data-healnum="'+item.healthy_num+'" data-level="1"  value="답글 쓰기">';
-					if(item.rere_cnt !=0){
-						output+=' <input type="button"  class="re-view-btn default-btn"data-renum="'+item.hre_num+'"  value="답글 보기">';
+					if(item.rereply_cnt !=0){
+						output+=' <input type="button"  class="re-view-btn default-btn"data-renum="'+item.hre_num+'"  value="'+item.rereply_cnt +'개의 답글 보기">';
 						output+=' <input type="button"  class="re-cancle-btn default-btn hide" data-renum="'+item.hre_num+'"  value="답글 닫기">';
 					}
 					output +='</div>';
