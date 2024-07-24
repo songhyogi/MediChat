@@ -121,9 +121,9 @@ ul {
 }
 .side-bar{
 	margin-top:-20%;
-	height:580px;
+	height:550px;
 	text-align:center;
-	background-color:rgba(230, 244, 244, 0.5);
+	border-right: 3px double #b7e4c7;
 }
 .camera{
 	width:45px;
@@ -165,15 +165,19 @@ input[type="button"]{
 }
 .default-btn{
 	color:#fff;
-		border-radius:25px 25px 25px 25px;
 		border:none;
-		background-color:rgba(102, 178, 178, 0.3);
+		background-color:#66b2b2;
 		padding: 5px 20px;
 		cursor: pointer;
 		margin-top:5px;
+		border-radius:5px 5px 5px 5px;
 }
 /* 회원정보 */
 .memberInfo{
+	margin-top:50px;
+	font-size:20px;
+}
+.docInfo{
 	margin-top:50px;
 	font-size:20px;
 }
@@ -230,4 +234,192 @@ input[type="button"]{
 }
 .footer{
 	background-color: rgba(57, 174, 164, 0.21);
+}
+h2.title{
+	padding-top:20px;
+	font-weight:bold;
+}
+span{
+	font-size: 18px;
+	margin-bottom:0;
+}
+span.title2{
+	font-size: 12px;
+	color:#bdbcb9;
+}
+.doctor-register-body {
+    height: 1000px; /* 원하는 높이로 설정 */
+}
+ul{
+    padding:0;
+    margin:0;
+	list-style:none;
+}
+li{
+    margin-bottom:15px;
+}
+#member_register label,#doctor_register label,
+#member_modify label,#doctor_modify label{
+    display:inline-block;
+    width:120px;
+    font-weight:bold;
+    margin-right:10px;
+    margin-left:70px;
+    text-align:right;
+}
+#member_changePasswd label,#member_delete label,
+#doctor_changePasswd label,#doctor_delete label{
+	display:inline-block;
+    width:158px;
+    font-weight:bold;
+    margin-right:10px;
+    margin-left:70px;
+    text-align:right;
+}
+input[type="text"],
+input[type="password"],
+input[type="email"]{
+    width:400px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+#member_register .default-btn,#doctor_register .default-btn,
+#member_modify .default-btn,#doctor_modify .default-btn{
+	background-color: rgb(102, 178, 178);
+	font-weight: 100 !important;
+	font-size: 16px;
+	font-weight:bold;
+    color: #fff; /* 버튼 텍스트를 하얀색으로 */
+    border: none; /* 기본 테두리 제거 */
+    padding: 6px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 95px;
+}
+#member_changePasswd .default-btn,#member_delete .default-btn,
+#doctor_changePasswd .default-btn,#doctor_delete .default-btn{
+	background-color: rgb(102, 178, 178);
+	font-weight: 100 !important;
+	font-size: 16px;
+	font-weight:bold;
+    color: #fff; /* 버튼 텍스트를 하얀색으로 */
+    border: none; /* 기본 테두리 제거 */
+    padding: 6px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 300px;
+}
+.default-btn:hover{
+    background-color:gray;
+}
+.error-color{
+	font-size: 12px;
+    color: red;
+}
+#message_id {
+    display: block;
+    width: 200px;
+    margin-top:5px;
+    margin-left:205px;	
+    font-size: 12px;
+}
+input[id="mem_zipcode"] {
+    width:100px;
+}
+input[id="mem_address1"]{
+	width:235px;
+	margin-top:10px;
+}
+input#mem_zipcode {
+    width:75px;
+}
+.ui-datepicker {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 1000; /* 다른 요소 위에 표시되도록 설정 */
+}
+#datepickerContainer {
+    position: relative;
+    display: inline-block;
+    width: 236px;
+}
+#mem_birth {
+    width: 360px;
+    padding-right: 30px;
+}
+.ui-datepicker-header {
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ccc;
+}
+.ui-datepicker-title {
+    color: #333;
+}
+.ui-datepicker-calendar {
+    color: #333;
+}
+.ui-datepicker-current {
+    background-color: #007bff;
+    color: #fff;
+}
+#captcha_div{
+	margin-top:10px;
+	margin-left:50px;
+}
+#reload_btn{
+	background-color:#9c9c9c;
+	font-weight: 100 !important;
+	font-size: 16px;
+	font-weight:bold;
+    color: #fff;
+    border: none;
+    padding: 6px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100px;
+}
+input[type="search"],
+textarea,
+select{
+    width: 350px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+#search_button {
+    padding: 7px 12px;
+    background-color:rgb(102, 178, 178);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+#search_button:hover {
+    background-color:gray;
+}
+.upload-form {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    padding: 10px;
+}
+.upload-form input[type="file"] {
+    width:350px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+.upload-form input[type="file"]::-webkit-file-upload-button {
+    padding: 8px 12px;
+    background-color:rgb(102, 178, 178);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }

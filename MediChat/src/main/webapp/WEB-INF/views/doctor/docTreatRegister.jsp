@@ -19,6 +19,21 @@
 label li {
 	postion: fixed;
 }
+#mem_name{
+	width:200px;
+}
+#doc_email{
+	width:200px;
+}
+#doc_stime{
+	width:100px;
+}
+#doc_etime{
+	width:100px;
+}
+#now_passwd{
+	width:200px;
+}
 </style>
 <div class="container">
 	<h2>비대면 진료 신청</h2>
@@ -91,9 +106,16 @@ label li {
 <!-- 비대면 진료 신청 끝 -->
 <script>
 function validateForm() {
-    var checkboxes = document.querySelectorAll('input[type="checkbox"][name="doc_off"]:checked');
-    if (checkboxes.length === 0) {
-        alert('휴무일을 최소 하루 이상 선택해주세요.');
+    var checkboxes = document.getElementsByName("doc_off");
+    var checked = false;
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            checked = true;
+            break;
+        }
+    }
+    if (!checked) {
+        alert("휴무일을 선택해주세요.");
         return false;
     }
     return true;

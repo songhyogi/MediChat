@@ -17,17 +17,17 @@
 		<put-attribute name="title" value="My페이지" />
 		<put-attribute name="body" value="/WEB-INF/views/member/memberView.jsp" />
 	</definition>
-	<definition name="memberInfo" extends="ychmember">
-		<put-attribute name="title" value="회원정보" />
-		<put-attribute name="body" value="/WEB-INF/views/mypage/memberInfo.jsp" />
+	<definition name="memberModify" extends="ychmember">
+		<put-attribute name="title" value="회원정보 수정"/>
+		<put-attribute name="body" value="/WEB-INF/views/member/memberModify.jsp"/>
 	</definition>
 	<definition name="medicationHistory" extends="ychmember">
 		<put-attribute name="title" value="약 복용 내역" />
 		<put-attribute name="body" value="/WEB-INF/views/mypage/medicationHistory.jsp" />
 	</definition>
-	<definition name="reviewMyList" extends="ychmember">
+	<definition name="myReviewList" extends="ychmember">
 		<put-attribute name="title" value="후기내역" />
-		<put-attribute name="body" value="/WEB-INF/views/review/reviewMyList.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/mypage/reviewHistory.jsp" />
 	</definition>
 	<definition name="myReservationList" extends="ychmember">
       <put-attribute name="title" value="나의 예약 내역"/>
