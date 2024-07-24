@@ -21,6 +21,7 @@ import kr.spring.community.service.CommunityService;
 import kr.spring.community.vo.CommunityFavVO;
 import kr.spring.community.vo.CommunityReplyVO;
 import kr.spring.community.vo.CommunityVO;
+import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.PagingUtil;
 import kr.spring.util.StringUtil;
@@ -90,23 +91,38 @@ public class CommunityController {
 		log.debug("<<커뮤니티 글 등록>> : " + communityVO);
 		
 		
-		MemberVO user = (MemberVO)session.getAttribute("user");
+		/*
+		 * MemberVO user = (MemberVO)session.getAttribute("user"); if(user==null) {
+		 * model.addAttribute("message","로그인이 필요합니다.");
+		 * model.addAttribute("url","/member/login"); return "/common/resultAlert";
+		 * }else if(user.getMem_auth() < 2) {
+		 * model.addAttribute("message","권한이 없는 계정입니다. 자세한 사항은 관리자에게 문의하시기 바랍니다.");
+		 * model.addAttribute("url","/member/login"); return "/common/resultAlert"; }
+		 * 
+		 * if(result.hasErrors()) { return insertForm(); }
+		 * 
+		 * communityVO.setMem_num(user.getMem_num());
+		 * communityService.insertCommunity(communityVO);
+		 * 
+		 * model.addAttribute("message","글이 성공적으로 등록되었습니다");
+		 * model.addAttribute("url",request.getContextPath()+"/medichatCommunity/list");
+		 */
+		
+		Object user = session.getAttribute("user"); 
 		if(user==null) {
 			model.addAttribute("message","로그인이 필요합니다.");
-			model.addAttribute("url","/member/login");
-			return "/common/resultAlert";
-		}else if(user.getMem_auth() < 2) {
-			model.addAttribute("message","권한이 없는 계정입니다. 자세한 사항은 관리자에게 문의하시기 바랍니다.");
-			model.addAttribute("url","/member/login");
-			return "/common/resultAlert";
+			model.addAttribute("url","/member/login"); return "/common/resultAlert";
 		}
 		
-		if(result.hasErrors()) {
-			return insertForm();
+		if(user instanceof DoctorVO) {
+			DoctorVO doctor = (DoctorVO) user;
+			communityVO.setMem_num(doctor.getMem_num());
+			communityService.insertCommunity(communityVO);
+		}else if(user instanceof MemberVO) {
+			MemberVO member = (MemberVO) user;
+			communityVO.setMem_num(member.getMem_num());
+			communityService.insertCommunity(communityVO);
 		}
-		
-		communityVO.setMem_num(user.getMem_num());
-		communityService.insertCommunity(communityVO);
 		
 		model.addAttribute("message","글이 성공적으로 등록되었습니다");
 		model.addAttribute("url",request.getContextPath()+"/medichatCommunity/list");
@@ -264,6 +280,80 @@ public class CommunityController {
 		return mapJson;
 	}
 	
+	//댓글 수정
+	@PostMapping("/medichatCommunity/updateComment")
+	@ResponseBody
+	public Map<String, String> updateComment(CommunityReplyVO commuityReply, HttpSession session){
+		
+		log.debug("<<댓글 수정>> : " + commuityReply);
+		
+		Map<String, String> mapJson = new HashMap<String, String>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		CommunityReplyVO db_reply = communityService.selectComment(commuityReply.getCre_num());
+		
+		if(user == null) {
+			mapJson.put("result", "logout");
+		}else if(user != null && user.getMem_num()==db_reply.getMem_num()){
+			communityService.updateComment(commuityReply);
+			
+			mapJson.put("result", "success");
+		}else {//로그인 회원번호와 작성자 회원번호 불일치
+			mapJson.put("result", "wrongAccess");
+		}
+		
+		return mapJson;
+	}
+	
+	//댓글 삭제
+	@PostMapping("/medichatCommunity/deleteComment")
+	@ResponseBody
+	public Map<String, String> deleteComment(Long cre_num, HttpSession session){
+		
+		log.debug("<<댓글 삭제>> : " + cre_num);
+		
+		Map<String, String> mapJson = new HashMap<String, String>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		CommunityReplyVO db_reply = communityService.selectComment(cre_num);
+		
+		if(user == null) {
+			mapJson.put("result", "logout");
+		}else if(user != null && user.getMem_num()==db_reply.getMem_num()){
+			communityService.deleteComment(cre_num);
+			mapJson.put("result", "success");
+		}else {//로그인 회원번호와 작성자 회원번호 불일치
+			mapJson.put("result", "wrongAccess");
+		}
+		
+		return mapJson;
+	}
+	
+	
+	/*==============================답글==============================*/
+	//답글 목록
+	
+	//답글 등록
+	@PostMapping("/medichatCommunity/writeReply")
+	@ResponseBody
+	public Map<String, String> insertReply(CommunityReplyVO communityReplyVO, HttpSession session){
+		
+		log.debug("<<답글 등록>> : " + communityReplyVO);
+		
+		Map<String, String> mapJson = new HashMap<String, String>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		if(user == null) {
+			mapJson.put("result", "logout");
+		}else {
+			communityReplyVO.setMem_num(user.getMem_num());
+			
+			communityService.insertReply(communityReplyVO);
+			mapJson.put("result", "success");
+		}
+		return mapJson;
+	}
 }
 
 

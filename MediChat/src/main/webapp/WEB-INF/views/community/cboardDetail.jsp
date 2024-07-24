@@ -25,28 +25,47 @@
 			</li>
 			<li>${cboard.mem_id}</li>
 			<li>${cboard.cbo_rdate}</li>
-			<li>${cboard.cbo_hit}</li>
 		</ul>
+		<c:if test="${!empty user && user.mem_num == cboard.mem_num}" >
+			<div class="dropdown">	
+			<img src="${pageContext.request.contextPath}/images/dots.png" width="20" id="dropdownToggle">
+			<ul class="dropdown-menu" id="dropdownMenu">
+				<li><a class="dropdown-btn" href="update?cbo_num=${cboard.cbo_num}">수정</a></li>
+				<li><hr></li>
+				<li><a class="dropdown-btn" href="#" id="delete_btn">삭제</a>
+					<script>
+						const dropdownToggle = document.getElementById('dropdownToggle');
+	                    const dropdownMenu = document.getElementById('dropdownMenu');
+	
+	                    dropdownToggle.onclick = function() {
+	                        dropdownMenu.classList.toggle('show');
+	                    };
+	
+	                    window.onclick = function(event) {
+	                        if (!event.target.matches('#dropdownToggle')) {
+	                            if (dropdownMenu.classList.contains('show')) {
+	                                dropdownMenu.classList.remove('show');
+	                            }
+	                        }
+	                    };
+                    
+						const delete_btn = document.getElementById('delete_btn');
+						delete_btn.onclick=function(){
+							const choice = confirm('삭제하시겠습니까?');
+							if(choice){
+								location.replace('delete?cbo_num=${cboard.cbo_num}');
+							}
+						};
+					</script>		
+				</li>
+			</ul>
+			</div>
+		</c:if>
 		<div>
 			${cboard.cbo_content}
 		</div>
 		<!-- 좋아요 -->
 		<!-- 댓글수 -->
-		<div>
-			<c:if test="${!empty user && user.mem_num == cboard.mem_num}">
-				<input type="button" value="수정" onclick="location.href='update?cbo_num=${cboard.cbo_num}'">
-				<input type="button" value="삭제" id="delete_btn">
-			<script>
-				const delete_btn = document.getElementById('delete_btn');
-				delete_btn.onclick=function(){
-					const choice = confirm('삭제하시겠습니까?');
-					if(choice){
-						location.replace('delete?cbo_num=${cboard.cbo_num}');
-					}
-				};
-			</script>
-			</c:if>
-		</div>
 		<hr>
 	</div>
 	<!-- 댓글 -->
@@ -54,7 +73,7 @@
 		<span>댓글쓰기</span>
 		<form id="comment_form">
 			<input type="hidden" name="cbo_num" value="${cboard.cbo_num}" id="cbo_num">
-			<textarea rows="3" cols="50" name="cre_content" id="cre_content"
+			<textarea rows="7" cols="110" name="cre_content" id="cre_content"
 				<c:if test="${empty user}">disabled="disabled"</c:if>
 				><c:if test="${empty user}">댓글을 작성하려면 로그인 해주세요.</c:if></textarea>
 			<c:if test="${!empty user}">

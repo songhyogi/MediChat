@@ -94,8 +94,7 @@ public class CommunityServiceImpl implements CommunityService{
 
 	@Override
 	public CommunityReplyVO selectComment(Long cre_num) {
-		// TODO Auto-generated method stub
-		return null;
+		return communityMapper.selectComment(cre_num);
 	}
 
 	@Override
@@ -105,14 +104,12 @@ public class CommunityServiceImpl implements CommunityService{
 
 	@Override
 	public void updateComment(CommunityReplyVO communityReply) {
-		// TODO Auto-generated method stub
-		
+		communityMapper.updateComment(communityReply);
 	}
 
 	@Override
 	public void deleteComment(Long cre_num) {
-		// TODO Auto-generated method stub
-		
+		communityMapper.deleteComment(cre_num);
 	}
 	
 	/*-----------------------------게시판글 대댓글-----------------------------*/
@@ -124,8 +121,7 @@ public class CommunityServiceImpl implements CommunityService{
 
 	@Override
 	public void insertReply(CommunityReplyVO communityReply) {
-		// TODO Auto-generated method stub
-		
+		communityMapper.insertReply(communityReply);
 	}
 
 	@Override

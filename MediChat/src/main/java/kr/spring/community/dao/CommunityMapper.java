@@ -55,9 +55,12 @@ public interface CommunityMapper {
 	public Integer selectRowCountCommentAndReply(Map<String, Object> map); //댓글 및 답글 총 개수
 	
 	//댓글
-	public CommunityReplyVO selectComment(Long cre_num); //댓글개수
+	@Select("SELECT * FROM cboard_re WHERE cre_num=#{cre_num}")
+	public CommunityReplyVO selectComment(Long cre_num); //작성자를 구하기 위함
 	public void insertComment(CommunityReplyVO communityReply);
+	@Update("UPDATE cboard_re SET cre_content=#{cre_content},cre_mdate=SYSDATE WHERE cre_num=#{cre_num}")
 	public void updateComment(CommunityReplyVO communityReply);
+	@Delete("DELETE cboard_re WHERE cre_num=#{cre_num}")
 	public void deleteComment(Long cre_num);
 	
 	//대댓글
