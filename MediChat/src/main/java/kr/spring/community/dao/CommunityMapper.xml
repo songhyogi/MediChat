@@ -7,6 +7,10 @@
 	<!-- 목록 -->
 	<sql id="typeSearch">
 		<where>
+			<!-- 누적신고수 10이상이 되면 보여지지 않게 처리 -->
+			<![CDATA[
+				cbo_report < 10
+			]]>
 			<!-- 카테고리 -->
 			<if test="cbo_type != null and cbo_type != ''">
 				cbo_type=#{cbo_type}
@@ -111,7 +115,7 @@
 	</update>
 	
 	<!-- =================댓글================= -->
-	<!-- 댓글 목록 -->
+	<!-- 댓글/답글 전체 목록 -->
 	<select id="selectListCommentAndReply" parameterType="map" resultType="communityReplyVO">
 		SELECT
 			*
@@ -133,6 +137,41 @@
 		WHERE rnum >= #{start} AND rnum <= #{end}
 		]]>
 	</select>
+	
+	<!-- 댓글 목록 -->
+	<select id="selectListComment" parameterType="map" resultType="communityReplyVO">
+		SELECT 
+			cre_num, 
+			cbo_num, 
+			mem_num,
+			mem_id, 
+			cre_content, 
+			cre_rdate, 
+			cre_mdate, 
+			cre_report, 
+			reply_cnt
+		FROM(SELECT rownum rnum, 
+						a.*
+			FROM (SELECT 
+						* 
+				  FROM cboard_re JOIN member USING(mem_num)
+								 LEFT OUTER JOIN(SELECT cre_ref ref, COUNT(*) reply_cnt 
+								 				FROM cboard_re 
+								 				<![CDATA[
+								 				WHERE cre_level > 0 AND cre_report < 10
+								 				]]>
+								 				GROUP BY cre_ref) 
+								 				ON ref=cre_num
+								 <![CDATA[
+								 WHERE cbo_num=#{cbo_num} AND cre_level=0 AND cre_report < 10
+								 ]]>
+				 				 ORDER BY cre_num DESC
+				   ) a)
+		<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= #{end}
+		]]>
+	</select>
+	
 	<!-- 댓글 등록 -->
 	<insert id="insertComment">
 		INSERT INTO cboard_re(
@@ -148,6 +187,8 @@
 	</insert>
 	
 	<!-- =================답글/대댓글================= -->
+	<!-- 답글 목록 -->
+	<select id=""></select>
 	<!-- 답글 등록 -->
 	<insert id="insertReply" parameterType="communityReplyVO">
 		INSERT INTO cboard_re(

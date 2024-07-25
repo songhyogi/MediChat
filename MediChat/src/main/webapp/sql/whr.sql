@@ -60,14 +60,14 @@ create table cboard_fav(
 --커뮤니티 댓글(신고글을 위해서 cboard와 fk 미진행)
 create table cboard_re(
 	cre_num number not null,
-	cbo_num number not null,
+	cbo_num number not null, --댓글의 부모글 번호
 	mem_num number not null,
 	cre_content varchar2(900) not null,
 	cre_rdate date default sysdate not null,
 	cre_mdate date,
-	cre_level number default 0 not null,
-	cre_ref number default 0 not null,
-	cre_report number default 0 not null,
+	cre_level number default 0 not null, --깊이
+	cre_ref number default 0 not null, --답글의 댓글번호
+	cre_report number default 0 not null, --신고수
 	constraint cboard_re_pk primary key (cre_num),
 	constraint cboard_re_fk foreign key (mem_num) references member (mem_num)
 );

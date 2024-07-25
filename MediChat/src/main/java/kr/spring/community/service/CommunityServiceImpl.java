@@ -91,10 +91,21 @@ public class CommunityServiceImpl implements CommunityService{
 	public Integer selectRowCountCommentAndReply(Map<String, Object> map) {
 		return communityMapper.selectRowCountCommentAndReply(map);
 	}
+	
 
+	@Override
+	public List<CommunityReplyVO> selectListComment(Map<String, Object> map) {
+		return communityMapper.selectListComment(map);
+	}
+	
 	@Override
 	public CommunityReplyVO selectComment(Long cre_num) {
 		return communityMapper.selectComment(cre_num);
+	}
+
+	@Override
+	public Integer selectCountComment(Long cre_num) {
+		return communityMapper.selectCountComment(cre_num);
 	}
 
 	@Override
@@ -113,6 +124,11 @@ public class CommunityServiceImpl implements CommunityService{
 	}
 	
 	/*-----------------------------게시판글 대댓글-----------------------------*/
+	@Override
+	public List<CommunityReplyVO> selectListReply(Map<String, Object> map) {
+		return communityMapper.selectListReply(map);
+	}
+	
 	@Override
 	public CommunityReplyVO selectReply(Long cre_num) {
 		// TODO Auto-generated method stub
@@ -136,4 +152,5 @@ public class CommunityServiceImpl implements CommunityService{
 		
 	}
 
+	
 }

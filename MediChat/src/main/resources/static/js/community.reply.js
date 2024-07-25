@@ -21,13 +21,15 @@ $(function(){
 				if(pageNum == 1){//처음호출시 
 					$('#output').empty();
 				}
-				console.log("<<댓글 목록 데이터>>", param.list);
+				console.log("<<댓글 목록 데이터>>", param.list); //서버로부터 받은 댓글 목록 배열
 				console.log("<<댓글 목록 데이터 - user_num>>", param.user_num);
 
 				//댓글수 읽어 오기
 				//displayReplyCount(param.count);
 				
 				$(param.list).each(function(index,item){
+					console.log("<<댓글 목록 mem_num>>"+item.mem_num);
+					console.log("<<댓글 목록 item>>"+item.med_id);
 					//처음에는 보여지지 않고 다음 댓글부터 수평선에 보이게 처리
 					if(index>0) $('#output').append('<hr size="1" width="100%">'); 
 					
@@ -141,7 +143,7 @@ $(function(){
 				}
 			},
 			error:function(){
-				alert('네트워크 오류 발생');
+				alert('댓글 등록 네트워크 오류 발생');
 			}
 		});
 	});
@@ -230,7 +232,7 @@ $(function(){
 				}
 			},
 			error:function(){
-				alert('댓글수정 네트워크 오류 발생');
+				alert('댓글 수정 네트워크 오류 발생');
 			}
 		});
 	});	

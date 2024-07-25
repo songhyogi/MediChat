@@ -29,6 +29,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.beust.jcommander.internal.Console;
+
 
 @Slf4j
 @Controller
@@ -93,8 +95,7 @@ public class CommunityController {
 		Object user = session.getAttribute("user"); 
 		if(user==null) {
 			model.addAttribute("message","로그인이 필요합니다.");
-			model.addAttribute("url","/member/login"); 
-			return "/common/resultAlert";
+			model.addAttribute("url","/member/login"); return "/common/resultAlert";
 		}
 		
 		if(user instanceof DoctorVO) {
@@ -176,8 +177,6 @@ public class CommunityController {
 	@ResponseBody
 	public Map<String, Object> getFav(CommunityFavVO fav, HttpSession session){
 		
-		//조건체크 닥터 고려해서 다시 작성 필요
-		
 		log.debug("<<게시판 좋아요>> : " + fav);
 		
 		Map<String, Object> mapJson = new HashMap<String, Object>();
@@ -204,39 +203,42 @@ public class CommunityController {
 	//댓글 목록
 	@GetMapping("/medichatCommunity/listComment")
 	@ResponseBody
-	public Map<String, Object> getLIst(int cbo_num, int pageNum,int rowCount, HttpSession session){
+	public Map<String, Object> getLIst(long cbo_num, @RequestParam(defaultValue="1") int pageNum,int rowCount, HttpSession session){
 		log.debug("<<댓글 목록 - cbo_num>> : " + cbo_num);
 		log.debug("<<댓글 목록 - pageNum>> : " + pageNum);
 		log.debug("<<댓글 목록 - rowCount>> : " + rowCount);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("cbo_num", cbo_num);
 		
-		int count = communityService.selectRowCountCommentAndReply(map); //총 글의 개수
+		Object user = session.getAttribute("user");
+		long user_num;
+		
+		if(user == null) {
+			user_num = 0;
+		}else if(user!=null && user instanceof MemberVO){
+			MemberVO member = (MemberVO)user;
+			user_num = member.getMem_num();
+		}else if(user!= null && user instanceof DoctorVO) {
+			DoctorVO doctor = (DoctorVO)user;
+			user_num = doctor.getMem_num();
+		}else {
+			user_num = -1; //에러발생..?
+		}
+		
+		log.debug("<<댓글 목록 - user_num>> : " + user_num);
+		
+		int count = communityService.selectCountComment(cbo_num); //댓글 개수
 		
 		//페이지 처리
 		PagingUtil page = new PagingUtil(pageNum, count, rowCount);
+		map.put("cbo_num", cbo_num);
 		map.put("start", page.getStartRow());
 		map.put("end", page.getEndRow());
-		
-		//좋아요 작업을 위해 mem_num 호출
-		Object user = session.getAttribute("user");
-		if(user!=null) {
-			if(user instanceof DoctorVO) { 
-				DoctorVO doctor = (DoctorVO) user;
-				map.put("mem_num", doctor.getMem_num());
-			}else if(user instanceof MemberVO) {
-				MemberVO member = (MemberVO) user;
-				map.put("mem_num", member.getMem_num());
-			}
-		}else {
-			map.put("mem_num",0);
-		}
-		
+		map.put("user_num", user_num);
 		
 		List<CommunityReplyVO> list = null;
 		if(count > 0) { //댓글이 있는 경우
-			list = communityService.selectListCommentAndReply(map);
+			list = communityService.selectListComment(map); //댓글 목록
 		}else {
 			list = Collections.emptyList();//null이 아닌 비어있는 배열로 인식되게 처리
 		}
@@ -245,13 +247,7 @@ public class CommunityController {
 		mapJson.put("count", count);
 		mapJson.put("list", list);
 		if(user!=null) {
-			if(user instanceof DoctorVO) { 
-				DoctorVO doctor = (DoctorVO) user;
-				map.put("user_num", doctor.getMem_num());
-			}else if(user instanceof MemberVO) {
-				MemberVO member = (MemberVO) user;
-				map.put("user_num", member.getMem_num());
-			}
+			mapJson.put("user_num", user_num);
 		}
 		return mapJson;
 	}
@@ -282,6 +278,7 @@ public class CommunityController {
 			communityService.insertComment(communityReply);
 			mapJson.put("result", "success");
 		}
+		
 		return mapJson;
 	}
 	
@@ -327,7 +324,7 @@ public class CommunityController {
 		log.debug("<<댓글 삭제>> : " + cre_num);
 		
 		Map<String, String> mapJson = new HashMap<String, String>();
-
+		
 		Object user = session.getAttribute("user");
 		CommunityReplyVO db_reply = communityService.selectComment(cre_num);
 		
@@ -382,7 +379,7 @@ public class CommunityController {
 			communityService.insertReply(communityReplyVO);
 			mapJson.put("result", "success");
 		}
-
+		
 		return mapJson;
 	}
 }
