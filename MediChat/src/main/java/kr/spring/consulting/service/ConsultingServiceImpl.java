@@ -94,12 +94,17 @@ public class ConsultingServiceImpl implements ConsultingService{
 		consultingMapper.updateConsulting(consulting);
 	}
 
+	@Override
+	public boolean isWriteReply(Map<String,Object> map) {
+		return consultingMapper.selectReplyCntByDocNum(map) > 0 ? true : false;
+	}
 
 	@Override
 	public void removeConsulting(Long con_num) {
 		consultingMapper.deleteAllCon_Re(con_num);
 		consultingMapper.deleteConsulting(con_num);
 	}
+
 
 
 	@Override

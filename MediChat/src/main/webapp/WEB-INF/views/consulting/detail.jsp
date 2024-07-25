@@ -43,7 +43,7 @@
 			</div>
 			<div>
 				<div class="fs-16 text-black-7 fw-6">답변을 작성한 선생님에게 진료 예약하기</div>
-				<div class="border rounded-1 d-flex justify-content-between align-items-center py-3 px-2">
+				<div class="border rounded-1 d-flex justify-content-around align-items-center py-3 px-2">
 					<div class="me-3 border bg-gray-0 p-3 rounded-1">
 						<img src="/images/hospital.png" width="72" height="72">
 					</div>
@@ -53,6 +53,9 @@
 						</div>
 						<div class="fs-14 text-black-4">
 							${cRe.hospital.hos_addr}
+						</div>
+						<div class="fs-13 text-black-3">
+							${cRe.hospital.hos_mapImg }
 						</div>
 					</div>
 					<div>
@@ -78,11 +81,13 @@
 	</c:if>
 </div>
 
-<c:if test="${user.mem_auth==3}">
-	<form action="/consultings/createReply" method="post">
+<c:if test="${user.mem_auth==3 and !checkReply}">
+	<form action="/consultings/createReply" method="post" class="p-3 my-4">
 		<input type="hidden" name="con_num" value="${consulting.con_num}">
-		<textarea rows="7" class="form-control" name="con_re_content"></textarea>
-		<input type="submit" value="전송">
+		<textarea rows="10" class="form-control" name="con_re_content"></textarea>
+		<div class="text-end mt-1 mb-4">
+			<input type="submit" value="전송" class="btn-green">
+		</div>
 	</form>
 </c:if>
 

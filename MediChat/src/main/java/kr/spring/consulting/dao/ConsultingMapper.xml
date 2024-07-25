@@ -95,10 +95,10 @@
 	<delete id="deleteConsulting" parameterType="long">
 		DELETE FROM consulting WHERE con_num=#{con_num}
 	</delete>
-	
-	
-	
-	
+
+	<select id="selectReplyCntByDocNum" resultType="integer" parameterType="map">
+		select count(*) from con_reply where con_num=#{con_num} and doc_num = #{doc_num}
+	</select>
 	
 	
 	

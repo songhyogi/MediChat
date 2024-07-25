@@ -20,6 +20,8 @@ import kr.spring.consulting.vo.Con_ReVO;
 import kr.spring.consulting.vo.ConsultingVO;
 import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.member.vo.MemberVO;
+import kr.spring.notification.service.NotificationService;
+import kr.spring.notification.vo.NotificationVO;
 import kr.spring.util.DurationFromNow;
 import kr.spring.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +32,9 @@ public class ConsultingController {
 	
 	@Autowired
 	private ConsultingService consultingService;
+	
+	@Autowired
+	private NotificationService notificationService;
 	
 	@GetMapping("/getRightNavData")
 	@ResponseBody
@@ -106,7 +111,7 @@ public class ConsultingController {
 	}
 	
 	@GetMapping("/consultings/detail/{con_num}")
-	public String detail(@PathVariable Long con_num, Model model) {
+	public String detail(@PathVariable Long con_num, Model model, HttpSession session) {
 		ConsultingVO consulting = consultingService.getConsulting(con_num);
 		consulting.setCon_rDate(DurationFromNow.getTimeDiffLabel(consulting.getCon_rDate()));
 		model.addAttribute("consulting",consulting);
@@ -118,6 +123,16 @@ public class ConsultingController {
 		List<Con_ReVO> cReList = consultingService.getListCon_Re(map);
 
 		model.addAttribute("cReList", cReList);
+		
+		boolean checkReply = false;
+		Object user = session.getAttribute("user");
+		if(user instanceof DoctorVO) {
+			DoctorVO doctor = (DoctorVO)user;
+			map.put("con_num", con_num);
+			map.put("doc_num", doctor.getMem_num());
+			checkReply = consultingService.isWriteReply(map);
+			model.addAttribute("checkReply",checkReply);
+		}
 		return "cDetail";
 	}
 	
@@ -206,6 +221,18 @@ public class ConsultingController {
 				con_re.setDoc_num(doctor.getDoc_num());
 				con_re.setCon_re_content(StringUtil.useBrHtml(con_re.getCon_re_content()));
 				consultingService.createCon_Re(con_re);
+				
+				Long mem_num = consultingService.getConsulting(con_re.getCon_num()).getMember().getMem_num();
+				
+				NotificationVO noti = new NotificationVO();
+				noti.setMem_num(mem_num);
+				noti.setNoti_category(5L);
+				noti.setNoti_message("의료 상담 답글이 등록되었습니다.");
+				noti.setNoti_link("<a href='/consultings/detail/"+con_re.getCon_num()+"'>답글 보러가기</a>");
+				
+				log.debug("<<알림 생성>> : " + noti);
+				
+				notificationService.insertNotification(noti);
 				
 				return "redirect:/consultings/detail/"+con_re.getCon_num();
 			} else {
