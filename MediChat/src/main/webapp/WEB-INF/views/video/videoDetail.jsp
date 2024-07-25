@@ -7,7 +7,7 @@
   <script src="${pageContext.request.contextPath}/js/videoAdapter.js"></script>
 <div class="page-main">
 	<div class="page-one">
-		<h4>홈 > 건강 비디오 > ${video.video_title}</h4> 		
+		<h4>홈 > 건강 블로그 > 건강 비디오 > ${video.video_title}</h4> 		
 		<h2>&nbsp;&nbsp;&nbsp;${video.video_title}</h2>
 		${video.v_reg_date}  조회수 :  ${video.video_hit} <br>
 		<br>

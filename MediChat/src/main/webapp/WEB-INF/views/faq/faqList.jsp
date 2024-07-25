@@ -9,9 +9,9 @@
 	<div class="page-one">
 		<h5>홈 > 자주 묻는 질문(FAQ)</h5>
 		<p>
-		<h2>
-			&nbsp;&nbsp;&nbsp;<b>자주 묻는 질문(FAQ)</b>
-		</h2>
+		<h1>
+			<img src="${pageContext.request.contextPath}/images/communication.png" width="45px;"> <b>자주 묻는 질문(FAQ)</b>
+		</h1>
 		<br>
 		<form action="faqList" id="form-faq" method="get" class="align-center">
 			<div class="container-input " style="width: 500px; margin: 0 auto;">
@@ -52,7 +52,7 @@
 						href="${pageContext.request.contextPath}/faq/faqDetail?faq_num=${f.faq_num}">
 						<ul style="margin: 0 auto; float: left; width: 70%">
 							<li style="font-size: 16pt;">${f.faq_title}</li>
-							<li>${f.f_reg_date} &nbsp;조회수 : ${f.faq_hit} &nbsp;</li>
+							<li class="fs-16 fw-5 text-black-3" >${f.f_reg_date} &nbsp;조회수 : ${f.faq_hit} &nbsp;</li>
 						</ul>
 					</a>
 					<div style="float: right; margin-right: 30px; padding-top: 30px;">

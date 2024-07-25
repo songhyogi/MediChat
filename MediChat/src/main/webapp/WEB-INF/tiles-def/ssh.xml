@@ -28,6 +28,11 @@
 		<put-attribute name="css" value="/WEB-INF/views/health/healthCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/health/healthyBlogMain.jsp"/>
 	</definition>
+	<definition name="healthy_M" extends="diseaseMain">
+		<put-attribute name="title" value="healthyMagagine"/>
+		<put-attribute name="css" value="/WEB-INF/views/health/healthCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/health/healthyM.jsp"/>
+	</definition>
 	<definition name="healthy_writeForm" extends="diseaseMain">
 		<put-attribute name="title" value="healthyWrite"/>
 		<put-attribute name="css" value="/WEB-INF/views/health/healthCSS.jsp"/>

@@ -7,7 +7,24 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/ckeditor.js"></script>
 <script src="${pageContext.request.contextPath}/js/uploadAdapter.js"></script>
-
+<script  type="text/javascript">
+ 	$(function(){
+ 		$('#register_form').submit(function(){
+ 				if($('#faq_title').val().trim() ==''){
+ 					alert('제목을 입력하세요.');
+ 					$('#faq_title').val('').focus();
+ 					return false;
+ 				}
+ 				if($('#faq_content').val().trim() ==''){
+ 					alert('내용을 입력하세요.');
+ 					$('#faq_content').val('').focus();
+ 					return false;
+ 				}
+ 			
+ 		})
+ 		
+ 	});
+</script>
 <div class="page-main">
 	<div class="page-one">
 		<h4>홈 > 자주 묻는 질문(FAQ) >  글쓰기</h4> 		

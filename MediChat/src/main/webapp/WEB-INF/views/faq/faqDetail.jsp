@@ -19,7 +19,7 @@
 
 	
 		
-     
+     <br><br><br><br>
 <c:if test="${user.mem_num == faq.mem_num}">
 <div class="align-center">
 	<input type="button" class="default-btn" value="글 수정" onclick="location.href='faqUpdate?faq_num=${faq.faq_num}'">
@@ -40,6 +40,6 @@
 		</div>
 		<div class="align-center">
 			<br><br><br>
-			<input type="button" class="default-btn" value="비대면 진료 받으러 가기">
+			<input type="button" class="default-btn" onclick="location.href='${pageContext.request.contextPath}/hospitals'" style="width:50% !important; height:50px; font-size:15pt;" value="비대면 진료 받으러 가기">
 		</div>
 	</div>

@@ -16,7 +16,7 @@
 		<hr size="1" width="80%">
 		
 		<form:form action="faqUpdate" id="register_form" method="post" modelAttribute="faqVO" enctype="multipart/form-data">
-				<form:hidden path="video_num"/>
+				<form:hidden path="faq_num"/>
 				<ul>
 					<li>
 						<select name="f_category" id="selectinputw">
