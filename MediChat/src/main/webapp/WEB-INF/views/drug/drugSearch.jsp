@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/kyj.css" type="text/css">
 <style>
 .align-center {/* 가운데 정렬 */
   text-align: center;
@@ -28,12 +29,12 @@ a {
 	<form action="search" id="search_form" method="get" class="align-center">
 		<ul class="search">
 			<li>
-				<select name="keyfield" id="keyfield">
+				<select name="keyfield" id="keyfield" class="drug-keyfield">
 					<option value="1" <c:if test="${param.keyfield == 1}">selected</c:if>>제품명</option>
 					<option value="2" <c:if test="${param.keyfield == 2}">selected</c:if>>회사명</option>
 					<option value="3" <c:if test="${param.keyfield == 3}">selected</c:if>>효능</option>
 				</select>
-				<input type="search" name="keyword" id="keyword" value="${param.keyword}">
+				<input type="search" name="keyword" id="keyword" class="drug-keyword" value="${param.keyword}">
 				<input type="submit" value="검색">
 			</li>
 			<%-- <li>
@@ -57,8 +58,8 @@ a {
 			</tr>
 			<c:forEach var="drug" items="${list}">
 			<tr>
-				<td>${drug.drg_num}</td>
-				<td><a href="detail?drg_num=${drug.drg_num}"> ${drug.drg_name}</a></td>
+				<td class="align-center">${drug.drg_num}</td>
+				<td><a href="detail?drg_num=${drug.drg_num}" class="list-drug-name"> ${drug.drg_name}</a></td>
 				<td class="align-center">${drug.drg_company}</td>
 				<td class="align-center"><img src="${pageContext.request.contextPath}/images/magnifier.png" width="20"></td>
 			</tr>

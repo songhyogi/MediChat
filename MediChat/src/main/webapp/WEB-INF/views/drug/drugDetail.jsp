@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/kyj.css" type="text/css">
 <style>
 ul li {
     margin-bottom: 50px; /* 리스트 아이템들 간의 간격을 넓힘 */
@@ -20,7 +21,7 @@ ul li {
 }
 </style>
 <!-- 의약품 목록 상세 시작 -->
-<div class="page-main">
+<div class="page-main main-margin">
 	<div class="body-header">
 		<p class="text-lightgray fw-7 fs-13">홈 > 의약품 백과사전</p>
 		<h4>의약품 상세정보</h4>
@@ -29,9 +30,9 @@ ul li {
 		<h4>제품 기본 정보</h4>
 		<table class="table table-bordered">
 			<tr>
-				<td>제품명</td>
+				<td class="drug-table-title fw-6">제품명</td>
 				<td>${drug.drg_name}</td>
-				<td rowspan="3">
+				<td class="drug-table-image" rowspan="3">
 					<c:if test="${empty drug.drg_img}">
 						<img src="${pageContext.request.contextPath}/images/noIMG.png"width="100">
 					</c:if>
@@ -41,11 +42,11 @@ ul li {
 				</td>
 			</tr>
 			<tr>
-				<td>업체명</td>
+				<td class="drug-table-title fw-6">업체명</td>
 				<td>${drug.drg_company}</td>
 			</tr>
 			<tr>
-				<td>품목 기준 코드</td>
+				<td class="drug-table-title fw-6">품목 기준 코드</td>
 				<td>${drug.drg_code}</td>
 			</tr>
 		</table>
@@ -59,7 +60,7 @@ ul li {
 		</c:if>
 		<!-- 데이터가 하나 이상 존재할 경우 -->
 		<c:if test="${!empty drug.drg_dosage || !empty drug.drg_effect || !empty drug.drg_warning || !empty drug.drg_precaution || !empty drug.drg_interaction || !empty drug.drg_seffect || !empty drug.drg_storage}">
-		<div class="drug-btn align-center">
+		<div class="drug-btn align-center drug-btn-space">
 			<c:if test="${!empty drug.drg_dosage}">
 				<button class="button" onclick="scrollToSection('dosage')">복용법</button>
 			</c:if>
@@ -77,7 +78,7 @@ ul li {
 			</c:if>
 		</div>
 		<br>
-		<ul>
+		<ul class="list-margin">
 			<c:if test="${!empty drug.drg_dosage}">
 				<li id="dosage">
 					<h5>복용법</h5>
@@ -124,8 +125,8 @@ ul li {
 <!-- 모달창 시작 -->
 <div class="modal">
 	<div class="drugImg-modal">
-		<div class="modal-header">
-			<div>의약품 이미지 확대보기</div>
+		<div class="modal-header bg-green-5">
+			<div class="fw-5 fs-20">의약품 이미지 확대보기</div>
 			<div class="close">&times;</div>
 		</div>
 		<div class="modal-body">
@@ -144,7 +145,7 @@ window.onload=function(){
 	
 	//모달창 열기
 	drgImg.onclick = function(){
-		modal.style.display = "block";
+		modal.style.display = "flex";
 	};
 	
 	//모달창 닫기
