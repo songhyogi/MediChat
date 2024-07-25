@@ -11,7 +11,7 @@
 				width="150" height="150" class="my-photo border rounded-circle" 
 				onclick="location.href='${pageContext.request.contextPath}/doctor/docPage'">
 				<div class="camera" id="photo_btn">
-					<img src="${pageContext.request.contextPath}/images/re.png" width="25">
+					<img src="${pageContext.request.contextPath}/images/reset.png">
 				</div>			
 
 		</li>
@@ -26,7 +26,12 @@
             <a href="${pageContext.request.contextPath}/schedule/list" class="detail-btn">스케줄관리</a>
         </li>
         <li style="margin-bottom:10px;">
-            <a href="${pageContext.request.contextPath}/doctor/registerTreat" class="detail-btn">비대면 진료</a>
+	        <c:if test="${user.doc_treat == 0}">
+	            <a href="${pageContext.request.contextPath}/doctor/registerTreat" class="detail-btn">비대면 진료 신청</a>
+	        </c:if>
+	        <c:if test="${user.doc_treat == 1}">
+            	<a href="${pageContext.request.contextPath}/chat/chatView" class="detail-btn">비대면 진료</a>
+        	</c:if>
         </li>
 		<li style="margin-bottom:10px;">
             <a href="${pageContext.request.contextPath}/doctor/modifyDoctor" class="detail-btn">회원정보 수정</a>
