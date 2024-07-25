@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.member.email.Email;
 import kr.spring.member.email.EmailSender;
 import kr.spring.member.service.MemberService;
@@ -70,6 +71,41 @@ public class MemberAjaxController {
 			mapAjax.put("result","success");
 		}
 		return mapAjax;
+	}
+	/*===================
+	  회원권한변경 (관리자)
+	===================*/
+	@PostMapping("/updateAuth")
+	@ResponseBody
+	public Map<String, String> updateAuth(MemberVO memberVO,HttpSession session){
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		Map<String, String> mapJson = new HashMap<String, String>();
+		
+		if(user==null) {
+			mapJson.put("result","logout");
+		}else {
+			memberService.updateAuth(memberVO);
+
+			mapJson.put("result","success");
+		}
+		return mapJson;
+	}
+	@PostMapping("/cancelAuth")
+	@ResponseBody
+	public Map<String, String> cancelAuth(MemberVO memberVO,HttpSession session){
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		Map<String, String> mapJson = new HashMap<String, String>();
+		
+		if(user==null) {
+			mapJson.put("result","logout");
+		}else {
+			memberService.cancelAuth(memberVO);
+
+			mapJson.put("result","success");
+		}
+		return mapJson;
 	}
 	//비밀번호 찾기
 	@PostMapping("/member/getPasswordInfo")

@@ -90,7 +90,12 @@
 					</div>
 					<div class="select-line"></div>
 					<div class="header-status-select">
-						<a href="/member/logout">로그아웃</a>
+						<c:if test="${mem_gender == null}">
+							<a href="/member/logout">로그아웃</a>						
+						</c:if>
+						<c:if test="${mem_gender != null}">
+							<a href="/member/naverLogout">로그아웃</a>						
+						</c:if>
 					</div>
 				</div>
 				</c:if>
@@ -136,6 +141,10 @@
 				<div id="header-status-div" style="display: none;">
 					<div class="header-status-select">
 						<a href="/doctor/agree">의사회원가입 승인</a>
+					</div>
+					<div class="select-line"></div>
+					<div class="header-status-select">
+						<a href="/member/changeAuth">회원권한 변경</a>
 					</div>
 					<div class="select-line"></div>
 					<div class="header-status-select">

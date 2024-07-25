@@ -1,13 +1,19 @@
 package kr.spring.member.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 import kr.spring.member.vo.MemberVO;
- 
+
 public interface MemberService {
 	//==========일반 회원============
 	//회원가입
 	public void insertMember(MemberVO member);
+	//회원목록
+	public List<MemberVO> getMemList(Map<String,Object> map);
+	public Integer selectRowCount(Map<String, Object> map);
 	//회원상세정보
 	public MemberVO selectMember(Long mem_num);
 	//회원정보수정
@@ -25,18 +31,19 @@ public interface MemberService {
 	public void updateMem_au_id(String mem_au_id,Long mem_num);
 	public MemberVO selectMem_au_id(String mem_au_id);
 	public void deleteMem_au_id(Long mem_num);
-	
+
 	//아이디 중복확인
 	public MemberVO checkId(String mem_id);
 	//아이디 찾기
 	public MemberVO findId(MemberVO member);
 	//비밀번호 찾기
 	public void findPasswd(MemberVO member);
-	
+
 	//카카오 로그인 회원 체크
 	public MemberVO checkUser(@Param("mem_id") String mem_id);
-	
+
 	//==========관리자============
 	//회원등급수정
 	public void updateAuth(MemberVO member);
+	public void cancelAuth(MemberVO member);
 }

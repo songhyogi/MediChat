@@ -88,5 +88,9 @@
 		<put-attribute name="title" value="의사정보상세(관리자)"/>
 		<put-attribute name="body" value="/WEB-INF/views/doctor/doctorDetail.jsp"/>
 	</definition>
+	<definition name="adminChangeAuth" extends="kcy">
+		<put-attribute name="title" value="회원권한 변경(관리자)"/>
+		<put-attribute name="body" value="/WEB-INF/views/member/adminAuth.jsp"/>
+	</definition>
 	
 </tiles-definitions>
