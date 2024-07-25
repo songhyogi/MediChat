@@ -15,11 +15,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.spring.doctor.service.DoctorService;
 import kr.spring.doctor.vo.DoctorVO;
@@ -510,11 +512,13 @@ public class DoctorController {
 	        DoctorVO doctor = doctorService.selectDoctor(user.getDoc_num());
 	        if(doctor != null) {
 	            int count = reservationService.selectCountByMem(user.getDoc_num());
+	            HospitalVO hospital = hospitalService.selectHospital(doctor.getHos_num());
 	            doctor.setReservationCount(count);
 	            log.debug("<<MY페이지>> : " + doctor);
 	            model.addAttribute("doctor", doctor);
 	            model.addAttribute("count", count);
-	            return "myPage";
+	            model.addAttribute("hospital", hospital);
+	            return "docPage";
 	        }else{
 	            return "redirect:/login";
 	        }
@@ -574,7 +578,6 @@ public class DoctorController {
 
        return "registerTreat";
    }
-   
    @PostMapping("/doctor/registerTreat")
    public String registerTreatSubmit(@ModelAttribute("doctorVO") @Valid DoctorVO doctorVO,
                                      BindingResult result,
@@ -598,8 +601,12 @@ public class DoctorController {
            result.rejectValue("now_passwd", "invalidPasswd", "현재 비밀번호가 일치하지 않습니다."); // 에러 메시지 설정
            return registerTreatForm(model, session); // 비밀번호가 일치하지 않으면 폼으로 되돌림
        }
-
+       doctorVO.setDoc_num(user.getDoc_num());
        doctorService.updateDoctorTreat(doctorVO); // 비밀번호가 일치하면 진료 정보 업데이트
+       
+       /* 정보 수정 후 세션에 다시 값 설정 */
+       user.setDoc_treat(1);
+       session.setAttribute("user",user);
        return "redirect:/doctor/docPage"; // 성공적으로 처리된 경우 다른 페이지로 리다이렉트
    }
 

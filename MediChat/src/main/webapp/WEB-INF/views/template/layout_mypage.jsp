@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/ych.css" type="text/css">
 <tiles:insertAttribute name="font" ignore="true"/>
 <tiles:insertAttribute name="css" ignore="true"/>
+<tiles:insertAttribute name="chatCss" ignore="true"/>
 <tiles:insertAttribute name="bootstrap" ignore="true"/>
 <style>
 .container{

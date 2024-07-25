@@ -58,7 +58,7 @@ public interface DoctorMapper {
 	public void findPasswd(DoctorVO doctor);
 	
 	//비대면 신청
-	@Update("UPDATE doctor_detail SET doc_treat=#{doc_treat} WHERE doc_num=#{doc_num}")
+	@Update("UPDATE doctor_detail SET doc_treat=1, doc_stime=#{doc_stime}, doc_etime=#{doc_etime}, doc_off=#{doc_off} WHERE doc_num=#{doc_num}")
 	public void updateDoctorTreat(DoctorVO doctor);
 	
 	

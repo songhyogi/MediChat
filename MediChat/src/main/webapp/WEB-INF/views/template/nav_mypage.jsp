@@ -12,7 +12,7 @@
 				width="150" height="150" class="my-photo border rounded-circle" 
 				onclick="location.href='${pageContext.request.contextPath}/member/myPage'">
 				<div class="camera" id="photo_btn">
-					<img src="${pageContext.request.contextPath}/images/re.png" width="25">
+					<img src="${pageContext.request.contextPath}/images/reset.png" width="25">
 				</div>			
 			</c:if>
 			<c:if test="${mem_profile != null}">
@@ -32,7 +32,7 @@
             <a href="${pageContext.request.contextPath}/memberDrug/list" class="detail-btn">약 복용 내역</a>
         </li>
         <li style="margin-bottom:10px;">
-            <a href="${pageContext.request.contextPath}/mypage/reviewHistory" class="detail-btn">후기내역</a>
+            <a href="${pageContext.request.contextPath}/review/reviewMemList" class="detail-btn">후기내역</a>
         </li>
         <li style="margin-bottom:10px;">
             <a href="${pageContext.request.contextPath}/chat/chatView" class="detail-btn">비대면 진료</a>
