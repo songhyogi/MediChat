@@ -137,7 +137,7 @@ button.selected, .time-button.selected {
 }
 .confirm-container {
     padding: 20px;
-    max-width: 600px;
+    width: 750px;
     margin: 20px auto;
 }
 .reservation-header h3 {
@@ -153,14 +153,14 @@ button.selected, .time-button.selected {
 .reservation-details {
     margin-top: 20px;
     border: 3px solid #ddd;
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 15px;
     background-color: #fff;
 }
 .reservation-userInfo {
     margin-top: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    /* border: 1px solid #ddd;
+    border-radius: 5px; */
     padding: 15px;
     background-color: #fff;
 }
@@ -190,8 +190,9 @@ button.selected, .time-button.selected {
 }
 .reservation-footer {
     display: flex;
-    justify-content: space-between;
     margin-top: 20px;
+    justify-content: right;
+    margin-right: 8px;
 }
 .btn {
     width: 100px; /* 버튼의 너비 조정 */
@@ -200,44 +201,49 @@ button.selected, .time-button.selected {
     border-radius: 10px; /* 모서리 반경 조정 */
     margin-right: 5px;
 }
-.btn-primary {
+.agree-btn{
+	background-color: #74c69d; /* 활성화 상태 색상 */
+    border-color: #74c69d;
+    color: #fff;
+}
+.btn-primary{
     background-color: #d8f3dc;
     border-color: #d8f3dc;
     color: white; /* 텍스트 색상 변경 */
 }
-.btn-primary:hover {
+.btn-primary:hover, .agree-btn:hover {
     background-color: #b7e4c7;
     border-color: #b7e4c7;
     color: white; /* 텍스트 색상 변경 */
 }
-.btn-primary.active {
+.btn-primary.active{
     background-color: #74c69d; /* 활성화 상태 색상 */
     border-color: #74c69d;
     color: #fff;
 }
-.btn-primary:disabled {
+.btn-primary:disabled{
     background-color: #b7e4c7; /* 비활성화 상태 색상 */
     border-color: #b7e4c7;
     color: #fff;
     opacity: 0.6; /* 비활성화 상태 불투명도 */
     cursor: not-allowed; /* 비활성화 상태 커서 */
 }
-.btn-secondary {
+.btn-secondary, .prev-btn {
     background-color: #bdbdbd;
     border-color: #bdbdbd;
     color: white; /* 텍스트 색상 변경 */
 }
-.btn-secondary:hover {
+.btn-secondary:hover, .prev-btn:hover {
     background-color: #e0e0e0;
     border-color: #e0e0e0;
     color: white; /* 텍스트 색상 변경 */
 }
-.btn-secondary.active {
+.btn-secondary.active, .prev-btn:active {
     background-color: #bdbdbd; /* 활성화 상태 색상 */
     border-color: #bdbdbd;
     color: #fff;
 }
-.btn-secondary.active:hover {
+.btn-secondary.active:hover, .prev-btn:hover {
     background-color: #e0e0e0;
     border-color: #e0e0e0;
     color: #fff;
@@ -265,6 +271,67 @@ button.selected, .time-button.selected {
     border-radius: 10px; /* 모서리를 둥글게 설정 */
     background-color: #f8f9fa; /* 배경색 설정 */
 }
+#confirm-name, #confirm-phone, #confirm-symptoms {
+    border: 1px solid #000;
+    border-radius: 10px; /* 테두리를 둥글게 설정 */
+    padding: 10px; /* 패딩 값 설정 */
+}
+.hide {
+    display: none;
+}
+
+.chevron-down, .chevron-up {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.chevron-up {
+    transform: rotate(180deg);
+}
+
+.collapsible-content {
+   /* margin: 10px 0;  내용 부분의 마진 조정 */
+    padding-left: 5px;  /*들여쓰기 추가 */
+    padding-right: 5px;
+}
+
+.privacy-info, .privacy-info-sub {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px; /* 패딩 추가 */
+    /*border: 1px solid #ddd;  테두리 추가 */
+    border-radius: 4px; /* 모서리 둥글게 */
+    background-color: #f9f9f9; /* 배경색 추가 */
+}
+
+.privacy-info-sub {
+    margin-top: 5px; /* 간격 추가 */
+}
+
+.privacy-info-title {
+    font-weight: bold;
+    
+}
+.privacy-collection {
+    background-color: #f2f2f2; /* 개인정보 수집 동의 배경색 설정 */
+}
+
+.privacy-provision {
+    background-color: #f2f2f2; /* 개인정보 제공 동의 배경색 설정 */
+}
+#privacy_collect, #privacy_provide{
+	background: #f2f2f2;
+	margin-bottom: 5px;
+	border-radius: 4px;
+}
+.outer-line{
+	background: #f7f9fa;
+	border-radius: 4px;
+	padding-bottom: 5px;
+	margin-top: 35px;
+}
 </style>
 <script src="${pageContext.request.contextPath}/js/index.global.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/reservation.reservation.js"></script>
@@ -285,8 +352,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <input type="hidden" id="user_mem_num" value="${user.mem_num}" />
 <div class="confirm-container" style="display:none;">
 	<div class="reservation-header">
-		<h3 id="confirm-resType"></h3>
-        <p>예약 정보를 다시 한 번 확인해 주세요</p>
+		<!-- <h4 id="confirm-resType"></h4> -->
+        <b>예약 정보를 다시 한 번 확인해 주세요</b>
 	</div>
 	<div class="reservation-details">
 		<div class="detail-item">
@@ -305,27 +372,86 @@ document.addEventListener('DOMContentLoaded', function() {
             <label>시간 | </label>
             <span id="confirm-time"></span>
         </div>
+        <div class="detail-item">
+        	<label>비대면/방문 | </label>
+        	<span id="confirm-resType"></span>
+        </div>
 	</div>
 	<div class="reservation-userInfo">
-	<h4>예약자 정보</h4>
+	<h5><b>예약자 정보</b></h5>
+	<p>
 		<div class="detail-item">
-            <label>이름 | </label>
+            <label>이름 </label>
             <span id="confirm-name">${user.mem_name}</span>
         </div>
         <c:if test="${user_type != 'doctor'}">
         <div class="detail-item">
-            <label>전화번호 | </label>
+            <label>전화번호 </label>
             <span id="confirm-phone">${user.mem_phone}</span>
         </div>
         </c:if>
         <div class="detail-item">
-            <label>상세 증상 | </label>
+            <label>상세 증상 </label>
             <textarea id="confirm-symptoms"></textarea>
         </div>
+		<div class="outer-line">
+        <div class="privacy-info">
+            <span class="privacy-info-title">개인정보 수집, 제공</span>
+            <svg viewBox="0 0 512 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="chevron-down toggle">
+            <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path></svg>
+        </div>
+        <div id="privacy_notice" class="hide collapsible-content">
+            <div class="privacy-info privacy-collection">
+                <span class="privacy-info-title">개인정보 수집 동의</span>
+                <svg viewBox="0 0 512 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="chevron-down toggle">
+                <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path></svg>
+            </div>
+            <div id="privacy_collect" class="hide collapsible-content">
+                <!-- <p><strong>개인정보 수집 동의</strong></p> -->
+                <div>
+                개인정보 수집에 대한 자세한 내용은 다음과 같습니다...
+                </div>
+            </div>
+            <div class="privacy-info privacy-provision">
+                <span class="privacy-info-title">개인정보 제공 동의</span>
+                <svg viewBox="0 0 512 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="chevron-down toggle">
+                <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path></svg>
+            </div>
+            <div id="privacy_provide" class="hide collapsible-content">
+                <!-- <p><strong>개인정보 제공 동의</strong></p> -->
+                <div>
+                개인정보 제공에 대한 자세한 내용은 다음과 같습니다...
+                </div>
+            </div>
+        </div>
+		</div>
     </div>
-	<div class="reservation-footer">
+    <div class="reservation-footer">
         <input type="button" class="btn prev-btn" value="이전" onclick="previousStep()">
-        <input type="button" class="btn agree-btn" value="동의하고 예약하기" onclick="submitReservation()">
+        <input type="button" class="btn agree-btn" style="width:140px;" value="동의하고 예약하기" onclick="submitReservation()">
     </div>
-    
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.privacy-info').click(function(){
+            var nextElement = $(this).next('.collapsible-content');
+            if (nextElement.hasClass('hide')) {
+                nextElement.removeClass('hide');
+            } else {
+                nextElement.addClass('hide');
+            }
+            $(this).find('svg').toggleClass('chevron-down chevron-up');
+        });
+
+        $('.privacy-info-sub').click(function(){
+            var nextElement = $(this).next('.collapsible-content');
+            if (nextElement.hasClass('hide')) {
+                nextElement.removeClass('hide');
+            } else {
+                nextElement.addClass('hide');
+            }
+            $(this).find('svg').toggleClass('chevron-down chevron-up');
+        });
+    });
+</script>
