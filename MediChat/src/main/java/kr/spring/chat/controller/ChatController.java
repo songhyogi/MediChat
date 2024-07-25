@@ -549,8 +549,8 @@ public class ChatController {
 	    	log.debug("<<try문 진입>>");
 	    	String fileNotice = "예약번호: " +res_num+"의 결제가 완료되었습니다.";
 		    fileNotice += "<br>진단 서류가 도착했습니다.";
-		    fileNotice += "<br><button type='button' class='btn-message' id='btn_file' ";
-		    fileNotice += "data-mem_num='"+mem_num+"'>";
+		    fileNotice += "<br><button class='btn-message' id='btn_file' ";
+		    fileNotice += "data-mem_num='"+mem_num+"' onclick='location.href=\"/chat/myFiles\"'>";
 		    fileNotice += "나의 서류함으로</button>";
 		   
 		    ChatMsgVO msg = new ChatMsgVO();
