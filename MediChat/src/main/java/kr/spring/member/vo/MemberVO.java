@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Getter;
@@ -33,9 +34,9 @@ public class MemberVO {
    @Pattern(regexp="^[A-Za-z0-9]{4,12}$")
    //영문자와 숫자의 조합이며 길이가 4에서 12 사이
    /* @Pattern(regexp="^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{4,12}$") */
-   private   String mem_passwd;
-   @NotNull
-   private Date mem_birth;
+   private String mem_passwd;
+   @NotEmpty
+   private String mem_birth;
    @Email
    @NotBlank
    private String mem_email;

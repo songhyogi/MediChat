@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- 회원가입 시작 -->
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style>
 .btn.green{
 	background-color:rgb(102, 178, 178);
@@ -17,15 +17,6 @@
 	display: inline-block;
 	text-align: center;
 	color: white;
-}
-#calendarButton {
-    width: 30px;
-    height: 30px;
-    margin:0 auto;
-    border: none;
-    cursor: pointer;
-    text-align:center;
-    background-color:rgb(251, 250, 250);
 }
 </style>
 <div class="container">
@@ -56,11 +47,11 @@
 			</li>
 			<li>
 			    <form:label path="mem_birth">생년월일</form:label>
-			    <input type="text" id="mem_birth" placeholder="년-월-일">
-			    <button id="calendarButton" type="button">
-			    	<img src="${pageContext.request.contextPath}/images/calendar.jpg" style="width:30px; height:30px;">
+			    <input type="text" name="mem_birth" id="mem_birth" placeholder="년-월-일">
+			    <button type="button" id="calendarButton">
+			    	<img src="${pageContext.request.contextPath}/images/calendar.jpg" style="width:30px; height:30px; margin-right:5px;">
 			    </button>
-			    <form:errors path="mem_birth" cssClass="error-color"/>
+			    <form:errors path="mem_birth" cssClass="error-color" style="margin-left:5px;"/>
 			</li>
 			<li>
 				<form:label path="mem_email">이메일</form:label>
@@ -76,9 +67,10 @@
 			    <form:label path="mem_zipcode">주소</form:label>
 			    <form:input path="mem_zipcode"/>
 			    <input type="button" onclick="execDaumPostcode()" value="우편번호" class="btn green rounded" style="margin:0 2px;">
-			    <form:errors path="mem_zipcode" cssClass="error-color"/>
 			    <form:input path="mem_address1"/>
-			    <form:errors path="mem_address1" cssClass="error-color"/>
+			    <br>
+			    <form:errors path="mem_zipcode" cssClass="error-color" style="margin-left:200px;"/>
+			    <form:errors path="mem_address1" cssClass="error-color" style="margin-left:110px;"/>
 			</li>
 			<li>
 				<form:label path="mem_address2">상세주소</form:label>
@@ -115,9 +107,7 @@
 	</form:form>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/member.register.js"></script>
-<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
-<script src="https://code.jquery.com/ui/1.13.0/i18n/jquery.ui.datepicker-ko.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script>
 	$(function(){
 		$('#reload_btn').click(function(){
@@ -128,6 +118,41 @@
 	        });
 		});
 	});
+</script>
+<script>
+    $(document).ready(function() {
+        $('#mem_birth').datepicker({
+            dateFormat: 'yy-mm-dd',
+            changeYear: true,
+            changeMonth: true,
+            yearRange: 'c-100:c+0',
+            maxDate: '0',
+            prevText: '이전 달',
+            nextText: '다음 달',
+            monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+            dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+            dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+            showMonthAfterYear: true,
+            yearSuffix: '년',
+            beforeShowDay: function(date) {
+                var day = date.getDay();
+                // 요일에 따라 클래스를 추가하여 스타일을 지정합니다.
+                if (day === 0) { // 일요일
+                    return [true, 'ui-datepicker-sunday'];
+                } else if (day === 6) { // 토요일
+                    return [true, 'ui-datepicker-saturday'];
+                } else {
+                    return [true, '']; // 기본 스타일
+                }
+            }
+        });
+        
+        $('#calendarButton').click(function() {
+            $('#mem_birth').datepicker('show');
+        });
+    });
 </script>
 <!-- 우편번호 시작 -->
 <!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
