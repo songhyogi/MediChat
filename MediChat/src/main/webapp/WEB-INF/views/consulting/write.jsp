@@ -61,8 +61,4 @@
 			<input type="submit" id="consulting-write-btn" value="질문하기">
 		</div>
 	</form>
-	
-	
-	
 </div>
-

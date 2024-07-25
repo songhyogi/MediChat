@@ -22,4 +22,7 @@ public interface DiseaseService {
 	public Integer selectDisCount(Map<String,Object> map);
 	public DiseaseVO getDis(String sickcd);
 	public void updateDisHit(String sickcd);
+	
+	
+	public List<DiseaseVO> selectDisListByHit(int itemNum);
 }

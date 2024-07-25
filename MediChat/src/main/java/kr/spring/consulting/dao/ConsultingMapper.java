@@ -23,6 +23,8 @@ public interface ConsultingMapper {
 	/* 답글 */
 	public void insertCon_Re(Con_ReVO con_Re);
 	public List<Con_ReVO> selectListCon_Re(Map<String,Object> map);
+	public int selectCon_ReCnt(Long con_num);
 	
+	public void deleteAllCon_Re(Long con_num);
 	
 }

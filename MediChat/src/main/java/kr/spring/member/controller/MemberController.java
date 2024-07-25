@@ -149,9 +149,6 @@ public class MemberController {
 				/* ksy 알림 처리 시작 */
 				int noti_cnt = notificationService.selectCountNotification(member.getMem_num());
 				session.setAttribute("noti_cnt", noti_cnt);
-				List<NotificationVO> noti_list = notificationService.selectListNotification(member.getMem_num());
-				session.setAttribute("noti_list", noti_list);
-				log.debug("<<알림 갯수 >> : " + noti_cnt + "<<알림 목록 >> : " + noti_list);
 				/* ksy 알림 처리 끝 */
 				
 				log.debug("<인증 성공> : "+ member);

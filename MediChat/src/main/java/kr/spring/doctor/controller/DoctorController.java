@@ -158,8 +158,6 @@ public class DoctorController {
 				/* ksy 알림 처리 시작 */
 				int noti_cnt = notificationService.selectCountNotification(doctor.getMem_num());
 				session.setAttribute("noti_cnt", noti_cnt);
-				List<NotificationVO> noti_list = notificationService.selectListNotification(doctor.getMem_num());
-				session.setAttribute("noti_list", noti_list);
 				/* ksy 알림 처리 끝 */
 				
 				log.debug("<로그인 인증 성공> : " + doctor);
