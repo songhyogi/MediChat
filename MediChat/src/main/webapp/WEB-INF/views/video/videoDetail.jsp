@@ -42,6 +42,6 @@
 		<br><br>
 		<div class="align-center">
 			<br><br><br>
-			<input type="button" class="default-btn" value="비대면 진료 받으러 가기">
+			<input type="button" class="default-btn" onclick="location.href='${pageContext.request.contextPath}/hospitals'" style="width:50% !important; height:50px; font-size:15pt;" value="비대면 진료 받으러 가기">
 		</div>
 	</div>
