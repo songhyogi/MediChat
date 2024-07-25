@@ -161,7 +161,7 @@ function selectReply(currentNum){
 						output+=' <input type="button"  class="re-cancle-btn default-btn hide" data-renum="'+item.hre_num+'"  value="답글 닫기">';
 					}
 					output +='</div>';
-					output +='</div><div id="subitems'+item.hre_num+'"></div><br><br><br><div class="line"></div><br>';
+					output +='</div><div id="subitems'+item.hre_num+'"></div><br><br><div class="line"></div><br>';
 					$('#replyList').append(output);
 				})
 				

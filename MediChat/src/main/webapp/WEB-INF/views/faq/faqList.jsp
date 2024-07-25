@@ -69,9 +69,10 @@
 						style="margin: 0 auto; width: 80%; text-align: left;">
 						<br>
 						<br>
-						<br><br><h4>${f.faq_title}</h4>
+						<br><br><h4><img src="${pageContext.request.contextPath}/images/qna.png" width="45px;"> &nbsp; ${f.faq_title}</h4>
 						<hr width="100%" size="1">
-						${f.faq_content}
+						<br>
+						<img src="${pageContext.request.contextPath}/images/faqdoc.png" width="50px;"> <br><br>${f.faq_content}
 					</div>
 				</div>
 
