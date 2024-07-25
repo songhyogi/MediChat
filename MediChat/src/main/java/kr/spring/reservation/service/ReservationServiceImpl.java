@@ -69,5 +69,10 @@ public class ReservationServiceImpl implements ReservationService{
 		return reservationMapper.getResExist(map);
 	}
 
+	@Override
+	public ReservationVO getReservationById(long res_num) {
+		return reservationMapper.getReservationById(res_num);
+	}
+
 	
 }

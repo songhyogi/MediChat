@@ -21,6 +21,8 @@ import kr.spring.chat.vo.ChatVO;
 import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.hospital.vo.HospitalVO;
 import kr.spring.member.vo.MemberVO;
+import kr.spring.notification.service.NotificationService;
+import kr.spring.notification.vo.NotificationVO;
 import kr.spring.reservation.service.ReservationService;
 import kr.spring.reservation.vo.ReservationVO;
 import kr.spring.review.vo.ReviewVO;
@@ -33,6 +35,8 @@ public class ReservationAjaxController {
 	private ReservationService reservationService;
 	@Autowired
 	private ChatService chatService;
+	@Autowired
+    private NotificationService notificationService;
 	
 	@GetMapping("/reservation/reservation")
 	@ResponseBody
@@ -133,6 +137,27 @@ public class ReservationAjaxController {
 
 	        try {
 	            reservationService.insertReservation(reservationVO);
+	            // 회원에게 알림 보내기
+	            NotificationVO memberNotification = new NotificationVO();
+	            memberNotification.setMem_num(user.getMem_num());
+	            memberNotification.setNoti_category(1L); // 진료 관련
+	            memberNotification.setNoti_message(reservationVO.getRes_date() + " " + reservationVO.getRes_time()+" 예약 대기 중입니다.");
+	            memberNotification.setNoti_link("<a href='/reservation/myResList'>나의 예약 내역<a>");
+	            memberNotification.setNoti_priority(1);
+
+	            notificationService.insertNotification(memberNotification);
+	            
+	            // 의사에게 알림 보내기
+	            NotificationVO doctorNotification = new NotificationVO();
+	            doctorNotification.setMem_num(reservationVO.getDoc_num());
+	            doctorNotification.setNoti_category(1L); // 진료 관련
+	            doctorNotification.setNoti_message("새로운 예약 신청이 있습니다.");
+	            doctorNotification.setNoti_link("<a href='/reservation/docResList'>나의 예약 내역<a>"); // 링크를 직접 설정
+	            doctorNotification.setNoti_priority(1);
+
+	            notificationService.insertNotification(doctorNotification);
+
+	            
 	            map.put("result", "success");
 	        } catch (Exception e) {
 	            e.printStackTrace();
@@ -167,10 +192,9 @@ public class ReservationAjaxController {
 		}else {
 
 			long res_type = chatService.selectResType(res_num);
+			long mem_num = chatService.selectMem_num(res_num);
 			
 			if(res_type == 0){
-				long mem_num = chatService.selectMem_num(res_num);
-
 				ChatVO chatVO = new ChatVO();
 
 				chatVO.setMem_num(mem_num);
@@ -179,10 +203,27 @@ public class ReservationAjaxController {
 
 				chatService.createChat(chatVO);
 			}
-
-
-			
 			reservationService.updateReservation(res_num,res_status);
+			// 회원에게 알림 보내기
+            NotificationVO memberNotification = new NotificationVO();
+            //ReservationVO reservationVO = reservationService.getReservationById(res_num);
+            memberNotification.setMem_num(mem_num);
+            memberNotification.setNoti_category(1L); // 진료 관련
+            memberNotification.setNoti_message("예약정보가 업데이트 되었습니다.");
+            memberNotification.setNoti_link("<a href='/reservation/myResList'>나의 예약 내역<a>");
+            memberNotification.setNoti_priority(1);
+
+            notificationService.insertNotification(memberNotification);
+            
+            // 의사에게 알림 보내기
+            NotificationVO doctorNotification = new NotificationVO();
+            doctorNotification.setMem_num(user.getMem_num());
+            doctorNotification.setNoti_category(1L); // 진료 관련
+            doctorNotification.setNoti_message("예약 정보가 업데이트 되었습니다.");
+            doctorNotification.setNoti_link("<a href='/reservation/docResList'>나의 예약 내역<a>"); // 링크를 직접 설정
+
+            notificationService.insertNotification(doctorNotification);
+			
 			map.put("result", "success");
 		}
 		return map;

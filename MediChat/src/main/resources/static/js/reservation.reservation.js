@@ -3,6 +3,11 @@ function initializeCalendar(hos_num) {
     var today = new Date();
     today.setHours(0, 0, 0, 0); // 현재 시간을 00:00:00으로 설정
     
+    // 두 달 후의 날짜를 계산
+    var twoMonthsLater = new Date(today);
+    twoMonthsLater.setMonth(twoMonthsLater.getMonth() + 2);
+    twoMonthsLater.setDate(twoMonthsLater.getDate()); // 두 달 후의 마지막 날 포함
+    
     var calendar = new FullCalendar.Calendar(calendarEl, {
         selectable: true,// 사용자가 날짜를 선택할 수 있게 설정
         height: 'auto',
@@ -20,8 +25,8 @@ function initializeCalendar(hos_num) {
         },
         fixedWeekCount: false,// 다음 달의 날짜가 보여지지 않게 설정
         dateClick: function(info) {
-            // 오늘 이전 날짜는 클릭할 수 없도록 설정
-            if (info.date < today) {
+            // 오늘 이전 날짜 또는 두 달 이후 날짜는 클릭할 수 없도록 설정
+            if (info.date < today || info.date > twoMonthsLater) {
                 return;
             }
             resetSelections(); // 이전 선택 초기화
@@ -32,10 +37,10 @@ function initializeCalendar(hos_num) {
             $(info.dayEl).addClass('fc-daygrid-day-selected').attr('data-date', info.dateStr);
         },
         dayCellDidMount: function(info) {
-            // 오늘 이전 날짜는 글씨 색을 회색으로 표시
+            // 오늘 이전 날짜 또는 두 달 이후 글씨 색을 회색으로 표시
             var date = new Date(info.date);
             date.setHours(0, 0, 0, 0); // 시간을 00:00:00으로 설정하여 비교
-            if (date < today) {
+            if (date < today || date > twoMonthsLater) {
                 $(info.el).find('.fc-daygrid-day-number').css('color', '#d6d6d6');
                 $(info.el).css('pointer-events', 'none');
             }
@@ -80,20 +85,20 @@ function displayHosTimes(date, dayOfWeek, hos_num) {
 
                 // 시작 시간 또는 종료 시간이 없으면 경고를 표시하고 반환
                 if (!startTime || !endTime) {
-                    $('#time-buttons').html('<p>해당 날짜에 대한 진료 시간이 없습니다.</p>');
+                    $('#time-buttons').html('<div class="no-time">해당 날짜에 대한 진료 시간이 없습니다.</div>');
                     return;
                 }
 
                 // 선택한 날짜에 근무하는 의사가 있는지 확인
                 getAvailableDoctors(hos_num, date, null, dayOfWeek, function(doctors) {
                     if (doctors.length === 0) {
-                        $('#time-buttons').html('<p>해당 날짜에 근무하는 의사가 없습니다.</p>');
+                        $('#time-buttons').html('<div class="no-time">해당 날짜에 근무하는 의사가 없습니다.</div>');
                         return;
                     }
                     
                     // 시작 시간과 종료 시간 사이의 30분 단위 시간을 생성
                     let times = generateTimesForDay(startTime, endTime);
-                    let output = '<div class="time-section"><h5>오전</h5><div class="time-row">';
+                    let output = '<div class="time-section"><h5 class="time-header">오전</h5><div class="time-row">';
                     
                     times.forEach((time, index) => {
                         if (time < "12:00") {
@@ -105,7 +110,7 @@ function displayHosTimes(date, dayOfWeek, hos_num) {
                     });
                     output += '</div></div>';
 
-                    output += '<div class="time-section"><h5>오후</h5><div class="time-row">';
+                    output += '<div class="time-section"><h5 class="time-header">오후</h5><div class="time-row">';
                     times.forEach((time, index) => {
                         if (time >= "12:00") {
                             if (index > 0 && index % 4 == 0) {
@@ -215,10 +220,10 @@ function getAvailableDoctors(hos_num, date, time, dayOfWeek, callback) {
 
                         output += '<div class="doctor-card" data-doc-num="' + doctor.doc_num + '">';
                         output += '<img src="/doctor/docViewProfile?mem_num=' + doctor.doc_num + '" alt="' + doctor.mem_name + '" class="doctor-image">';
-                        output += '<div class="doctor-name">' + doctor.mem_name + '</div>';
+                        output += '<div class="doctor-name">' + doctor.mem_name + ' 의사 </div>';
                         output += '<div class="res-type-container">';
-                        output += '<label><input type="radio" name="res_type" value="0" class="res-type-radio"> 비대면 진료</label>';
-                        output += ' <label><input type="radio" name="res_type" value="1" class="res-type-radio"> 방문 진료</label>';
+                        output += '<label><input type="radio" name="res_type" value="0" class="res-type-radio"> 비대면 진료 </label>';
+                        output += '<label><input type="radio" name="res_type" value="1" class="res-type-radio"> 방문 진료 </label>';
                         output += '</div>';
                         output += '</div>';
                     });
@@ -251,8 +256,8 @@ function getAvailableDoctors(hos_num, date, time, dayOfWeek, callback) {
 
 // 다음 버튼 초기화 함수
 function initializeNextButton() {
-    const nextButton = '<input type="button" class="next-btn" value="다음" disabled onclick="loadConfirmPage()">';
-    const cancelButton = ' <input type="button" class="cancel-btn" value="취소" onclick="resetAll()">';
+    const nextButton = '<input type="button" class="btn btn-primary" value="다음" disabled onclick="loadConfirmPage()">';
+    const cancelButton = ' <input type="button" class="btn btn-secondary" value="취소" onclick="resetAll()">';
     $('#next-button-container').html(nextButton + cancelButton);
 }
 
