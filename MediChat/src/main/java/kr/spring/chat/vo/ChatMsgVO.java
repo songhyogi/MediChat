@@ -12,4 +12,6 @@ public class ChatMsgVO {
 	private long chat_num;
 	private String msg_content;
 	private int msg_sender_type;
+	
+	private byte[] msg_image; //이미지 전송 시
 }
