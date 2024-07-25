@@ -6,9 +6,9 @@
  <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div class="page-main">
 <div class="page-one">
-		<h5>홈 > 건강 비디오</h5> 
+		<h5>홈 > 건강 블로그 > 건강 비디오</h5> 
 		<p>		
-		<h2>&nbsp;&nbsp;&nbsp;<b>건강 비디오</b></h2>
+		<h1><img src="${pageContext.request.contextPath}/images/marketing.png" width="45px;"> <b>건강 비디오</b></h1>
 		<br>
 		<form action="videoList" id="form-video" method="get" class="align-center">
 			<div class="container-input"  style="width:500px; margin:0 auto;">
@@ -40,15 +40,16 @@
 	</c:if>
 	<c:if test="${count > 0}">
 		<c:forEach var="v" items="${list}">
+				<div style="width:400px; float:left; margin:20px;'">
 					<br><br>
 					${fn:substring(v.video_content,0,fn:indexOf(v.video_content, '</figure>')+9)}
 					<a href="${pageContext.request.contextPath}/video/videoDetail?video_num=${v.video_num}">
 							<ul class="align-center">
 								<li style="font-size:16pt;">${v.video_title}</li>
-								<li> ${v.v_reg_date} 조회수 : ${v.video_hit} &nbsp;   </li>
+								<li class="fs-16 fw-5 text-black-3"> ${v.v_reg_date} 조회수 : ${v.video_hit} &nbsp;   </li>
 							</ul>
 						</a>
-			
+			</div>	
 		</c:forEach>
 		<div class="align-center float-clear">
 			${page}

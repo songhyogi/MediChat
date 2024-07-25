@@ -126,7 +126,7 @@ function selectReply(currentNum){
 					let output ='';
 					output +='<div class="items">';
 					output +='<ul>';
-					output+='<li>'+item.id+'</li>';
+					output+='<li><img src="../member/memViewProfile?mem_num='+item.mem_num+'" width="35" height="35" class="rounded-circle"> &nbsp;&nbsp; '+item.id+'</li>';
 					if(item.hre_modify_date){
 						output+='<li> 수정일 : '+item.hre_modify_date+'</li>';
 					}else{
@@ -161,7 +161,7 @@ function selectReply(currentNum){
 						output+=' <input type="button"  class="re-cancle-btn default-btn hide" data-renum="'+item.hre_num+'"  value="답글 닫기">';
 					}
 					output +='</div>';
-					output +='</div><div id="subitems'+item.hre_num+'"></div><br><br><br><div class="line"></div><br>';
+					output +='</div><div id="subitems'+item.hre_num+'"></div><br><br><div class="line"></div><br>';
 					$('#replyList').append(output);
 				})
 				
@@ -427,7 +427,7 @@ $(document).on('click','.re-view-btn',function(){
 					let output ='';
 					output +='<div class="subitems">';
 					output +='<ul>';
-					output+='<li>'+item.id+'</li>';
+					output+='<li><img src="../member/memViewProfile?mem_num='+item.mem_num+'" width="35" height="35" class="rounded-circle"> &nbsp;&nbsp; '+item.id+'</li>';
 					if(item.hre_modify_date){
 						output+='<li> 수정일 : '+item.hre_modify_date+'</li>';
 					}else{

@@ -11,15 +11,15 @@
 		<br>
 		<hr size="1" width="100%">
 		<br>
-		<p><b>질병코드</b><br>
+		<p class="fs-18"><b>질병코드</b><br>
 			<p>
 			${disease.sickcd}
 		</p>
-		<p><b>진료과</b><br>
+		<p class="fs-18"><b>진료과</b><br>
 			<p>
 			${disease.dis_department}
 		</p>
-		<p><b>증상</b><br>
+		<p class="fs-18" ><b>증상</b><br>
 			<p>
 			${fn:replace(fn:replace(disease.dis_symptoms, ".", ".<br>"),"▶","<br>▶")}
 			

@@ -6,7 +6,7 @@
 	<div class="page-one">
 		<h5>홈 > 질병백과사전</h5> 		
 		<p>
-		<h2>&nbsp;&nbsp;&nbsp;<b>질병 백과사전</b></h2>
+		<h1><img src="${pageContext.request.contextPath}/images/dictionary.png" width="45px;"> <b>질병 백과사전</b></h1>
 		<br>
  
 	<form class="align-center" id="form-disease" action="${pageContext.request.contextPath}/disease/diseaseDictionary" method="get">
@@ -36,7 +36,7 @@
 				질병 사전 내역이 없습니다.
 		</c:if>
 		<c:if test="${count > 0}">
-				<table style="width:90%; margin:0 auto;">
+				<table style="width:90%; margin:0 auto;"class="fs-18 fw-4">
 					<tr>
 						<th>
 						</th>

@@ -7,19 +7,20 @@
    <script type="text/javascript" src="${pageContext.request.contextPath}/js/healthy.total.js"></script>
 <div class="page-main">
 	<div class="page-one">
-		<h4>홈 > 건강 블로그 > ${healthy.healthy_title}</h4> 		
+		<h4>홈 > 건강 블로그  > 건강매거진 > ${healthy.healthy_title}</h4> 		
 		<h2>&nbsp;&nbsp;&nbsp;${healthy.healthy_title}</h2>
 		<ul>
-			<li><img src="${pageContext.request.contextPath}/member/memViewProfile?mem_num=${r.mem_num}" width="35" height="35" class="rounded-circle"></li>
+			<li><img src="${pageContext.request.contextPath}/member/memViewProfile?mem_num=${healthy.mem_num}" width="35" height="35" class="rounded-circle"> &nbsp;&nbsp; ${healthy.id}</li>
 		</ul>
 		${healthy.h_reg_date}  조회수 :  ${healthy.healthy_hit} <br>
 		<c:if test="${!empty healthy.h_filename}">
 		<img  width="120" height="120" src="${pageContext.request.contextPath}/upload/${healthy.h_filename}"/>
 		</c:if>
+			<br><br>
 			<div>
 					<p>${healthy.healthy_content}</p>
 			</div>
-	
+			<br><br>
 		<div title="Like" class="heart-container" id="hFav" data-num="${healthy.healthy_num}">
 	            <input id="Give-It-An-Id" class="checkbox" type="checkbox" <c:if test="${healthy.click_num == user.mem_num && !empty user}">checked</c:if>>
 	            <div class="svg-container">
@@ -56,8 +57,6 @@
 						location.href='healthDelete?healthy_num=${healthy.healthy_num}';
 					}
 				})
-			
-			
 		})
 	</script>
 </c:if>
@@ -98,7 +97,6 @@
 		<p>
 		<div class="align-center">
 			<br><br><br><br>
-			<input type="button" class="default-btn" value="비대면 진료 받으러 가기">
 		</div>
 	</div>
 </div>

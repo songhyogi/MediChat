@@ -8,18 +8,18 @@
 <div class="page-main">
 	<div class="page-one">
 		<h4>홈 > 자주 묻는 질문(FAQ) > ${faq.faq_title}</h4> 		
-		<h2>&nbsp;&nbsp;&nbsp;${faq.faq_title}</h2>
+		<h2><img src="${pageContext.request.contextPath}/images/qna.png" width="45px;"> &nbsp; ${faq.faq_title}</h2>
 		<br>
 		${faq.f_reg_date} &nbsp; 조회수 :  ${faq.faq_hit} <br>
 		<div class="line"></div>
 		<br><br>
-		
+		<img src="${pageContext.request.contextPath}/images/faqdoc.png" width="60px;"><br><br>
 		
 				${faq.faq_content}
 
 	
 		
-     
+     <br><br><br><br>
 <c:if test="${user.mem_num == faq.mem_num}">
 <div class="align-center">
 	<input type="button" class="default-btn" value="글 수정" onclick="location.href='faqUpdate?faq_num=${faq.faq_num}'">
@@ -40,6 +40,6 @@
 		</div>
 		<div class="align-center">
 			<br><br><br>
-			<input type="button" class="default-btn" value="비대면 진료 받으러 가기">
+			<input type="button" class="default-btn" onclick="location.href='${pageContext.request.contextPath}/hospitals'" style="width:50% !important; height:50px; font-size:15pt;" value="비대면 진료 받으러 가기">
 		</div>
 	</div>
