@@ -33,6 +33,7 @@
 	    <result property="con_content" column="con_content"/>
 	    <result property="con_rDate" column="con_rdate"/>
 	    <result property="con_mDate" column="con_mdate"/>
+	    <result property="con_re_cnt" column="con_re_cnt"/>
 		
 		<association property="member" javaType="MemberVO">
 	        <id property="mem_num" column="mem_num"/>
@@ -44,29 +45,42 @@
 	    </association>
 	</resultMap>
 	<select id="selectListConsulting" resultMap="consulting" parameterType="map">
-	    SELECT *
+		SELECT *
 		FROM (
-		        SELECT c.con_num, c.con_type, c.con_title, c.con_content, c.con_rdate, c.con_mdate, m.*, ROWNUM rnum
-		        FROM consulting c 
-		        LEFT JOIN (
-		            SELECT * 
-		            FROM MEMBER 
-		            LEFT JOIN MEMBER_DETAIL 
-		            USING (mem_num)
-		            )m on c.mem_num = m.mem_num
-		        WHERE #{pageNum} * #{pageItemNum} >= ROWNUM 
-		        <include refid="searchConsultingByType"/>
-		        ORDER BY con_num DESC
+            SELECT c.con_num, c.con_type, c.con_title, c.con_content, c.con_rdate, c.con_mdate, m.*, r.con_re_cnt, ROWNUM rnum
+            FROM consulting c 
+            LEFT JOIN (
+                SELECT * 
+                FROM MEMBER 
+                LEFT JOIN MEMBER_DETAIL 
+                USING (mem_num)
+                )m on c.mem_num = m.mem_num
+            LEFT JOIN (
+                select con_num, count(*) as con_re_cnt
+                from con_reply
+                group by con_num
+                )r on r.con_num = c.con_num
+            WHERE #{pageNum} * #{pageItemNum} >= ROWNUM
+            <include refid="searchConsultingByType"/>
+            ORDER BY con_num DESC
 		    ) a
 		WHERE rnum > (#{pageNum} - 1) * #{pageItemNum}
 	</select>
 
 	<select id="selectConsulting" parameterType="long" resultMap="consulting">
-		SELECT *
-		FROM consulting
-		LEFT JOIN MEMBER USING (MEM_NUM)
-		LEFT JOIN MEMBER_DETAIL USING (MEM_NUM)
-		WHERE con_num = #{con_num}
+		SELECT c.con_num, c.con_type, c.con_title, c.con_content, c.con_rdate, c.con_mdate, m.*, r.con_re_cnt
+		FROM consulting c
+		LEFT JOIN (select *
+					from member
+					left join member_detail
+					using (mem_num)
+					) m on c.mem_num = m.mem_num
+		LEFT JOIN (
+                select con_num, count(*) as con_re_cnt
+                from con_reply
+                group by con_num
+                )r on r.con_num = c.con_num
+		WHERE c.con_num = #{con_num}
 	</select>
 	
 	<update id="updateConsulting" parameterType="consultingVO">
@@ -81,10 +95,10 @@
 	<delete id="deleteConsulting" parameterType="long">
 		DELETE FROM consulting WHERE con_num=#{con_num}
 	</delete>
-	
-	
-	
-	
+
+	<select id="selectReplyCntByDocNum" resultType="integer" parameterType="map">
+		select count(*) from con_reply where con_num=#{con_num} and doc_num = #{doc_num}
+	</select>
 	
 	
 	
@@ -150,4 +164,15 @@
 		    )a
 		WHERE rnum > (#{pageNum}-1) * #{pageItemNum}
 	</select>
+	
+	<select id="selectCon_ReCnt" parameterType="long" resultType="integer">
+		SELECT count(*) 
+		FROM con_reply 
+		WHERE con_num=#{con_num}
+	</select>
+	
+	<delete id="deleteAllCon_Re" parameterType="long">
+		DELETE FROM CON_REPLY
+		WHERE con_num=#{con_num}
+	</delete>
 </mapper>

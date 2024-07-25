@@ -73,6 +73,11 @@ public class DiseaseServiceImpl implements DiseaseService{
 		mapper.updateDisHit(sickcd);
 	}
 
+	@Override
+	public List<DiseaseVO> selectDisListByHit(int itemNum) {
+		return mapper.selectDisListByHit(itemNum);
+	}
+
 
 
 }

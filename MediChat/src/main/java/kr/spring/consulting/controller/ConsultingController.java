@@ -20,7 +20,10 @@ import kr.spring.consulting.vo.Con_ReVO;
 import kr.spring.consulting.vo.ConsultingVO;
 import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.member.vo.MemberVO;
+import kr.spring.notification.service.NotificationService;
+import kr.spring.notification.vo.NotificationVO;
 import kr.spring.util.DurationFromNow;
+import kr.spring.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -29,6 +32,20 @@ public class ConsultingController {
 	
 	@Autowired
 	private ConsultingService consultingService;
+	
+	@Autowired
+	private NotificationService notificationService;
+	
+	@GetMapping("/getRightNavData")
+	@ResponseBody
+	public List<ConsultingVO> getListConsulting(){
+		Map<String,Object> map = new HashMap<>();
+		map.put("pageNum" , 1);
+		map.put("pageItemNum", 5);
+		map.put("con_type", 0);;
+		
+		return consultingService.getListConsulting(map);
+	}
 	
 	@GetMapping("/consultings")
 	public String consultings(Model model, @RequestParam(defaultValue="1") int pageNum, @RequestParam(defaultValue="5") int pageItemNum, @RequestParam(defaultValue="0") int con_type) {
@@ -39,10 +56,20 @@ public class ConsultingController {
 		
 		List<ConsultingVO> consultingList = consultingService.getListConsulting(map);
 		model.addAttribute("consultingList", consultingList);
-		
-		log.debug("<<상담 리스트>> : " + consultingList);
-		
+		model.addAttribute("con_type",con_type);
 		return "consultings";
+	}
+	@GetMapping("/consultings-ajax")
+	@ResponseBody
+	public List<ConsultingVO> consultings(@RequestParam(defaultValue="1") int pageNum, @RequestParam(defaultValue="5") int pageItemNum, @RequestParam(defaultValue="0") int con_type) {
+		Map<String,Object> map = new HashMap<>();
+		map.put("pageNum", pageNum);
+		map.put("pageItemNum", pageItemNum);
+		map.put("con_type", con_type);		
+		
+		List<ConsultingVO> consultingList = consultingService.getListConsulting(map);
+		
+		return consultingList;
 	}
 	
 	@GetMapping("/consultings/create")
@@ -73,6 +100,8 @@ public class ConsultingController {
 		
 		log.debug("<<상담 글 등록>> : " + consulting);
 		
+		consulting.setCon_content(StringUtil.useBrHtml(consulting.getCon_content()));
+		
 		consultingService.createConsulting(consulting);
 		
 		model.addAttribute("message","글이 성공적으로 등록되었습니다");
@@ -82,7 +111,7 @@ public class ConsultingController {
 	}
 	
 	@GetMapping("/consultings/detail/{con_num}")
-	public String detail(@PathVariable Long con_num, Model model) {
+	public String detail(@PathVariable Long con_num, Model model, HttpSession session) {
 		ConsultingVO consulting = consultingService.getConsulting(con_num);
 		consulting.setCon_rDate(DurationFromNow.getTimeDiffLabel(consulting.getCon_rDate()));
 		model.addAttribute("consulting",consulting);
@@ -94,88 +123,88 @@ public class ConsultingController {
 		List<Con_ReVO> cReList = consultingService.getListCon_Re(map);
 
 		model.addAttribute("cReList", cReList);
+		
+		boolean checkReply = false;
+		Object user = session.getAttribute("user");
+		if(user instanceof DoctorVO) {
+			DoctorVO doctor = (DoctorVO)user;
+			map.put("con_num", con_num);
+			map.put("doc_num", doctor.getMem_num());
+			checkReply = consultingService.isWriteReply(map);
+			model.addAttribute("checkReply",checkReply);
+		}
 		return "cDetail";
 	}
 	
-	@GetMapping("/consultings/modify/{con_num}")
-	public String update (@PathVariable Long con_num, Model model,HttpSession session) {
-		ConsultingVO consulting = consultingService.getConsulting(con_num);
-		Object user = session.getAttribute("user");
-		
-		if(user!=null) {
-			if(user.getClass().equals(MemberVO.class)) {
-				MemberVO member = (MemberVO)user;
-				if(member.getMem_num()==consulting.getMem_num()) {
-					consultingService.modifyConsulting(consulting);
-					model.addAttribute("consulting",consulting);
-					return "cUpdate";
-				} else {
-					model.addAttribute("url", "/consultings");
-					model.addAttribute("message","본인 글이 아니면 수정할 수 없습니다.");
-					return "/common/resultAlert";
-				}
-			} else if(user.getClass().equals(DoctorVO.class)) {
-				model.addAttribute("url", "/main/main");
-				model.addAttribute("message","잘못된 접근입니다.");
-				return "/common/resultAlert";
-			} else {
-				return "404Error";
-			}
-		} else {
-			model.addAttribute("url", "/consultings");
-			model.addAttribute("message", "본인 글이 아니면 수정할 수 없습니다.");
-			return "/common/resultAlert";
-		}
-	}
-	
-	@PostMapping("/consultings/modify/{con_num}")
-	public String update (@PathVariable Long con_num, ConsultingVO consulting, Model model) {
-		
-		ConsultingVO oldConsulting = consultingService.getConsulting(con_num);
-		oldConsulting.setCon_title(consulting.getCon_title());
-		oldConsulting.setCon_content(consulting.getCon_content());
-		oldConsulting.setCon_type(consulting.getCon_type());
-		
-		consultingService.modifyConsulting(oldConsulting);
+	@GetMapping("/consultings/detail-ajax")
+	@ResponseBody
+	public List<Con_ReVO> getReList(int pageNum, int pageItemNum, int con_num){
+		Map<String,Object> map = new HashMap<>();
+		map.put("pageNum", pageNum);
+		map.put("pageItemNum", pageItemNum);
+		map.put("con_num", con_num);
+		List<Con_ReVO> cReList = consultingService.getListCon_Re(map);
 
-		model.addAttribute("message","글이 성공적으로 수정되었습니다");
-		model.addAttribute("url","/consultings");
-		
-		return "/common/resultAlert";
+		return cReList;
 	}
 	
-	@GetMapping("/consultings/remove/{con_num}")
-	public String remove(HttpSession session, @PathVariable Long con_num, Model model) {
-		ConsultingVO consulting = consultingService.getConsulting(con_num);
-		
-		Object user = session.getAttribute("user");
-		
-		if(user!=null) {
-			if(user.getClass().equals(MemberVO.class)) {
-				MemberVO member = (MemberVO)user;
-				if(member.getMem_num()==consulting.getMem_num()) {
-					consultingService.removeConsulting(con_num);
-					model.addAttribute("url", "/consultings");
-					model.addAttribute("message","글 삭제가 완료되었습니다.");
-					return "/common/resultAlert";
-				} else {
-					model.addAttribute("url", "/consultings");
-					model.addAttribute("message","본인 글이 아니면 삭제할 수 없습니다.");
-					return "/common/resultAlert";
-				}
-			} else if(user.getClass().equals(DoctorVO.class)) {
-				model.addAttribute("url", "/main/main");
-				model.addAttribute("message","잘못된 접근입니다.");
-				return "/common/resultAlert";
-			} else {
-				return "404Error";
-			}
-		} else {
-			model.addAttribute("url", "/consultings");
-			model.addAttribute("message", "본인 글이 아니면 삭제할 수 없습니다.");
-			return "/common/resultAlert";
-		}
-	}
+	/*
+	 * @GetMapping("/consultings/modify/{con_num}") public String update
+	 * (@PathVariable Long con_num, Model model,HttpSession session) { ConsultingVO
+	 * consulting = consultingService.getConsulting(con_num); Object user =
+	 * session.getAttribute("user");
+	 * 
+	 * if(user!=null) { if(user.getClass().equals(MemberVO.class)) { MemberVO member
+	 * = (MemberVO)user; if(member.getMem_num()==consulting.getMem_num()) {
+	 * consultingService.modifyConsulting(consulting);
+	 * model.addAttribute("consulting",consulting); return "cUpdate"; } else {
+	 * model.addAttribute("url", "/consultings");
+	 * model.addAttribute("message","본인 글이 아니면 수정할 수 없습니다."); return
+	 * "/common/resultAlert"; } } else if(user.getClass().equals(DoctorVO.class)) {
+	 * model.addAttribute("url", "/main/main");
+	 * model.addAttribute("message","잘못된 접근입니다."); return "/common/resultAlert"; }
+	 * else { return "404Error"; } } else { model.addAttribute("url",
+	 * "/consultings"); model.addAttribute("message", "본인 글이 아니면 수정할 수 없습니다.");
+	 * return "/common/resultAlert"; } }
+	 */
+	
+	/*
+	 * @PostMapping("/consultings/modify/{con_num}") public String update
+	 * (@PathVariable Long con_num, ConsultingVO consulting, Model model) {
+	 * 
+	 * ConsultingVO oldConsulting = consultingService.getConsulting(con_num);
+	 * oldConsulting.setCon_title(consulting.getCon_title());
+	 * oldConsulting.setCon_content(consulting.getCon_content());
+	 * oldConsulting.setCon_type(consulting.getCon_type());
+	 * 
+	 * consultingService.modifyConsulting(oldConsulting);
+	 * 
+	 * model.addAttribute("message","글이 성공적으로 수정되었습니다");
+	 * model.addAttribute("url","/consultings");
+	 * 
+	 * return "/common/resultAlert"; }
+	 */
+	
+	/*
+	 * @GetMapping("/consultings/remove/{con_num}") public String remove(HttpSession
+	 * session, @PathVariable Long con_num, Model model) { ConsultingVO consulting =
+	 * consultingService.getConsulting(con_num);
+	 * 
+	 * Object user = session.getAttribute("user");
+	 * 
+	 * if(user!=null) { if(user.getClass().equals(MemberVO.class)) { MemberVO member
+	 * = (MemberVO)user; if(member.getMem_num()==consulting.getMem_num()) {
+	 * consultingService.removeConsulting(con_num); model.addAttribute("url",
+	 * "/consultings"); model.addAttribute("message","글 삭제가 완료되었습니다."); return
+	 * "/common/resultAlert"; } else { model.addAttribute("url", "/consultings");
+	 * model.addAttribute("message","본인 글이 아니면 삭제할 수 없습니다."); return
+	 * "/common/resultAlert"; } } else if(user.getClass().equals(DoctorVO.class)) {
+	 * model.addAttribute("url", "/main/main");
+	 * model.addAttribute("message","잘못된 접근입니다."); return "/common/resultAlert"; }
+	 * else { return "404Error"; } } else { model.addAttribute("url",
+	 * "/consultings"); model.addAttribute("message", "본인 글이 아니면 삭제할 수 없습니다.");
+	 * return "/common/resultAlert"; } }
+	 */
 	
 	
 	@PostMapping("/consultings/createReply")
@@ -190,7 +219,20 @@ public class ConsultingController {
 			} else if(user.getClass().equals(DoctorVO.class)) {
 				DoctorVO doctor = (DoctorVO)user;
 				con_re.setDoc_num(doctor.getDoc_num());
+				con_re.setCon_re_content(StringUtil.useBrHtml(con_re.getCon_re_content()));
 				consultingService.createCon_Re(con_re);
+				
+				Long mem_num = consultingService.getConsulting(con_re.getCon_num()).getMember().getMem_num();
+				
+				NotificationVO noti = new NotificationVO();
+				noti.setMem_num(mem_num);
+				noti.setNoti_category(5L);
+				noti.setNoti_message("의료 상담 답글이 등록되었습니다.");
+				noti.setNoti_link("<a href='/consultings/detail/"+con_re.getCon_num()+"'>답글 보러가기</a>");
+				
+				log.debug("<<알림 생성>> : " + noti);
+				
+				notificationService.insertNotification(noti);
 				
 				return "redirect:/consultings/detail/"+con_re.getCon_num();
 			} else {

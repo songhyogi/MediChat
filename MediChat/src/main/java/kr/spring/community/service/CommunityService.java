@@ -34,12 +34,15 @@ public interface CommunityService {
 	public Integer selectRowCountCommentAndReply(Map<String, Object> map); //댓글 및 답글 총 개수
 	
 	//댓글
+	public List<CommunityReplyVO> selectListComment(Map<String, Object> map);
 	public CommunityReplyVO selectComment(Long cre_num); //댓글개수
+	public Integer selectCountComment(Long cre_num);
 	public void insertComment(CommunityReplyVO communityReply);
 	public void updateComment(CommunityReplyVO communityReply);
 	public void deleteComment(Long cre_num);
 	
 	//대댓글
+	public List<CommunityReplyVO> selectListReply(Map<String, Object> map);
 	public CommunityReplyVO selectReply(Long cre_num);
 	public void insertReply(CommunityReplyVO communityReply);
 	public void updateReply(CommunityReplyVO communityReply);

@@ -29,4 +29,5 @@ public interface ReservationService {
     public void updateReservation(Long res_num,Long res_status);
     //예약내역 존재 여부
     public List<String> getResExist(Map<String,Object> map);
+    ReservationVO getReservationById(long res_num);
 }

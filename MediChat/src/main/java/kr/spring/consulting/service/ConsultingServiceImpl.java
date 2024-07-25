@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.spring.consulting.dao.ConsultingMapper;
 import kr.spring.consulting.vo.Con_ReVO;
 import kr.spring.consulting.vo.ConsultingVO;
+import kr.spring.util.DurationFromNow;
 
 @Service
 @Transactional
@@ -26,13 +27,65 @@ public class ConsultingServiceImpl implements ConsultingService{
 
 	@Override
 	public List<ConsultingVO> getListConsulting(Map<String, Object> map) {
-		return consultingMapper.selectListConsulting(map);
+		List<ConsultingVO> cList = consultingMapper.selectListConsulting(map);
+		for(ConsultingVO c:cList) {
+			c.setCon_rDate(DurationFromNow.getTimeDiffLabel(c.getCon_rDate()));
+			if(c.getCon_type()==0) {
+				c.setCon_type_name("전체");
+			} else if(c.getCon_type()==1) {
+				c.setCon_type_name("만성질환");
+			} else if(c.getCon_type()==2) {
+				c.setCon_type_name("여성질환");
+			} else if(c.getCon_type()==3) {
+				c.setCon_type_name("소화기질환");
+			} else if(c.getCon_type()==4) {
+				c.setCon_type_name("영양제");
+			} else if(c.getCon_type()==5) {
+				c.setCon_type_name("정신건강");
+			} else if(c.getCon_type()==6) {
+				c.setCon_type_name("처방약");
+			} else if(c.getCon_type()==7) {
+				c.setCon_type_name("탈모");
+			} else if(c.getCon_type()==8) {
+				c.setCon_type_name("통증");
+			} else if(c.getCon_type()==9) {
+				c.setCon_type_name("여드름,피부염");
+			} else if(c.getCon_type()==10) {
+				c.setCon_type_name("임신,성고민");
+			}
+		}
+		
+		return cList;
 	}
 
 
 	@Override
 	public ConsultingVO getConsulting(Long con_num) {
-		return consultingMapper.selectConsulting(con_num);
+		ConsultingVO c = consultingMapper.selectConsulting(con_num);
+		if(c.getCon_type()==0) {
+			c.setCon_type_name("전체");
+		} else if(c.getCon_type()==1) {
+			c.setCon_type_name("만성질환");
+		} else if(c.getCon_type()==2) {
+			c.setCon_type_name("여성질환");
+		} else if(c.getCon_type()==3) {
+			c.setCon_type_name("소화기질환");
+		} else if(c.getCon_type()==4) {
+			c.setCon_type_name("영양제");
+		} else if(c.getCon_type()==5) {
+			c.setCon_type_name("정신건강");
+		} else if(c.getCon_type()==6) {
+			c.setCon_type_name("처방약");
+		} else if(c.getCon_type()==7) {
+			c.setCon_type_name("탈모");
+		} else if(c.getCon_type()==8) {
+			c.setCon_type_name("통증");
+		} else if(c.getCon_type()==9) {
+			c.setCon_type_name("여드름,피부염");
+		} else if(c.getCon_type()==10) {
+			c.setCon_type_name("임신,성고민");
+		}
+		return c;
 	}
 
 
@@ -41,11 +94,17 @@ public class ConsultingServiceImpl implements ConsultingService{
 		consultingMapper.updateConsulting(consulting);
 	}
 
+	@Override
+	public boolean isWriteReply(Map<String,Object> map) {
+		return consultingMapper.selectReplyCntByDocNum(map) > 0 ? true : false;
+	}
 
 	@Override
 	public void removeConsulting(Long con_num) {
+		consultingMapper.deleteAllCon_Re(con_num);
 		consultingMapper.deleteConsulting(con_num);
 	}
+
 
 
 	@Override

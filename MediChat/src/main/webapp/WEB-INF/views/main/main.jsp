@@ -65,7 +65,7 @@
 					<div class="main-consult-item-content">${consulting.con_content}</div>
 					<div class="d-flex align-items-center">
 						<div class="rounded-4 bg-success"><img src="/images/doctor.png" width="20px" height="20px"></div>
-						<div class="main-consult-item-replyCnt">1개의 답변</div>
+						<div class="main-consult-item-replyCnt">${consulting.con_re_cnt}개의 답변</div>
 					</div>
 				</div>
 				</c:forEach>

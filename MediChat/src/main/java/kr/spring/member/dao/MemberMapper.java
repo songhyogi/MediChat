@@ -1,5 +1,8 @@
 package kr.spring.member.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -18,6 +21,9 @@ public interface MemberMapper {
 	@Insert("INSERT INTO member(mem_num,mem_id,mem_name) VALUES(#{mem_num},#{mem_id},#{mem_name})")
 	public void insertMember(MemberVO member);
 	public void insertMember_detail(MemberVO member);
+	//회원목록
+	public List<MemberVO> getMemList(Map<String,Object> map);
+	public Integer selectRowCount(Map<String, Object> map);
 	//회원상세정보
 	@Select("SELECT * FROM member JOIN member_detail USING(mem_num) WHERE mem_num=#{mem_num}")
 	public MemberVO selectMember(Long mem_num);
@@ -60,7 +66,9 @@ public interface MemberMapper {
 	public MemberVO checkUser(@Param("mem_id") String mem_id);
 	//==========관리자============
 	//회원등급수정
-	@Update("UPDATE member SET mem_auth=#{mem_auth} WHERE mem_num=#{mem_num}")
+	@Update("UPDATE member SET mem_auth=1 WHERE mem_num=#{mem_num}")
 	public void updateAuth(MemberVO member);
+	@Update("UPDATE member SET mem_auth=2 WHERE mem_num=#{mem_num}")
+	public void cancelAuth(MemberVO member);
 	
 }

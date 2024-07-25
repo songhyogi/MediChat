@@ -35,6 +35,8 @@ import kr.spring.doctor.service.DoctorService;
 import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
+import kr.spring.notification.service.NotificationService;
+import kr.spring.notification.vo.NotificationVO;
 import kr.spring.reservation.service.ReservationService;
 import kr.spring.reservation.vo.ReservationVO;
 import kr.spring.util.FileUtil;
@@ -54,6 +56,9 @@ public class ChatController {
 	
 	@Autowired
 	ReservationService reservationService;
+	
+	@Autowired
+	NotificationService notificationService;
 	
 	/*=======================
 	 * 	 비대면채팅 페이지 호출
@@ -77,12 +82,17 @@ public class ChatController {
             list = chatService.selectChatListForDoc(doctor.getMem_num());
 			log.debug("<<생성된 채팅방 호출>> - 의사회원번호: " + doctor.getMem_num());
 			log.debug("<<생성된 채팅방 호출>> - 일반회원번호: "+list);
+			model.addAttribute("list",list);
+			
+			return "chatViewForDoc";
+			
         } else if (user instanceof MemberVO) {
             MemberVO member = (MemberVO) user;
             model.addAttribute("user", member);
             list = chatService.selectChatListForMem(member.getMem_num());
 			log.debug("<<생성된 채팅방 호출>> - 일반회원번호: "+member.getMem_num());
 			log.debug("<<생성된 채팅방 호출>> - 일반회원번호: "+list);
+			
         }
 		
 		model.addAttribute("list",list);
@@ -136,6 +146,7 @@ public class ChatController {
 		
 		List<ChatMsgVO> msg_list = new ArrayList<ChatMsgVO>();
 		ReservationVO reservation = chatService.selectReservationByChatNum(chat_num);
+		ChatVO chat = chatService.selectChat(chat_num);
 		
 		//파라미터를 날짜 및 시각으로 파싱
 		LocalDate resDate = LocalDate.parse(reservation.getRes_date(), DateTimeFormatter.ISO_DATE);
@@ -160,7 +171,10 @@ public class ChatController {
 			map.put("res_time",res_time);
 			map.put("list",msg_list);
 			map.put("chat","open");
-		}else{
+			if(chat.getChat_status()==1) {
+				map.put("status", "completed");
+			}
+		}else if(LocalDateTime.now().isBefore(reservationDateTime)){
 			log.debug("<<채팅방 사용 불가>> - 예약 날짜/시간: "+resDate+"/"+resTime);
 			map.put("chat","close");
 		}
@@ -170,13 +184,6 @@ public class ChatController {
 	 return map;
 		
 	}
-	
-	//예약 확정 버튼 클릭 시 채팅방 생성
-	//@PostMapping("")
-	//public void submitRes(ReservationVO reservationVO) {
-		
-		
-	//}
 	
 	/*=======================
 	 * 	 	 메시지 입력
@@ -219,14 +226,35 @@ public class ChatController {
 	                                       ) throws Exception {
 		
 		Map<String,Object> map = new HashMap<String,Object>();
-		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		Object user = session.getAttribute("user");
+		
+		ChatMsgVO msg_image = new ChatMsgVO();
+		msg_image.setChat_num(chat_num);
+		
+		log.debug("<<이미지 전송 컨트롤러 진입 chat_num>>:"+chat_num);
 		
 		if(user == null) {
 			map.put("userCheck","logout");
-		}else {
+			return map;
+		}else if(user instanceof DoctorVO){
+			map.put("userCheck", "doctor");
+			msg_image.setMsg_sender_type(1);
 			
+		}else if(user instanceof MemberVO) {
+			map.put("userCheck", "member");
+			msg_image.setMsg_sender_type(0);
+		}	
 		
-		}
+			String save_image = FileUtil.createFile(request, select_image);
+			byte[] image = FileUtil.getBytes(request.getServletContext().getRealPath("/upload")+"/"+save_image);
+			
+			log.debug("<<파일 전송 - save_image>>:"+save_image);
+			log.debug("<<파일 전송 - image>>:"+image);
+			
+			msg_image.setMsg_image(image);
+			chatService.insertImage(msg_image);
+		
 		return map;
 	}
 	
@@ -521,8 +549,8 @@ public class ChatController {
 	    	log.debug("<<try문 진입>>");
 	    	String fileNotice = "예약번호: " +res_num+"의 결제가 완료되었습니다.";
 		    fileNotice += "<br>진단 서류가 도착했습니다.";
-		    fileNotice += "<br><button type='button' class='btn-message' id='btn_file' ";
-		    fileNotice += "data-mem_num='"+mem_num+"'>";
+		    fileNotice += "<br><button class='btn-message' id='btn_file' ";
+		    fileNotice += "data-mem_num='"+mem_num+"' onclick='location.href=\"/chat/myFiles\"'>";
 		    fileNotice += "나의 서류함으로</button>";
 		   
 		    ChatMsgVO msg = new ChatMsgVO();
@@ -542,6 +570,17 @@ public class ChatController {
 	        map.put("result", "paySuccess");
 	        
 	        log.debug("<<결제 완료 fileNotice>>: "+ fileNotice);
+	        
+	        NotificationVO noti = new NotificationVO();
+	        
+	        noti.setMem_num(mem_num);
+	        noti.setNoti_category((long) 1);
+	        noti.setNoti_message("예약번호:"+res_num+"의 진료가 완료되었습니다.");
+	        noti.setNoti_link("<a href='/chat/myFiles'>나의 서류함으로</a>");
+	        noti.setNoti_priority(1);
+	        
+	        notificationService.insertNotification(noti);
+	        
 	    } catch (Exception e) {
 	        map.put("result", "fail");
 	        // 로그에 예외 메시지를 기록

@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.spring.disease.service.DiseaseService;
+import kr.spring.disease.vo.DiseaseVO;
 import kr.spring.hospital.service.HospitalService;
 import kr.spring.hospital.vo.HospitalVO;
 import kr.spring.review.service.ReviewService;
@@ -37,6 +39,10 @@ public class HospitalController {
 	
 	@Autowired
 	private HospitalService hospitalService;
+	
+	@Autowired
+	private DiseaseService diseaseService;
+	
 	
 	// 병원
 	@GetMapping("/hospitals")
@@ -75,11 +81,24 @@ public class HospitalController {
 		model.addAttribute("subList",subList);
 
 		// 병원 (어떻게 아프신가요) 리스트 생성 후 값 넣기 (미완성)
+		List<DiseaseVO> dList = diseaseService.selectDisListByHit(10);
+		List<String> dNameList = new ArrayList<>();
+		for(DiseaseVO d : dList) {
+			dNameList.add(d.getDis_name());
+		}
+		
+		//어떻게 아프신가요?
 		List<String> howSick = new ArrayList<>(Arrays.asList("독감","탈모","비염","대상포진","다이어트","아토피"));
 		model.addAttribute("howSick", howSick);
 
 		// 병원 (인기 검색어) 리스트 생성 후 값 넣기 (미완성)
-		List<String> hotKeyWord = new ArrayList<>(Arrays.asList("여드름","지루성 피부염","감기","두드러기","역류성 식도염","보톡스","발열","백옥주사","당뇨"));
+		List<String> hotKeyWord = null;
+		if(dNameList.size()>=10) {
+			hotKeyWord = dNameList;
+		} else {
+			hotKeyWord = new ArrayList<>(Arrays.asList("여드름","지루성 피부염","감기","두드러기","역류성 식도염","보톡스","발열","백옥주사","당뇨"));
+		}
+		
 		model.addAttribute("hotKeyWord", hotKeyWord);
 		
 		// 지도에 병원 마커용

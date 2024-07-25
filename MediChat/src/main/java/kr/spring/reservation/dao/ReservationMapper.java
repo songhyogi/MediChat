@@ -35,4 +35,6 @@ public interface ReservationMapper {
     //예약내역 존재 여부 (의사가 스케줄 수정할 때 사용)
     @Select("SELECT res_time FROM reservation WHERE res_date=#{res_date} AND doc_num=#{doc_num}")
     public List<String> getResExist(Map<String,Object> map);
+    @Select("SELECT * FROM reservation WHERE res_num = #{res_num}")
+    ReservationVO getReservationById(long res_num);
 }

@@ -36,6 +36,9 @@
 		JOIN reservation r USING(res_num)
 		JOIN member m ON (c.doc_num = m.mem_num)
 		WHERE c.mem_num=#{mem_num}
+		ORDER BY c.chat_status,
+				 r.res_date ASC,
+				 r.res_time ASC
 	</select>
 	
 	<select id="selectChatListForDoc" parameterType="long" resultType="chatVO">
@@ -53,15 +56,19 @@
 		JOIN reservation r USING(res_num)
 		JOIN member m ON (c.mem_num = m.mem_num)
 		WHERE c.doc_num=#{mem_num}
+		ORDER BY c.chat_status,
+				 r.res_date ASC,
+				 r.res_time ASC
 	</select>
 	
 	<insert id="insertImage" parameterType="ChatMsgVO">
 		INSERT
-		INTO chat_msg(msg_num, chat_num, msg_content, msg_sender_type)
+		INTO chat_msg(msg_num, chat_num, msg_content, msg_sender_type, msg_image)
 		VALUES(msg_seq.nextval,
 			   #{chat_num},
-			   #{msg_content},
-			   #{msg_sender_type}
+			   #{msg_content, jdbcType=VARCHAR},
+			   #{msg_sender_type},
+			   #{msg_image, jdbcType=BLOB}
 			   )
 	
 	</insert>

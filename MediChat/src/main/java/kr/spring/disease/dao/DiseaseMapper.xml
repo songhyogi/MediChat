@@ -41,6 +41,19 @@
 		WHERE alnum >= #{start} AND alnum <= #{end}
 		]]>
 	</select>
+	
+
+
+
+	<select id="selectDisListByHit" parameterType="int" resultType="diseaseVO">
+		select * 
+		from (
+				select * 
+				from disease 
+				order by 
+				dis_hit desc) 
+		where #{itemNum} >= rownum
+	</select>
  </mapper>
 
 

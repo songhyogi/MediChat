@@ -19,7 +19,7 @@
 				<a href="/pharmacies/search?user_lat=${user_lat}&user_lon=${user_lon}" class="header-menu-text">약국 찾기</a>
 			</div>
 			<div class="header-menu">
-				<a href="/consultings" class="header-menu-text">의료상담</a>
+				<a href="/consultings" class="header-menu-text">의료 상담</a>
 			</div>
 			<div class="header-menu">
 				<a href="/health/healthBlog" class="header-menu-text">건강 블로그</a>
@@ -90,7 +90,12 @@
 					</div>
 					<div class="select-line"></div>
 					<div class="header-status-select">
-						<a href="/member/logout">로그아웃</a>
+						<c:if test="${mem_gender == null}">
+							<a href="/member/logout">로그아웃</a>						
+						</c:if>
+						<c:if test="${mem_gender != null}">
+							<a href="/member/naverLogout">로그아웃</a>						
+						</c:if>
 					</div>
 				</div>
 				</c:if>
@@ -139,6 +144,10 @@
 					</div>
 					<div class="select-line"></div>
 					<div class="header-status-select">
+						<a href="/member/changeAuth">회원권한 변경</a>
+					</div>
+					<div class="select-line"></div>
+					<div class="header-status-select">
 						<a href="/member/logout">로그아웃</a>
 					</div>
 				</div>
@@ -151,14 +160,9 @@
 <!-- 상단 끝 -->
 <div id="noti_div" style="display:none;" class="bg-white">
 	<div class="fw-7 fs-20 text-dark-7 text-center mb-4">알림 내역</div>
-	<c:if test="${empty noti_list}">
-		<div id="noti_noneNoti" class="fw-7 fs-17 text-dark-7 text-center">${user.mem_id}님에게 온 알림이 없습니다!</div>
-	</c:if>
-	<c:if test="${!empty noti_list}">
 		<div id="noti_box">
 			
 		</div>
-	</c:if>
 </div>
 <script>
 	function ring() {
@@ -171,9 +175,6 @@
 	  		img.classList.remove('bell-shake');
 	  		img.src="/images/notification.png";
 		}, { once: true });
-		let cnt = Math.floor($('#shakeCnt').text());
-		$('#shakeCnt').text('');
-		$('#shakeCnt').text(cnt+1);
 	}
 	
 	function fetchNotifications(param) {
@@ -200,11 +201,13 @@
                         output += '<div class="red-circle"></div>';
                         output += '<div class="text-dange fw-7 fs-13 me-1">중요</div>';
                     }
-                    output += '<div class="noti-item-message fs-16">'
+                    output += '<div class="noti-item-message fs-15">';
+                    output +=' <div class="noti-item-message-wrap">';
                     output += param.list[i].noti_message;
                     output += '</div>';
                     output += '</div>';
-                    output += '<div class="noti-item-category fs-12 fw-7">';
+                    output += '</div>';
+                    output += '<div class="noti-item-category fs-13 fw-7">';
                     if (param.list[i].noti_category == 1) {
                         output += '진료 관련 알림';
                     } else if (param.list[i].noti_category == 2) {
@@ -225,8 +228,10 @@
                     }
                     output += '</div>';
                 }
-                $('#noti_box').html(output);
+            } else {
+            	output += '<div id="noti_noneNoti" class="fw-7 fs-17 text-dark-7 text-center">${user.mem_id}님에게 온 알림이 없습니다!</div>';
             }
+            $('#noti_box').html(output);
         } else if (param.result == 'fail') {
             alert('ajax 오류');
         } else {
@@ -247,7 +252,19 @@
 	        }
 		});
 	});
-	
+	$('#header-notification-unreaded').click(function(){
+		ring();
+		$.ajax({
+	        url: "/notification-json",
+	        dataType: 'json',
+	        success: function(param) {
+	        	fetchNotifications(param);
+	        },
+	        error: function(){
+	        	alert('ajax 오류');
+	        }
+		});
+	});
 	
 	/* 알림 읽기 */
 	$(document).ready(function() {
@@ -300,11 +317,9 @@
 		
 		const header_notification_unreaded = document.getElementById('header-notification-unreaded');
 		header_notification_unreaded.onclick = function(){
-			if(noti_div.style.display == 'block'){
-				noti_div.style.display = 'none';
-			} else {
-				noti_div.style.display = 'block';
-			}
+			document.getElementById('noti_div').style.display = 'block';
+		    overlay.style.display = 'block';
+		    document.body.style.overflow = 'hidden'; // 외부 스크롤 비활성화
 		};
 	} else {/* 비로그인 시 */
 		/* 비로그인 시 */

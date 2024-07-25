@@ -26,7 +26,7 @@
 				<c:if test="${user.mem_auth==3}">
 					<input type="hidden" name="msg_sender_type" value="1">
 				</c:if>
-				<button type="button" class="chat-image bg-green-6" id="chat_image" disabled>
+				<button class="chat-image bg-green-6" id="chat_image" disabled>
 					<img src="${pageContext.request.contextPath}/images/chat_image.png" width="40px" height="40px">
 				</button>
 				<input type="text" name="msg_content" id="msg_content" disabled>
@@ -52,6 +52,18 @@
 	</div>
 <div class="image-form-bg"></div>
 <!-- 모달 창 끝 -->
+
+<!-- 이미지 크게 보기 모달 -->
+<div class="msg-image-modal">
+	<div class="form-title bg-green-7 fs-20 fw-4">
+		이미지 크게 보기
+		<button type="button" class="close-button">&times;</button>
+	</div>
+	<div id="msg_image"></div>
+</div>
+<div class="msg-image-modal-bg"></div>
+<!-- 이미지 크게 보기 모달 끝 -->
+
 <!-- 진료 종료 모달 창(파일 전송) 시작 -->
 <jsp:include page="chatClose.jsp"/>
 <!-- 진료 종료 모달 창(파일 전송) 끝 -->

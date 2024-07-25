@@ -36,4 +36,7 @@ public interface DiseaseMapper {
 	
 	@Update("UPDATE disease SET dis_hit= dis_hit+1 WHERE sickcd Like #{sickcd}")
 	public void updateDisHit(String sickcd);
+	
+	
+	public List<DiseaseVO> selectDisListByHit(int itemNum);
 }

@@ -80,7 +80,7 @@ $(function(){
 					res_title += '			</div>';
 					res_title += '			</div>';
 					if(param.type=='3'){
-						res_title += '			<button type="button" class="chat-close-btn" id="chat_close">진료 종료</button>';
+						res_title += '			<button type="button" class="chat-close-btn" id="chat_close" disabled>진료 종료</button>';
 					};
 
 					$('#chat_header').html(res_title);
@@ -88,28 +88,47 @@ $(function(){
 					let message = '';
 					message += '		<ul>';
 					if(param.chat=='open'){
-						//예약시간이 되어서 채팅방을 쓸 수 있는 상태
-						$('.chat-input input').prop('disabled', false);
-						$('.chat-input button').prop('disabled', false);
-						$(param.list).each(function(index,item){
-							if(param.type=='1'|| param.type=='2'){
-								if(item.msg_sender_type == 0){ //일반 회원이 0
-									//유저가 일반 회원이면서 일반 회원의 입력인 경우(본인이 보낸 메시지인 경우)
-									message += '			<li class="my-message bg-green-7 fs-17">'+item.msg_content+'</li>';
-								}else if(item.msg_sender_type == 1){
-									//유저가 일반 회원이면서 의사 회원의 입력인 경우(상대방이 보낸 메시지인 경우)
-									message += '			<li class="other-message bg-green-5 fs-17">'+item.msg_content+'</li>';
-								}
-							}else if(param.type=='3'){
-								if(item.msg_sender_type == 1){ //의사 회원이 1
-									//유저가 의사 회원이면서 일반 회원의 입력인 경우(본인이 보낸 메시지인 경우)
-									message += '			<li class="my-message bg-green-7 fs-17">'+item.msg_content+'</li>';
-								}else if(item.msg_sender_type == 0){
-									//유저가 의사 회원이면서 의사 회원의 입력인 경우(상대방이 보낸 메시지인 경우)
-									message += '			<li class="other-message bg-green-5 fs-17">'+item.msg_content+'</li>';
-								}
-							}//end of param.type(이용자 type)
-						}); //end of message list
+						if(param.status=='completed'){
+							$('.chat-input input').prop('disabled', true);
+                    		$('.chat-input button').prop('disabled', true);
+                    		$('#chat_close').prop('disabled',true);
+						}else{
+							$('.chat-input input').prop('disabled', false);
+	                    	$('.chat-input button').prop('disabled', false);
+	                    	$('#chat_close').prop('disabled',false);
+                    	}
+                    	$(param.list).each(function(index, item) {
+                        	if (param.type === '1' || param.type === '2') {
+                            	if (item.msg_sender_type === 0) { // 일반 회원이 0
+                                	// 유저가 일반 회원이면서 일반 회원의 입력인 경우(본인이 보낸 메시지인 경우)
+                                	message += ' <li class="my-message bg-green-7 fs-17">';
+                            	} else if (item.msg_sender_type === 1) {
+                                	// 유저가 일반 회원이면서 의사 회원의 입력인 경우(상대방이 보낸 메시지인 경우)
+                                	message += ' <li class="other-message bg-green-5 fs-17">';
+                            	}
+                        	} else if (param.type === '3') {
+                            	if (item.msg_sender_type === 1) { // 의사 회원이 1
+                                	// 유저가 의사 회원이면서 일반 회원의 입력인 경우(본인이 보낸 메시지인 경우)
+                                	message += ' <li class="my-message bg-green-7 fs-17">';
+                            	} else if (item.msg_sender_type === 0) {
+                                	// 유저가 의사 회원이면서 의사 회원의 입력인 경우(상대방이 보낸 메시지인 경우)
+                                	message += ' <li class="other-message bg-green-5 fs-17">';
+                            	}
+                        	}
+
+                        // 메시지 내용 추가
+                        if (item.msg_content) {
+                            message += item.msg_content;
+                        }
+
+                        // 이미지 추가
+                        if (item.msg_image) {
+                            message += '<img src="data:image/jpeg;base64,' + item.msg_image + '" class="msg-image"/>';
+                        }
+                        message += '</li>';
+                        
+                    }); // end of message list
+
 						
 						message += '	</ul>'
 						
@@ -273,13 +292,11 @@ $(function(){
 				if(param.userCheck=='logout'){
 					//로그아웃 상태인 경우, 메인으로 이동
 					alert('로그인 후 이용해주십시오');
+					message_socket.close();
 					window.location.href='/main/main';
-				}else if(param.userCheck=='login'){
-					//로그인 상태인 경우
-					if(param.result == 'imageSuccess'){
-						selectChat();
-					}
 				}
+				//로그인 상태인 경우
+				message_socket.send('msg');
 			},
 			error:function(){
 				alert('네트워크 오류 발생');
@@ -291,6 +308,34 @@ $(function(){
 		
 	}); //end of submit image
 	
+	/*=======================
+		 이미지 크게 보기
+	=========================*/
+	$('.chat-body').on('click','.msg-image',function(){
+		
+		let image = '<img src="';
+		let image_src = $(this).attr('src');
+		
+		image += image_src;
+		image += '">';
+		
+		$('#msg_image').html(image);
+		
+		$('.msg-image-modal').show();
+		$('.msg-image-modal-bg').show();
+		
+	});
+	
+	$('.msg-image-modal .close-button').click(function(event){
+		//기본 이벤트 제거
+		event.preventDefault();
+		
+		console.log('닫기 버튼 클릭 이벤트 발생');
+		
+		
+		$('.msg-image-modal-bg').hide();
+		$('.msg-image-modal').hide();
+	});
 	/*=======================
 		  채팅 종료 폼 노출
 	=========================*/
@@ -572,8 +617,8 @@ $(function(){
 				if(param.list == 'null'){
 					//해당 채팅방 파일 목록이 없는 경우
 					fileList+='<div class="close-room">';
-					fileList+='		<img src="../images/myFiles.png" width="60px" height="60px" class="chat-bubble">';
-					fileList+='		<span class="fs-21 chat-notice fw-5">해당 채팅방에 열람할 자료가 없습니다.</span>';
+					fileList+='		<img src="../images/my_files.png" width="60px" height="60px" class="chat-bubble">';
+					fileList+='		<span class="fs-21 chat-notice fw-8">해당 채팅방에 열람할 자료가 없습니다.</span>';
 					fileList+='</div>';
 				}else{
 					//해당 채팅방 파일 목록이 있는 경우
@@ -677,8 +722,12 @@ $(function(){
                    		success: function(param) {
 							if(param.result == 'paySuccess'){
                        			alert("결제가 완료되었습니다.");
+                       			$('#chat_close').css('display','none');
+                       			$('.chat-input input').prop('disabled', true);
+								$('.chat-input button').prop('disabled', true);
+								
                        			console.log('서버 응답:', param);
-                       			selectChat();
+                       			message_socket.send('msg');      
                        		}else if(param.result == 'fail'){
 								alert("결제에 실패했습니다. 예외 발생");
 							}else{

@@ -308,6 +308,9 @@
 	font-size: 14px;
 	color: #8D9297;
 	margin: 8px 0;
+	max-height: 63px;
+	overflow: hidden;
+    text-overflow: ellipsis;
 }
 .consulting-item-type{
 	display:flex;
@@ -322,7 +325,7 @@
 .consulting-item-reCnt{
 	display: flex;
 	margin: 15px 0;
-	justify-content: start;
+	justify-content: space-between;
 	align-items: center;
 	font-size: 14px;
 	font-weight: 700;
@@ -386,4 +389,28 @@
 }
 
 /* =================== consultings/detail =================== */
-
+.toGoHosBtn{
+	 color: #565c65; 
+	 border:none; 
+	 background-color:#EDEFF0;
+	 border-radius: 15px;
+	 padding: 24px;
+	 font-weight: 700;
+}
+.toGoHosBtn:hover{
+	background-color:#d6d6d6;	
+}
+.goodBtn,.badBtn{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 450px;
+	height: 60px;
+	border: 1px solid #d6d6d6;
+	border-radius: 10px;
+	color: #565C65;
+	font-weight: 700;
+	font-size: 16px;
+	margin: 10px 5px;
+	cursor: pointer;
+}
