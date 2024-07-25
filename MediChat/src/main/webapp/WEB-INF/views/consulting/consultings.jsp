@@ -24,7 +24,7 @@
 			$('#typeForm').submit();
 		})
 	</script>
-	<button id="consulting-btn" onclick="location.href='/consultings/create'">글 작성</button>
+	<button id="consulting-btn" onclick="location.href='/consultings/create'">질문하기</button>
 	<div id="consulting-div">
 		<c:forEach items="${consultingList}" var="consulting">
 			<div class="consulting-item-div" data-conNum="${consulting.con_num}">

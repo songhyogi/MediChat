@@ -201,13 +201,13 @@
                         output += '<div class="red-circle"></div>';
                         output += '<div class="text-dange fw-7 fs-13 me-1">중요</div>';
                     }
-                    output += '<div class="noti-item-message fs-16">';
+                    output += '<div class="noti-item-message fs-15">';
                     output +=' <div class="noti-item-message-wrap">';
                     output += param.list[i].noti_message;
                     output += '</div>';
                     output += '</div>';
                     output += '</div>';
-                    output += '<div class="noti-item-category fs-12 fw-7">';
+                    output += '<div class="noti-item-category fs-13 fw-7">';
                     if (param.list[i].noti_category == 1) {
                         output += '진료 관련 알림';
                     } else if (param.list[i].noti_category == 2) {

@@ -547,6 +547,14 @@ body{
         transform: translateX(0%); /* 끝 위치 */
     }
 }
+.noti-item-link a{
+	font-size: 12px;
+	font-weight: 700;
+	text-decoration: none;
+	color: #2F3E46;
+}
+
+
 .header-status-rightBox{
 	width: 70px;
 }

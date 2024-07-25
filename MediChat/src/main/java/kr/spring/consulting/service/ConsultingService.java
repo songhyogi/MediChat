@@ -13,6 +13,8 @@ public interface ConsultingService {
 	public ConsultingVO getConsulting(Long con_num);
 	public void modifyConsulting(ConsultingVO consulting);
 	
+	public boolean isWriteReply(Map<String,Object> map);
+	
 	public void removeConsulting(Long con_num);
 	
 	

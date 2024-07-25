@@ -308,6 +308,9 @@
 	font-size: 14px;
 	color: #8D9297;
 	margin: 8px 0;
+	max-height: 63px;
+	overflow: hidden;
+    text-overflow: ellipsis;
 }
 .consulting-item-type{
 	display:flex;
