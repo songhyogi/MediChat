@@ -13,19 +13,37 @@
 		<c:forEach var="item" items="${list}">
 		<!-- li에 들어가야 할 항목(일반회원)- 진료일시, 의사명 -->
 			<c:if test="${user.getMem_auth()==2}">
-				<tr>
+				<c:if test="${item.getChat_status()==1}">
+				<tr class="bg-gray-3">
 					<td><a href="/chat/chatRoom" class="chat-room fs-18 text-black-4" data-chat-num="${item.chat_num}" data-res-date="${item.res_date}" data-res-time="${item.res_time}" data-res-num="${item.res_num}">
 					${item.res_date} ${item.res_time}
 					<br>${item.mem_name} 의사</a></td>
 				</tr>
+				</c:if>
+				<c:if test="${item.getChat_status()==0}">
+					<tr>
+						<td><a href="/chat/chatRoom" class="chat-room fs-18 text-black-4" data-chat-num="${item.chat_num}" data-res-date="${item.res_date}" data-res-time="${item.res_time}" data-res-num="${item.res_num}">
+						${item.res_date} ${item.res_time}
+						<br>${item.mem_name} 의사</a></td>
+					</tr>
+				</c:if>
 			</c:if>
 		<!-- li에 들어가야 할 항목(의사회원)- 진료일시, 환자명 -->
 			<c:if test="${user.getMem_auth() ==3}">
-			<tr>
-				<td><a href="/chat/chatRoom" class="chat-room fs-18 text-black-4" data-chat-num="${item.chat_num}" data-res-date="${item.res_date}" data-res-time="${item.res_time}" data-res-num="${item.res_num}">
-				${item.res_date} ${item.res_time}
-				<br>${item.mem_name} 환자</a></td>
-			</tr>
+				<c:if test="${item.getChat_status()==1}">
+					<tr class="bg-gray-3">
+						<td><a href="/chat/chatRoom" class="chat-room fs-18 text-black-4" data-chat-num="${item.chat_num}" data-res-date="${item.res_date}" data-res-time="${item.res_time}" data-res-num="${item.res_num}">
+						${item.res_date} ${item.res_time}
+						<br>${item.mem_name} 환자</a></td>
+					</tr>
+				</c:if>
+				<c:if test="${item.getChat_status()==0}">
+					<tr>
+						<td><a href="/chat/chatRoom" class="chat-room fs-18 text-black-4" data-chat-num="${item.chat_num}" data-res-date="${item.res_date}" data-res-time="${item.res_time}" data-res-num="${item.res_num}">
+						${item.res_date} ${item.res_time}
+						<br>${item.mem_name} 환자</a></td>
+					</tr>
+				</c:if>
 			</c:if>
 		</c:forEach>
 	</table>

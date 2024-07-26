@@ -14,15 +14,17 @@
 	text-align:left;
 	margin-left:15px;
 }
-
+.padding-left-40{
+	padding-left:40px;
+}
 .display{
 	display:flex;
-	padding:0 10px 10px 10px;
 }
 .nav-body{
 	width:200px;
-	height:800px;
-	overflow:auto;
+	height:798px;
+	overflow-y:auto;
+	overflow-x:hidden;
 }
 .nav-item{
 	width:200px;
@@ -141,7 +143,7 @@
 	word-wrap: break-word; /* 긴 단어의 줄바꿈 처리 */
   	overflow-wrap: break-word;
   	padding:10px;
-  	margin-left:5px;
+  	margin:5px 0 5px 5px;
 }
 .my-message{
 	overflow:auto;
@@ -151,6 +153,7 @@
 	word-wrap: break-word; /* 긴 단어의 줄바꿈 처리 */
   	overflow-wrap: break-word;
   	padding:10px;
+  	margin:5px 5px 5px 0;
 }
 .msg-image{
 	border-radius: 5px;
@@ -457,7 +460,7 @@ label[for="file_valid_date"]{
 }
 .modal-header{
 	width:500px;
-	height:100px;
+	height:70px;
 	color:white;
 }
 /*.modal-header .close{
@@ -482,8 +485,11 @@ label[for="file_valid_date"]{
 	padding-left:20px;
 }
 
+.drug-table{
+	table-layout:fixed;
+}
 .drug-table-title{
-	width:200px;
+	width:150px;
 }
 .drug-table-image{
 	width:500px;
@@ -506,13 +512,49 @@ label[for="file_valid_date"]{
 	transform:translateX(260px);
 }
 .list-drug-name{
-	margin-left:30px;
+	margin:0 60px 0 60px;
 }
+
 .drug-keyfield{
 	height:50px;
-	width:70px;
+	width:130px;
+	margin-right:7px;
 }
 .drug-keyword{
-	height:50px;
-	width:300px;
+	height:50px;	
+}
+.page-one{
+	width:900px;
+	margin:0 auto 100px auto;
+}
+.drug-table tr th,
+.drug-table tr td{
+	padding:20px 0;
+}
+.drug-table tr td{
+	 text-overflow:ellipsis;
+	 overflow:hidden;
+	 white-space:nowrap;
+}
+.drug-name-th,
+.drug-name-td{
+	width:550px;
+}
+.drug-search{
+	width:500px;
+	margin:0 auto;
+}
+.drug-search ul li{
+	display:flex;
+	justify-content: center;
+	margin-right:0;
+}
+#h-search-icon{
+	font-size:20px;
+	transform:translateX(-30px);
+	align-self:center;
+	cursor:pointer;
+}
+.text-lightgray{
+	color:#71767a;
 }
