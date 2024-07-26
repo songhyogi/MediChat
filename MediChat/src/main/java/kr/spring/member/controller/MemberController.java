@@ -153,7 +153,7 @@ public class MemberController {
 				//=====자동 로그인 끝=====
 				//로그인 처리
 				session.setAttribute("user", member);
-				
+				session.setAttribute("user_type", "membert");
 				/* ksy 알림 처리 시작 */
 				int noti_cnt = notificationService.selectCountNotification(member.getMem_num());
 				session.setAttribute("noti_cnt", noti_cnt);
@@ -567,6 +567,10 @@ public class MemberController {
 			return "redirect:/member/login";
 		}else {
 			Map<String, Object> map = new HashMap<String, Object>();
+			MemberVO member = new MemberVO();
+			member.setMem_num(user.getMem_num());
+			
+			map.put("mem_num",member.getMem_num());
 			
 			List<ConsultingVO> consultList = memberService.consultList(map);
 			
