@@ -221,13 +221,11 @@ body{
     position: -webkit-sticky; /* Safari용 */
     position: sticky;
     top: 0;
-    z-index: 1000; /* 다른 콘텐츠 위에 있도록 조정 필요 */
 }
 .sticky-bottom-container {
     position: -webkit-sticky; /* Safari용 */
     position: sticky;
     bottom: 0;
-    z-index: 1000; /* 다른 콘텐츠 위에 있도록 조정 필요 */
 }
 /* ================= 버튼 ================= */
 .btn-green {
@@ -361,13 +359,16 @@ body{
 	font-weight: 600;
 	color: #333333;
 	margin-bottom: 13px;
+	height:22px;
+	overflow:hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 .main-consult-item-content{
 	font-size: 14px;
 	color: #757575; 
 	margin-bottom: 5px;
-	
-	white-space: nowrap;
+	height:40px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
