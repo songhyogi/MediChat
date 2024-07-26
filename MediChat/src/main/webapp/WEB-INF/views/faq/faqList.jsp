@@ -48,11 +48,11 @@
 		<c:if test="${count > 0}">
 			<c:forEach var="f" items="${list}">
 				<br>
-				<div>
+				<div style=" padding-bottom:10px;">
 					<a
 						href="${pageContext.request.contextPath}/faq/faqDetail?faq_num=${f.faq_num}">
-						<ul style="margin: 0 auto; float: left; width: 70%">
-							<li style="font-size: 16pt;">${f.faq_title}</li>
+						<ul  id="faqList" style="margin: 0 auto; float: left; width: 70%">
+							<li style="font-size: 16pt;">Q. ${f.faq_title}</li>
 							<li class="fs-16 fw-5 text-black-3">${f.f_reg_date}
 								&nbsp;조회수 : ${f.faq_hit} &nbsp;</li>
 						</ul>

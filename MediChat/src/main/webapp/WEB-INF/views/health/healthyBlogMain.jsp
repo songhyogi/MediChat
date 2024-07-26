@@ -21,7 +21,7 @@
 </script>
 <div class="page-main">
 	<div class="page-one" style="margin: auto;">
-		<h5>홈 > 건강 블로그</h5>
+		<h5>홈 > 건강 블로그</h5><a href="${pageContext.request.contextPath}/member/healthyMy">(개발)내 목록 보러가기>></a>
 		<p>
 		<h1>
 			<img src="${pageContext.request.contextPath}/images/blogging.png" width="45px;"> <b>건강 블로그</b>
@@ -85,7 +85,7 @@
 				</c:if>
 			</c:if>
 			<div style="clear: both;"></div>
-			<div class="align-right">
+			<div class="align-right float-clear">
 				<a href="${pageContext.request.contextPath}/video/videoList">건강비디오 목록 보러가기>></a>
 			</div>
 
@@ -101,16 +101,16 @@
 		<c:if test="${count > 0}">
 
 			<c:forEach var="h" items="${list}">
-			<a href="${pageContext.request.contextPath}/health/healthDetail?healthy_num=${h.healthy_num}">
-				<div class="healthy_list" style="width:400px; float:left; margin:25px; padding-bottom:20px;">
+			<a href="${pageContext.request.contextPath}/health/healthDetail?healthy_num=${h.healthy_num}" >
+				<div class="healthy_list" style="width:400px; float:left; margin:25px; padding-bottom:20px; height:200px;">
 					<div class="float-left">
-							<ul>
+							<ul style="height:200px">
 								<li style="font-size: 16pt;">${h.healthy_title}</li>
-								<li>${fn:substring(h.healthy_content,0,fn:indexOf(h.healthy_content, '.')+1)}<br><span class="fs-15 fw-5 text-black-3">${h.h_reg_date}</span><br></li>
-								<li class="align-right fs-14 fw-5 text-black-3" style="padding-right:18px;"><br> 조회수: ${h.healthy_hit}&nbsp; ♡ : ${h.fav_cnt}&nbsp; &nbsp;<img src="../images/speech.png"
+								<li>${fn:substring(fn:substring(h.healthy_content,0,fn:indexOf(h.healthy_content, '.')+1),0,52)}<br><span class="fs-15 fw-5 text-black-3">${h.h_reg_date}</span><br></li>
+								<li class="align-right fs-14 fw-5 text-black-3" style="padding-right:18px;">조회수: ${h.healthy_hit}&nbsp; ♡ : ${h.fav_cnt}&nbsp; &nbsp;<img src="../images/speech.png"
 									width="15px;"> : ${h.re_cnt}
 								</li>
-								<li>	<div class="line"></div></li>
+								<li><div class="line"></div></li>
 							</ul>
 					</div>
 					<div class="healthy_image">
@@ -131,7 +131,9 @@
 					onclick="location.href='${pageContext.request.contextPath}/health/healWrite'">글쓰기</button>
 			</div>
 		</c:if>
-		<div class="align-right">
+		<br>
+		<br>
+		<div class="align-right float-clear">
 			<a href="${pageContext.request.contextPath}/health/healthM">건강매거진 목록 보러가기>></a>
 		</div>
 	</div>

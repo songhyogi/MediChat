@@ -154,6 +154,66 @@
 	 							 ORDER BY hre_num ASC
 	 				) a ) 
 	 </select>
+	 <select id="selectMyFavHealCount" parameterType="map" resultType="integer">
+	 	SELECT COUNT(*)
+	 	FROM healthy_fav 
+	 	WHERE mem_num=#{mem_num}
+	 </select>
+	 <select id="selectMyFavHealList" parameterType="map" resultType="healthyBlogVO">
+	 	
+	 	SELECT 
+	 		healthy_num,
+	 		healthy_title,
+	 		h_reg_date,
+	 		h_modify_date
+	 	FROM(SELECT rownum anum,
+	 							 a.* 
+	 				FROM (
+				 				SELECT * 
+							 	FROM healthy_fav JOIN healthy_blog USING(healthy_num)
+							 	WHERE mem_num=#{mem_num}
+							 	ORDER BY healthy_num DESC	) a)		
+	 	<![CDATA[
+	 	WHERE anum>=#{start} AND anum<=#{end}
+	 	]]>
+	 </select>
+	  <select id="selectMyFavHealReCount" parameterType="map" resultType="integer">
+	 	SELECT COUNT(*)
+	 	FROM healthy_re_fav 
+	 	WHERE mem_num=#{mem_num}
+	 </select>
+	 <select id="selectMyFavReHealList" parameterType="map" resultType="healthyReplyVO">
+	 	SELECT *
+	 	FROM(SELECT rownum anum,
+	 							 a.* 
+	 				FROM (
+							 	SELECT * 
+							 	FROM healthy_re_fav JOIN healthy_re USING(hre_num)
+							 										  JOIN healthy_blog USING(healthy_num)
+							 	WHERE mem_num=#{mem_num}
+							 	ORDER BY hre_num DESC	) a)
+	 	 <![CDATA[
+	 	WHERE anum>=#{start} AND anum<=#{end}
+	 	]]>
+	 </select>
+	 <select id="selectMyHealReCount" parameterType="map" resultType="integer">
+	 	SELECT COUNT(*)
+	 	FROM healthy_re 
+	 	WHERE mem_num=#{mem_num}
+	 </select>
+	 <select id="selectMyReHealList" parameterType="map" resultType="healthyReplyVO">
+	 	SELECT *
+	 	FROM(SELECT rownum anum,
+	 							 a.* 
+	 				FROM (
+								 	SELECT * 
+								 	FROM healthy_re  JOIN healthy_blog USING(healthy_num)
+								 	WHERE mem_num=#{mem_num}
+								 	ORDER BY hre_num DESC	)a)	
+		<![CDATA[
+	 	WHERE anum>=#{start} AND anum<=#{end}
+	 	]]>
+	 </select>
  </mapper>
 
 

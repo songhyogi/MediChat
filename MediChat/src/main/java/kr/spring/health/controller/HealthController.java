@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.health.service.HealthyService;
 import kr.spring.health.vo.HealthyBlogVO;
+import kr.spring.health.vo.HealthyReplyVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.FileUtil;
 import kr.spring.util.PagingUtil;
@@ -41,6 +42,50 @@ public class HealthController {
 	public HealthyBlogVO initCommand() {
 		return new HealthyBlogVO();
 	}
+	//마이페이지
+	@GetMapping("/member/healthyMy")
+	public String getMyHeathList(HttpServletRequest request,HttpSession session,@RequestParam(defaultValue="1") int pageNum,@RequestParam(defaultValue="1") int rpageNum,Model model) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		String user_type = (String)session.getAttribute("user_type");
+		Object user = (Object) session.getAttribute("user");
+
+		if(user != null) {
+			
+				MemberVO muser = (MemberVO) user;
+				map.put("mem_num", muser.getMem_num());
+			
+		}else {
+			model.addAttribute("message","로그인 후 사용가능합니다.");
+			model.addAttribute("url",request.getContextPath()+"/member/login");
+			return "common/resultAlert";
+		}
+		int count = service.selectMyFavHealCount(map);
+
+		PagingUtil page = new PagingUtil(pageNum,count,5,10,"healthyMy");
+
+		map.put("start", page.getStartRow());
+		map.put("end", page.getEndRow());
+
+		List<HealthyBlogVO> list = service.selectMyFavHealList(map);
+
+		model.addAttribute("list",list);
+		model.addAttribute("count",count);
+		model.addAttribute("page",page.getPage());
+
+		
+		int reFavcount = service.selectMyFavHealReCount(map);
+		PagingUtil repage = new PagingUtil(rpageNum,reFavcount,5,10,"healthyMy");
+		map.put("start", repage.getStartRow());
+		map.put("end", repage.getEndRow());
+		List<HealthyReplyVO> relist = service.selectMyFavReHealList(map);
+		model.addAttribute("relist",relist);
+		model.addAttribute("recount",reFavcount);
+		model.addAttribute("repage",repage.getPage());
+	
+	
+		return"myFavHealthyList";
+	}
+	
 	@GetMapping("/health/healthBlog")
 	public String getHeathList(@RequestParam(defaultValue="1") int pageNum,String keyword, String keyfield,@RequestParam(defaultValue="1") int vpageNum,String vkeyword, String vkeyfield,Model model) {
 		Map<String,Object> map =new HashMap<String,Object>();

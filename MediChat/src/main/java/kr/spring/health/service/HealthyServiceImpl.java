@@ -166,6 +166,42 @@ public class HealthyServiceImpl implements HealthyService{
 		return mapper.selectReHreList(map);
 	}
 
+	@Override
+	public Integer selectMyFavHealCount(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mapper.selectMyFavHealCount(map);
+	}
+
+	@Override
+	public List<HealthyBlogVO> selectMyFavHealList(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mapper.selectMyFavHealList(map);
+	}
+
+	@Override
+	public Integer selectMyFavHealReCount(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mapper.selectMyFavHealReCount(map);
+	}
+
+	@Override
+	public List<HealthyReplyVO> selectMyFavReHealList(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mapper.selectMyFavReHealList(map);
+	}
+
+	@Override
+	public Integer selectMyHealReCount(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mapper.selectMyHealReCount(map);
+	}
+
+	@Override
+	public List<HealthyReplyVO> selectMyReHealList(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mapper.selectMyReHealList(map);
+	}
+	
 
 
 }

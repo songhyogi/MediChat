@@ -51,7 +51,7 @@
 			<c:forEach var="h" items="${list}">
 				<a href="${pageContext.request.contextPath}/health/healthDetail?healthy_num=${h.healthy_num}">
 				<div class="healthy_list">
-					<div class="float-left">
+					<div class="float-left" style="padding-right:120px;">
 							<ul>
 								<li style="font-size: 16pt;">${h.healthy_title}</li>
 								<li>${fn:substring(h.healthy_content,0,fn:indexOf(h.healthy_content, '.')+1)}</li>
