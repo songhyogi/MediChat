@@ -148,6 +148,18 @@ public class ChatController {
 		ReservationVO reservation = chatService.selectReservationByChatNum(chat_num);
 		ChatVO chat = chatService.selectChat(chat_num);
 		
+		//환자 회원 정보
+		MemberVO patient = memberService.selectMember(chat.getMem_num());
+		
+		//환자 회원이 탈퇴 or 정지 회원인 경우
+		if(patient.getMem_auth()==0) { //탈퇴 회원인 경우
+			map.put("patient", "withdrawal");
+			return map;
+		}else if(patient.getMem_auth()==1){ //정지 회원인 경우
+			map.put("patient", "suspended");
+			return map;
+		}
+		
 		//파라미터를 날짜 및 시각으로 파싱
 		LocalDate resDate = LocalDate.parse(reservation.getRes_date(), DateTimeFormatter.ISO_DATE);
 		LocalTime resTime = LocalTime.parse(reservation.getRes_time(), DateTimeFormatter.ofPattern("HH:mm"));

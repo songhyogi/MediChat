@@ -87,6 +87,19 @@ $(function(){
 					
 					let message = '';
 					message += '		<ul>';
+					
+					if(param.patient=='withdrawal'){
+						message += '<div class="close-room">';
+						message += '<img src="../images/suspanded.png" width="40px" height="40px">';
+						message += '<span class="fs-21 chat-notice fw-8">해당 환자는 탈퇴한 회원입니다.</span>';
+						message += '</div>';
+					}else if(param.patient=='suspended'){
+						message += '<div class="close-room">';
+						message += '<img src="../images/suspanded.png" width="40px" height="40px">';
+						message += '<span class="fs-21 chat-notice fw-8">해당 환자는 정지된 회원입니다.</span>';
+						message += '</div>';
+					}
+					
 					if(param.chat=='open'){
 						if(param.status=='completed'){
 							$('.chat-input input').prop('disabled', true);
