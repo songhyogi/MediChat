@@ -204,8 +204,11 @@ public class DoctorController {
 		log.debug("<<의사회원정보 수정 - 로그인 정보>> : " + user);
 		
 		if(user == null) {
-			return "redirect:/main/main";
-		}
+	         model.addAttribute("message","로그인이 필요합니다.");
+	         model.addAttribute("url","/doctor/login");
+	         return "common/resultAlert";
+	    }
+
 		DoctorVO doctor = doctorService.selectDoctor(user.getDoc_num());
 		HospitalVO hospital = hospitalService.selectHospital(user.getHos_num());
 		
@@ -215,7 +218,7 @@ public class DoctorController {
 		return "doctorModify";
 	}
 	@PostMapping("/doctor/modifyDoctor")
-	public String updateSubmit(@Valid DoctorVO doctorVO,BindingResult result,HttpSession session) {
+	public String updateSubmit(@Valid DoctorVO doctorVO,BindingResult result,HttpSession session,Model model) {
 		
 		log.debug("<<의사회원정보 수정>> : "+doctorVO);
 		
@@ -228,10 +231,17 @@ public class DoctorController {
 		
 		doctorService.updateDoctor(doctorVO);
 		
+		user.setMem_name(doctorVO.getMem_name());
+		user.setDoc_email(doctorVO.getDoc_email());
 		user.setHos_num(doctorVO.getHos_num());
+		user.setDoc_history(doctorVO.getDoc_history());
 		
-		return "redirect:/main/main";
+		model.addAttribute("message","정보가 수정되었습니다.");
+        model.addAttribute("url","/doctor/docPage");
+		
+        return "common/resultAlert";
 	}
+
 	/*=============================
 	 * 아이디 찾기
 	 ============================*/
@@ -371,17 +381,20 @@ public class DoctorController {
 	 * 의사회원탈퇴
 	 ============================*/
 	@GetMapping("/doctor/deleteDoctor")
-	public String deleteForm(HttpSession session) {
+	public String deleteForm(HttpSession session,Model model) {
 		DoctorVO user = (DoctorVO) session.getAttribute("user");
 		if (user == null || user.getMem_auth() != 3) {
-			return "redirect:/doctor/login";
+			model.addAttribute("message","로그인이 필요합니다.");
+	        model.addAttribute("url","/doctor/login");
+	        
+	        return "common/resultAlert";
 		}
 		return "doctorDelete";
 	}
-
 	// 탈퇴 폼에서 전송된 데이터 처리
 	@PostMapping("/doctor/deleteDoctor")
-	public String deleteSubmit(@Valid DoctorVO doctorVO, BindingResult result, HttpSession session) {
+	public String deleteSubmit(@Valid DoctorVO doctorVO, BindingResult result, HttpSession session,
+														Model model,HttpServletRequest request) {
 
 		// 아이디와 비밀번호 유효성 체크
 		if (result.hasFieldErrors("mem_id") || result.hasFieldErrors("doc_passwd")
@@ -421,7 +434,10 @@ public class DoctorController {
 
 		session.invalidate();
 
-		return "redirect:/main/main";
+		model.addAttribute("message","회원탈퇴 되었습니다.");
+		model.addAttribute("url",request.getContextPath()+"/main/main");
+        
+        return "common/resultAlert";
 	}
 
 	/*=============================

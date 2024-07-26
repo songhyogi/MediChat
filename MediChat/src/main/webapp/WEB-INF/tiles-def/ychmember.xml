@@ -33,6 +33,10 @@
       <put-attribute name="title" value="나의 예약 내역"/>
       <put-attribute name="body" value="/WEB-INF/views/reservation/myReservationList.jsp"/>
    </definition>
+   <definition name="myConsult" extends="ychmember">
+      <put-attribute name="title" value="나의 의료상담 내역"/>
+      <put-attribute name="body" value="/WEB-INF/views/mypage/myConsult.jsp"/>
+   </definition>
    <definition name="memberDrugList" extends="ychmember">
       <put-attribute name="title" value="회원 의약품 상세"/>
       <put-attribute name="body" value="/WEB-INF/views/drug/memberDrugList.jsp"/>

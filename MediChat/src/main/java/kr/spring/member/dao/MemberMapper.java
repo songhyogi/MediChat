@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import kr.spring.consulting.vo.ConsultingVO;
 import kr.spring.member.vo.MemberVO;
  
 @Mapper
@@ -43,6 +44,8 @@ public interface MemberMapper {
 	@Delete("DELETE FROM member_detail WHERE mem_num=#{mem_num}")
 	public void deleteMember_detail(MemberVO member);
 	
+	//나의 의료상담 목록
+	public List<ConsultingVO> consultList(Map<String,Object> map);
 	
 	//자동 로그인
 	@Update("UPDATE member_detail SET mem_au_id=#{mem_au_id} WHERE mem_num=#{mem_num}")

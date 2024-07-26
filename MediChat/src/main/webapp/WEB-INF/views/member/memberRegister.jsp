@@ -5,9 +5,6 @@
 <!-- 회원가입 시작 -->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style>
-.btn.green{
-	background-color:rgb(102, 178, 178);
-}
 .rounded {
 	border-radius: 10px;
 }
@@ -29,54 +26,54 @@
 		<div class="form-main">
 		<ul>
 			<li style="margin-top:20px;">
-				<form:label path="mem_id">아이디</form:label>
-				<form:input path="mem_id" placeholder="영문or숫자사용하여 4~12자 입력" autocomplete="off" style="width:300px;"/>
-				<input type="button" id="confirmId" value="중복확인" class="default-btn" style="margin-left:0px;">
-				<form:errors path="mem_id" cssClass="error-color" style="display:inline;"/><br>
-				<span id="message_id" style=""></span>
-			</li>
-			<li>
-				<form:label path="mem_passwd">비밀번호</form:label>
-				<form:password path="mem_passwd" placeholder="영문,숫자 사용하여 4~12자 입력"/>
-				<form:errors path="mem_passwd" cssClass="error-color"/>
-			</li>
-			<li>
-				<form:label path="mem_name">이름</form:label>
-				<form:input path="mem_name" placeholder="이름"/>
-				<form:errors path="mem_name" cssClass="error-color"/>
-			</li>
-			<li>
-			    <form:label path="mem_birth">생년월일</form:label>
-			    <input type="text" name="mem_birth" id="mem_birth" placeholder="년-월-일">
-			    <button type="button" id="calendarButton">
-			    	<img src="${pageContext.request.contextPath}/images/calendar.jpg" style="width:30px; height:30px; margin-right:5px;">
-			    </button>
-			    <form:errors path="mem_birth" cssClass="error-color" style="margin-left:5px;"/>
-			</li>
-			<li>
-				<form:label path="mem_email">이메일</form:label>
-				<form:input path="mem_email" placeholder="test@test.com 형식으로 입력"/>
-				<form:errors path="mem_email" cssClass="error-color"/>
-			</li>
-			<li>
-				<form:label path="mem_phone">전화번호</form:label>
-				<form:input path="mem_phone" placeholder=" '-' 를 제외하고 입력"/>
-				<form:errors path="mem_phone" cssClass="error-color"/>
-			</li>
-			<li>
-			    <form:label path="mem_zipcode">주소</form:label>
-			    <form:input path="mem_zipcode"/>
-			    <input type="button" onclick="execDaumPostcode()" value="우편번호" class="btn green rounded" style="margin:0 2px;">
-			    <form:input path="mem_address1"/>
-			    <br>
-			    <form:errors path="mem_zipcode" cssClass="error-color" style="margin-left:200px;"/>
-			    <form:errors path="mem_address1" cssClass="error-color" style="margin-left:110px;"/>
-			</li>
-			<li>
-				<form:label path="mem_address2">상세주소</form:label>
-				<form:input path="mem_address2"/>
-				<form:errors path="mem_address2" cssClass="error-color"/>
-			</li>
+				    <form:label path="mem_id">아이디</form:label>
+				    <form:input path="mem_id" placeholder="영문or숫자사용하여 4~12자 입력" autocomplete="off" class="effect-1" style="width:300px;"/>
+				    <input type="button" id="confirmId" value="중복확인" class="default-btn" style="margin-left: 10px;">
+				    <form:errors path="mem_id" cssClass="error-color" style="display:inline;"/><br>
+				    <span id="message_id"></span>
+				</li>
+				<li>
+				    <form:label path="mem_passwd">비밀번호</form:label>
+				    <form:password path="mem_passwd" placeholder="영문,숫자 사용하여 4~12자 입력" class="effect-1"/>
+				    <form:errors path="mem_passwd" cssClass="error-color"/>
+				</li>
+				<li>
+				    <form:label path="mem_name">이름</form:label>
+				    <form:input path="mem_name" placeholder="이름" class="effect-1"/>
+				    <form:errors path="mem_name" cssClass="error-color"/>
+				</li>
+				<li>
+				    <form:label path="mem_birth">생년월일</form:label>
+				    <input type="text" name="mem_birth" id="mem_birth" placeholder="년-월-일" class="effect-1">
+				    <button type="button" id="calendarButton">
+				        <img src="${pageContext.request.contextPath}/images/calendar.jpg" style="width:30px; height:30px; margin-right:5px;">
+				    </button>
+				    <form:errors path="mem_birth" cssClass="error-color" style="margin-left:5px;"/>
+				</li>
+				<li>
+				    <form:label path="mem_email">이메일</form:label>
+				    <form:input path="mem_email" placeholder="test@test.com 형식으로 입력" class="effect-1"/>
+				    <form:errors path="mem_email" cssClass="error-color"/>
+				</li>
+				<li>
+				    <form:label path="mem_phone">전화번호</form:label>
+				    <form:input path="mem_phone" placeholder="'-'를 제외하고 입력" class="effect-1"/>
+				    <form:errors path="mem_phone" cssClass="error-color"/>
+				</li>
+				<li>
+				    <form:label path="mem_zipcode">주소</form:label>
+				    <form:input path="mem_zipcode" class="effect-1"/>
+				    <input type="button" onclick="execDaumPostcode()" value="우편번호" class="btn rounded" style="margin: 0 2px; background-color:#40916C;">
+				    <form:input path="mem_address1" class="effect-1"/>
+				    <br>
+				    <form:errors path="mem_zipcode" cssClass="error-color" style="margin-left:200px;"/>
+				    <form:errors path="mem_address1" cssClass="error-color" style="margin-left:110px;"/>
+				</li>
+				<li>
+				    <form:label path="mem_address2">상세주소</form:label>
+				    <form:input path="mem_address2" class="effect-1"/>
+				    <form:errors path="mem_address2" cssClass="error-color"/>
+				</li>
 			</ul>
 		</div>
 		<br>
@@ -93,7 +90,7 @@
 			</li>
 			<li>
 				<form:label path="captcha_chars" >인증문자 확인</form:label>
-				<form:input path="captcha_chars" placeholder="인증문자를 입력하세요."/>
+				<form:input path="captcha_chars" placeholder="인증문자를 입력하세요." class="effect-1"/>
 				<form:errors path="captcha_chars" cssClass="error-color"/>
 			</li>
 		</ul>
