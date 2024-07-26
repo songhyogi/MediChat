@@ -24,7 +24,7 @@ public interface ReservationMapper {
     public Integer selectCountByMem(long mem_num);
     public List<ReservationVO> getMyResList(Map<String,Object> map);
     //예약내역 삭제하기
-    @Delete("DELETE FROM reservation WHERE res_num=#{res_num}")
+    @Delete("UPDATE reservation SET res_status=3 WHERE res_num=#{res_num}")
     public void cancelReservation(Long res_num);
     //예약 내역 가져오기(의사)
     public Integer selectCountByDoc(Map<String,Object> map);
