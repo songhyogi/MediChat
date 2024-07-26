@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/ych.css" type="text/css">
 <!-- MyPage 메뉴 시작 -->
 <div class="side-bar">
-	<h1 style="padding-top:30px;">마이페이지</h1>
+	<h1>마이페이지</h1>
 	<ul style="padding: 0 0 !important; margin-top:20px;">
 		<li>
 			<c:if test="${mem_profile == null}">
