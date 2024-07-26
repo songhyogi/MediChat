@@ -124,14 +124,32 @@ li{
 input[type="text"],
 input[type="password"],
 input[type="email"]{
-    width:400px;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+    width: 400px;
+    padding: 7px 0;
+    border:0;
+    color: #333;
+    box-sizing: border-box;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    position: relative;
+    background-color:rgb(251, 250, 250);
+}
+input.effect-1 {
+    border-bottom: 2px solid black;
+    position: relative;
+}
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+.effect-1:focus {
+    outline: none;
+    border-bottom: 2px solid rgb(112, 178, 178); /* 포커스 시 하단 선 색상 변경 */
+    transition: border-bottom 0.2s ease-in-out;
 }
 #member_register .default-btn,#doctor_register .default-btn,
 #member_modify .default-btn,#doctor_modify .default-btn{
-	background-color: rgb(102, 178, 178);
+	background-color:#40916C;
 	font-weight: 100 !important;
 	font-size: 16px;
 	font-weight:bold;
@@ -144,7 +162,7 @@ input[type="email"]{
 }
 #member_changePasswd .default-btn,#member_delete .default-btn,
 #doctor_changePasswd .default-btn,#doctor_delete .default-btn{
-	background-color: rgb(102, 178, 178);
+	background-color:#40916C;
 	font-weight: 100 !important;
 	font-size: 16px;
 	font-weight:bold;
@@ -237,11 +255,15 @@ input#mem_zipcode {
 }
 input[type="search"]{
     width: 350px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: 7px 0;
+    border:0;
+    border-bottom: 2px solid rgb(112, 178, 178);
+    color: #333;
     box-sizing: border-box;
-    font-size: 14px;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    position: relative;
+    background-color:rgb(251, 250, 250);
 }
 select,textarea{
     width: 400px;
@@ -253,7 +275,7 @@ select,textarea{
 }
 #search_button {
     padding: 7px 12px;
-    background-color:rgb(102, 178, 178);
+    background-color:#40916C;
     color: white;
     border: none;
     border-radius: 4px;
@@ -271,14 +293,14 @@ select,textarea{
 .upload-form input[type="file"] {
     width:350px;
     padding: 5px;
-    border: 1px solid #ccc;
+    border: 1px dotted #ccc;
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 14px;
 }
 .upload-form input[type="file"]::-webkit-file-upload-button {
     padding: 8px 12px;
-    background-color:rgb(102, 178, 178);
+    background-color:#40916C;
     color: white;
     border: none;
     border-radius: 4px;
@@ -504,7 +526,7 @@ td img{
 }
 #agree-btn{
     padding:5px 10px;
-    background-color:rgb(12, 178, 178);
+    background-color:#40916C;
     color:white;
     border:none;
     cursor:pointer;

@@ -13,8 +13,8 @@ import com.google.gson.JsonObject;
 
 
 public class KakaoAPI {
-	private static final String CLIENT_ID = "c3cdae763b0fed22d18baf2e2cb1c2ee";
-    private static final String REDIRECT_URI = "http://localhost:8000/member/kakaologin";
+	private static final String KAKAO_CLIENT_ID = "c3cdae763b0fed22d18baf2e2cb1c2ee";
+    private static final String KAKAO_REDIRECT_URI = "http://localhost:8000/member/kakaologin";
 
     public String getAccessToken(String code) {
         String accessToken = "";
@@ -29,8 +29,8 @@ public class KakaoAPI {
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
-            sb.append("&client_id=").append(CLIENT_ID);
-            sb.append("&redirect_uri=").append(REDIRECT_URI);
+            sb.append("&client_id=").append(KAKAO_CLIENT_ID);
+            sb.append("&redirect_uri=").append(KAKAO_REDIRECT_URI);
             sb.append("&code=").append(code);
 
             bw.write(sb.toString());
