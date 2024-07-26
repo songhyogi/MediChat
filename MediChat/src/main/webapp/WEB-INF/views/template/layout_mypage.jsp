@@ -17,11 +17,6 @@
 	margin-bottom: 10px;
 	border:none;
 }
-#main_leftNav{
-	margin-top:5%;
-	background-color:#fff;
-}
-
 </style>
 </head>
 <body>
@@ -37,11 +32,10 @@
 		<div id="main_body" class="col-9">
 			<tiles:insertAttribute name="body"/>
 		</div>
-
 	</div>
-	<div id="main_footer">
-		<tiles:insertAttribute name="footer"/>
-	</div>
+		<div id="main_footer">
+			<tiles:insertAttribute name="footer"/>
+		</div>
 </div>
 </div>
 </body>
