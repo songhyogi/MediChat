@@ -92,7 +92,7 @@ function displayHosTimes(date, dayOfWeek, hos_num) {
                 // 선택한 날짜에 근무하는 의사가 있는지 확인
                 getAvailableDoctors(hos_num, date, null, dayOfWeek, function(doctors) {
                     if (doctors.length === 0) {
-                        $('#time-buttons').html('<div class="no-time">해당 날짜에 근무하는 의사가 없습니다.</div>');
+                        $('#time-buttons').html('<div class="no-time">예약 가능한 의사가 없습니다.</div>');
                         return;
                     }
                     
