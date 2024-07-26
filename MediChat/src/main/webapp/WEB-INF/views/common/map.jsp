@@ -36,13 +36,14 @@ kakao.maps.load(function(){
 	<c:forEach items="${hosList}" var="hos">
 		positions.push({
 			title:'${hos.hos_name}',
-			latlng:new kakao.maps.LatLng('${hos.hos_lat}','${hos.hos_lon}')
+			latlng:new kakao.maps.LatLng('${hos.hos_lat}','${hos.hos_lon}'),
+			hosNum: '${hos.hos_num}'
 		});
 	</c:forEach>
 	
 	//병원 위치 마커
 	var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
-	for (var i = 0; i < positions.length; i ++) {
+	for (let i = 0; i < positions.length; i ++) {
 	    var imageSize = new kakao.maps.Size(24, 35); 
 	    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
 	    var marker = new kakao.maps.Marker({
@@ -51,7 +52,9 @@ kakao.maps.load(function(){
 	        title : positions[i].title,
 	        image : markerImage
 	    });
-	    
+	    kakao.maps.event.addListener(marker, 'click', function(){
+	    	location.href='/hospitals/search/detail/' + positions[i].hosNum;
+	    });
 	    // 병원 이름 인포윈도우
 	    var iwContent = '<div class="ch rounded-5 fs-12 fw-7 text-black-5" style="width:150px; padding:5px;">' + positions[i].title + '</div>';
 	    var infowindow = new kakao.maps.InfoWindow({
