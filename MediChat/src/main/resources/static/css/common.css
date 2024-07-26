@@ -216,10 +216,19 @@ body{
 	width: 1400px; /* 원하는 고정 너비 */
 	margin-left: auto;
 	margin-right: auto;
-	padding-left: 15px;
-	padding-right: 15px;
 }
-
+.sticky-top-container {
+    position: -webkit-sticky; /* Safari용 */
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* 다른 콘텐츠 위에 있도록 조정 필요 */
+}
+.sticky-bottom-container {
+    position: -webkit-sticky; /* Safari용 */
+    position: sticky;
+    bottom: 0;
+    z-index: 1000; /* 다른 콘텐츠 위에 있도록 조정 필요 */
+}
 /* ================= 버튼 ================= */
 .btn-green {
     background-color: #40916c;
@@ -239,8 +248,6 @@ body{
 	width: 100%;
 	height:1px;
 	border-bottom: 1px solid #dfe1e2;
-	padding-top: 5px;
-	padding-bottom: 5px;
 }
 .mline{
 	width: 100%;

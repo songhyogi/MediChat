@@ -4,31 +4,34 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <div>
-	<p class="text-lightgray fw-7 fs-13">홈 > 의료 상담 > 상세</p>
-	<%-- <c:if test="${user.mem_num == consulting.member.mem_num}">
-		<div class="float-end">
-			<button onclick="location.href='/consultings/modify/${consulting.con_num}'" class="btn-green">글 수정</button>
-			<button onclick="location.href='/consultings/remove/${consulting.con_num}'" class="btn-green">글 삭제</button>
-		</div>
-	</c:if> --%>
-	<div class="p-2">
-		<h1 class="fs-24 fw-8">${consulting.con_title}</h1>
-		<div class="fs-14 text-black-4 mb-4">${fn:substring(consulting.member.mem_name,0,1)}OO | ${consulting.con_rDate}</div>
-		<div class="fs-16 text-black-6 p-5">
-			${consulting.con_content}
-		</div>
-		<div class="fs-12 bg-gray-1 d-inline rounded-2 p-1 text-gray-6">${consulting.con_type_name}</div>
-		<div class="mt-4">
-			<ul class="fs-10 text-black-2">
-				<li>'의료 상담'의 모든 게시물은 저작권의 보호를 받습니다. 저작권자의 명시적 동의 없이 게시물을 복제, 배포, 전송 등 활용하는 것은 저작권 침해로서 법적 책임을 질 수 있으니 유의하세요!</li>
-			</ul> 
+	<div class="p-3">
+		<p class="text-lightgray fw-7 fs-13">홈 > 의료 상담 > 상세</p>
+		<%-- <c:if test="${user.mem_num == consulting.member.mem_num}">
+			<div class="float-end">
+				<button onclick="location.href='/consultings/modify/${consulting.con_num}'" class="btn-green">글 수정</button>
+				<button onclick="location.href='/consultings/remove/${consulting.con_num}'" class="btn-green">글 삭제</button>
+			</div>
+		</c:if> --%>
+		<div class="p-2">
+			<h1 class="fs-24 fw-8">${consulting.con_title}</h1>
+			<div class="fs-14 text-black-4 mb-4">${fn:substring(consulting.member.mem_name,0,1)}OO | ${consulting.con_rDate}</div>
+			<div class="fs-16 text-black-6 py-3">
+				${consulting.con_content}
+			</div>
+			<div class="fs-12 bg-gray-1 d-inline rounded-2 p-1 text-gray-6">${consulting.con_type_name}</div>
+			<div class="mt-4">
+				<ul class="fs-10 text-black-2">
+					<li>'의료 상담'의 모든 게시물은 저작권의 보호를 받습니다. 저작권자의 명시적 동의 없이 게시물을 복제, 배포, 전송 등 활용하는 것은 저작권 침해로서 법적 책임을 질 수 있으니 유의하세요!</li>
+				</ul> 
+			</div>
 		</div>
 	</div>
+	
 	<div class="line"></div>
 	<div style="height:70px; background-color: #F3F6F9; color:#2D2E2F" class="fs-18 fw-7 d-flex align-items-center p-4">${consulting.con_type_name}과 관련 ${consulting.con_re_cnt}개의 답변</div>
-	<div id="cReBox" class="p-2">
+	<div id="cReBox">
 		<c:forEach items="${cReList}" var="cRe">
-			<div class="d-flex my-3">
+			<div class="d-flex my-3 p-2">
 				<div class="me-3">
 					<img src="/doctor/docViewProfile?mem_num=${cRe.doctor.doc_num}" class="border rounded-circle" width="48px" height="48px">
 				</div>
@@ -38,10 +41,10 @@
 				</div>
 			</div>
 			<div class="line"></div>
-			<div class="p-5">
+			<div class="py-5 px-3">
 				${cRe.con_re_content}
 			</div>
-			<div>
+			<div class="p-3">
 				<div class="fs-16 text-black-7 fw-6">답변을 작성한 선생님에게 진료 예약하기</div>
 				<div class="border rounded-1 d-flex justify-content-around align-items-center py-3 px-2">
 					<div class="me-3 border bg-gray-0 p-3 rounded-1">
@@ -73,7 +76,6 @@
 				<div class="badBtn" data-cReNum="${cRe.con_re_num}"><img src="/images/bad.png"  width="30" height="30" class="me-4">만족스럽지 않아요</div>
 			</div>
 			<div class="line"></div>
-			<div class="bg-gray-0" style="height: 20px;"></div>
 		</c:forEach>
 	</div>
 	<c:if test="${consulting.con_re_cnt>5}">

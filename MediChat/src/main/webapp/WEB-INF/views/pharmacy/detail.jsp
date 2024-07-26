@@ -3,16 +3,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div>
-	<span class="text-lightgray fw-7 fs-13">홈 > 약국 찾기 > 검색 결과 > 약국 상세</span>
-	<div id="detail_hosName">
-		<h4 class="fw-7">${pharmacy.pha_name}</h4>
-		<div class="d-flex">
-			<c:if test="${pharmacy.pha_weekendAt=='Y'}">
-				<div class="detail-hospital-info-item fs-14 fw-7">주말 운영</div>
-			</c:if>
+	<div class="p-3">
+		<span class="text-lightgray fw-7 fs-13">홈 > 약국 찾기 > 검색 결과 > 약국 상세</span>
+		<div id="detail_hosName">
+			<h4 class="fw-7">${pharmacy.pha_name}</h4>
+			<div class="d-flex">
+				<c:if test="${pharmacy.pha_weekendAt=='Y'}">
+					<div class="detail-hospital-info-item fs-14 fw-7">주말 운영</div>
+				</c:if>
+			</div>
 		</div>
 	</div>
-	
 	<div class="line"></div>
 	<div style="height:15px;" class="bg-gray-0"></div>
 	
