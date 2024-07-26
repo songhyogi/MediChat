@@ -270,7 +270,6 @@ document.addEventListener('DOMContentLoaded', function() {
 #calendar {
     margin: 0 auto;
     width: 80%;
-    max-width: 800px;
 }
 .regular-day-off {/*정기휴무요일*/
 
@@ -345,5 +344,6 @@ button:disabled {
     pointer-events: auto;
 }
 </style>
+
 <div id="calendar"></div>
 <div id="time-buttons"></div>

@@ -4,8 +4,9 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/ych.css" type="text/css">
 <!-- MyPage 메뉴 시작 -->
 <div class="side-bar">
-	<h1>마이페이지</h1>
 	<ul style="padding: 0 0 !important; margin-top:20px;">
+		<li style="font-size:40px; font-weight:bold;">마이페이지</li>
+		<li class="fs-17 text-black-5"><span class="fs-20 fw-7 text-black-7" style="color:red;">${user.mem_id}님,</span> 반갑습니다.</li>
 		<li>
 			<c:if test="${mem_profile == null}">
 				<img src="${pageContext.request.contextPath}/member/memPhotoView"
@@ -28,19 +29,19 @@
 			</div>
 		</li>
 
-        <li style="margin-bottom:10px;">
+        <li style="margin-bottom:10px; font-size:20px;">
             <a href="${pageContext.request.contextPath}/memberDrug/list" class="detail-btn">약 복용 내역</a>
         </li>
-        <li style="margin-bottom:10px;">
+        <li style="margin-bottom:10px; font-size:20px;">
             <a href="${pageContext.request.contextPath}/review/reviewMemList" class="detail-btn">후기내역</a>
         </li>
-        <li style="margin-bottom:10px;">
+        <li style="margin-bottom:10px; font-size:20px;">
             <a href="${pageContext.request.contextPath}/chat/chatView" class="detail-btn">비대면 진료</a>
         </li>
-		<li style="margin-bottom:10px;">
+		<li style="margin-bottom:10px; font-size:20px;">
             <a href="${pageContext.request.contextPath}/member/modifyUser" class="detail-btn">회원정보 수정</a>
         </li>
-        <li style="margin-top:50px;">
+        <li style="margin-top:50px; font-size:20px; padding-bottom:10px;">
             <a href="${pageContext.request.contextPath}/member/logout" class="detail-btn">로그아웃</a>
         </li>
 	</ul>
