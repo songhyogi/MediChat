@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -173,6 +174,19 @@ public class HospitalController {
 		// 병원 리스트 담기
 		List<HospitalVO> hosList = new ArrayList<>();
 		hosList = hospitalService.selectListHospital(map);
+
+		Set<String> kSet = null;
+		if(keyword!=null) {
+			kSet = diseaseService.selectDisListBykeyword(keyword);
+//			if(kSet!=null) {
+//				for(String key: kSet) {
+//					map.put("keyword", key);
+//					hosList = hospitalService.selectListHospital(map);
+//				}
+//			}
+			System.out.println(kSet);
+		}
+		
 		model.addAttribute("hosList", hosList);
 		
 		return "search";

@@ -39,4 +39,7 @@ public interface DiseaseMapper {
 	
 	
 	public List<DiseaseVO> selectDisListByHit(int itemNum);
+	
+	@Select("select distinct dis_department from disease where dis_name like '%' || #{keyword} || '%' or dis_symptoms like '%' || #{keyword} || '%'")
+	public List<String> selectDisListBykeyword(String keyword);
 }

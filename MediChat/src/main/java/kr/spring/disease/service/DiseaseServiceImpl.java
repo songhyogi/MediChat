@@ -1,7 +1,9 @@
 package kr.spring.disease.service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +13,6 @@ import kr.spring.disease.dao.DiseaseMapper;
 import kr.spring.disease.vo.DiseaInsertVO;
 import kr.spring.disease.vo.DiseaseVO;
 import kr.spring.disease.vo.Item;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Transactional
@@ -78,6 +79,17 @@ public class DiseaseServiceImpl implements DiseaseService{
 		return mapper.selectDisListByHit(itemNum);
 	}
 
-
-
+	@Override
+	public Set<String> selectDisListBykeyword(String keyword) {
+		List<String> list = mapper.selectDisListBykeyword(keyword);
+		Set<String> set = new HashSet<>();
+		for(String dis : list) {
+			String[] arr = dis.split(",");
+			for (int i = 0; i < arr.length; i++) {
+				set.add(arr[i]);
+			}
+		}
+		set.remove("병의원과 상담");
+		return set;
+	}
 }

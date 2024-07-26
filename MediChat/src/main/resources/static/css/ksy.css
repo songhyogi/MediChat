@@ -46,7 +46,7 @@
 /* 더보기 */
 #more{
 	height: 50px;
-	margin-top: 10px;
+	margin: 10px 0;
 	cursor: pointer;
 }
 #more p{
@@ -188,9 +188,8 @@
 }
 .hospital-box{
 	cursor: pointer;
-	padding: 8px;
 	border-radius: 10px;
-	margin-top: 10px;
+	padding: 12px 10px;
 }
 .hospital-box:hover {
 	background-color: #f2f2f2;
@@ -238,7 +237,10 @@
 	color: #FF073A;
 }
 /* =================== hospital > search > detail =================== */
-#detail_hosName,#detail_hosTime,#detail_hosSub,#detail_hosPosition,#detail_hosTell,#detail_hosRev,#detail_btn_box{
+#detail_hosName{
+	margin:15px 0;
+}
+#detail_hosTime,#detail_hosSub,#detail_hosPosition,#detail_hosTell,#detail_hosRev,#detail_btn_box{
 	padding: 30px 20px;
 }
 .detail-hospital-info-item{
@@ -292,7 +294,7 @@
 
 /* =================== consultings =================== */
 .consulting-item-div{
-	padding: 5px; 
+	padding: 12px 10px; 
 }
 .consulting-item-div:hover{
 	cursor: pointer;

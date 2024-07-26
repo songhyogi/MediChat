@@ -3,29 +3,33 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <div>
-	<p class="text-lightgray fw-7 fs-13">홈 > 의료 상담</p>
-	<form id="typeForm" action="/consultings" method="get">
-		<select id="con_type" name="con_type" class="form-control">
-			<option <c:if test="${con_type==0}">selected</c:if> value="0">구분없음</option>
-			<option <c:if test="${con_type==1}">selected</c:if> value="1">만성질환</option>
-			<option <c:if test="${con_type==2}">selected</c:if> value="2">여성질환</option>
-			<option <c:if test="${con_type==3}">selected</c:if> value="3">소화기질환</option>
-			<option <c:if test="${con_type==4}">selected</c:if> value="4">영양제</option>
-			<option <c:if test="${con_type==5}">selected</c:if> value="5">정신건강</option>
-			<option <c:if test="${con_type==6}">selected</c:if> value="6">처방약</option>
-			<option <c:if test="${con_type==7}">selected</c:if> value="7">탈모</option>
-			<option <c:if test="${con_type==8}">selected</c:if> value="8">통증</option>
-			<option <c:if test="${con_type==9}">selected</c:if> value="9">여드름,피부염</option>
-			<option <c:if test="${con_type==10}">selected</c:if> value="10">임신,성고민</option>
-		</select>
-	</form>
-	<script>
-		$('select').change(function(){
-			$('#typeForm').submit();
-		})
-	</script>
-	<button id="consulting-btn" onclick="location.href='/consultings/create'">질문하기</button>
+	<div class="p-3">
+		<p class="text-lightgray fw-7 fs-13">홈 > 의료 상담</p>
+		<form id="typeForm" action="/consultings" method="get">
+			<select id="con_type" name="con_type" class="form-control">
+				<option <c:if test="${con_type==0}">selected</c:if> value="0">구분없음</option>
+				<option <c:if test="${con_type==1}">selected</c:if> value="1">만성질환</option>
+				<option <c:if test="${con_type==2}">selected</c:if> value="2">여성질환</option>
+				<option <c:if test="${con_type==3}">selected</c:if> value="3">소화기질환</option>
+				<option <c:if test="${con_type==4}">selected</c:if> value="4">영양제</option>
+				<option <c:if test="${con_type==5}">selected</c:if> value="5">정신건강</option>
+				<option <c:if test="${con_type==6}">selected</c:if> value="6">처방약</option>
+				<option <c:if test="${con_type==7}">selected</c:if> value="7">탈모</option>
+				<option <c:if test="${con_type==8}">selected</c:if> value="8">통증</option>
+				<option <c:if test="${con_type==9}">selected</c:if> value="9">여드름,피부염</option>
+				<option <c:if test="${con_type==10}">selected</c:if> value="10">임신,성고민</option>
+			</select>
+		</form>
+		<script>
+			$('select').change(function(){
+				$('#typeForm').submit();
+			})
+		</script>
+	</div>
 	<div id="consulting-div">
+		<c:if test="${empty consultingList}">
+			<div class="text-black-5 text-center fs-17 fw-7">등록된 의료 상담 글이 없습니다.</div>
+		</c:if>
 		<c:forEach items="${consultingList}" var="consulting">
 			<div class="consulting-item-div" data-conNum="${consulting.con_num}">
 				<div class="consulting-item-title">${consulting.con_title}</div>
@@ -43,6 +47,9 @@
 			</div>
 			<div class="line"></div>
 		</c:forEach>
+	</div>
+	<div class="sticky-bottom-container">
+		<button id="consulting-btn" onclick="location.href='/consultings/create'">질문하기</button>
 	</div>
 </div>
 
