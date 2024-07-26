@@ -188,7 +188,29 @@
 	
 	<!-- =================답글/대댓글================= -->
 	<!-- 답글 목록 -->
-	<select id=""></select>
+	<select id="selectListReply" >
+		SELECT 
+		    r.cre_num,
+		    r.cre_content,
+		    r.mem_num,
+		    m.mem_id,
+		    r.cre_rdate,
+		    r.cre_mdate,
+		    r.cre_level,
+		    r.cre_ref,
+		    re.mem_id parent_id
+		FROM cboard_re r
+		JOIN member m ON r.mem_num = m.mem_num 
+		LEFT OUTER JOIN cboard_re p ON r.cre_ref = p.cre_num
+		LEFT OUTER JOIN member re ON p.mem_num = re.mem_num
+		<![CDATA[
+		WHERE r.cre_report < 10
+		]]>
+		START WITH r.cre_ref = #{cre_num} /*답글에 해당하는 댓글*/
+		CONNECT BY PRIOR r.cre_num = r.cre_ref
+		
+		ORDER SIBLINGS BY r.cre_rdate
+	</select>
 	<!-- 답글 등록 -->
 	<insert id="insertReply" parameterType="communityReplyVO">
 		INSERT INTO cboard_re(

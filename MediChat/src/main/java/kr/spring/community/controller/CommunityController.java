@@ -352,6 +352,28 @@ public class CommunityController {
 	
 	/*==============================답글==============================*/
 	//답글 목록
+	@GetMapping("/medichatCommunity/listReply")
+	@ResponseBody
+	public Map<String, Object> getListReply(long cre_num, HttpSession session){
+		log.debug("<<답글 목록 - cre_num>> : " + cre_num);
+		
+		List<CommunityReplyVO> list = communityService.selectListReply(cre_num);
+		log.debug("<<답글 list>>>" + list);
+		Object user = session.getAttribute("user");
+		
+		Map<String, Object> mapJson = new HashMap<String, Object>();
+		mapJson.put("list", list);
+		
+		if(user!=null && user instanceof DoctorVO) {
+			DoctorVO doctor = (DoctorVO) user;
+			mapJson.put("user_num", doctor.getMem_num());
+		}else if(user!=null && user instanceof MemberVO) {
+			MemberVO member = (MemberVO) user;
+			mapJson.put("user_num", member.getMem_num());
+		}
+		
+		return mapJson;
+	}
 	
 	//답글 등록
 	@PostMapping("/medichatCommunity/writeReply")
