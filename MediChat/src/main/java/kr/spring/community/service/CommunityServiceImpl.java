@@ -125,8 +125,8 @@ public class CommunityServiceImpl implements CommunityService{
 	
 	/*-----------------------------게시판글 대댓글-----------------------------*/
 	@Override
-	public List<CommunityReplyVO> selectListReply(Map<String, Object> map) {
-		return communityMapper.selectListReply(map);
+	public List<CommunityReplyVO> selectListReply(Long cre_num) {
+		return communityMapper.selectListReply(cre_num);
 	}
 	
 	@Override
