@@ -30,4 +30,6 @@ public interface ReservationService {
     //예약내역 존재 여부
     public List<String> getResExist(Map<String,Object> map);
     ReservationVO getReservationById(long res_num);
+	//예약 번호를 기반으로 의사 번호 가져오기
+	public long selectDoc_num(long res_num);
 }

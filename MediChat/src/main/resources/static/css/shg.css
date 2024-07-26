@@ -212,7 +212,7 @@ button.selected, .time-button.selected {
     margin: 5px 0 5px 52px;
 }
 .no-time {
-    padding: 100px 275px; /* 패딩 값 설정 */
+    padding: 100px 308px; /* 패딩 값 설정 */
     margin: 20px 0; /* 위아래 여백 설정 */
     text-align: center; /* 텍스트 중앙 정렬 */
     border-radius: 10px; /* 모서리를 둥글게 설정 */
@@ -272,6 +272,9 @@ button.selected, .time-button.selected {
 	background: #f2f2f2;
 	margin-bottom: 5px;
 	border-radius: 4px;
+    height: 200px; /* 표시하고 싶은 높이 설정 */
+    overflow-y: scroll; /* 스크롤 가능하게 설정 */
+    white-space: pre-line; /* 줄바꿈을 반영하게 설정 */
 }
 .outer-line{
 	background: #f7f9fa;

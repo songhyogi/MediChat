@@ -71,14 +71,14 @@
 .pagination a {
     margin: 0 5px;
     text-decoration: none;
-    color: #007bff;
+    color: #000;
 }
 .pagination a.active {
     font-weight: bold;
     color: #000;
 }
 .reservation-header img {
-    width: 38px; /* 이 값이 우선 적용됨 */
+    width: 38px;
     height: 38px;
     margin-right: 10px;
 }
@@ -88,7 +88,7 @@
 .detail-info {
     display: flex;
     padding: 10px 0;
-    justify-content: space-between; /*제거 */
+    justify-content: space-between;
     border-bottom: 1px solid #eee;
 }
 .detail-item:last-child {

@@ -74,5 +74,10 @@ public class ReservationServiceImpl implements ReservationService{
 		return reservationMapper.getReservationById(res_num);
 	}
 
+	@Override
+	public long selectDoc_num(long res_num) {
+		return reservationMapper.selectDoc_num(res_num);
+	}
+
 	
 }
