@@ -182,6 +182,14 @@ $(function(){
 	/*=======================
 		    메시지 입력하기
 	=========================*/
+	//엔터 입력 시 폼 제출되게 하기
+	$('#msg_content').on('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // 기본 Enter 키 동작 막기
+            $('#chat_input').submit(); // 폼 제출 트리거
+        }
+    });
+	
 	$('#chat_input').submit(function insertMsg(event){
 		
 		//기본 이벤트 제거
