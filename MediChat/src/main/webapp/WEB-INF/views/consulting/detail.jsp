@@ -72,8 +72,8 @@
 				</ul>
 			</div>
 			<div class="d-flex justify-content-center my-2">
-				<div class="goodBtn" data-cReNum="${cRe.con_re_num}"><img src="/images/good.png" width="30" height="30" class="me-4">만족해요</div>
-				<div class="badBtn" data-cReNum="${cRe.con_re_num}"><img src="/images/bad.png"  width="30" height="30" class="me-4">만족스럽지 않아요</div>
+				<div class="goodBtn <c:if test="${cRe.con_re_status==1}">active</c:if><c:if test="${cRe.con_re_status==2}">inactive</c:if>" data-cReNum="${cRe.con_re_num}" data-docNum="${cRe.doctor.doc_num}"><img src="/images/good.png" width="30" height="30" class="me-4">만족해요</div>
+				<div class="badBtn <c:if test="${cRe.con_re_status==2}">active</c:if><c:if test="${cRe.con_re_status==1}">inactive</c:if>" data-cReNum="${cRe.con_re_num}" data-docNum="${cRe.doctor.doc_num}"><img src="/images/bad.png"  width="30" height="30" class="me-4">만족스럽지 않아요</div>
 			</div>
 			<div class="line"></div>
 		</c:forEach>
@@ -86,15 +86,116 @@
 <c:if test="${user.mem_auth==3 and !checkReply}">
 	<form action="/consultings/createReply" method="post" class="p-3 my-4">
 		<input type="hidden" name="con_num" value="${consulting.con_num}">
-		<textarea rows="10" class="form-control" name="con_re_content"></textarea>
+		<div class="d-flex justify-content-between">
+			<label for="con_re_content">답글 달기</label>
+			<span id="reply_length">0 / 2000</span>
+		</div>
+		<textarea rows="10" class="form-control" name="con_re_content" id="con_re_content"></textarea>
 		<div class="text-end mt-1 mb-4">
 			<input type="submit" value="전송" class="btn-green">
 		</div>
 	</form>
 </c:if>
 
+<style>
+.goodBtn.active {
+    border: 2px solid #40916c; /* 원하는 테두리 색상으로 변경 */
+    cursor: default !important;
+}
+.goodBtn.inactive {
+    background-color: #adadad;
+    cursor: default !important;
+}
+
+.badBtn.active {
+    border: 2px solid #40916c; /* 원하는 테두리 색상으로 변경 */
+    cursor: default !important;
+}
+.badBtn.inactive {
+    background-color: #adadad;
+    cursor: default !important;
+}
+</style>
+
 <script>
 $(document).ready(function() {
+	
+	
+	$('.goodBtn').on('click',function(){
+		$.ajax({
+			url: '/consultings/detail/cReSat',
+			data: {cReNum:$(this).attr('data-cReNum'),conNum:'${consulting.con_num}',docNum:$(this).attr('data-docNum')},
+			dataType: 'json',
+			success: function(param){
+				if(param.status=='login'){
+					if(param.user_type=='member'){
+						if(param.check){
+							$('.goodBtn').find('img').attr('src', '/images/good-active.gif').attr('width','37').attr('height','37');
+							$('.goodBtn').addClass('active');
+							$('.badBtn').addClass('inactive').off('click');
+						} else {
+							alert('본인의 글만 이용 가능합니다');
+						}
+					} else {
+						alert('본인의 글만 이용 가능합니다');
+					}
+				} else if(param.status=='logout'){
+					alert('로그인 먼저 하셔야 합니다');
+				} else {
+					alert('로그인 상태를 확인해주세요');
+				}
+			},
+			error: function(){
+				alert('ajax 오류');
+			}
+		});
+	});
+	
+	$('.badBtn').on('click',function(){
+		$.ajax({
+			url: '/consultings/detail/cReUnSat',
+			data: {cReNum:$(this).attr('data-cReNum'),conNum:'${consulting.con_num}',docNum:$(this).attr('data-docNum')},
+			dataType: 'json',
+			success: function(param){
+				if(param.status=='login'){
+					
+					if(param.user_type=='member'){
+						if(param.check){
+							$('.badBtn').find('img').attr('src', '/images/bad-active.gif').attr('width','37').attr('height','37');
+							$('.badBtn').addClass('active');
+							$('.goodBtn').addClass('inactive').off('click');
+						} else {
+							alert('본인의 글만 이용 가능합니다');
+						}
+					} else {
+						alert('본인의 글만 이용 가능합니다');
+					}
+				} else if(param.status=='logout'){
+					alert('로그인 먼저 하셔야 합니다');
+				} else {
+					alert('로그인 상태를 확인해주세요');
+				}
+			},
+			error: function(){
+				alert('ajax 오류');
+			}
+		});
+	});
+	
+	$('.active').off('click');
+	$('.inactive').off('click');
+	
+	
+	$('#con_re_content').on('input', function() {
+        var conReContent = $(this).val();
+        var contentLength = conReContent.length;
+        if (contentLength > 2000) {
+            $(this).val(conReContent.substring(0, 2000)); // 2000자까지만 입력되도록 자르기
+            contentLength = 2000;
+        }
+        $('#reply_length').text(contentLength + ' / 2000');
+    });
+	
 	const cReBox = $('#cReBox');
 	let pageNum = 2;
 	const pageItemNum = 5;
