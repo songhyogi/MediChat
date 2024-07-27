@@ -371,22 +371,28 @@ public class ChatController {
 	@GetMapping("/chat/myFiles")
 	public String selectFiles(Model model, HttpSession session) {
 		//해당 페이지는 환자만 들어올 수 있으므로 회원 등급 조회 x
-		MemberVO user = (MemberVO)session.getAttribute("user");
+		Object user = session.getAttribute("user");
 		
 		if(user==null) {
 			model.addAttribute("message","로그인이 필요합니다.");
 			model.addAttribute("url","/member/login");
 			return "/common/resultAlert";
+		}else if (user instanceof DoctorVO) {
+			//의사 계정으로 나의 서류함에 접근을 시도한 경우
+			model.addAttribute("message","환자 본인만 접근할 수 있습니다.");
+			model.addAttribute("url","/chat/chatView");
+			return "/common/resultAlert";
+		}else if(user instanceof MemberVO){
+			MemberVO member = (MemberVO)user;
+			long mem_num = member.getMem_num();
+		
+			List<ChatVO> chat = chatService.selectChatListForMem(mem_num);
+		
+			model.addAttribute("chat",chat);
 		}
 		
-		
-		long mem_num = user.getMem_num();
-		
-		List<ChatVO> chat = chatService.selectChatListForMem(mem_num);
-		
-		model.addAttribute("chat",chat);
-		
 		return "chatMyFiles";
+
 	}
 	
 	/*=======================

@@ -64,19 +64,19 @@ a {
 			<div class="result-display">표시할 게시물이 없습니다</div>
 		</c:if>
 		<c:if test="${count > 0}">
-			<table class="table table-hover drug-table">
-				<tr class="table-light align-center">
+			<table class="drug-table">
+				<tr class="table-light align-center bg-gray-1">
 					<!-- <th class="fs-18 fw-4">번호</th>-->
 					<th class="fs-18 fw-4 drug-name-th">제품명</th>
-					<th class="fs-18 fw-4">회사명</th>
-					<th class="fs-18 fw-4">효능</th>
+					<th class="fs-18 fw-4 drug-company">회사명</th>
+					<th class="fs-18 fw-4 drug-effect">효능</th>
 				</tr>
 				<c:forEach var="drug" items="${list}">
 				<tr>
 					<!--<td class="align-center fs-18 fw-4">${drug.drg_num}</td>-->
 					<td class="fs-18 fw-4 drug-name-td"><a href="detail?drg_num=${drug.drg_num}" class="list-drug-name"> ${drug.drg_name}</a></td>
-					<td class="align-center fs-18 fw-4">${drug.drg_company}</td>
-					<td class="align-center fs-18 fw-4"><img src="${pageContext.request.contextPath}/images/magnifier.png" width="20"></td>
+					<td class="align-center fs-18 fw-4 drug-company">${drug.drg_company}</td>
+					<td class="align-center fs-18 fw-4 drug-effect"><img src="${pageContext.request.contextPath}/images/magnifier.png" width="20"></td>
 				</tr>
 				</c:forEach>
 			</table><br>
@@ -102,8 +102,7 @@ a {
 	<!-- 모달 끝 --> 	
 </div>
 <!-- 의약품 검색 끝 -->
-<!-- 
-스크립트 시작
+
 <script>
 $(document).ready(function(){
 	const imgModal = document.querySelector("#img_modal")
@@ -129,4 +128,3 @@ $(document).ready(function(){
 	}
 });
 </script>
-스크립트 끝 -->
