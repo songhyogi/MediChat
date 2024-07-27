@@ -328,6 +328,9 @@ body{
 #main-search-input:focus{
 	outline: none;
 }
+#main-search-icon{
+	cursor: pointer;
+}
 
 .main-titleAndMore{
 	display: flex;

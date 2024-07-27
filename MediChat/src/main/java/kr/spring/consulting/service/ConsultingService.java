@@ -18,11 +18,8 @@ public interface ConsultingService {
 	public void removeConsulting(Long con_num);
 	
 	
-	
-	
-	
-	
-	
 	public void createCon_Re(Con_ReVO con_Re);
 	public List<Con_ReVO> getListCon_Re(Map<String,Object> map);
+	
+	public void modifyCon_Re_Status(Map<String,Object> map); 
 }

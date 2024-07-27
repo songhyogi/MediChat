@@ -20,7 +20,7 @@
 }
 .header-status-leftBox, .header-status-rightBox, .header-status-rightBox {
     position: relative;
-    padding-bottom: 10px; /* 부모 요소의 영역을 늘려서 마우스 이동 시 hover 상태를 유지 */
+    padding-bottom: 15px; /* 부모 요소의 영역을 늘려서 마우스 이동 시 hover 상태를 유지 */
 }
 #header-login-div {
     top: 30px; /* 메뉴가 아래로 내려오도록 설정 */
@@ -380,8 +380,9 @@
 		});
 	});
 	
-	/* 알림 읽기 */
+	
 	$(document).ready(function() {
+		/* 알림 읽기 */
 	    $('#noti_box').on("click", ".noti-item", function() {
 	        $.ajax({
 	        	url: "/notificationReaded",
@@ -396,8 +397,6 @@
 	        });
 	    });
 	});
-	
-	
 	
 	
 	/* 로그인 시 */
