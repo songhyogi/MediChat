@@ -181,10 +181,12 @@
         if (param.result == 'success') {
             $('#header-notification-unreaded').text('');
             $('#header-notification-unreaded').text(param.cnt);
-
+            
+            var output = ' ';
+            
             if (param.list.length > 0) {
                 $('#noti_box').empty();
-                var output = '';
+                
                 for (let i = 0; i < param.list.length; i++) {
                     output += '<div data-notiNum="' + param.list[i].noti_num + '" class="noti-item'
                     if (param.list[i].noti_isRead == 1) {
