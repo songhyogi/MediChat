@@ -359,8 +359,9 @@ body{
 	font-weight: 600;
 	color: #333333;
 	margin-bottom: 13px;
-	height:22px;
-	overflow:hidden;
+	
+	height: 22px;
+	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
@@ -368,7 +369,13 @@ body{
 	font-size: 14px;
 	color: #757575; 
 	margin-bottom: 5px;
-	height:40px;
+	
+	display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* 줄 수 */
+    
+	height: 40px;
+	white-space: normal;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
