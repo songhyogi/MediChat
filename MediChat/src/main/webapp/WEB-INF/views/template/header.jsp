@@ -1,6 +1,118 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<style>
+#header-login-div, #header-register-div {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    z-index: 1000;
+}
+/* 부모 요소와 하위 메뉴 모두에 hover 상태를 적용 */
+.header-status-leftBox:hover #header-login-div,
+.header-status-rightBox:hover #header-register-div,
+#header-login-div:hover,
+#header-register-div:hover, 
+.header-status-rightBox:hover #header-status-div,
+#header-status-div:hover {
+    display: block;
+}
+.header-status-leftBox, .header-status-rightBox, .header-status-rightBox {
+    position: relative;
+    padding-bottom: 10px; /* 부모 요소의 영역을 늘려서 마우스 이동 시 hover 상태를 유지 */
+}
+#header-login-div {
+    top: 30px; /* 메뉴가 아래로 내려오도록 설정 */
+    left: 0;
+    width: 100px; /* 메뉴의 너비 설정 */
+}
+#header-register-div {
+    top: 30px; /* 메뉴가 아래로 내려오도록 설정 */
+    left: 0;
+    width: 100px; /* 메뉴의 너비 설정 */
+}
+/* 로그인 서브 메뉴 */
+#header-login-div {
+    position: absolute;
+    top: 38px; /* 부모 요소로부터의 거리 */
+    left: 43%;
+    transform: translateX(-50%); /* 가운데 정렬 */
+    width: 100px; /* 메뉴의 너비 설정 */
+    border: 1px solid #40916c;
+    border-radius: 5px;
+    background-color: white;
+    z-index: 999;
+    padding: 0; /* 내부 패딩 제거 */
+}
+#header-login-div:after {
+    content: "";
+    position: absolute;
+    top: -9px; /* 삼각형의 위치 조정 */
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 9px solid #40916c;
+}
+/* 회원가입 서브 메뉴 */
+#header-register-div {
+    position: absolute;
+    top: 38px; /* 부모 요소로부터의 거리 */
+    left: 45%;
+    transform: translateX(-50%); /* 가운데 정렬 */
+    width: 105px; /* 메뉴의 너비 설정 */
+    border: 1px solid #40916c;
+    border-radius: 5px;
+    background-color: white;
+    z-index: 999;
+    padding: 0; /* 내부 패딩 제거 */
+}
+#header-register-div:after {
+    content: "";
+    position: absolute;
+    top: -19px; /* 삼각형의 위치 조정 */
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 9px solid #40916c;
+}
+/* 서브 메뉴 내부 스타일 */
+.header-login-select, .header-register-select, .header-status-select {
+    text-align: center;
+    padding: 5px 0;
+    font-size: 14px;
+    border-radius: 5px;
+}
+.header-login-select:hover, .header-register-select:hover, .header-status-select:hover {
+    background-color: #f2f2f2;
+}
+/* 프로필 서브 메뉴 */
+#header-status-div {
+    display: none;
+    position: absolute;
+    top: 53px; /* 부모 요소로부터의 거리 조정 */
+    left: 72%;
+    transform: translateX(-50%); /* 가운데 정렬 */
+    width: 98px; /* 메뉴의 너비 설정 */
+    border: 1px solid #40916c;
+    border-radius: 5px;
+    background-color: white;
+    z-index: 999;
+    padding: 0; /* 내부 패딩 제거 */
+}
+#header-status-div:after {
+    content: "";
+    position: absolute;
+    top: -19px; /* 삼각형의 위치 조정 */
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 9px solid #40916c;
+}
+</style>
 <script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <!-- 상단 시작 -->
 <div id="header_box" class="d-flex justify-content-between">
@@ -40,30 +152,30 @@
 		<c:if test="${empty user}">
 		<!-- 로그인/회원가입 시작 -->
 		<div id="header-status-logout" class="d-flex">
-			<div class="header-status-leftBox">
-				<a id="header-login-text">로그인</a>
-			</div>
-			<div class="header-status-rightBox">
-				<a id="header-register-text">회원가입</a>
-			</div>
-			<div id="header-login-div" style="display: none;">
-				<div class="header-login-select">
-					<a href="/member/login">일반 로그인</a>
-				</div>
-				<div class="select-line"></div>
-				<div class="header-login-select">
-					<a href="/doctor/login">의사 로그인</a>
-				</div>
-			</div>
-			<div id="header-register-div" style="display: none;">
-				<div class="header-register-select">
-					<a href="/member/registerUser">일반 회원가입</a>
-				</div>
-				<div class="select-line"></div>
-				<div class="header-register-select">
-					<a href="/doctor/registerDoc">의사 회원가입</a>
-				</div>
-			</div>
+		    <div class="header-status-leftBox">
+		        <a id="header-login-text">로그인</a>
+		        <div id="header-login-div">
+		            <div class="header-login-select">
+		                <a href="/member/login">일반 로그인</a>
+		            </div>
+		            <div class="select-line"></div>
+		            <div class="header-login-select">
+		                <a href="/doctor/login">의사 로그인</a>
+		            </div>
+		        </div>
+		    </div>
+		    <div class="header-status-rightBox">
+		        <a id="header-register-text">회원가입</a>
+		        <div id="header-register-div">
+		            <div class="header-register-select">
+		                <a href="/member/registerUser">일반 회원가입</a>
+		            </div>
+		            <div class="select-line"></div>
+		            <div class="header-register-select">
+		                <a href="/doctor/registerDoc">의사 회원가입</a>
+		            </div>
+		        </div>
+		    </div>
 		</div>
 		<!-- 로그인/회원가입 끝 -->
 		</c:if>
@@ -289,62 +401,44 @@
 	
 	
 	/* 로그인 시 */
-	if(${!empty user}){
-		/* 로그인 시 */
-		const header_profile = document.getElementById('header-profile');
-		const header_status_div = document.getElementById('header-status-div');
-		header_profile.onclick = function(){
-			if(header_status_div.style.display == 'block'){
-				header_status_div.style.display = 'none';
-			} else {
-				header_status_div.style.display = 'block';
-			}
-		};
-		/* 로그인 시 */
-		const noti_div = document.getElementById('noti_div');
-		
-		const header_notification = document.getElementById('header-notification');
-		const overlay = document.getElementById('overlay');
-		header_notification.onclick = function(){
-			document.getElementById('noti_div').style.display = 'block';
-		    overlay.style.display = 'block';
-		    document.body.style.overflow = 'hidden'; // 외부 스크롤 비활성화
-		};
-		overlay.onclick = function() {
-		    document.getElementById('noti_div').style.display = 'none';
-		    overlay.style.display = 'none';
-		    document.body.style.overflow = 'auto'; // 외부 스크롤 활성화
-		};
-		
-		
-		const header_notification_unreaded = document.getElementById('header-notification-unreaded');
-		header_notification_unreaded.onclick = function(){
-			document.getElementById('noti_div').style.display = 'block';
-		    overlay.style.display = 'block';
-		    document.body.style.overflow = 'hidden'; // 외부 스크롤 비활성화
-		};
-	} else {/* 비로그인 시 */
-		/* 비로그인 시 */
-		const loginText = document.getElementById('header-login-text');
-		const headerLoginDiv = document.getElementById('header-login-div');
-		if(${empty user}){
-			loginText.onclick = function(){
-				if(headerLoginDiv.style.display == 'block'){
-					headerLoginDiv.style.display = 'none';
-				} else {
-					headerLoginDiv.style.display = 'block';
-				}
-			};
-		}
-		/* 비로그인 시 */
-		const registerText = document.getElementById('header-register-text');
-		const headerRegisterDiv = document.getElementById('header-register-div');
-		registerText.onclick = function(){
-			if(headerRegisterDiv.style.display == 'block'){
-				headerRegisterDiv.style.display = 'none';
-			} else {
-				headerRegisterDiv.style.display = 'block';
-			}
-		};
+	if (${!empty user}) {
+	    const header_profile = document.getElementById('header-profile');
+	    const header_status_div = document.getElementById('header-status-div');
+
+	    // 클릭 대신 hover로 변경
+	    header_profile.onmouseover = function() {
+	        header_status_div.style.display = 'block';
+	    };
+	    header_profile.onmouseout = function() {
+	        header_status_div.style.display = 'none';
+	    };
+	    header_status_div.onmouseover = function() {
+	        header_status_div.style.display = 'block';
+	    };
+	    header_status_div.onmouseout = function() {
+	        header_status_div.style.display = 'none';
+	    };
+
+	    const noti_div = document.getElementById('noti_div');
+	    const header_notification = document.getElementById('header-notification');
+	    const overlay = document.getElementById('overlay');
+	    header_notification.onclick = function() {
+	        document.getElementById('noti_div').style.display = 'block';
+	        overlay.style.display = 'block';
+	        document.body.style.overflow = 'hidden'; // 외부 스크롤 비활성화
+	    };
+	    overlay.onclick = function() {
+	        document.getElementById('noti_div').style.display = 'none';
+	        overlay.style.display = 'none';
+	        document.body.style.overflow = 'auto'; // 외부 스크롤 활성화
+	    };
+	    const header_notification_unreaded = document.getElementById('header-notification-unreaded');
+	    header_notification_unreaded.onclick = function() {
+	        document.getElementById('noti_div').style.display = 'block';
+	        overlay.style.display = 'block';
+	        document.body.style.overflow = 'hidden'; // 외부 스크롤 비활성화
+	    };
+	} else {
+	    // 비로그인 시 JavaScript는 필요 없음
 	}
 </script>

@@ -361,8 +361,8 @@ body{
 	margin-bottom: 13px;
 	
 	height: 22px;
-	white-space: nowrap;
 	overflow: hidden;
+	white-space: nowrap;
 	text-overflow: ellipsis;
 }
 .main-consult-item-content{
@@ -693,8 +693,8 @@ body{
 	width: 100%;
 	height:1px;
 	border-bottom: 1px solid #dfe1e2;
-	margin-top: 5px;
-	margin-bottom: 5px;
+	margin-top: 0px;
+	margin-bottom: 0px;
 }
 /* ================= 오른쪽 메뉴 ================= */
 
