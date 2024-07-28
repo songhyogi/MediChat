@@ -82,6 +82,7 @@ public class ConsultingController {
 			} else if(user.getClass().equals(DoctorVO.class)) {
 				model.addAttribute("url", "/main/main");
 				model.addAttribute("message","의사 회원은 글을 작성하실 수 없습니다.");
+				model.addAttribute("alertType","warning");
 				return "/common/resultAlert";
 			} else {
 				return "404Error";
@@ -89,6 +90,7 @@ public class ConsultingController {
 		} else {
 			model.addAttribute("url", "/member/login");
 			model.addAttribute("message", "회원만 이용 가능한 서비스 입니다.");
+			model.addAttribute("alertType","warning");
 			return "/common/resultAlert";
 		}
 	}
@@ -106,7 +108,7 @@ public class ConsultingController {
 		
 		model.addAttribute("message","글이 성공적으로 등록되었습니다");
 		model.addAttribute("url","/consultings");
-		
+		model.addAttribute("alertType","success");
 		return "/common/resultAlert";
 	}
 	
@@ -306,6 +308,7 @@ public class ConsultingController {
 			if(user.getClass().equals(MemberVO.class)) {
 				model.addAttribute("url", "/main/main");
 				model.addAttribute("message","일반 회원은 답글을 작성하실 수 없습니다.");
+				model.addAttribute("alertType","warning");
 				return "/common/resultAlert";
 			} else if(user.getClass().equals(DoctorVO.class)) {
 				DoctorVO doctor = (DoctorVO)user;
@@ -330,6 +333,7 @@ public class ConsultingController {
 		} else {
 			model.addAttribute("url", "/doctor/login");
 			model.addAttribute("message", "의사 회원만 이용 가능한 서비스 입니다.");
+			model.addAttribute("alertType","warning");
 			return "/common/resultAlert";
 		}
 	}
