@@ -15,7 +15,9 @@
 #header-login-div:hover,
 #header-register-div:hover, 
 .header-status-rightBox:hover #header-status-div,
-#header-status-div:hover {
+#header-status-div:hover,
+#dictionary_menu:hover #dictionary_menu_div,
+#dictionary_menu_div:hover{
     display: block;
 }
 .header-status-leftBox, .header-status-rightBox, .header-status-rightBox {
@@ -112,6 +114,35 @@
     border-right: 7px solid transparent;
     border-bottom: 9px solid #40916c;
 }
+
+#dictionary_menu_div{
+	display:none;
+	position: absolute;
+	top:92px;
+	width:130px;
+	z-index:998;
+	border: 3px solid #40916c;
+	background-color:white;
+}
+.dictionary-menu-item{
+	height:60px;
+	display: flex;
+  	justify-content: center;
+  	align-items: center;  
+}
+#dictionary_menu_div:after{
+	content: "";
+    position: absolute;
+    top: -10px; /* 삼각형의 위치 조정 */
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 9px solid #40916c;
+}
+#dictionary_menu_div a{
+	text-decoration: none;
+}
 </style>
 <script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <!-- 상단 시작 -->
@@ -136,11 +167,20 @@
 			<div class="header-menu">
 				<a href="/health/healthBlog" class="header-menu-text">건강 블로그</a>
 			</div>
-			<div class="header-menu">
-				<a href="/disease/diseaseDictionary" class="header-menu-text">질병 백과사전</a>
+			<div class="header-menu" id="dictionary_menu">
+				<a class="header-menu-text">의료 백과사전</a>
+				<div id="dictionary_menu_div">
+					<div class="dictionary-menu-item">
+						<a href="/disease/diseaseDictionary" class="text-black-6">질병 백과사전</a>
+					</div>
+					<div class="select-line"></div>
+					<div class="dictionary-menu-item">
+						<a href="/drug/search" class="text-black-6">의약품 백과사전</a>
+					</div>
+				</div>
 			</div>
 			<div class="header-menu">
-				<a href="/drug/search" class="header-menu-text">의약품 백과사전</a>
+				<a href="/medichatCommunity/list" class="header-menu-text">커뮤니티</a>
 			</div>
 			<div class="header-menu">
 				<a href="/faq/faqList" class="header-menu-text">고객센터</a>
