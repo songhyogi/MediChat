@@ -3,6 +3,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- 회원탈퇴 시작 -->
+<style>
+input[type="password"],
+input[type="text"]{
+	width:320px;
+	border-bottom:1px solid #000;
+}
+input[type="password"]:focus,
+input[type="text"]:focus{
+	outline:none;
+	border-bottom:2px solid #000;
+}
+</style>
 <div class="container">
 	<h2 class="title">회원탈퇴</h2>
 	<hr size="1" width="100%" noshade="noshade">
@@ -22,7 +34,7 @@
 			</li>
 			<li>
 				<form:label path="mem_email">이메일</form:label>
-				<form:input path="mem_email" placeholder="test@test.com 형식으로 입력하세요."/>
+				<form:input path="mem_email" placeholder="test@test.com 형식으로 입력"/>
 				<form:errors path="mem_email" cssClass="error-color"/>
 			</li>
 		</ul>

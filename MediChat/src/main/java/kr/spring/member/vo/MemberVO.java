@@ -67,6 +67,20 @@ public class MemberVO {
       }  
       return false;
    }
+   //아이디 찾기 (이메일 일치 여부 체크)
+ 	public boolean checkEmail(String userEmail) {
+ 		if(mem_auth>1 && mem_email.equals(userEmail)) {
+ 			return true;
+ 		}
+ 		return false;
+ 	}
+ 	//아이디 찾기 (이메일 일치 여부 체크)
+ 	public boolean checkName(String userName) {
+ 		if(mem_auth>1 && mem_name.equals(userName)) {
+ 			return true;
+ 		}
+ 		return false;
+ 	}
    //이미지 BLOB 처리
    public void setUpload(MultipartFile upload)throws IOException {
       //MultipartFile > byte[] 

@@ -50,6 +50,12 @@ public interface DoctorMapper {
 	
 	//아이디 중복확인
 	public DoctorVO checkId(String mem_id);
+	//이메일 확인
+	@Select("SELECT doc_email FROM doctor_detail WHERE doc_email=#{doc_email}")
+	public DoctorVO checkEmail(String doc_email);
+	//이름 확인
+	@Select("SELECT mem_name FROM member WHERE mem_name=#{mem_name}")
+	public DoctorVO checkName(String mem_name);
 	//아이디 찾기
 	@Select("SELECT m.mem_id FROM member m JOIN doctor_detail d ON m.mem_num=d.doc_num WHERE mem_name=#{mem_name} AND doc_email=#{doc_email}")
 	public DoctorVO findId(DoctorVO doctor);

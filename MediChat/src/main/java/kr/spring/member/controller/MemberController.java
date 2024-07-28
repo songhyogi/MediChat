@@ -106,6 +106,7 @@ public class MemberController {
 		
 		model.addAttribute("message","성공적으로 회원가입 되었습니다.");
 		model.addAttribute("url",request.getContextPath()+"/main/main");
+		model.addAttribute("alertType","success");
 		
 		return "common/resultAlert";
 	}
@@ -205,6 +206,7 @@ public class MemberController {
 		if(user == null) {
 	         model.addAttribute("message","로그인이 필요합니다.");
 	         model.addAttribute("url","/member/login");
+	         model.addAttribute("alertType","warning");
 	         
 	         return "common/resultAlert";
 	    }
@@ -231,6 +233,7 @@ public class MemberController {
 
 		model.addAttribute("message","정보가 수정되었습니다.");
         model.addAttribute("url","/member/myPage");
+        model.addAttribute("alertType","success");
 		
         return "common/resultAlert";
 	}
@@ -247,14 +250,42 @@ public class MemberController {
 		if(result.hasFieldErrors("mem_name")||result.hasFieldErrors("mem_email")) {
 			return "memberFindId";
 		}
-		//아이디 찾기
-		MemberVO member = memberService.findId(memberVO);
-		
-		log.debug("<< 아이디 찾기 결과 >> : " + member.getMem_id());
-		
-		model.addAttribute("mem_id",member.getMem_id());
-		
-		return "/member/memberResultId";
+		MemberVO member = null;
+		try {
+			member = memberService.checkEmail(memberVO.getMem_email());
+			member = memberService.checkName(memberVO.getMem_name());
+			
+			boolean check = false;
+			if(member!=null && member.getMem_email() != null) {
+				//이메일 일치확인
+				check = member.checkEmail(memberVO.getMem_email());
+				//이름 일치 확인
+				check = member.checkName(memberVO.getMem_name());
+			}else {
+				result.reject("notFoundUser2");
+				
+				return "memberFindId";
+			}
+			if(check) {
+				//아이디 찾기
+				member = memberService.findId(memberVO);
+
+				log.debug("<<아이디 찾기 결과>> : " + member.getMem_id());
+				
+				model.addAttribute("mem_id",member.getMem_id());
+				
+				return "/member/memberResultId";
+			}
+			//인증 실패
+			throw new AuthCheckException();
+		}catch(AuthCheckException e) {
+			if(member!=null && member.getMem_auth() == 1) {
+				result.reject("noAuthority");
+			}
+			log.debug("<인증 실패>");
+
+			return "memberFindId";
+		}
 	}
 	
 	/*=============================
@@ -274,6 +305,8 @@ public class MemberController {
 		if(user == null) {
 	         model.addAttribute("message","로그인이 필요합니다.");
 	         model.addAttribute("url","/member/login");
+	         model.addAttribute("alertType","warning");
+	         
 	         return "common/resultAlert";
 	    }
 		return "memberChangePasswd";
@@ -326,6 +359,7 @@ public class MemberController {
 		
 		model.addAttribute("message","비밀번호가 수정되었습니다.");
 		model.addAttribute("url","/member/myPage");
+		model.addAttribute("alertType","success");
 		
 		return "common/resultAlert";
 	}
@@ -338,6 +372,7 @@ public class MemberController {
 		if(user == null) {
 	         model.addAttribute("message","로그인이 필요합니다.");
 	         model.addAttribute("url","/member/login");
+	         model.addAttribute("alertType","warning");
 	         
 	         return "common/resultAlert";
 	    }
@@ -389,8 +424,10 @@ public class MemberController {
 		session.invalidate();
 		
 		model.addAttribute("message","회원탈퇴 되었습니다.");
+		model.addAttribute("message2","그 동안 MediChat을 이용해주셔서 감사합니다.");
 		model.addAttribute("url",request.getContextPath()+"/main/main");
-        
+		model.addAttribute("alertType","success");
+		
         return "common/resultAlert";
 	}
 	/*=============================
@@ -404,7 +441,8 @@ public class MemberController {
 		if (user == null || user.getMem_auth() != 9) {
 			model.addAttribute("message","접근 권한이 없습니다.");
 			model.addAttribute("url",request.getContextPath()+"/main/main");
-
+			model.addAttribute("alertType","warning");
+			
 			return "common/resultAlert";
 		} else {
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -564,7 +602,11 @@ public class MemberController {
 	public String myConsult(HttpSession session,Model model) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		if(user == null) {
-			return "redirect:/member/login";
+			model.addAttribute("message","로그인이 필요합니다.");
+			model.addAttribute("url","/member/login");
+			model.addAttribute("alertType","warning");
+			
+	        return "common/resultAlert";
 		}else {
 			Map<String, Object> map = new HashMap<String, Object>();
 			MemberVO member = new MemberVO();
