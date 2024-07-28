@@ -46,13 +46,14 @@ public class HealthController {
 			@GetMapping("/doctor/healthyMydoc")
 			public String getMyDocHeathList(HttpServletRequest request,HttpSession session,@RequestParam(defaultValue="1") int pageNum,Model model) {
 				Map<String,Object> map = new HashMap<String,Object>();
-				String user_type = (String)session.getAttribute("user_type");
+				Object user_type = (Object)session.getAttribute("user_type");
 				Object user = (Object) session.getAttribute("user");
 
 				if(user != null) {
 					if(user_type != null) {
 						DoctorVO duser = (DoctorVO) user;
 						map.put("mem_num", duser.getMem_num());
+					
 					}else{
 						model.addAttribute("message","접근 권한이 없습니다.");
 						model.addAttribute("url",request.getContextPath()+"/main/main");

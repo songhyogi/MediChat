@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/hos.css" type="text/css">
 <div>
 	<div class="p-3">
@@ -203,7 +205,7 @@
 	<div style="height:18px;" class="bg-gray-0"></div>
 	
 	<div id="detail_hosRev">
-		<p class="fs-18 fw-7">진료 후기 <img src="/images/star.png" width="20" height="20"> ${hospital.rev_avg}</p>
+		<p class="fs-18 fw-7">진료 후기 (<img src="/images/star.png" width="20" height="20"> 		<fmt:formatNumber value="${hospital.rev_avg}" pattern=".0"/>)</p>
 		<c:if test="${reviewCount == 0}">
 			<div class="align-center">
 				<p>등록된 후기가 없습니다.<br>
