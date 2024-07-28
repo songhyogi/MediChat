@@ -455,8 +455,8 @@ body{
 	background-color: #f2f2f2;
 }
 .header-menu-text {
-	text-decoration: none;
-	color: black;
+	text-decoration: none !important;
+	color: black !important;
 	font-weight: 900;
 	font-size: 18px;
 }
