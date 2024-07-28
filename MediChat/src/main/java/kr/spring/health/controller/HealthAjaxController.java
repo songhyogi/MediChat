@@ -44,7 +44,7 @@ public class HealthAjaxController {
 		if(user == null) {
 			user_num=0;
 		}else{
-			if(user_type.equals("doctor")) {
+			if(user_type != null) {
 				DoctorVO duser = (DoctorVO)user;
 				map.put("user_num", duser.getMem_num());
 				user_num= duser.getMem_num();
@@ -82,7 +82,7 @@ public class HealthAjaxController {
 		if(user == null) {
 			map.put("result", "logout");
 		}else {
-			if(user_type.equals("doctor")) {
+			if(user_type != null) {
 				DoctorVO duser = (DoctorVO)user;
 				map.put("user_num", duser.getMem_num());
 				user_num= duser.getMem_num();
@@ -118,7 +118,7 @@ public class HealthAjaxController {
 		if(user == null) {
 			map.put("result", "logout");
 		}else {
-			if(user_type.equals("doctor")) {
+			if(user_type != null) {
 				DoctorVO duser = (DoctorVO)user;
 				map.put("user_num", duser.getMem_num());
 				user_num= duser.getMem_num();
@@ -153,7 +153,7 @@ public class HealthAjaxController {
 		if(user == null) {
 			map.put("result", "logout");
 		}else{
-			if(user_type.equals("doctor")) {
+			if(user_type != null) {
 				DoctorVO duser = (DoctorVO)user;
 				map.put("user_num", duser.getMem_num());
 				user_num= duser.getMem_num();
@@ -181,7 +181,7 @@ public class HealthAjaxController {
 		if(user == null) {
 			map.put("result", "logout");
 		}else {
-			if(user_type.equals("doctor")) {
+			if(user_type != null) {
 				DoctorVO duser = (DoctorVO)user;
 				map.put("user_num", duser.getMem_num());
 				user_num= duser.getMem_num();
@@ -210,7 +210,7 @@ public class HealthAjaxController {
 		if(user == null) {
 			map.put("result", "logout");
 		}else {
-			if(user_type.equals("doctor")) {
+			if(user_type != null) {
 				DoctorVO duser = (DoctorVO)user;
 				map.put("user_num", duser.getMem_num());
 				user_num= duser.getMem_num();
@@ -248,7 +248,7 @@ public class HealthAjaxController {
 		if(user == null) {
 			map.put("result", "logout");
 		}else {
-			if(user_type.equals("doctor")) {
+			if(user_type != null) {
 				DoctorVO duser = (DoctorVO)user;
 				map.put("user_num", duser.getMem_num());
 				user_num= duser.getMem_num();
@@ -291,7 +291,7 @@ public class HealthAjaxController {
 		if(user == null) {
 			user_num=0;
 		}else{
-			if(user_type.equals("doctor")) {
+			if(user_type != null) {
 				DoctorVO duser = (DoctorVO)user;
 				map.put("user_num", duser.getMem_num());
 				user_num= duser.getMem_num();

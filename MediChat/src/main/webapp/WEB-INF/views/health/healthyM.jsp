@@ -53,7 +53,7 @@
 				<div class="healthy_list">
 					<div class="float-left" style="padding-right:120px;">
 							<ul>
-								<li style="font-size: 16pt;">${h.healthy_title}</li>
+								<li style="font-size: 16pt;" style="col-9" >${h.healthy_title}</li>
 								<li>${fn:substring(h.healthy_content,0,fn:indexOf(h.healthy_content, '.')+1)}</li>
 								<li class="fs-15 fw-5 text-black-3">${h.h_reg_date} 조회수:${h.healthy_hit} &nbsp; ♡ :
 									${h.fav_cnt} &nbsp; <img src="../images/speech.png"

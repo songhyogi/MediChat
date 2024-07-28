@@ -21,7 +21,8 @@
 </script>
 <div class="page-main">
 	<div class="page-one" style="margin: auto;">
-		<h5>홈 > 건강 블로그</h5><a href="${pageContext.request.contextPath}/member/healthyMy">(개발)내 목록 보러가기>></a>
+		<h5>홈 > 건강 블로그</h5><a href="${pageContext.request.contextPath}/member/healthyMy">(개발)내 좋아요 목록 보러가기>></a><a href="${pageContext.request.contextPath}/member/healthyMyreply">(개발)내 댓글 목록 보러가기>></a>
+		<br><a href="${pageContext.request.contextPath}/doctor/healthyMydoc">(개발)의사 healthy글 목록 보러가기>></a>
 		<p>
 		<h1>
 			<img src="${pageContext.request.contextPath}/images/blogging.png" width="45px;"> <b>건강 블로그</b>

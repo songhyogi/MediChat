@@ -201,6 +201,18 @@ public class HealthyServiceImpl implements HealthyService{
 		// TODO Auto-generated method stub
 		return mapper.selectMyReHealList(map);
 	}
+
+	@Override
+	public Integer selectDocByHealCount(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mapper.selectDocByHealCount(map);
+	}
+
+	@Override
+	public List<HealthyBlogVO> selectDocByHealList(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mapper.selectDocByHealList(map);
+	}
 	
 
 

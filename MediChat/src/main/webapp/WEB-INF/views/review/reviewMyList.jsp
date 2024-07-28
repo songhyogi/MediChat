@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/review.css" type="text/css">
 <br><br>
-<h4>작성한 후기 리스트</h4>
+<h4><b>작성한 후기 리스트</b></h4>
 <br><br><br>
 <div class="align-center">
 <c:if test="${count  ==0}">
@@ -128,7 +128,7 @@
 							 ${r.rev_content}
 							 </p>
 							 <br>
-							<div class="align-right">
+							<div class="align-right"  style="z-index:999;">
 								<button class="default-btn" onclick="location.href='${pageContext.request.contextPath}/review/updateReview?rev_num=${r.rev_num}'">수정</button > <button  data-num="${r.rev_num}" class="default-btn delete-btn" >삭제</button>
 						   </div>
 						    <script type="text/javascript">

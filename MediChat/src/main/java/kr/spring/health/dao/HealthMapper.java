@@ -95,5 +95,9 @@ public interface HealthMapper {
 	//댓글
 	public Integer selectMyHealReCount(Map<String, Object> map);
 	public List<HealthyReplyVO> selectMyReHealList(Map<String, Object> map);
+	
+	//의사 글 목록
+	public Integer selectDocByHealCount(Map<String, Object> map);
+	public List<HealthyBlogVO> selectDocByHealList(Map<String, Object> map);
 
 }

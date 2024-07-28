@@ -43,7 +43,7 @@
 		<div title="Like" class="heart-container" id="hFav"
 			data-num="${healthy.healthy_num}">
 			<input id="Give-It-An-Id" class="checkbox" type="checkbox"
-				<c:if test="${healthy.click_num == user.mem_num && !empty user}">checked</c:if>>
+				<c:if test="${healthy.click_num == user_num}" >checked="checked"</c:if> >
 			<div class="svg-container">
 				<svg xmlns="http://www.w3.org/2000/svg" class="svg-outline"
 					viewBox="0 0 24 24">
