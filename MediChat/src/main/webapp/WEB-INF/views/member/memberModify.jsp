@@ -4,9 +4,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style>
-.btn.green{
-	background-color:rgb(102, 178, 178);
-}
 .rounded {
 	border-radius: 10px;
 }
@@ -31,12 +28,12 @@
 		<ul>
 			<li style="margin-top:20px;">
 				<form:label path="mem_name">이름</form:label>
-				<form:input path="mem_name"/>
+				<form:input path="mem_name" class="effect-1"/>
 				<form:errors path="mem_name" cssClass="error-color"/>
 			</li>
 			<li>
 			    <form:label path="mem_birth">생년월일</form:label>
-			    <input type="text" name="mem_birth" id="mem_birth" placeholder="년-월-일">
+			    <input type="text" name="mem_birth" id="mem_birth" placeholder="년-월-일" class="effect-1">
 			    <button type="button" id="calendarButton">
 			    	<img src="${pageContext.request.contextPath}/images/calendar.jpg" style="width:30px; height:30px; margin-right:5px;">
 			    </button>
@@ -45,34 +42,34 @@
 			<li>
 				<c:if test="${mem_profile == null && mem_gender == null}">
 					<form:label path="mem_email">이메일</form:label>
-					<form:input path="mem_email"/>
+					<form:input path="mem_email" class="effect-1"/>
 					<form:errors path="mem_email" cssClass="error-color"/>			
 				</c:if>
 				<c:if test="${mem_profile != null && mem_gender == null}">
 					<form:label path="mem_email">이메일</form:label>
-					<form:input path="mem_email" class="readonly" readonly="true"/>			
+					<form:input path="mem_email" class="readonly effect-1" readonly="true"/>			
 				</c:if>
 				<c:if test="${mem_profile == null && mem_gender != null}">
 					<form:label path="mem_email">이메일</form:label>
-					<form:input path="mem_email" class="readonly" readonly="true"/>			
+					<form:input path="mem_email" class="readonly effect-1" readonly="true"/>			
 				</c:if>
 			</li>
 			<li>
 				<form:label path="mem_phone">전화번호</form:label>
-				<form:input path="mem_phone"/>
+				<form:input path="mem_phone" class="effect-1"/>
 				<form:errors path="mem_phone" cssClass="error-color"/>
 			</li>
 			<li >
 				<form:label path="mem_zipcode">주소</form:label>
-				<form:input path="mem_zipcode"/>
+				<form:input path="mem_zipcode" class="effect-1"/>
 				<input type="button" onclick="execDaumPostcode()" value="우편번호" class="btn green rounded" style="margin:0 2px;">
 				<form:errors path="mem_zipcode" cssClass="error-color"/>
-				<form:input path="mem_address1"/>
+				<form:input path="mem_address1" class="effect-1"/>
 				<form:errors path="mem_address1" cssClass="error-color"/>
 			</li>
 			<li>
 				<form:label path="mem_address2">상세주소</form:label>
-				<form:input path="mem_address2"/>
+				<form:input path="mem_address2" class="effect-1"/>
 				<form:errors path="mem_address2" cssClass="error-color"/>
 				<hr size="1" width="100%" noshade="noshade">
 			</li>

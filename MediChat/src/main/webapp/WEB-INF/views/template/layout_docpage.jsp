@@ -17,10 +17,7 @@
 	margin-bottom: 10px;
 	border:none;
 }
-#main_leftNav{
-	margin-top:5%;
-	background-color:#fff;
-}
+
 </style>
 </head>
 <body>
@@ -28,7 +25,8 @@
 		<div id="main_header">
 			<tiles:insertAttribute name="header"/>
 		</div>
-		<div class="custom-container row d-flex justify-content-center pt-4">
+		<div class="custom-container">
+		<div class="row d-flex justify-content-center pt-4">
 			<div id="main_leftNav" class="col-3">
 				<tiles:insertAttribute name="navDoc"/>
 			</div>
@@ -38,6 +36,7 @@
 		</div>
 		<div id="main_footer">
 			<tiles:insertAttribute name="footer"/>
+		</div>
 		</div>
 	</div>
 </body>

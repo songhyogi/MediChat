@@ -3,6 +3,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- 의사회원가입 시작 -->
+<style>
+.custom-select {
+    position: relative;
+    padding-right: 35px;
+}
+.custom-select::after {
+    content: "\f078"; /* Font Awesome 화살표 아이콘 코드 */
+    font-family: "Font Awesome 5 Free";
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+</style>
 <div class="container">
 	<h2 class="title">회원가입(의사)</h2>
 	<hr size="1" width="100%" noshade="noshade">
@@ -14,36 +29,38 @@
 		<ul>
 			<li style="margin-top:20px;">
 				<form:label path="mem_id">아이디</form:label>
-				<form:input path="mem_id" placeholder="영문or숫자 사용하여 4~12자 입력" autocomplete="off" style="width:300px;"/>
+				<form:input path="mem_id" placeholder="영문or숫자 사용하여 4~12자 입력" autocomplete="off" class="effect-1" style="width:300px;"/>
 				<input type="button" id="confirmId" value="중복확인" class="default-btn" style="margin-left:0px;">
 				<form:errors path="mem_id" cssClass="error-color" style="display:inline;"/><br>
 				<span id="message_id" style=""></span>
 			</li>
 			<li>
 				<form:label path="doc_passwd">비밀번호</form:label>
-				<form:password path="doc_passwd" placeholder="영문,숫자 사용하여 4~12자 입력"/>
+				<form:password path="doc_passwd" placeholder="영문,숫자 사용하여 4~12자 입력" class="effect-1"/>
 				<form:errors path="doc_passwd" cssClass="error-color"/>
 			</li>
 			<li>
 				<form:label path="mem_name">이름</form:label>
-				<form:input path="mem_name" placeholder="이름"/>
+				<form:input path="mem_name" placeholder="이름" class="effect-1"/>
 				<form:errors path="mem_name" cssClass="error-color"/>
 			</li>
 			<li>
 				<form:label path="doc_email">이메일</form:label>
-				<form:input path="doc_email" placeholder="test@test.com 형식으로 입력"/>
+				<form:input path="doc_email" placeholder="test@test.com 형식으로 입력" class="effect-1"/>
 				<form:errors path="doc_email" cssClass="error-color"/>
 			</li>
 			<li>
 				<!-- 병원 목록 검색 -->
 				<form:label path="hos_num">병원</form:label>
 				<form:hidden path="hos_num"/>
-				<input type="search" name="keyword" id="keyword" value="${keyword}">
-                <input type="button" id="search_button" value="검색">
+				<input type="search" name="keyword" id="keyword" value="${keyword}" class="effect-1" onkeypress="return handleEnter(event)">
+                <button type="button" id="search_button" class="btn">
+				    <i class="fas fa-search"></i>
+				</button>
                 <form:errors path="hos_num" cssClass="error-color"/>
             </li>
             <li style="margin-left:205px;">
-            	<form:select path="hos_num">
+            	<form:select path="hos_num" class="custom-select" style="width:400px;">
               	 	<c:forEach var="hos" items="${hosList}">
             			<option value="${hos.hos_num}">${hos.hos_name}/${hos.hos_addr}</option>
             		</c:forEach>
@@ -51,7 +68,7 @@
             </li>
 			<li>
 				<form:label path="doc_history">연혁</form:label>
-				<form:textarea path="doc_history" placeholder="연혁을 입력해주세요." style="height: 150px; vertical-align: top;"/>
+				<form:textarea path="doc_history" placeholder="연혁을 입력해주세요." class="msg" style="height:150px; vertical-align:top;"/>
 			</li>
 		</ul>
 		</div>
@@ -74,12 +91,14 @@
 				<span style="font-weight:bold;">인증문자 입력</span>
 				<div id="captcha_div">
 					<img src="getCaptcha" id="captcha_img" width="200" height="90">
-					<input type="button" value="새로고침" id="reload_btn">
+					<button type="button" class="btn" id="reload_captcha">
+					    <i class="fas fa-sync-alt"></i>
+					</button>
 				</div>
 			</li>
 			<li>
 				<form:label path="captcha_chars" >인증문자 확인</form:label>
-				<form:input path="captcha_chars" placeholder="인증문자를 입력하세요."/>
+				<form:input path="captcha_chars" placeholder="인증문자를 입력하세요." class="effect-1"/>
 				<form:errors path="captcha_chars" cssClass="error-color"/>
 			</li>
 		</ul>
@@ -95,46 +114,49 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/doctor.register.js"></script>
 <script src="${pageContext.request.contextPath}/js/uploadAdapter.js"></script>
 <script type="text/javascript">
-	$(document).ready(function() {
-	    $('#search_button').on('click', function() {
-	        var keyword = $('#keyword').val();
-	
-	        $.ajax({
-	            url:'${pageContext.request.contextPath}/doctor/hosList',
-	            type:'post',
-	            dataType:'json',
-	            data:{keyword:keyword},
-	            success:function(data){
-	                if(data.success){
-	                   var hosList = data.hosList;
-	                   var options = '';
-	                   // 기존 옵션 초기화
-	                    $('form').find('select[name="hos_num"]').empty();
+    // Enter 키를 눌렀을 때 검색 호출
+    function handleEnter(event) {
+        if (event.key === 'Enter') {
+            performSearch();
+            return false; // 폼 제출 방지
+        }
+        return true;
+    }
+    // 검색 버튼 클릭 시 또는 Enter 키를 눌렀을 때 실행될 검색 함수
+    function performSearch() {
+        var keyword = $('#keyword').val();
 
-	                   $.each(hosList, function(index, hospital) {
-	                       options += '<option value="' + hospital.hos_num + '">' 
-	                                + hospital.hos_name + ' / ' + hospital.hos_addr + '</option>';
-	                   });
-	                   $('form').find('select[name="hos_num"]').append(options);
-	                }else{
-	                   alert('병원 목록을 가져오는 중에 오류가 발생하였습니다.');
-	                }
-	            },
-	            error:function(){
-	               alert('서버 통신 중 오류가 발생하였습니다.');
-	            }
-	        });
-	    });
-	 	// select 태그 값 변경 시
-	    $('form').on('change','select[name="hos_num"]',function() {
-	        var selectedHosNum = $(this).val();
-	        $('form').find('input[name="hos_num"]').val(selectedHosNum); // 숨겨진 input 태그에 선택한 값 할당
-	    });
-	});
+        $.ajax({
+            url: '${pageContext.request.contextPath}/doctor/hosList',
+            type: 'post',
+            dataType: 'json',
+            data: { keyword: keyword },
+            success: function(data) {
+                if (data.success) {
+                    var hosList = data.hosList;
+                    var options = '';
+                    // 기존 옵션 초기화
+                    $('form').find('select[name="hos_num"]').empty();
+
+                    $.each(hosList, function(index, hospital) {
+                        options += '<option value="' + hospital.hos_num + '">' 
+                                + hospital.hos_name + ' / ' + hospital.hos_addr + '</option>';
+                    });
+                    // 검색 결과를 select 태그에 반영
+                    $('form').find('select[name="hos_num"]').append(options);
+                } else {
+                    alert('병원 목록을 가져오는 중에 오류가 발생하였습니다.');
+                }
+            },
+            error: function() {
+                alert('서버 통신 중 오류가 발생하였습니다.');
+            }
+        });
+    }
 </script>
 <script>
 	$(function(){
-		$('#reload_btn').click(function(){
+		$('#reload_captcha').click(function(){
 		 $.get('getCaptcha', function(data) {
 	            $('#captcha_img').attr('src', 'getCaptcha?' + new Date().getTime());
 	        }).fail(function() {

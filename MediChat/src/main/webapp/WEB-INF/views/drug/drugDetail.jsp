@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/kyj.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/kyj.css" type="text/css">
 <style>
 ul li {
     margin-bottom: 50px; /* 리스트 아이템들 간의 간격을 넓힘 */
@@ -24,7 +25,7 @@ ul li {
 <div class="page-main main-margin">
 	<div class="body-header">
 		<p class="text-lightgray fw-7 fs-13">홈 > 의약품 백과사전</p>
-		<h4>의약품 상세정보</h4>
+		<h1>의약품 상세정보</h1>
 	</div><br>
 	<div class="drug-body">
 		<h4>제품 기본 정보</h4>
@@ -54,7 +55,7 @@ ul li {
 		<h4>허가정보 · 복약정보</h4>
 		<!-- 모든 데이터가 존재하지 않을 경우 -->
 		<c:if test="${empty drug.drg_dosage && empty drug.drg_effect && empty drug.drg_warning && empty drug.drg_precaution && empty drug.drg_interaction && empty drug.drg_seffect && empty drug.drg_storage}">
-			<div class="warin">
+			<div class="warin fs-24">
 				제공되는 데이터가 없습니다
 			</div>
 		</c:if>

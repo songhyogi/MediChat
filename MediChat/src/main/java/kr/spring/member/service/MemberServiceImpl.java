@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.spring.consulting.vo.ConsultingVO;
 import kr.spring.member.dao.MemberMapper;
 import kr.spring.member.vo.MemberVO;
  
@@ -105,6 +106,11 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public Integer selectRowCount(Map<String, Object> map) {
 		return memberMapper.selectRowCount(map);
+	}
+
+	@Override
+	public List<ConsultingVO> consultList(Map<String, Object> map) {
+		return memberMapper.consultList(map);
 	}
 
 }

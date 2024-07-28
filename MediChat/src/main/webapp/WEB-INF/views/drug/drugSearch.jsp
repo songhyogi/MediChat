@@ -22,53 +22,69 @@ a {
 </style>
 <!-- 의약품 검색 시작 -->
 <div class="page-main">
-	<p class="text-lightgray fw-7 fs-13">홈 > 의약품 백과사전</p>
-	<h4>의약품 상세검색</h4>
-	
-	<!-- 의약품 검색 -->
-	<form action="search" id="search_form" method="get" class="align-center">
-		<ul class="search">
-			<li>
-				<select name="keyfield" id="keyfield" class="drug-keyfield">
-					<option value="1" <c:if test="${param.keyfield == 1}">selected</c:if>>제품명</option>
-					<option value="2" <c:if test="${param.keyfield == 2}">selected</c:if>>회사명</option>
-					<option value="3" <c:if test="${param.keyfield == 3}">selected</c:if>>효능</option>
-				</select>
-				<input type="search" name="keyword" id="keyword" class="drug-keyword" value="${param.keyword}">
-				<input type="submit" value="검색">
-			</li>
-			<%-- <li>
-				<input type="search" name="keyword" id="keyword" value="${param.keyword}">
-			</li>
-			<li>
-				<input type="submit" value="검색">
-			</li> --%>
-		</ul>
-	</form><br>
-	<c:if test="${count == 0}">
-		<div class="result-display">표시할 게시물이 없습니다</div>
-	</c:if>
-	<c:if test="${count > 0}">
-		<table class="table table-hover">
-			<tr class="table-light align-center">
-				<th>번호</th>
-				<th>제품명</th>
-				<th>회사명</th>
-				<th>효능</th>
-			</tr>
-			<c:forEach var="drug" items="${list}">
-			<tr>
-				<td class="align-center">${drug.drg_num}</td>
-				<td><a href="detail?drg_num=${drug.drg_num}" class="list-drug-name"> ${drug.drg_name}</a></td>
-				<td class="align-center">${drug.drg_company}</td>
-				<td class="align-center"><img src="${pageContext.request.contextPath}/images/magnifier.png" width="20"></td>
-			</tr>
-			</c:forEach>
-		</table><br>
-	</c:if>
-	<nav aria-label="Page navigation example">
-		<div class="align-center">${page}</div>
-	</nav>
+	<div class="page-one">
+		<h5 class="text-lightgray fw-7 fs-13">홈 > 의약품 백과사전</h5>
+		<p></p>
+		<h1>
+		<img src="/images/dictionary.png" width="45px;">
+		<b>의약품 백과사전</b>
+		</h1>
+		<br>
+		<!-- 의약품 검색 -->
+		<div class="drug-search">
+		<form action="search" id="search_form" method="get" class="align-center">
+			<ul class="search">
+				<li>
+					<select name="keyfield" id="keyfield" class="form-control drug-keyfield">
+						<option value="1" <c:if test="${param.keyfield == 1}">selected</c:if>>제품명</option>
+						<option value="2" <c:if test="${param.keyfield == 2}">selected</c:if>>회사명</option>
+						<option value="3" <c:if test="${param.keyfield == 3}">selected</c:if>>효능</option>
+					</select>
+					<input type="text" name="keyword" id="keyword" class="form-control drug-keyword" value="${param.keyword}" placeholder="검색어를 입력하세요.">
+					<i id="h-search-icon" class="bi bi-search" ></i>
+					<script type="text/javascript">
+					$('#h-search-icon').click(function(){
+						$('#search_form').submit();
+					});
+				</script>
+					<!-- <input type="submit" value="검색">-->
+				</li>
+				<%-- <li>
+					<input type="search" name="keyword" id="keyword" value="${param.keyword}">
+				</li>
+				<li>
+					<input type="submit" value="검색">
+				</li> --%>
+			</ul>
+		</form>
+		</div>
+		<hr size="1" width="100%">
+		<br>
+		<c:if test="${count == 0}">
+			<div class="result-display">표시할 게시물이 없습니다</div>
+		</c:if>
+		<c:if test="${count > 0}">
+			<table class="drug-table">
+				<tr class="table-light align-center bg-gray-1">
+					<!-- <th class="fs-18 fw-4">번호</th>-->
+					<th class="fs-18 fw-4 drug-name-th">제품명</th>
+					<th class="fs-18 fw-4 drug-company">회사명</th>
+					<th class="fs-18 fw-4 drug-effect">효능</th>
+				</tr>
+				<c:forEach var="drug" items="${list}">
+				<tr>
+					<!--<td class="align-center fs-18 fw-4">${drug.drg_num}</td>-->
+					<td class="fs-18 fw-4 drug-name-td"><a href="detail?drg_num=${drug.drg_num}" class="list-drug-name"> ${drug.drg_name}</a></td>
+					<td class="align-center fs-18 fw-4 drug-company">${drug.drg_company}</td>
+					<td class="align-center fs-18 fw-4 drug-effect"><img src="${pageContext.request.contextPath}/images/magnifier.png" width="20"></td>
+				</tr>
+				</c:forEach>
+			</table><br>
+		</c:if>
+		<nav aria-label="Page navigation example">
+			<div class="align-center">${page}</div>
+		</nav>
+	</div>
 	<!-- 모달 시작 --> 	
 	<div class="modal">
 		<!-- 이미지 모달 -->
@@ -86,8 +102,7 @@ a {
 	<!-- 모달 끝 --> 	
 </div>
 <!-- 의약품 검색 끝 -->
-<!-- 
-스크립트 시작
+
 <script>
 $(document).ready(function(){
 	const imgModal = document.querySelector("#img_modal")
@@ -113,4 +128,3 @@ $(document).ready(function(){
 	}
 });
 </script>
-스크립트 끝 -->

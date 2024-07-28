@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.checkerframework.checker.units.qual.s;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.spring.consulting.vo.ConsultingVO;
 import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
@@ -151,7 +153,7 @@ public class MemberController {
 				//=====자동 로그인 끝=====
 				//로그인 처리
 				session.setAttribute("user", member);
-				
+				session.setAttribute("user_type", "membert");
 				/* ksy 알림 처리 시작 */
 				int noti_cnt = notificationService.selectCountNotification(member.getMem_num());
 				session.setAttribute("noti_cnt", noti_cnt);
@@ -541,7 +543,7 @@ public class MemberController {
 	    }
 	}
 	@GetMapping("/mypage/memberInfo")
-   public String process1(HttpSession session,Model model) {
+    public String process1(HttpSession session,Model model) {
       MemberVO user = (MemberVO)session.getAttribute("user");
       if(user == null) {
          return "login";
@@ -554,5 +556,26 @@ public class MemberController {
       model.addAttribute("member", member);
         
       return "memberInfo";
-   }
+    }
+	/*=============================
+	 * 의료상담 내역(마이페이지)
+    ============================*/
+	@GetMapping("/mypage/myConsult")
+	public String myConsult(HttpSession session,Model model) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user == null) {
+			return "redirect:/member/login";
+		}else {
+			Map<String, Object> map = new HashMap<String, Object>();
+			MemberVO member = new MemberVO();
+			member.setMem_num(user.getMem_num());
+			
+			map.put("mem_num",member.getMem_num());
+			
+			List<ConsultingVO> consultList = memberService.consultList(map);
+			
+			model.addAttribute("consultList",consultList);
+		}
+		return "myConsult";
+	}
 }

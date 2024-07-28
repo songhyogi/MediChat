@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import kr.spring.consulting.vo.ConsultingVO;
 import kr.spring.member.vo.MemberVO;
 
 public interface MemberService {
@@ -25,7 +26,9 @@ public interface MemberService {
 	//회원탈퇴
 	public void deleteMember(Long mem_num);
 	public void deleteMember_detail(MemberVO member);
-
+	
+	//나의 의료상담 목록
+	public List<ConsultingVO> consultList(Map<String, Object> map);
 
 	//자동 로그인
 	public void updateMem_au_id(String mem_au_id,Long mem_num);

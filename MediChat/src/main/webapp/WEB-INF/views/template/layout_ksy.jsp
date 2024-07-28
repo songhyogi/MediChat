@@ -15,9 +15,9 @@
 	<div>
 		<tiles:insertAttribute name="header"/>
 	</div>
-	<div class="custom-container pt-4 border">
-		<div class="row mb-3">
-			<div class="col-9 border-end">
+	<div class="custom-container border">
+		<div class="row">
+			<div class="col-9 border-end" style="padding-right:0;">
 				<tiles:insertAttribute name="body"/>
 			</div>
 			<div id="right_nav" class="col-3">

@@ -35,7 +35,9 @@
 				<span style="font-weight:bold;">인증문자 입력</span>
 				<div id="captcha_div">
 					<img src="getCaptcha" id="captcha_img" width="200" height="90">
-					<input type="button" value="새로고침" id="reload_btn">
+					<button type="button" class="btn" id="reload_captcha">
+					    <i class="fas fa-sync-alt"></i>
+					</button>
 				</div>
 			</li>
 			<li>
@@ -58,7 +60,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/member.passwd.js"></script>
 	<script>
 		$(function(){
-			$('#reload_btn').click(function(){
+			$('#reload_captcha').click(function(){
 			 $.get('getCaptcha', function(data) {
 		            $('#captcha_img').attr('src', 'getCaptcha?' + new Date().getTime());
 		        }).fail(function() {

@@ -42,7 +42,7 @@ public interface CommunityService {
 	public void deleteComment(Long cre_num);
 	
 	//대댓글
-	public List<CommunityReplyVO> selectListReply(Map<String, Object> map);
+	public List<CommunityReplyVO> selectListReply(Long cre_num);
 	public CommunityReplyVO selectReply(Long cre_num);
 	public void insertReply(CommunityReplyVO communityReply);
 	public void updateReply(CommunityReplyVO communityReply);

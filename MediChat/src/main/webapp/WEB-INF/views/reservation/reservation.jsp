@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/shg.css" type="text/css">
 <style>
 #calendar {
     margin: 50px auto 0;
@@ -51,286 +52,6 @@
 }
 .fc .fc-highlight{
     background-color: #d8f3dc;
-}
-.time-header {
-    margin-left: 10px;
-    /* font-weight: bold; */
-    /* color: #757575; */
-}
-#time-buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-}
-button, .time-button {
-    background-color: transparent;
-    border: 1px solid #ccc;
-    color: #000;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin: 7px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    font-size: 16px;
-    width: 180px; /* 버튼의 너비를 통일 */
-    height: 45px; /* 버튼의 높이를 통일 */
-}
-button:disabled, .time-button.disabled {
-    background-color: transparent;
-    color: gray;
-    border: 1px solid #d6d6d6;
-    cursor: default; /* 기본 커서로 설정 */
-    opacity: 1;
-}
-button:hover, .time-button:hover {
-    background-color: #f2fcf3;
-}
-button.selected, .time-button.selected {
-    background-color: #d8f3dc;
-}
-.time-section {
-    margin-bottom: 20px;
-    text-align: left;
-}
-.time-row {
-    display: flex;
-    justify-content: left;
-    margin-bottom: 10px;
-    width: 100%;
-}
-.button-row {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-}
-.reserve-btn {
-    width: 100px;
-}
-.doctor-section {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 40px;
-}
-.doctor-card {
-    width: 200px;
-    margin: 10px;
-    text-align: center;
-}
-.doctor-image {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 12px;
-}
-.doctor-name{
-	margin-bottom: 15px;
-	font-size: 1em;
-	font-weight: bold;
-}
-.res-type-container {
-    margin-top: 10px;
-    text-align: left;
-}
-.confirm-container {
-    padding: 20px;
-    width: 750px;
-    margin: 20px auto;
-}
-.reservation-header h3 {
-    margin: 0;
-    font-size: 18px;
-    color: #333;
-}
-.reservation-header p {
-    margin: 0;
-    font-size: 14px;
-    color: #666;
-}
-.reservation-details {
-    margin-top: 20px;
-    border: 3px solid #ddd;
-    border-radius: 10px;
-    padding: 15px;
-    background-color: #fff;
-}
-.reservation-userInfo {
-    margin-top: 20px;
-    /* border: 1px solid #ddd;
-    border-radius: 5px; */
-    padding: 15px;
-    background-color: #fff;
-}
-.detail-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
-}
-.detail-item:last-child {
-    border-bottom: none;
-}
-.detail-item label {
-    font-weight: bold;
-    color: #333;
-}
-.detail-item span, .detail-item textarea {
-    color: #333;
-    width: 70%;
-}
-.detail-item textarea {
-    height: 80px;
-    resize: none;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 5px;
-}
-.reservation-footer {
-    display: flex;
-    margin-top: 20px;
-    justify-content: right;
-    margin-right: 8px;
-}
-.btn {
-    width: 100px; /* 버튼의 너비 조정 */
-    height: 50px; /* 버튼의 높이 조정 */
-    font-size: 15px; /* 폰트 크기 조정 */
-    border-radius: 10px; /* 모서리 반경 조정 */
-    margin-right: 5px;
-}
-.agree-btn{
-	background-color: #74c69d; /* 활성화 상태 색상 */
-    border-color: #74c69d;
-    color: #fff;
-}
-.btn-primary{
-    background-color: #d8f3dc;
-    border-color: #d8f3dc;
-    color: white; /* 텍스트 색상 변경 */
-}
-.btn-primary:hover, .agree-btn:hover {
-    background-color: #b7e4c7;
-    border-color: #b7e4c7;
-    color: white; /* 텍스트 색상 변경 */
-}
-.btn-primary.active{
-    background-color: #74c69d; /* 활성화 상태 색상 */
-    border-color: #74c69d;
-    color: #fff;
-}
-.btn-primary:disabled{
-    background-color: #b7e4c7; /* 비활성화 상태 색상 */
-    border-color: #b7e4c7;
-    color: #fff;
-    opacity: 0.6; /* 비활성화 상태 불투명도 */
-    cursor: not-allowed; /* 비활성화 상태 커서 */
-}
-.btn-secondary, .prev-btn {
-    background-color: #bdbdbd;
-    border-color: #bdbdbd;
-    color: white; /* 텍스트 색상 변경 */
-}
-.btn-secondary:hover, .prev-btn:hover {
-    background-color: #e0e0e0;
-    border-color: #e0e0e0;
-    color: white; /* 텍스트 색상 변경 */
-}
-.btn-secondary.active, .prev-btn:active {
-    background-color: #bdbdbd; /* 활성화 상태 색상 */
-    border-color: #bdbdbd;
-    color: #fff;
-}
-.btn-secondary.active:hover, .prev-btn:hover {
-    background-color: #e0e0e0;
-    border-color: #e0e0e0;
-    color: #fff;
-}
-.next-button-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-}
-.next-button-container {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin: 0 103px 20px 0;
-}
-.res-type-container label {
-    display: block;
-    margin: 5px 0 5px 52px;
-}
-.no-time {
-    padding: 100px 275px; /* 패딩 값 설정 */
-    margin: 20px 0; /* 위아래 여백 설정 */
-    text-align: center; /* 텍스트 중앙 정렬 */
-    border-radius: 10px; /* 모서리를 둥글게 설정 */
-    background-color: #f8f9fa; /* 배경색 설정 */
-}
-#confirm-name, #confirm-phone, #confirm-symptoms {
-    border: 1px solid #000;
-    border-radius: 10px; /* 테두리를 둥글게 설정 */
-    padding: 10px; /* 패딩 값 설정 */
-}
-.hide {
-    display: none;
-}
-
-.chevron-down, .chevron-up {
-    cursor: pointer;
-    transition: transform 0.2s ease;
-}
-
-.chevron-up {
-    transform: rotate(180deg);
-}
-
-.collapsible-content {
-   /* margin: 10px 0;  내용 부분의 마진 조정 */
-    padding-left: 5px;  /*들여쓰기 추가 */
-    padding-right: 5px;
-}
-
-.privacy-info, .privacy-info-sub {
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px; /* 패딩 추가 */
-    /*border: 1px solid #ddd;  테두리 추가 */
-    border-radius: 4px; /* 모서리 둥글게 */
-    background-color: #f9f9f9; /* 배경색 추가 */
-}
-
-.privacy-info-sub {
-    margin-top: 5px; /* 간격 추가 */
-}
-
-.privacy-info-title {
-    font-weight: bold;
-    
-}
-.privacy-collection {
-    background-color: #f2f2f2; /* 개인정보 수집 동의 배경색 설정 */
-}
-
-.privacy-provision {
-    background-color: #f2f2f2; /* 개인정보 제공 동의 배경색 설정 */
-}
-#privacy_collect, #privacy_provide{
-	background: #f2f2f2;
-	margin-bottom: 5px;
-	border-radius: 4px;
-}
-.outer-line{
-	background: #f7f9fa;
-	border-radius: 4px;
-	padding-bottom: 5px;
-	margin-top: 35px;
 }
 </style>
 <script src="${pageContext.request.contextPath}/js/index.global.min.js"></script>
@@ -407,10 +128,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path></svg>
             </div>
             <div id="privacy_collect" class="hide collapsible-content">
-                <!-- <p><strong>개인정보 수집 동의</strong></p> -->
-                <div>
-                개인정보 수집에 대한 자세한 내용은 다음과 같습니다...
-                </div>
+				1. 기본수집항목: [필수] 이름, (휴대)전화번호, 상세증상<br>
+				※ 추가 수집하는 필수항목<br>
+				- 예약자와 실제 방문자가 다른 경우 : 방문자의 이름 및 휴대전화번호<br>
+				- 병원을 이용하는 경우: 생년월일 (병원 재진 시 이전 진료기록 조회를 위해 예약자명, 생년월일, 전화번호가 수집될 수 있습니다.)
+				<p>
+				2. 수집 및 이용목적 : 사업자회원과 예약이용자의 원활한 거래 진행, 고객상담, 불만처리 등 민원 처리, 분쟁조정 해결을 위한 기록보존
+				<p>
+				3. 보관기간<br>
+				- 회원탈퇴 시 지체없이 파기<br>
+				- 단, 관련 법령에 의하여 일정 기간 보관이 필요한 경우에는 해당 기간 동안 보관함
+				<p>
+				4. 동의 거부권 등에 대한 고지: 정보주체는 개인정보의 수집 및 이용 동의를 거부할 권리가 있으나, 이 경우 상품 및 서비스 예약이 제한될 수 있습니다. 그 밖의 내용은 메디챗 개인정보 처리방침을 따릅니다.<br>
             </div>
             <div class="privacy-info privacy-provision">
                 <span class="privacy-info-title">개인정보 제공 동의</span>
@@ -418,10 +147,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path></svg>
             </div>
             <div id="privacy_provide" class="hide collapsible-content">
-                <!-- <p><strong>개인정보 제공 동의</strong></p> -->
-                <div>
-                개인정보 제공에 대한 자세한 내용은 다음과 같습니다...
-                </div>
+                1. 개인정보를 제공받는 자 : 메디챗
+				<p>
+				2. 제공하는 기본 개인정보 항목: [필수] 예약자의 마스킹 처리된 아이디, 이름, (휴대)전화번호<br>
+				※ 추가 제공하는 필수항목<br>
+				- 예약자와 실제 방문자가 다른 경우 : 방문자 이름 및 휴대전화번호<br>
+				- 병원을 이용하는 경우: 생년월일 (병원 재진 시 이전 진료기록 조회를 위해 예약자명, 생년월일, 전화번호가 수집될 수 있습니다.)
+				<p>
+				3. 개인정보를 제공받는 자의 이용목적 : 사업자회원과 예약이용자의 원활한 거래 진행, 서비스 분석과 통계에 따른 혜택 및 맞춤 서비스 제공, 민원처리 등 고객상담, 고객관리, 서비스 이용에 따른 설문조사 및 혜택 제공, 분쟁조정을 위한 기록보존
+				<p>
+				4. 개인정보를 제공받는 자의 개인정보 보유 및 이용기간 : 메디챗 회원탈퇴 시 또는 위 개인정보 이용목적 달성 시 까지 이용합니다. (단, 관련 법령에 따른 보관의무가 있는 경우에 그 기간동안 보관)
+				<p>
+				5. 동의 거부권 등에 대한 고지 : 정보주체는 개인정보 제공 동의를 거부할 권리가 있으나, 이 경우 상품 및 서비스 예약이 제한될 수 있습니다.<br>
             </div>
         </div>
 		</div>

@@ -4,17 +4,19 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/hos.css" type="text/css">
 <div>
-	<span class="text-lightgray fw-7 fs-13">홈 > 병원 찾기 > 검색 결과 > 병원 상세</span>
-	<div id="detail_hosName">
-		<h4 class="fw-7">${hospital.hos_name}</h4>
-		<div class="d-flex">
-			<div class="detail-hospital-info-item fs-14 fw-7">${hospital.hos_divName}</div>
-			<c:if test="${hospital.hos_weekendAt=='Y'}">
-				<div class="detail-hospital-info-item fs-14 fw-7">주말 운영</div>
-			</c:if>
-			<c:if test="${hospital.hos_eryn==1}">
-				<div class="detail-hospital-info-item fs-14 fw-7">응급실 운영</div>
-			</c:if>
+	<div class="p-3">
+		<span class="text-lightgray fw-7 fs-13">홈 > 병원 찾기 > 검색 결과 > 병원 상세</span>
+		<div id="detail_hosName">
+			<h4 class="fw-7">${hospital.hos_name}</h4>
+			<div class="d-flex">
+				<div class="detail-hospital-info-item fs-14 fw-7">${hospital.hos_divName}</div>
+				<c:if test="${hospital.hos_weekendAt=='Y'}">
+					<div class="detail-hospital-info-item fs-14 fw-7">주말 운영</div>
+				</c:if>
+				<c:if test="${hospital.hos_eryn==1}">
+					<div class="detail-hospital-info-item fs-14 fw-7">응급실 운영</div>
+				</c:if>
+			</div>
 		</div>
 	</div>
 	
@@ -22,7 +24,7 @@
 	<div style="height:15px;" class="bg-gray-0"></div>
 	
 	
-	<div id="detail_hosTime">
+	<div id="detail_hosTime" class="p-3">
 		<div class="d-flex align-items-center mb-3">
 			<div class="fs-18 fw-7">진료 시간</div>
 			<c:if test="${day==1}">
@@ -96,7 +98,7 @@
 				</c:if>
 		    </c:if>
 		</div>
-		<div class="bg-gray-0 p-3 d-flex rounded-3 row">
+		<div class="bg-gray-0 p-3 rounded-3 row">
 			<div id="detail_timeAndEtc" class="col-6">
 				<div class="fs-15 fw-7 text-black-6">오늘</div>
 				<div class="fs-15 fw-3">

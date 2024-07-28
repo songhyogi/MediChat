@@ -1,10 +1,5 @@
 package kr.spring.member.controller;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -19,8 +14,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 public class NaverAPI {
-	private static final String CLIENT_ID = "RNP28hanNjPbrV17UuZb";
-    private static final String CLIENT_SECRET = "utrdK5mSrl";
+	private static final String NAVER_CLIENT_ID = "RNP28hanNjPbrV17UuZb";
+    private static final String NAVER_CLIENT_SECRET = "utrdK5mSrl";
     
     public HttpEntity<MultiValueMap<String, String>> authCodeRequest(String code,String state){
     	HttpHeaders headers = new HttpHeaders();
@@ -28,8 +23,8 @@ public class NaverAPI {
     	
     	MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
     	param.add("grant_type","authorization_code");
-    	param.add("client_id",CLIENT_ID);
-    	param.add("client_secret",CLIENT_SECRET);
+    	param.add("client_id",NAVER_CLIENT_ID);
+    	param.add("client_secret",NAVER_CLIENT_SECRET);
     	param.add("code",code);
     	
     	return new HttpEntity<>(param, headers);

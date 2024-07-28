@@ -35,7 +35,7 @@
 		FROM chat c
 		JOIN reservation r USING(res_num)
 		JOIN member m ON (c.doc_num = m.mem_num)
-		WHERE c.mem_num=#{mem_num}
+		WHERE c.mem_num=#{mem_num} AND r.res_status!=3
 		ORDER BY c.chat_status,
 				 r.res_date ASC,
 				 r.res_time ASC
@@ -55,7 +55,7 @@
 		FROM chat c
 		JOIN reservation r USING(res_num)
 		JOIN member m ON (c.mem_num = m.mem_num)
-		WHERE c.doc_num=#{mem_num}
+		WHERE c.doc_num=#{mem_num} AND r.res_status!=3
 		ORDER BY c.chat_status,
 				 r.res_date ASC,
 				 r.res_time ASC

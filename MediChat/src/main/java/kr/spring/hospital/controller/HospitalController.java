@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -169,7 +170,38 @@ public class HospitalController {
 		map.put("sortType", sortType);
 		model.addAttribute("sortType", sortType);
 		
-		
+		Set<String> kSet = null;
+		String sub_sql = "";
+		if(keyword!=null) {
+			if(!keyword.equals("가정의학과")&&
+					!keyword.equals("내과")&&
+					!keyword.equals("마취통증")&&
+					!keyword.equals("비뇨기과")&&
+					!keyword.equals("산부인과")&&
+					!keyword.equals("성형외과")&&
+					!keyword.equals("소아과")&&
+					!keyword.equals("신경과")&&
+					!keyword.equals("신경외과")&&
+					!keyword.equals("안과")&&
+					!keyword.equals("영상의학과")&&
+					!keyword.equals("외과")&&
+					!keyword.equals("응급의학과")&&
+					!keyword.equals("이비인후과")&&
+					!keyword.equals("재활의학과")&&
+					!keyword.equals("정신건강의학과")&&
+					!keyword.equals("정형외과")&&
+					!keyword.equals("치과")&&
+					!keyword.equals("피부과")&&
+					!keyword.equals("한의원")) {
+				kSet = diseaseService.selectDisListBykeyword(keyword);
+				if(kSet!=null) {
+					for(String key: kSet) {
+						sub_sql += "OR hos_name LIKE '%' || '" + key + "' || '%' ";
+					}
+				}
+				map.put("sub_sql", sub_sql);
+			}
+		}
 		// 병원 리스트 담기
 		List<HospitalVO> hosList = new ArrayList<>();
 		hosList = hospitalService.selectListHospital(map);

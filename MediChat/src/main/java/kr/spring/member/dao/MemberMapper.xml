@@ -66,6 +66,10 @@
 		mem_modify=SYSDATE 
 		WHERE mem_num=#{mem_num}
 	</update>
+	<!-- 나의 의료상담 목록 -->
+	<select id="consultList" parameterType="map" resultType="consultingVO">
+		SELECT * FROM consulting WHERE mem_num=#{mem_num}
+	</select>
 </mapper>
 
 

@@ -77,4 +77,5 @@ public interface ChatMapper {
 	//채팅방 비활성화
 	@Update("UPDATE chat SET chat_status=1 WHERE chat_num=#{chat_num}")
 	public void updateChatStatus(long chat_num);
+	
 }

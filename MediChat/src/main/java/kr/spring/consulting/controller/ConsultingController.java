@@ -206,6 +206,97 @@ public class ConsultingController {
 	 * return "/common/resultAlert"; } }
 	 */
 	
+	@GetMapping("/consultings/detail/cReSat")
+	@ResponseBody
+	public Map<String,Object> satisfy(HttpSession session, Long cReNum, Long conNum, Long docNum) {
+		Map<String,Object> map = new HashMap<>();
+		
+		ConsultingVO consulting = consultingService.getConsulting(conNum);
+		Long mem_num = consulting.getMember().getMem_num();
+		
+		Object user = session.getAttribute("user");
+		
+		if(user!=null) {
+			Map<String,Object> re_map = new HashMap<>();
+			map.put("status", "login");
+			if(user instanceof MemberVO) {
+				MemberVO member = (MemberVO)user;
+				map.put("user_type","member");
+				
+				//본인 글
+				if(member.getMem_num()==mem_num) {
+					map.put("check", true);
+					re_map.put("con_re_status", 1);
+					re_map.put("con_re_num", cReNum);
+					consultingService.modifyCon_Re_Status(re_map);
+					
+					NotificationVO noti = new NotificationVO();
+					noti.setMem_num(docNum);
+					noti.setNoti_category(5L);
+					noti.setNoti_message("의료 상담 답글 상태가 변경되었습니다.(만족)");
+					noti.setNoti_link("<a href='/consultings/detail/"+conNum+"'>내 답글 보러가기</a>");
+					
+					notificationService.insertNotification(noti);
+				} else {
+					map.put("check", false);
+				}
+			}else if(user instanceof DoctorVO) {
+				map.put("user_type","doctor");
+			} else {
+				map.put("status", "error");
+			}
+		} else {
+			map.put("status", "logout");
+		}
+		
+		return map;
+	}
+	@GetMapping("/consultings/detail/cReUnSat")
+	@ResponseBody
+	public Map<String,Object> unSatisfy(HttpSession session, Long cReNum, Long conNum, Long docNum) {
+		Map<String,Object> map = new HashMap<>();
+		
+		ConsultingVO consulting = consultingService.getConsulting(conNum);
+		Long mem_num = consulting.getMember().getMem_num();
+		
+		Object user = session.getAttribute("user");
+		
+		if(user!=null) {
+			Map<String,Object> re_map = new HashMap<>();
+			map.put("status", "login");
+			if(user instanceof MemberVO) {
+				MemberVO member = (MemberVO)user;
+				map.put("user_type","member");
+				
+				//본인 글
+				if(member.getMem_num()==mem_num) {
+					map.put("check", true);
+					re_map.put("con_re_status", 2);
+					re_map.put("con_re_num", cReNum);
+					consultingService.modifyCon_Re_Status(re_map);
+					
+					NotificationVO noti = new NotificationVO();
+					noti.setMem_num(docNum);
+					noti.setNoti_category(5L);
+					noti.setNoti_message("의료 상담 답글 상태가 변경되었습니다.(불만족)");
+					noti.setNoti_link("<a href='/consultings/detail/"+conNum+"'>내 답글 보러가기</a>");
+					
+					notificationService.insertNotification(noti);
+				} else {
+					map.put("check", false);
+				}
+			}else if(user instanceof DoctorVO) {
+				map.put("user_type","doctor");
+			} else {
+				map.put("status", "error");
+			}
+		} else {
+			map.put("status", "logout");
+		}
+		
+		return map;
+	}
+	
 	
 	@PostMapping("/consultings/createReply")
 	public String insert(Con_ReVO con_re, HttpSession session, Model model) {
@@ -229,8 +320,6 @@ public class ConsultingController {
 				noti.setNoti_category(5L);
 				noti.setNoti_message("의료 상담 답글이 등록되었습니다.");
 				noti.setNoti_link("<a href='/consultings/detail/"+con_re.getCon_num()+"'>답글 보러가기</a>");
-				
-				log.debug("<<알림 생성>> : " + noti);
 				
 				notificationService.insertNotification(noti);
 				

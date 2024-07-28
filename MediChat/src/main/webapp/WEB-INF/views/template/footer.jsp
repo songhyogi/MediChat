@@ -16,6 +16,7 @@
 			<p class="footer-title">Service</p>
 	    	<a href="/hospitals" class="footer-text">병원 찾기</a><br>
 	    	<a href="/pharmacies/search" class="footer-text">약국 찾기</a><br>
+	    	<a href="/consultings" class="footer-text">의료 상담</a><br>
 	    	<a href="/health/healthBlog" class="footer-text">건강 블로그</a><br>
 	    	<a href="/disease/diseaseDictionary" class="footer-text">질병 백과사전</a><br>
 	    	<a href="/durg/search" class="footer-text">약품 백과사전</a><br>
