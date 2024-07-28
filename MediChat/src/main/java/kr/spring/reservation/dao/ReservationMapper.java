@@ -40,4 +40,7 @@ public interface ReservationMapper {
 	//예약 번호를 기반으로 의사 번호 가져오기
 	@Select("SELECT doc_num FROM reservation WHERE res_num=#{res_num}")
 	public long selectDoc_num(long res_num);
+	//진료 완료된 내역 가져오기
+	public Integer selectCountByCompleted(Map<String,Object> map);
+	public List<ReservationVO> getDocCompletedList(Map<String,Object> map);
 }
