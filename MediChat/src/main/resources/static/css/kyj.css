@@ -539,7 +539,7 @@ label[for="file_valid_date"]{
 	 white-space:nowrap;
 	 border-bottom:1px solid #e0e0e0;
 }
-.drug-name-td:hover{
+.drug-name-td>a:hover{
 	color:#a3a3a3;
 }
 .drug-name-th,
@@ -573,4 +573,30 @@ label[for="file_valid_date"]{
 .warin{
 	text-align:center;
 	margin:300px 0;
+}
+/*=======================
+	  의약품 효능 modal
+=========================*/
+.drug-effect-info{
+	display:none;
+	position:absolute;
+	z-index:999;
+	width:400px;
+}
+.effect-info-header{
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+	padding: 0 5px;
+	color:white;
+	width:400px;
+	height:50px;
+}
+.effect-info-body{
+	display:table-cell;
+	text-align:center;
+	vertical-align:middle;
+	background-color:white;
+	width:400px;
+	height:90px;
 }
