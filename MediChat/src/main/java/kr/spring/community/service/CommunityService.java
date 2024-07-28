@@ -44,6 +44,7 @@ public interface CommunityService {
 	//대댓글
 	public List<CommunityReplyVO> selectListReply(Long cre_num);
 	public CommunityReplyVO selectReply(Long cre_num);
+	public Integer selectCountReply(Long cre_num);
 	public void insertReply(CommunityReplyVO communityReply);
 	public void updateReply(CommunityReplyVO communityReply);
 	public void deleteReply(Long cre_num);

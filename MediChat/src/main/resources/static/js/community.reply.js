@@ -25,7 +25,8 @@ $(function(){
 				console.log("<<댓글 목록 데이터 - user_num>>", param.user_num);
 
 				//댓글수 읽어 오기
-				//displayReplyCount(param.count);
+				displayReplyCount(param.count);
+				console.log("댓글수"+param.count);
 				
 				$(param.list).each(function(index,item){
 					console.log("<<댓글 목록 mem_num>>"+item.mem_num);
@@ -68,6 +69,7 @@ $(function(){
 					//output += '  <div><input type="button" data-level="1" data-ref="'+item.cre_num+'" value="답글목록" class="rescontent-btn"></div>';
 					output += '<a class="rescontent-btn" data-level="1" data-ref="'+item.cre_num+'">💬답글목록</a>&nbsp;&nbsp;';
 					/*---답글 시작---*/
+					console.log("답글수 : "+param.resp_cnt)
 					if(param.user_num){
 						//output += '<input type="button" data-parent="'+item.cbo_num+'"data-level="1" data-ref="'+item.cre_num+'" value="답글" class="reply-btn">'
 						output += '<a class="reply-btn" data-parent="'+item.cbo_num+'"data-level="'+(item.cre_level+1)+'" data-ref="'+item.cre_num+'">답글작성</a><br><b'
@@ -276,9 +278,9 @@ $(function(){
 	function displayReplyCount(count){
 		let output;
 		if(count>0){
-			output = '댓글수('+count+')';
+			output = '💬 '+count;
 		}else{
-			output = '댓글수(0)';
+			output = '💬 0';
 		}			
 		//문서 객체에 추가
 		$('#output_rcount').text(output);

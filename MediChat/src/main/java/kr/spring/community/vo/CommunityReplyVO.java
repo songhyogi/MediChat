@@ -1,5 +1,6 @@
 package kr.spring.community.vo;
 
+import kr.spring.util.DurationFromNow;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -25,5 +26,14 @@ public class CommunityReplyVO {
 	
 	private String parent_id;//부모글 아이디
 	
-	private int resp_cnt;	
+	private int reply_cnt;
+	
+	public void setRe_date(String cre_rdate) {
+		this.cre_rdate = 
+			    DurationFromNow.getTimeDiffLabel(cre_rdate);
+	}
+	public void setRe_mdate(String cre_mdate) {
+		this.cre_mdate = 
+				DurationFromNow.getTimeDiffLabel(cre_mdate);
+	}
 }

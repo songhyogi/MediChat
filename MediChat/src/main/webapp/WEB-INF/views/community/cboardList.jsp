@@ -127,7 +127,7 @@
 				        <div class="cboard-likes-views">
 				            <span>👁 ${cboard.cbo_hit}</span>&nbsp;
 				            <span>❤️ ${cboard.fav_cnt}</span>&nbsp;
-				            <span>💬 ${cboard.fav_cnt}</span>
+				            <span>💬 ${cboard.re_cnt}</span>
 				        </div>
 				    </div>
 				</div>
