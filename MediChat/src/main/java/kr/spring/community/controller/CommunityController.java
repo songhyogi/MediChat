@@ -222,7 +222,7 @@ public class CommunityController {
 			DoctorVO doctor = (DoctorVO)user;
 			user_num = doctor.getMem_num();
 		}else {
-			user_num = -1; //에러발생..?
+			user_num = -1; //에러발생..?(이를 명시하지 않는 경우 mapJson에 put할 때 에러 발생)
 		}
 		
 		log.debug("<<댓글 목록 - user_num>> : " + user_num);
