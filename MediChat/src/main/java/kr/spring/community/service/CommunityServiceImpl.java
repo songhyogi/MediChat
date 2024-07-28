@@ -136,6 +136,11 @@ public class CommunityServiceImpl implements CommunityService{
 	}
 
 	@Override
+	public Integer selectCountReply(Long cre_num) {
+		return communityMapper.selectCountReply(cre_num);
+	}
+	
+	@Override
 	public void insertReply(CommunityReplyVO communityReply) {
 		communityMapper.insertReply(communityReply);
 	}
@@ -151,6 +156,7 @@ public class CommunityServiceImpl implements CommunityService{
 		// TODO Auto-generated method stub
 		
 	}
+
 
 	
 }

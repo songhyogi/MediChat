@@ -67,9 +67,14 @@
 		<div>
 			${cboard.cbo_content}
 		</div>
-		<!-- 좋아요 -->
-		<!-- 댓글수 -->
-	</div>
+		<div class="align-right">
+			👁 ${cboard.cbo_hit}
+			<!-- 좋아요 -->
+			❤️ <span id="output_fcount"></span>
+			<!-- 댓글수 -->
+			<span id="output_rcount"></span>
+		</div>
+		</div>
 	<hr><br>
 	<!-- 댓글 -->
 	<div class="align-center cboard-detail-reply">
