@@ -191,6 +191,7 @@
 	<select id="selectListReply" >
 		SELECT 
 		    r.cre_num,
+		    r.cbo_num,
 		    r.cre_content,
 		    r.mem_num,
 		    m.mem_id,

@@ -7,15 +7,13 @@
 <script src="${pageContext.request.contextPath}/js/uploadAdapter.js"></script>
 <!-- 커뮤니티 글쓰기 시작 -->
 <div class="page-main">
-	<div class="body-header">
-		<p class="text-lightgray fw-7 fs-13">홈 > 커뮤니티</p>
-		<h4>커뮤니티 글 등록</h4>
+	<div class="cboard-write-body">
+		<p class="text-lightgray fw-7 fs-13">홈 > 커뮤니티 > 글작성</p>
 		<form:form action="write" modelAttribute="communityVO">
-			<ul>
+			<ul class="cboard-write">
 				<li>
-					<form:label path="cbo_type">분류</form:label>
-					<form:select path="cbo_type">
-						<option disabled="disabled" selected>카테고리</option>
+					<form:select path="cbo_type" class="form-control-sm cboard-select">
+						<option disabled="disabled" selected>-카테고리-</option>
 						<form:option value="1">질환고민</form:option>
 						<form:option value="2">다이어트·헬스</form:option>
 						<form:option value="3">피부고민</form:option>
@@ -29,8 +27,7 @@
 					<form:errors path="cbo_type" cssClass="error-color"/>
 				</li>
 				<li>
-					<form:label path="cbo_title">제목</form:label>
-					<form:input path="cbo_title"/>
+					<form:input path="cbo_title" class="form-control" placeholder="제목"/>
 					<form:errors path="cbo_title" cssClass="error-color"/>
 				</li>
 				<li>
@@ -49,6 +46,7 @@
 			            })
 			            .then( editor => {
 							window.editor = editor;
+							editor.ui.view.editable.element.style.height = '500px'; // CKEditor 높이 설정
 						} )
 			            .catch( error => {
 			                console.error( error );
@@ -57,7 +55,7 @@
 				</li>
 			</ul>
 			<div>
-				<form:button class="submit-btn">등록</form:button>
+				<form:button class="write-btn" style="margin-bottom:50px;">등록</form:button>
 			</div>
 		</form:form>
 	</div>

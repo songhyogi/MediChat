@@ -22,4 +22,8 @@ public class CommunityReplyVO {
 	
 	private int click_num;
 	private int refav_cnt;	//댓글 좋아요 개수
+	
+	private String parent_id;//부모글 아이디
+	
+	private int resp_cnt;	
 }

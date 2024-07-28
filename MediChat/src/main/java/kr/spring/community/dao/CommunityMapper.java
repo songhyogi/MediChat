@@ -58,8 +58,8 @@ public interface CommunityMapper {
 	public List<CommunityReplyVO> selectListComment(Map<String, Object> map);
 	@Select("SELECT * FROM cboard_re WHERE cre_num=#{cre_num}")
 	public CommunityReplyVO selectComment(Long cre_num); //작성자를 구하기 위함
-	@Select("SELECT COUNT(*) FROM cboard_re WHERE cbo_num=#{cbo_num} AND cre_ref=0")
-	public Integer selectCountComment(Long cre_num);
+	@Select("SELECT COUNT(*) FROM cboard_re WHERE cbo_num=#{cbo_num}")
+	public Integer selectCountComment(Long cre_num);//댓글수(답글포함)
 	public void insertComment(CommunityReplyVO communityReply);
 	@Update("UPDATE cboard_re SET cre_content=#{cre_content},cre_mdate=SYSDATE WHERE cre_num=#{cre_num}")
 	public void updateComment(CommunityReplyVO communityReply);
