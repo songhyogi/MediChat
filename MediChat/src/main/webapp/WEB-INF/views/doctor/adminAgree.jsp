@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.3/dist/sweetalert2.all.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.3/dist/sweetalert2.min.css" rel="stylesheet">
 <!DOCTYPE html>
 <div class="container">
 	<h2 class="title">의사회원가입 승인(관리자)</h2>
@@ -33,11 +35,20 @@
 					data:{doc_num:doc_num},
 					dataType:'json',
 					success:function(param){
-						alert('회원가입이 승인되었습니다.');
-						$row.remove();
+						Swal.fire({
+	                       title:'회원가입이 승인되었습니다.',
+	                       icon:'success',
+	                       confirmButtonText:'확인'
+	                    }).then(() => {
+	                    	$row.remove();
+	                    });
 					},
 					error:function(){
-						alert('승인 오류');
+						Swal.fire({
+		                   title:'승인 오류',
+		                   icon:'error',
+		                   confirmButtonText:'확인'
+		                });
 					}
 				});
 			});

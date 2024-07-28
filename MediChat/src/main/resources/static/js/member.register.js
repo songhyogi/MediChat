@@ -35,12 +35,20 @@ $(function(){
 					$('#mem_id').val('').focus();
 				}else{
 					checkId=0;
-					alert('ID 중복 체크 오류');
+					Swal.fire({
+                       title: 'ID 중복 체크 오류',
+                       icon: 'error',
+                       confirmButtonText: '확인'
+                    });
 				}
 			},
 			error:function(){
 				checkId=0;
-				alert('네트워크 오류 발생');
+				Swal.fire({
+                   title: '네트워크 오류 발생',
+                   icon: 'error',
+                   confirmButtonText: '확인'
+                });
 			}
 		});	
 	});//end of click

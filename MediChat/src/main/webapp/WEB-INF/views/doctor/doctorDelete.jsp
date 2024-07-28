@@ -3,6 +3,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- 회원탈퇴 시작 -->
+<style>
+input[type="password"],
+input[type="text"]{
+	width:320px;
+	border-bottom:1px solid #000;
+}
+input[type="password"]:focus,
+input[type="text"]:focus{
+	outline:none;
+	border-bottom:2px solid #000;
+}
+</style>
 <div class="container">
 	<h2 class="title">회원탈퇴</h2>
 	<hr size="1" width="100%" noshade="noshade">
