@@ -103,6 +103,7 @@ $(function(){
 					if(param.chat=='open'){
 						if(param.status=='completed'){
 							$('.chat-input input').prop('disabled', true);
+							$('.chat-input input').attr('placeholder','진료가 끝난 채팅방입니다.');
                     		$('.chat-input button').prop('disabled', true);
                     		$('#chat_close').prop('disabled',true);
 						}else{
@@ -154,6 +155,7 @@ $(function(){
 						message += '		</div>'
 						$('.chat-input input').attr('disabled','disabled');
 						$('.chat-input button').attr('disabled','disabled');
+						$('.chat-input input').attr('placeholder','진료가 시작되지 않은 채팅방입니다.');
 					}
 					
 					$('#chat_body').html(message);
@@ -186,8 +188,8 @@ $(function(){
         const not_selected = $('.chat-room').parent().parent();
         console.log(selected);
         
-        not_selected.removeClass('selected-chat bg-gray-6');
-        selected.addClass('selected-chat bg-gray-6');
+        not_selected.removeClass('selected-chat chat-nav-selected-bg');
+        selected.addClass('selected-chat chat-nav-selected-bg');
         
         selectChat();
 	}); //end of chat-room click

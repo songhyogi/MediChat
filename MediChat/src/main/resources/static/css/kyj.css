@@ -6,7 +6,9 @@
 .margin-top-50{
 	margin-top:50px;
 }
-
+.margin-left-30{
+	margin-left:30px;
+}
 .margin-left-15{
 	margin-left:15px;
 }
@@ -30,11 +32,15 @@
 	overflow-x:hidden;
 	border-top-left-radius: 15px; /* 좌측 상단 모서리 둥글게 */
     border-bottom-left-radius: 15px;
-    box-shadow: -5px 10px 15px #f2f2f2;
-    background-color:#f7f1df;
+    box-shadow: -8px 8px 15px #e0e0e0;
+    background-color:#f2f0e9;
 }
-.chat-nav-bg{
-	background-color:#fcf5e1;
+
+.chat-nav-selected-bg{
+	background-color:#95c7a7;
+}
+.chat-nav-completed-bg{
+	background-color:#e0ded5;
 }
 .nav-item{
 	width:200px;
@@ -69,7 +75,7 @@
 	height:800px;
 	border-top-right-radius:15px;
 	border-bottom-right-radius:15px;
-	box-shadow:10px 10px 15px #f2f2f2;
+	box-shadow:8px 8px 15px #e0e0e0;
 }
 .chat-header{
 	padding:10px;
