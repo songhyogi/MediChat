@@ -243,8 +243,11 @@ a {
     margin-right:30px;
 }
 /*-----글 상세-----*/
+.community-main{
+	margin-bottom:40px;
+}
 .cboard-detail-header{
-	padding:16px;
+	padding:26px;
 }
 .cboard-detail-reply .reply-title{
 	display: block;  /* 블록 요소로 변경하여 전체 너비를 차지하도록 함 */
@@ -376,11 +379,18 @@ div.respitem{/*답글목록*/
     cursor: pointer;
     margin-right:5px;
 }
+form#reply_form{/*답글등록폼*/
+	margin-left:25px;
+}
+
 form#reply_form .letter-count, form#mresp_form .letter-count{
 	display: block;  /* 블록 요소로 변경하여 전체 너비를 차지하도록 함 */
     margin-bottom: 10px; 
     margin-left: 890px; /* 오른쪽으로 이동 */
     color: #8D9297;
+}
+form#mresp_form{/*답글수정폼*/
+	margin-right:30px;
 }
 .reply-profile {/*답글 사진 원처리*/
     border-radius: 50%;

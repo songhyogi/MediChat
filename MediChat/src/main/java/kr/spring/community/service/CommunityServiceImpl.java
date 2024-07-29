@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.community.dao.CommunityMapper;
 import kr.spring.community.vo.CommunityFavVO;
+import kr.spring.community.vo.CommunityReFavVO;
 import kr.spring.community.vo.CommunityReplyVO;
 import kr.spring.community.vo.CommunityVO;
 
@@ -46,8 +47,9 @@ public class CommunityServiceImpl implements CommunityService{
 
 	@Override
 	public void deleteCommunity(Long cbo_num) {//게시판글 삭제
-		//댓글(답글) 좋아요 삭제
 		//댓글(답글) 삭제
+		//댓글(답글) 좋아요 삭제
+		communityMapper.deleteReFavByCommunityNum(cbo_num);
 		//게시판 좋아요 삭제
 		communityMapper.deleteFavByCommunityNum(cbo_num);
 		//글 삭제
@@ -121,6 +123,8 @@ public class CommunityServiceImpl implements CommunityService{
 	@Override
 	public void deleteComment(Long cre_num) {
 		communityMapper.deleteComment(cre_num);
+		//댓글 좋아요 삭제
+		communityMapper.deleteReFavByReNum(cre_num);
 	}
 	
 	/*-----------------------------게시판글 대댓글-----------------------------*/
@@ -145,18 +149,24 @@ public class CommunityServiceImpl implements CommunityService{
 		communityMapper.insertReply(communityReply);
 	}
 
+	/*-----------------------------댓글 좋아요-----------------------------*/
 	@Override
-	public void updateReply(CommunityReplyVO communityReply) {
-		// TODO Auto-generated method stub
-		
+	public CommunityReFavVO selectReFav(CommunityReFavVO fav) {
+		return communityMapper.selectReFav(fav);
 	}
 
 	@Override
-	public void deleteReply(Long cre_num) {
-		// TODO Auto-generated method stub
-		
+	public Integer selectReFavCount(Long cre_num) {
+		return communityMapper.selectReFavCount(cre_num);
 	}
 
+	@Override
+	public void insertReFav(CommunityReFavVO fav) {
+		communityMapper.insertReFav(fav);
+	}
 
-	
+	@Override
+	public void deleteReFav(CommunityReFavVO fav) {
+		communityMapper.deleteReFav(fav);
+	}
 }

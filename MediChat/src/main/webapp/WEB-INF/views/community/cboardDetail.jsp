@@ -5,7 +5,7 @@
 <script src="${pageContext.request.contextPath}/js/community.reply.js"></script>
 <script src="${pageContext.request.contextPath}/js/community.fav.js"></script>
 <!-- 커뮤니티 글상세 시작 -->
-<div class="page-main">
+<div class="community-main">
 	<div class="cboard-detail-header">
 		<p class="text-lightgray fw-7 fs-13" style="padding:16px;">홈 > 커뮤니티</p>
 		<span class="cboard-category-box">

@@ -3,7 +3,6 @@ $(function(){
 	let currentPage;
 	let count;
 	
-	
 	/*==============================댓글==============================*/
 	/*-----댓글 목록-----*/
 	function selectList(pageNum){
@@ -36,6 +35,11 @@ $(function(){
 					//처음에는 보여지지 않고 다음 댓글부터 수평선에 보이게 처리
 					if(index>0) $('#output').append('<hr size="1" width="100%">'); 
 					
+					//댓글 좋아요
+					let fav_cnt = 0;
+					if(item.refav_cnt!=0) fav_cnt = item.refav_cnt;
+					//댓글 좋아요
+					
 					let output = '<div class="item cboard-comment">';
 					output += '     <ul class="detail-info">';
 					output +='        <li>';
@@ -63,11 +67,11 @@ $(function(){
 					output += '    <p>' + item.cre_content.replace(/\r\n/g,'<br>') + '</p>';
 					
 					/*---좋아요 시작---*/
-					if(item.click_num==0 || param.user_num!==item.click_num){
-						output += ' <img class="output_rfav" src="../images/heart01.png" data-num="'+item.cre_num+'"> <span class="output_rfcount">'+item.refav_cnt+'</span>';
+					/*if(item.click_num==0 || param.user_num!==item.click_num){
+						output += ' <img class="output_rfav" src="../images/cboard-fav01.png" width="15" data-num="'+item.cre_num+'"> <span class="output_rfcount">'+item.refav_cnt+'</span>';
 					}else{
-						output += ' <img class="output_rfav" src="../images/heart02.png" data-num="'+item.cre_num+'"> <span class="output_rfcount">'+item.refav_cnt+'</span>';
-					}
+						output += ' <img class="output_rfav" src="../images/cboard-fav02.png" width="15" data-num="'+item.cre_num+'"> <span class="output_rfcount">'+item.refav_cnt+'</span>';
+					}*/
 					/*---좋아요 끝---*/
 					
 					//답글이 있을 경우에만 버튼이 보여지도록 처리 변경 필요
@@ -470,6 +474,7 @@ $(function(){
 					alert('로그인해야 답글을 작성할 수 있습니다');
 				}else if(param.result == 'success'){
 					//답글 갯수
+					/*
 					if(resp_form.parent().attr('class')=='cboard-sub-item'){//답글을 최초 작성시에 .sub-item에 자식으로 form이 생성됨
 						//답글을 처음 등록할 때 숨겨져 있는 버튼을 노출함
 						resp_form.parent().find('div .rescontent-btn').show();
@@ -478,6 +483,7 @@ $(function(){
 					}else{//답글에 답글을 작성할 때
 						resp_form.parents('.cboard-sub-item').find('div .rescontent-btn').val('▼ 답글 ' + (Number(resp_form.parents('.cboard-sub-item').find('div .rescontent-btn').val().substring(5)) + 1));
 					}
+					*/
 					getListReply(cre_num,resp_form.parents('.cboard-sub-item'));//.sub-item
 					initReplyForm();
 				}else{
@@ -511,10 +517,11 @@ $(function(){
 		//숨김 resp-sub-item를 환원시키고 수정폼을 초기화함
 		initReplyModifyForm();
 		//지금 클릭해서 수정하고 하는 데이터는 감추기
-		$(this).parent().hide();
+		$(this).parents('.respitem').find('.resp-sub-item').hide();
 		
 		//수정폼을 수정하고자하는 데이터가 있는 div에 노출
 		$(this).parents('.respitem').append(replyUI);
+		
 		
 		//입력한 글자수 셋팅
 		let inputLength = $('#mresp_content').val().length;
@@ -538,7 +545,6 @@ $(function(){
 	//답글수정
 	$(document).on('submit','#mresp_form',function(){
 		event.preventDefault();
-		alert('답글수정');
 		if($('#mresp_content').val().trim()==''){
 			alert('내용을 입력하세요');
 			$('#mresp_content').val('').focus();

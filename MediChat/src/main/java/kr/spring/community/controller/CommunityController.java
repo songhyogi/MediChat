@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import kr.spring.community.service.CommunityService;
 import kr.spring.community.vo.CommunityFavVO;
+import kr.spring.community.vo.CommunityReFavVO;
 import kr.spring.community.vo.CommunityReplyVO;
 import kr.spring.community.vo.CommunityVO;
 import kr.spring.doctor.vo.DoctorVO;
@@ -400,6 +401,41 @@ public class CommunityController {
 		return mapJson;
 	}
 	
+	/*==============================댓글 좋아요==============================*/
+	//댓글 좋아요 읽기
+	@PostMapping("/medichatCommunity/getReFav")
+	@ResponseBody
+	public Map<String, Object> getReFav(CommunityReFavVO fav, HttpSession session){
+		
+		log.debug("<<댓글 좋아요>> : " + fav);
+		Map<String, Object> mapJson = new HashMap<String, Object>();
+		Object user = session.getAttribute("user");
+		
+		if(user==null) {
+			mapJson.put("result", "logout");
+			mapJson.put("status", "noFav");
+		}else {
+			if(user instanceof DoctorVO) {
+				DoctorVO doctor = (DoctorVO)user;
+				fav.setMem_num(doctor.getMem_num());
+			}else if(user instanceof MemberVO) {
+				MemberVO member = (MemberVO)user;
+				fav.setMem_num(member.getMem_num());
+			}
+			CommunityReFavVO cboardReFav = communityService.selectReFav(fav);
+			
+			if(cboardReFav!=null) {
+				mapJson.put("result", "success");
+				mapJson.put("status", "yesFav");
+			}else {
+				mapJson.put("result", "success");
+				mapJson.put("status", "noFav");
+			}
+		}
+		mapJson.put("count", communityService.selectReFavCount(fav.getCre_num()));
+		
+		return mapJson;
+	}
 	
 	/*==============================답글==============================*/
 	//답글 목록
