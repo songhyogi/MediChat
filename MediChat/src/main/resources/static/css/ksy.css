@@ -278,13 +278,23 @@
 	max-height: 100px;
 	padding-top: 10px;
 	margin-right: 40px;
-	
+}
+.overflowText {
 	text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
     overflow:hidden;
 }
+.heigtAuto{
+	max-height:none;
+}
+.hosRev_more_content_icon{
+	cursor: pointer;
+}
+
+
+
 #reservation_btn,#call_btn{
 	display: flex;
 	background-color: #40916c;

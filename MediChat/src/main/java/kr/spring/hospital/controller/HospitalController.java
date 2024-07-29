@@ -282,7 +282,7 @@ public class HospitalController {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("hos_num", hos_num);
 		int reviewCount = service.selectCountByHos(map);
-		PagingUtil page = new PagingUtil(pageNum,reviewCount, 5, 10,"/hospitals/search/detail/{hos_num}");
+		PagingUtil page = new PagingUtil(pageNum,reviewCount, 3, 3,"/hospitals/search/detail/{hos_num}");
 		map.put("start", page.getStartRow());
 		map.put("end", page.getEndRow());
 		List<ReviewVO> list = service.selectReviewListByHos(map);
