@@ -90,7 +90,7 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 
 	@Override
-	public List<ReservationVO> getReservationsByMember(Long mem_num) {
+	public List<String> getReservationsByMember(Long mem_num) {
 		return reservationMapper.getReservationsByMember(mem_num);
 	}
 

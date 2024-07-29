@@ -36,5 +36,5 @@ public interface ReservationService {
 	public Integer selectCountByCompleted(Map<String,Object> map);
 	public List<ReservationVO> getDocCompletedList(Map<String,Object> map);
 	//마이페이지 캘린더용 예약내역 가져오기
-    public List<ReservationVO> getReservationsByMember(Long mem_num);
+    public List<String> getReservationsByMember(Long mem_num);
 }

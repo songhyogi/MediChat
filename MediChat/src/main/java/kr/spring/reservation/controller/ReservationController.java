@@ -109,5 +109,19 @@ public class ReservationController {
 		return "common/resultAlert";
 	}
 	
-
-}
+	 @GetMapping("/reservation/myPageCalendar")
+	 @ResponseBody
+	    public Map<String, Object> getReservationsByMember(HttpSession session, HttpServletRequest request) {
+	        Map<String, Object> map = new HashMap<>();
+	        MemberVO user = (MemberVO) session.getAttribute("user");
+	        if (user == null) {
+	            map.put("result","logout");
+	        } else {
+	            List<String> reservations = reservationService.getReservationsByMember(user.getMem_num());
+	            map.put("result", "success");
+	            map.put("reservations", reservations);
+	        }
+	        return map;
+	    }
+		
+    }

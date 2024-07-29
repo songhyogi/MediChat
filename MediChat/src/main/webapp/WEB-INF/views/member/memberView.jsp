@@ -13,7 +13,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.0.0/index.global.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
 <style>
-/* @import url('https://fonts.googleapis.com/icon?family=Material+Icons'); */
+/* 스타일 정의 */
 .memberInfo {
     display:flex;
     margin-top:40px;
@@ -66,125 +66,117 @@
     }
 }
 
-.dropdown{
-  position :relative;
-  display :inline-block;
-  float:right;
+.dropdown {
+    position:relative;
+    display:inline-block;
+    float:right;
 }
 
-/* .dropbtn_icon{
-  font-family : 'Material Icons';
-} */
-.dropbtn{
-  border:none;
-  border-radius:4px;
-  background-color:rgba(249, 247, 242, 0.7);
-  font-weight:400;
-  color:rgb(37, 37, 37);
-  width:100px;
-  text-align:left;
-  cursor:pointer;
-  font-size:15px;
-}
-.dropdown-content{
-  display:none;
-  position:absolute;
-  z-index:1; /*다른 요소들보다 앞에 배치*/
-  font-weight:400;
-  background-color:#fff;
-  min-width:100px;
+.dropbtn {
+    border:none;
+    border-radius:4px;
+    background-color:rgba(249, 247, 242, 0.7);
+    font-weight:400;
+    color:rgb(37, 37, 37);
+    width:100px;
+    text-align:left;
+    cursor:pointer;
+    font-size:15px;
 }
 
-.dropdown-content a{
-  display:block;
-  text-decoration:none;
-  color:rgb(37, 37, 37);
-  font-size:12px;
-  padding:12px
+.dropdown-content {
+    display:none;
+    position:absolute;
+    z-index:1;
+    font-weight:400;
+    background-color:#fff;
+    min-width:100px;
 }
 
-.dropdown-content a:hover{
-  background-color:#ececec
+.dropdown-content a {
+    display:block;
+    text-decoration:none;
+    color:rgb(37, 37, 37);
+    font-size:12px;
+    padding:12px;
+}
+
+.dropdown-content a:hover {
+    background-color:#ececec;
 }
 
 .dropdown:hover .dropdown-content {
-  display:block;
+    display:block;
 }
-#calendar{
-	padding:30px;
-	width:650px;
+
+#calendar {
+    padding:30px;
+    width:650px;
 }
-.fc .fc-button-primary{
-    background-color: #fff;
-    border-color: #fff;
-    color: #000;
-    width: 80px;
+
+.fc .fc-button-primary {
+    background-color:#fff;
+    border-color:#fff;
+    color:#000;
+    width:80px;
 }
-.fc .fc-button-primary:hover{
-    background-color: #d8f3dc;
-    border-color: #fff;
-    color: #fff;
+
+.fc .fc-button-primary:hover {
+    background-color:#d8f3dc;
+    border-color:#fff;
+    color:#fff;
 }
+
 .fc .fc-button-primary:focus, .fc .fc-button-primary:active {
-    outline: none;
-    box-shadow: none;
+    outline:none;
+    box-shadow:none;
 }
-.fc .fc-button-primary:active{
-    background-color: transparent !important;
-    outline: none !important;
-    box-shadow: none !important;
-    border-color: transparent !important;
+
+.fc .fc-button-primary:active {
+    background-color:transparent !important;
+    outline:none !important;
+    box-shadow:none !important;
+    border-color:transparent !important;
 }
-.fc .fc-button-primary:disabled{
-    background-color: #fff;
-    border-color: #fff;
-    color: #000;
+
+.fc .fc-button-primary:disabled {
+    background-color:#fff;
+    border-color:#fff;
+    color:#000;
 }
+
 .fc-day-sun a {
-    color: red;
-    text-decoration: none;
+    color:red;
+    text-decoration:none;
 }
+
 .fc-day-sat a {
-    color: blue;
-    text-decoration: none;
+    color:blue;
+    text-decoration:none;
 }
+
 .fc-day-mon a, .fc-day-tue a, .fc-day-wed a, .fc-day-thu a, .fc-day-fri a {
-    color: black;
-    text-decoration: none;
+    color:black;
+    text-decoration:none;
 }
+
 .fc .fc-daygrid-day.fc-day-today {
-    background-color: #fafffb;
+    background-color:#fafffb;
 }
-.fc .fc-highlight{
-    background-color: #e4f8e5;
-}
-.fc-daygrid-day-selected {
-    background-color: #e4f8e5;
+
+.circle {
+    height:20px;
+    width:20px;
+    background-color:#ff9f89;
+    border-radius:50%;
+    display:inline-block;
+    position:absolute;
+    bottom:60px;
+    right:7px;
 }
 </style>
 </head>
 <body>
-<%-- <div class="dropdown">
-  <button class="dropbtn"> 
-    <span class="dropbtn_icon"></span>
-      나의 활동
-  </button>
-    <div class="dropdown-content">
-      <a class="dropdown-item" href="#">좋아요</a>
-      <a class="dropdown-item" href="${pageConetext.request.contextPath}/myPage/comments">댓글</a>
-    </div>
-  </div>
-  <div class="dropdown">
-    <button class="dropbtn"> 
-      <span class="dropbtn_icon"></span>
-      이용내역
-    </button>
-    <div class="dropdown-content">
-      <a class="dropdown-item" href="#">진료기록</a>
-      <a class="dropdown-item" href="${pageContext.request.contextPath}/reservation/myResList">예약내역</a>
-      <a class="dropdown-item" href="${pageContext.request.contextPath}/mypage/myConsult">의료상담</a>
-    </div>
-</div> --%>
     <div class="memberInfo">
         <div class="leftInfo">
             <ul>
@@ -220,40 +212,54 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-
-        // FullCalendar 초기화
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            selectable: true, // 사용자가 날짜를 선택할 수 있게 설정
-            height: 'auto',
-            width: 'auto',
-            headerToolbar: {
-                left: 'title',
-                right: 'today prev,next'
-            },
-            initialView: 'dayGridMonth', // 초기 보여줄 뷰 설정
-            locale: 'ko', // 로케일 설정
-            dayCellContent: function(e) {
-                // 날짜 셀 내용 설정 (1일, 2일 -> '일' 빼고 1, 2만 보이게)
-                var dayNumber = e.date.getDate();
-                var html = '<div class="fc-daygrid-day-number">' + dayNumber + '</div>';
-                return { html: html };
-            },
-            fixedWeekCount: false // 다음 달의 날짜가 보여지지 않게 설정
-
+        $.ajax({
+            url: '${pageContext.request.contextPath}/reservation/myPageCalendar',
+            type: 'GET',
+            success: function(param) {
+                if (param.result === 'logout') {
+                    alert("로그인 후 이용해주세요.");
+                    location.href = '/member/login';
+                } else if (param.result === 'success') {
+                    initializeCalendar(param.reservations);
+                }
+            }
         });
-        var reservations = ${reservations};
-        var events = reservations.map(function(reservation) {
-            return {
-                start: reservation.res_date,
-                display: 'background',
-                backgroundColor: '#ff9f89'
-            };
-        });
-        calendar.addEventSource(events);
-        
-        calendar.render();
-     });
+
+        function initializeCalendar(reservations) {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                height: 'auto',
+                width: 'auto',
+                headerToolbar: {
+                    left: 'title',
+                    right: 'today prev,next'
+                },
+                initialView: 'dayGridMonth',
+                locale: 'ko',
+                dayCellContent: function(e) {
+                    var dayNumber = e.date.getDate();
+                    var html = '<div class="fc-daygrid-day-number">' + dayNumber + '</div>';
+                    return { html: html };
+                },
+                fixedWeekCount: false,
+                events: reservations.map(function(date) {
+                    return {
+                        start: date,
+                        display: 'background',
+                        backgroundColor: 'transparent',
+                        classNames: ['circle-event']
+                    };
+                }),
+                eventContent: function(arg) {
+                    var dotEl = document.createElement('div');
+                    dotEl.classList.add('circle');
+                    return { domNodes: [dotEl] };
+                }
+            });
+
+            calendar.render();
+        }
+    });
     </script>
 </body>
 </html>
