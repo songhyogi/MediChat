@@ -68,11 +68,11 @@ public class AppConfig implements WebMvcConfigurer,WebSocketConfigurer{
 		        .addPathPatterns("/member/delete")
 		        .addPathPatterns("/board/write")
 		        .addPathPatterns("/board/update")
-		        .addPathPatterns("/board/delete");
+		        .addPathPatterns("/board/delete")
+		        .addPathPatterns("/medichatCommunity/write");
 		
 		//WriterCheckInterceptor 설정
 		registry.addInterceptor(writeCheck)
-				.addPathPatterns("/medichatCommunity/write")
 				.addPathPatterns("/medichatCommunity/update")
 				.addPathPatterns("/medichatCommunity/delete");
 	}

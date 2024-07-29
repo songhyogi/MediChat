@@ -48,9 +48,6 @@
 				</select>
 			</div> --%>
 		</form><br>
-		<c:if test="${!empty user}">
-			<div class="cboard_write_btn"><input type="button" value="글쓰기" onclick="location.href='write'" class="write-btn"></div>
-		</c:if>
 		<c:if test="${count == 0}">
 			<div class="text-black-5 text-center fs-17 fw-7">표시할 게시물이 없습니다</div>
 		</c:if>
@@ -132,6 +129,9 @@
 				</div>
 				<hr style="margin: 0; padding: 0;">
 			</c:forEach>
+			<c:if test="${!empty user}">
+				<div class="sticky-bottom-container"><input type="button" value="글쓰기" onclick="location.href='write'" class="cboard_write_btn"></div>
+			</c:if>
 			<div class="align-center">${page}</div>
 		</c:if>
 	</div>
