@@ -150,7 +150,7 @@
 	<div class="d-flex justify-content-start">
 		<!-- 로고 시작 -->
 		<div class="me-5">
-			<a href="/main/main"><img src="/images/logo8.png" width="220" height="70"></a>
+			<a href="/main/main"><img src="/images/logo2.png" width="220" height="70"></a>
 		</div>
 		<!-- 로고 끝 -->
 		<!-- 메뉴 시작 -->

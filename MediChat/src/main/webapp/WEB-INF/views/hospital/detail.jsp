@@ -215,12 +215,17 @@
 					<img src="${PageContext.reqeust.contextPath }/image_bundle/face.png" width="35" height="35" class="rounded-circle">
 					<div class="text-black-6 fw-7 fs-15 text-center">${fn:substring(review.mem_name,0,1)}OO</div>
 				</div>
-				<div>
-					<div class="detail_hosRev_title fw-7">
-						${review.rev_title}
+				<div class="d-flex justify-content-center align-items-center">
+					<div>
+						<div class="detail_hosRev_title fw-7">
+							${review.rev_title}
+						</div>
+						<div class="detail_hosRev_content overflowText">
+							${review.rev_content}
+						</div>
 					</div>
-					<div class="detail_hosRev_content">
-						${review.rev_content}
+					<div>
+						<img src="/images/down.png" width="20" height="20" class="hosRev_more_content_icon">
 					</div>
 				</div>
 				<div class="detail_hosRev_score d-flex justify-content-center align-items-center">
@@ -229,6 +234,7 @@
 				</div>
 			</div>
 		</c:forEach>
+		<div class="text-center text-decoration-none text-black-6">${reviewPage }</div>
 	</div>
 	
 	<div class="line"></div>
@@ -254,6 +260,12 @@
 <script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <script>
 $(function(){
+	$('.hosRev_more_content_icon').on('click',function(event){
+		const content = $(event.target).closest('.d-flex').find('.detail_hosRev_content');
+        content.toggleClass('overflowText');
+        content.toggleClass('heigtAuto');
+	})
+	
     $('#reservation_btn').click(function(event){
         $.ajax({
             url: '/reservation/reservation',
