@@ -173,6 +173,11 @@
 	<div class="line"></div>
 	<div style="height:15px;" class="bg-gray-0"></div>
 	
+	<div id="doctor_history"></div>
+	
+	<div class="line"></div>
+	<div style="height:15px;" class="bg-gray-0"></div>
+	
 	<div id="detail_hosPosition">
 		<p class="fs-18 fw-7">병원 위치</p>
 		<div class="fs-14 text-black-6 fw-7 mb-3">${hospital.hos_addr}</div>
@@ -278,6 +283,6 @@ $(function(){
                 alert('네트워크 오류 발생');
             }
         });
-    });
+    }); //end of click event 
 });
 </script>
