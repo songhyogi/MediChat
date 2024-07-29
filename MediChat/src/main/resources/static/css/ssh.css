@@ -287,7 +287,11 @@ input#video_title{
 .subitems{
 	padding-left:50px;
 }
-
+#faqList:hover {
+	border-radius: 5px;
+	background-color: #f2f2f2;
+	height:65px;
+}
 
 /**/
 #search_form {
@@ -361,3 +365,4 @@ input#video_title{
     transform: rotate(0deg);
   }
 }
+

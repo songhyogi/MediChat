@@ -7,7 +7,7 @@
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <!-- 비대면진료 채팅창 시작 -->
 	<div class="chat-main col-9">
-		<div class="chat-header bg-green-7" id="chat_header">
+		<div class="chat-header bg-green-6" id="chat_header">
 			<!-- 예약내역을 클릭한 경우에만 예약번호와 진료일시, 의사 표시 -->
 		</div>
 		<!-- 채팅방 표시 시작 -->
@@ -38,7 +38,7 @@
 
 <!-- 이미지 전송 시 모달 -->
 	<div class="image-form">
-		<div class="form-title bg-green-7 fs-20 fw-4">
+		<div class="form-title bg-green-6 fs-20 fw-4">
 		이미지 전송
 			<button type="button" class="close-button">&times;</button>
 		</div>
@@ -55,7 +55,7 @@
 
 <!-- 이미지 크게 보기 모달 -->
 <div class="msg-image-modal">
-	<div class="form-title bg-green-7 fs-20 fw-4">
+	<div class="form-title bg-green-6 fs-20 fw-4">
 		이미지 크게 보기
 		<button type="button" class="close-button">&times;</button>
 	</div>

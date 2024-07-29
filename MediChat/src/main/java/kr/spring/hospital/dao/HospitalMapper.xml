@@ -149,6 +149,7 @@
 		FROM ( SELECT a.* , ROWNUM rnum
 		       FROM ( SELECT t.*
 		              FROM ( SELECT h.*, 
+		              				rev_avg,
 		                            ROUND((6378137 * ACOS(COS(RADIANS(#{user_lat})) * COS(RADIANS(h.hos_lat)) * COS(RADIANS(h.hos_lon) - RADIANS(#{user_lon})) + SIN(RADIANS(#{user_lat})) * SIN(RADIANS(h.hos_lat))))) AS around,
 		                            COALESCE(d.doc_cnt, 0) AS doc_cnt,
 		                            COALESCE(r.rev_cnt, 0) AS rev_cnt
@@ -163,6 +164,11 @@
 		                                                 GROUP BY hos_num
 		                                               ) r 
 		                                     ON h.hos_num = r.hos_num
+		                                     LEFT JOIN( SELECT AVG(rev_grade) rev_avg, hos_num 
+		                                     			FROM review
+		                                    			GROUP BY hos_num
+												
+											 ) re ON h.hos_num =re.hos_num 
 		                     where hos_lat between #{user_lat}-0.04 and #{user_lat}+0.04 and hos_lon between #{user_lon}-0.04 and #{user_lon}+0.04
 		                     <include refid="searchHospitalByKeyword"/>
 							 <include refid="searchHospitalByCommonFilter"/>
@@ -179,11 +185,17 @@
 <!-- ========================= 병원 리스트 끝 ========================= -->
 
 	<select id="selectHospital" parameterType="long" resultType="hospitalVO">
-		select h.*, d.doc_cnt from hospital h LEFT JOIN ( SELECT hos_num, COUNT(*) AS doc_cnt
+		select h.*, d.doc_cnt, rev_avg from hospital h LEFT JOIN ( SELECT hos_num, COUNT(*) AS doc_cnt
 		                                                 FROM doctor_detail
 		                                                 WHERE doc_treat = 1
 		                                                 GROUP BY hos_num
-		                                               ) d  ON h.hos_num = d.hos_num where h.hos_num=#{hos_num}
+		                                               ) d  ON h.hos_num = d.hos_num 
+		                                                LEFT JOIN( SELECT AVG(rev_grade) rev_avg, hos_num 
+		                                     			FROM review
+		                                    			GROUP BY hos_num
+											 			) re ON h.hos_num =re.hos_num 
+		                                               
+		                                               where h.hos_num=#{hos_num}
 	</select>
 	
 	<update id="updateHitHospital" parameterType="long">

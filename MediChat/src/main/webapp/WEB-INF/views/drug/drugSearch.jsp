@@ -66,14 +66,12 @@ a {
 		<c:if test="${count > 0}">
 			<table class="drug-table">
 				<tr class="table-light align-center bg-gray-1">
-					<!-- <th class="fs-18 fw-4">번호</th>-->
 					<th class="fs-18 fw-4 drug-name-th">제품명</th>
 					<th class="fs-18 fw-4 drug-company">회사명</th>
 					<th class="fs-18 fw-4 drug-effect">효능</th>
 				</tr>
 				<c:forEach var="drug" items="${list}">
 				<tr>
-					<!--<td class="align-center fs-18 fw-4">${drug.drg_num}</td>-->
 					<td class="fs-18 fw-4 drug-name-td"><a href="detail?drg_num=${drug.drg_num}" class="list-drug-name"> ${drug.drg_name}</a></td>
 					<td class="align-center fs-18 fw-4 drug-company">${drug.drg_company}</td>
 					<td class="align-center fs-18 fw-4 drug-effect"><img src="${pageContext.request.contextPath}/images/magnifier.png" width="20" class="drg-effect-icon" data-drg_num="${drug.drg_num}"></td>
@@ -85,15 +83,14 @@ a {
 			<div class="align-center">${page}</div>
 		</nav>
 	</div>
-	
-	<!-- 모달 끝 -->
+
 	<!-- 의약품 효능 상세보기 -->
 	<div class="drug-effect-info">
-		<div class="effect-info-header bg-green-5">
+		<div class="effect-info-header bg-green-6">
 			<div class="drug-effect-header-content"></div>
 			<div class="close" style="color:white;">&times;</div>
 		</div>
-		<div class="effect-info-body">
+		<div class="effect-info-body bg-green-1">
 			<div class="drug-effect-content"></div>
 		</div>
 	</div>
@@ -107,19 +104,31 @@ $(document).ready(function(){
     
     $('.drg-effect-icon').click(function(){
         drg_num = $(this).data('drg_num');
+        
         let offset = $(this).offset();
         $('.drug-effect-info').css({
             top: offset.top+ $(this).outerWidth(),
             left: offset.left - 140
         });
         
+        if ($('.drg-effect-info').is(':visible')) {
+            $('.drg-effect-info').slideUp('fast', function() {
+                // 정보창을 닫은 후 새로운 데이터를 가져와서 열기
+                drugEffectToggle(drg_num);
+            });
+        } else {
+            // 정보창이 닫혀 있는 경우 바로 새로운 데이터를 가져와서 열기
+            drugEffectToggle(drg_num);
+        }
+    });
+function drugEffectToggle(drg_num){
         $.ajax({
             url:'/drug/drugEffect',
             type:'get',
             data:{drg_num:drg_num},
             dataType:'JSON',
             success:function(param){
-                // 이전 내용 초기화
+                // 이전 내용 초기화 
                 $('.drug-effect-header-content').empty();
                 $('.drug-effect-content').empty();
                 
@@ -134,7 +143,7 @@ $(document).ready(function(){
                 alert('네트워크 오류 발생');
             }
         }); // end of ajax
-    }); //end of click event
+}
     
     // 모달 닫기 기능
     $('.close').click(function(){

@@ -51,6 +51,12 @@
 .fc .fc-highlight{
     background-color: #e4f8e5;
 }
+.fc-daygrid-day-selected {
+    background-color: #e4f8e5;
+}
+.fc-daygrid-day-selected {
+    background-color: #e4f8e5;
+}
 </style>
 <script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/index.global.min.js"></script>
@@ -87,6 +93,8 @@ document.addEventListener('DOMContentLoaded', function() {
         dateClick: function(info) {
             // 날짜 클릭 시 호출될 함수
             displayTimes(info.dateStr);
+            $('td.fc-daygrid-day').removeClass('fc-daygrid-day-selected');
+            $(info.dayEl).addClass('fc-daygrid-day-selected').attr('data-date', info.dateStr);
         },
         dayCellDidMount: function(info) {
             // 특정 날짜 셀에 클래스를 적용하는 함수 호출
@@ -174,6 +182,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     $('#time-buttons').html(output);
 
                     handleButtonEvents(date, reservedTimes);
+                 	// 선택된 날짜 셀 유지
+                    $('td.fc-daygrid-day[data-date="' + date + '"]').addClass('fc-daygrid-day-selected');
                 } else if (param.result == 'logout') {
                     alert('로그인이 필요합니다.');
                 } else if (param.result == 'wrongAccess') {
