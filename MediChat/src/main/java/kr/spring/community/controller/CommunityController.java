@@ -404,29 +404,6 @@ public class CommunityController {
 		
 		return mapJson;
 	}
-	@GetMapping("/myPage/comments")
-	public String getUserComments(HttpSession session, Model model) {
-	    Object user = session.getAttribute("user");
-	    
-	    if (user == null) {
-	        return "redirect:/member/login"; // 로그인 페이지로 리디렉션
-	    }
-	    
-	    long userNum;
-	    if (user instanceof MemberVO) {
-	        userNum = ((MemberVO) user).getMem_num();
-	    } else if (user instanceof DoctorVO) {
-	        userNum = ((DoctorVO) user).getMem_num();
-	    } else {
-	        throw new RuntimeException("Unknown user type");
-	    }
-	    
-	    List<CommunityReplyVO> comments = communityService.selectCommentsByUser(userNum);
-	    
-	    model.addAttribute("comments", comments);
-	    return "myPageComments";
-	}
-
 }
 
 

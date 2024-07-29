@@ -169,7 +169,7 @@
 		<p class="fs-18 fw-7">약국 위치</p>
 		<div class="fs-14 text-black-6 fw-7 mb-3">${pharmacy.pha_addr}</div>
 		<div class="mb-3">
-			<jsp:include page="/WEB-INF/views/common/staticPhaMap.jsp"/>
+			<jsp:include page="/WEB-INF/views/pharmacy/staticPhaMap.jsp"/>
 		</div>
 		<c:if test="${pharmacy.pha_mapImg!='null'}">
 			<div class="fs-15 text-black-7 fw-9 text-center">&lt;간이약도&gt;</div>

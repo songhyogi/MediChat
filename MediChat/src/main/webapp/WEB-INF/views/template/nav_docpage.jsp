@@ -2,11 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/ych.css" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.3/dist/sweetalert2.all.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.3/dist/sweetalert2.min.css" rel="stylesheet">
 <!-- MyPage 메뉴 시작 -->
 <div class="side-bar">
+<h1>마이페이지</h1>
 	<ul style="padding: 0 0 !important; margin-top:20px;">
-		<li style="font-size:40px; font-weight:bold;">마이페이지</li>
-		<li class="fs-17 text-black-5"><span class="fs-20 fw-7 text-black-7">${user.mem_id}님</span> 반갑습니다.</li>
 		<li>
 				<img src="${pageContext.request.contextPath}/doctor/docPhotoView"
 				width="150" height="150" class="my-photo border rounded-circle" 
@@ -23,10 +24,10 @@
 				<input type="button" value="취소" id="photo_reset"> 
 			</div>
 		</li>
-        <li style="margin-bottom:10px; font-size:20px;">
+        <li style="margin-bottom:10px;">
             <a href="${pageContext.request.contextPath}/schedule/list" class="detail-btn">스케줄관리</a>
         </li>
-        <li style="margin-bottom:10px; font-size:20px;">
+        <li style="margin-bottom:10px;">
 	        <c:if test="${user.doc_treat == 0}">
 	            <a href="${pageContext.request.contextPath}/doctor/registerTreat" class="detail-btn">비대면 진료 신청</a>
 	        </c:if>
@@ -34,10 +35,10 @@
             	<a href="${pageContext.request.contextPath}/chat/chatView" class="detail-btn">비대면 진료</a>
         	</c:if>
         </li>
-		<li style="margin-bottom:10px; font-size:20px;">
+		<li style="margin-bottom:10px;">
             <a href="${pageContext.request.contextPath}/doctor/modifyDoctor" class="detail-btn">회원정보 수정</a>
         </li>
-        <li style="margin-top:50px; font-size:20px;">
+        <li style="margin-top:50px;">
             <a href="${pageContext.request.contextPath}/doctor/logout" class="detail-btn">로그아웃</a>
         </li>
 	</ul>

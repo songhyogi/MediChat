@@ -59,11 +59,6 @@ public class CommunityServiceImpl implements CommunityService{
 		communityMapper.updateHit(cbo_num);
 	}
 	
-	public List<CommunityReplyVO> selectCommentsByUser(long userNum) {
-	    return communityMapper.selectCommentsByUser(userNum);
-	}
-
-	
 	/*-----------------------------게시판글 좋아요-----------------------------*/
 	@Override
 	public CommunityFavVO selectFav(CommunityFavVO fav) {

@@ -65,8 +65,6 @@ public interface CommunityMapper {
 	public void updateComment(CommunityReplyVO communityReply);
 	@Delete("DELETE cboard_re WHERE cre_num=#{cre_num}")
 	public void deleteComment(Long cre_num);
-	@Select("SELECT c.*, p.cbo_title AS postTitle FROM cboard_re c JOIN cboard p ON c.cbo_num = p.cbo_num WHERE c.mem_num = #{userNum}")
-	public List<CommunityReplyVO> selectCommentsByUser(long userNum);
 	
 	//대댓글
 	public List<CommunityReplyVO> selectListReply(Long cre_num);

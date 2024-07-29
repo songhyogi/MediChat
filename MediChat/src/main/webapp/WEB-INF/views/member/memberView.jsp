@@ -8,15 +8,11 @@
 <title>회원정보</title>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.0.0/index.global.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
 <style>
 /* @import url('https://fonts.googleapis.com/icon?family=Material+Icons'); */
 .memberInfo {
     display:flex;
-    margin-top:40px;
+    margin-top:80px;
 }
 
 .leftInfo, .rightInfo {
@@ -78,7 +74,7 @@
 .dropbtn{
   border:none;
   border-radius:4px;
-  background-color:rgba(249, 247, 242, 0.7);
+  background-color:#fff;
   font-weight:400;
   color:rgb(37, 37, 37);
   width:100px;
@@ -110,21 +106,18 @@
 .dropdown:hover .dropdown-content {
   display:block;
 }
-#calendar{
-	padding:30px;
-	width:650px;
-}
+
 </style>
 </head>
 <body>
-<%-- <div class="dropdown">
+<div class="dropdown">
   <button class="dropbtn"> 
     <span class="dropbtn_icon"></span>
       나의 활동
   </button>
     <div class="dropdown-content">
       <a class="dropdown-item" href="#">좋아요</a>
-      <a class="dropdown-item" href="${pageConetext.request.contextPath}/myPage/comments">댓글</a>
+      <a class="dropdown-item" href="#">댓글</a>
     </div>
   </div>
   <div class="dropdown">
@@ -135,63 +128,36 @@
     <div class="dropdown-content">
       <a class="dropdown-item" href="#">진료기록</a>
       <a class="dropdown-item" href="${pageContext.request.contextPath}/reservation/myResList">예약내역</a>
-      <a class="dropdown-item" href="${pageContext.request.contextPath}/mypage/myConsult">의료상담</a>
+      <a class="dropdown-item" href="#">문의내역</a>
     </div>
-</div> --%>
+</div>
     <div class="memberInfo">
         <div class="leftInfo">
             <ul>
-                <li style="font-size:17px; font-weight:bold;">이름</li>
-                <li style="font-size:13px;">${member.mem_name}</li>
-                <li style="font-size:17px; font-weight:bold;">전화번호</li>
-                <li style="font-size:13px;">${member.mem_phone}</li>
-                <li style="font-size:17px; font-weight:bold;">생년월일</li>
-                <li style="font-size:13px;">${member.mem_birth}</li>
-                <li style="font-size:17px; font-weight:bold;">이메일</li>
-                <li style="font-size:13px;">${member.mem_email}</li>
+                <li style="font-size:25px; font-weight:bold;">이름</li>
+                <li style="font-size:15px;">${member.mem_name}</li>
+                <li style="font-size:25px; font-weight:bold;">전화번호</li>
+                <li style="font-size:15px;">${member.mem_phone}</li>
+                <li style="font-size:25px; font-weight:bold;">생년월일</li>
+                <li style="font-size:15px;">${member.mem_birth}</li>
+                <li style="font-size:25px; font-weight:bold;">이메일</li>
+                <li style="font-size:15px;">${member.mem_email}</li>
             </ul>
         </div>
         <div class="rightInfo">
             <ul>
-                <li style="font-size:17px; font-weight:bold;">우편번호</li>
-                <li style="font-size:13px;">${member.mem_zipcode}</li>
-                <li style="font-size:17px; font-weight:bold;">주소</li>
-                <li style="font-size:13px;">${member.mem_address1} ${member.mem_address2}</li>
-                <li style="font-size:17px; font-weight:bold;">가입일</li>
-                <li style="font-size:13px;">${member.mem_reg}</li>
+                <li style="font-size:25px; font-weight:bold;">우편번호</li>
+                <li style="font-size:15px;">${member.mem_zipcode}</li>
+                <li style="font-size:25px; font-weight:bold;">주소</li>
+                <li style="font-size:15px;">${member.mem_address1} ${member.mem_address2}</li>
+                <li style="font-size:25px; font-weight:bold;">가입일</li>
+                <li style="font-size:15px;">${member.mem_reg}</li>
                 <c:if test="${!empty member.mem_modify}">
-                    <li style="font-size:17px; font-weight:bold;">정보 수정일</li>
-                    <li style="font-size:13px;">${member.mem_modify}</li>
+                    <li style="font-size:25px; font-weight:bold;">정보 수정일</li>
+                    <li style="font-size:15px;">${member.mem_modify}</li>
                 </c:if>
             </ul>
         </div>
     </div>
-    <!-- FullCalendar -->
-    <div class="container mt-4">
-        <div id="calendar"></div>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth', // 달력을 월 단위로 시작
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                },
-                editable: true,
-                selectable: true,
-                events: [
-                    // 여기에 이벤트를 추가할 수 있습니다
-                    // 예: { title: '이벤트 제목', start: '2024-07-30', end: '2024-07-31' }
-                ]
-            });
-
-            calendar.render();
-        });
-    </script>
 </body>
 </html>

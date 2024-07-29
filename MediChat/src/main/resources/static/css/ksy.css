@@ -305,6 +305,10 @@
 	font-weight: 700;
 	color: #3D4551;
 	margin: 10px 0;
+	display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow:hidden;
 }
 .consulting-item-content{
 	font-size: 14px;
@@ -313,6 +317,10 @@
 	max-height: 63px;
 	overflow: hidden;
     text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow:hidden;
 }
 .consulting-item-type{
 	display:flex;
@@ -351,7 +359,7 @@
 #con_title_div, #con_content_div, #con_type_div{
 	margin: 30px 0;
 }
-#con_title_label, #con_content_label, #con_type_label{
+#con_title_label, #con_content_label, #con_type_label, #con_re_content, #reply_length{
 	font-size: 15px;
 	font-weight: 600;
 	color: #4a4a4a;
