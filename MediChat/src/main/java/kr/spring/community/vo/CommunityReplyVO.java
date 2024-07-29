@@ -28,8 +28,6 @@ public class CommunityReplyVO {
 	
 	private int reply_cnt;
 	
-	private String postTitle; // 게시글 제목 추가
-	
 	public void setRe_date(String cre_rdate) {
 		this.cre_rdate = 
 			    DurationFromNow.getTimeDiffLabel(cre_rdate);

@@ -117,5 +117,10 @@ public class ConsultingServiceImpl implements ConsultingService{
 	public List<Con_ReVO> getListCon_Re(Map<String, Object> map) {
 		return consultingMapper.selectListCon_Re(map);
 	}
-	
+
+
+	@Override
+	public void modifyCon_Re_Status(Map<String, Object> map) {
+		consultingMapper.updateCon_Re_Status(map);
+	}
 }

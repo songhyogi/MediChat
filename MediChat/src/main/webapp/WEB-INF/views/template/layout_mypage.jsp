@@ -17,10 +17,6 @@
 	margin-bottom: 10px;
 	border:none;
 }
-#main_body{
-	border-radius: 10px;
-	background-color: #fff;
-	}
 </style>
 </head>
 <body>

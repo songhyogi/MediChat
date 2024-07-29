@@ -35,6 +35,10 @@ public interface DoctorService {
 
 	//아이디 중복확인
 	public DoctorVO checkId(String mem_id);
+	//이메일 확인
+	public DoctorVO checkEmail(String doc_email);
+	//이름 확인
+	public DoctorVO checkName(String mem_name);
 	//아이디 찾기
 	public DoctorVO findId(DoctorVO doctor);
 	//비밀번호 찾기

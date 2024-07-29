@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.consulting.vo.ConsultingVO;
+import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.member.dao.MemberMapper;
 import kr.spring.member.vo.MemberVO;
  
@@ -111,6 +112,16 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public List<ConsultingVO> consultList(Map<String, Object> map) {
 		return memberMapper.consultList(map);
+	}
+
+	@Override
+	public MemberVO checkEmail(String mem_email) {
+		return memberMapper.checkEmail(mem_email);
+	}
+
+	@Override
+	public MemberVO checkName(String mem_name) {
+		return memberMapper.checkName(mem_name);
 	}
 
 }

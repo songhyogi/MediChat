@@ -177,6 +177,26 @@ public class ReservationAjaxController {
 			map.put("result", "logout");
 		}else {
 			reservationService.cancelReservation(res_num);
+			// 회원에게 알림 보내기
+            NotificationVO memberNotification = new NotificationVO();
+            memberNotification.setMem_num(user.getMem_num());
+            memberNotification.setNoti_category(1L); // 진료 관련
+            memberNotification.setNoti_message(" 예약이 취소되었습니다.");
+            memberNotification.setNoti_link("<a href='/reservation/myResList'>나의 예약 내역<a>");
+            memberNotification.setNoti_priority(1);
+
+            notificationService.insertNotification(memberNotification);
+            
+            // 의사에게 알림 보내기
+            long doc_num = reservationService.selectDoc_num(res_num);
+            NotificationVO doctorNotification = new NotificationVO();
+            doctorNotification.setMem_num(doc_num);
+            doctorNotification.setNoti_category(1L); // 진료 관련
+            doctorNotification.setNoti_message("취소된 예약내역이 있습니다.");
+            doctorNotification.setNoti_link("<a href='/reservation/docResList'>나의 예약 내역<a>");
+            doctorNotification.setNoti_priority(1);
+
+            notificationService.insertNotification(doctorNotification);
 			map.put("result", "success");
 		}
 		return map;

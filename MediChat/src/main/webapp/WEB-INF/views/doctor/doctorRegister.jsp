@@ -2,7 +2,24 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.3/dist/sweetalert2.all.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.3/dist/sweetalert2.min.css" rel="stylesheet">
 <!-- 의사회원가입 시작 -->
+<style>
+.custom-select {
+    position: relative;
+    padding-right: 35px;
+}
+.custom-select::after {
+    content: "\f078"; /* Font Awesome 화살표 아이콘 코드 */
+    font-family: "Font Awesome 5 Free";
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+</style>
 <div class="container">
 	<h2 class="title">회원가입(의사)</h2>
 	<hr size="1" width="100%" noshade="noshade">
@@ -39,11 +56,13 @@
 				<form:label path="hos_num">병원</form:label>
 				<form:hidden path="hos_num"/>
 				<input type="search" name="keyword" id="keyword" value="${keyword}" class="effect-1" onkeypress="return handleEnter(event)">
-                <input type="button" id="search_button" value="검색">
+                <button type="button" id="search_button" class="btn">
+				    <i class="fas fa-search"></i>
+				</button>
                 <form:errors path="hos_num" cssClass="error-color"/>
             </li>
             <li style="margin-left:205px;">
-            	<form:select path="hos_num">
+            	<form:select path="hos_num" class="custom-select" style="width:400px;">
               	 	<c:forEach var="hos" items="${hosList}">
             			<option value="${hos.hos_num}">${hos.hos_name}/${hos.hos_addr}</option>
             		</c:forEach>
@@ -51,7 +70,7 @@
             </li>
 			<li>
 				<form:label path="doc_history">연혁</form:label>
-				<form:textarea path="doc_history" placeholder="연혁을 입력해주세요." class="effect-1" style="height: 150px; vertical-align: top;"/>
+				<form:textarea path="doc_history" placeholder="연혁을 입력해주세요." class="msg" style="height:150px; vertical-align:top;"/>
 			</li>
 		</ul>
 		</div>
@@ -74,7 +93,9 @@
 				<span style="font-weight:bold;">인증문자 입력</span>
 				<div id="captcha_div">
 					<img src="getCaptcha" id="captcha_img" width="200" height="90">
-					<input type="button" value="새로고침" id="reload_btn">
+					<button type="button" class="btn" id="reload_captcha">
+					    <i class="fas fa-sync-alt"></i>
+					</button>
 				</div>
 			</li>
 			<li>
@@ -137,7 +158,7 @@
 </script>
 <script>
 	$(function(){
-		$('#reload_btn').click(function(){
+		$('#reload_captcha').click(function(){
 		 $.get('getCaptcha', function(data) {
 	            $('#captcha_img').attr('src', 'getCaptcha?' + new Date().getTime());
 	        }).fail(function() {

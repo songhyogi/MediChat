@@ -29,5 +29,7 @@ public interface ConsultingMapper {
 	
 	public void deleteAllCon_Re(Long con_num);
 	
+	public void updateCon_Re_Status(Map<String,Object> map);
+	
 	
 }

@@ -75,16 +75,33 @@
 	            dataType:'json',
 	            success:function(param) {
 	                if(param.result == 'logout') {
-	                   alert('로그인 하세요.');
-	                }else if (param.result == 'success') {
-	                   alert('회원이 정지되었습니다.');
-	                   location.reload();
+	                   Swal.fire({
+                          title:'로그인이 필요합니다.',
+                          icon:'warning',
+                          confirmButtonText:'확인'
+                       });
+	                }else if(param.result == 'success') {
+	                	Swal.fire({
+                           title:'회원이 정지되었습니다.',
+                           icon:'success',
+                           confirmButtonText:'확인'
+                        }).then(() => {
+                           location.reload();
+                        });
 	                }else {
-	                   alert('회원정보 변경 오류');
+	                	Swal.fire({
+                           title:'회원정보 변경 오류',
+                           icon:'error',
+                           confirmButtonText:'확인'
+                        });
 	                }
 	            },
 	            error:function() {
-	               alert('네트워크 오류 발생');
+	            	Swal.fire({
+                       title:'네트워크 오류 발생',
+                       icon:'error',
+                       confirmButtonText:'확인'
+                    });
 	            }
 	        });
 	    });
@@ -99,16 +116,33 @@
 	            dataType:'json',
 	            success:function(param) {
 	                if(param.result == 'logout') {
-	                   alert('로그인 하세요.');
-	                }else if (param.result == 'success') {
-	                   alert('회원 정지가 취소되었습니다.');
-	                   location.reload();
+	                	Swal.fire({
+                           title:'로그인이 필요합니다.',
+                           icon:'warning',
+                           confirmButtonText:'확인'
+                        });
+	                }else if(param.result == 'success') {
+	                	Swal.fire({
+                           title:'회원 정지가 취소되었습니다.',
+                           icon:'success',
+                           confirmButtonText:'확인'
+                        }).then(() => {
+                           location.reload();
+                        });
 	                }else {
-	                   alert('회원정보 변경 오류');
+	                	Swal.fire({
+                           title:'회원정보 변경 오류',
+                           icon:'error',
+                           confirmButtonText:'확인'
+                        });
 	                }
 	            },
 	            error:function() {
-	               alert('네트워크 오류 발생');
+	            	Swal.fire({
+                       title:'네트워크 오류 발생',
+                       icon:'error',
+                       confirmButtonText:'확인'
+                    });
 	            }
 	        });
 	    });
