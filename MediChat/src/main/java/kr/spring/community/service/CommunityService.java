@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Select;
 
 import kr.spring.community.vo.CommunityFavVO;
+import kr.spring.community.vo.CommunityReFavVO;
 import kr.spring.community.vo.CommunityReplyVO;
 import kr.spring.community.vo.CommunityVO;
 
@@ -48,10 +49,11 @@ public interface CommunityService {
 	public CommunityReplyVO selectReply(Long cre_num);
 	public Integer selectCountReply(Long cre_num);
 	public void insertReply(CommunityReplyVO communityReply);
-	public void updateReply(CommunityReplyVO communityReply);
-	public void deleteReply(Long cre_num);
 		
 	//댓글 좋아요
-
+	public CommunityReFavVO selectReFav(CommunityReFavVO fav);
+	public Integer selectReFavCount(Long cre_num);
+	public void insertReFav(CommunityReFavVO fav);
+	public void deleteReFav(CommunityReFavVO fav);
 	/*-----------------------------답글(대댓글)-----------------------------*/
 }

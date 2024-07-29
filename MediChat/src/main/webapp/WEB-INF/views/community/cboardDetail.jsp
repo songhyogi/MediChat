@@ -3,8 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script src="${pageContext.request.contextPath}/js/community.reply.js"></script>
+<script src="${pageContext.request.contextPath}/js/community.fav.js"></script>
 <!-- 커뮤니티 글상세 시작 -->
-<div class="page-main">
+<div class="community-main">
 	<div class="cboard-detail-header">
 		<p class="text-lightgray fw-7 fs-13" style="padding:16px;">홈 > 커뮤니티</p>
 		<span class="cboard-category-box">
@@ -68,11 +69,12 @@
 			${cboard.cbo_content}
 		</div>
 		<div class="align-right">
-			👁 ${cboard.cbo_hit}
 			<!-- 좋아요 -->
-			❤️ <span id="output_fcount"></span>
+			<img id="output_fav" data-num="${cboard.cbo_num}"src="${pageContext.request.contextPath}/images/cboard-fav01.png" width="20">
+			<span id="output_fcount"></span>
 			<!-- 댓글수 -->
-			<span id="output_rcount"></span>
+			<%-- <img id="output_fav" data-num="${cboard.cbo_num}"src="${pageContext.request.contextPath}/images/cboard-reply.png" width="20">
+			<span id="output_rcount"></span> --%>
 		</div>
 		</div>
 	<hr><br>

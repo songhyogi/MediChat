@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import kr.spring.community.vo.CommunityFavVO;
+import kr.spring.community.vo.CommunityReFavVO;
 import kr.spring.community.vo.CommunityReplyVO;
 import kr.spring.community.vo.CommunityVO;
 
@@ -31,11 +32,11 @@ public interface CommunityMapper {
 	public void updateHit(Long cbo_num);
 	
 	/*---게시판 좋아요---*/
-	@Select("SELECT * FROM cboard_fav WHERE cbo_num=#{cbo_num}")
+	@Select("SELECT * FROM cboard_fav WHERE cbo_num=#{cbo_num} AND mem_num=#{mem_num}")
 	public CommunityFavVO selectFav(CommunityFavVO fav); //좋아요 목록
 	@Select("SELECT COUNT(*) FROM cboard_fav WHERE cbo_num=#{cbo_num}")
 	public Integer selectFavCount(Long cbo_num); //좋아요 개수
-	@Insert("INSERT INTO cboard_fav (cbo_num,mem_num) VALUES(#{cbo_num},#{mem_num}")
+	@Insert("INSERT INTO cboard_fav (cbo_num,mem_num) VALUES(#{cbo_num},#{mem_num})")
 	public void insertFav(CommunityFavVO fav);	//좋아요 처리
 	@Delete("DELETE FROM cboard_fav WHERE cbo_num=#{cbo_num} AND mem_num=#{mem_num}")
 	public void deleteFav(CommunityFavVO fav); //좋아요 삭제
@@ -79,9 +80,19 @@ public interface CommunityMapper {
 	
 	//댓글 삭제 시 답글 삭제
 	
-	
-	
 	/*---댓글(답글) 좋아요---*/
-	
+	@Select("SELECT * FROM cboard_re_fav WHERE cre_num=#{cre_num} AND mem_num=#{mem_num}")
+	public CommunityReFavVO selectReFav(CommunityReFavVO fav);
+	@Select("SELECT COUNT(*) FROM cboard_re_fav WHERE cre_num=#{cre_num}")
+	public Integer selectReFavCount(Long cre_num);
+	@Insert("INSERT INTO cboard_re_fav (cre_num,mem_num) VALUES (#{cre_num},#{mem_num})")
+	public void insertReFav(CommunityReFavVO fav);
+	@Delete("DELETE FROM cboard_re_fav WHERE cre_num=#{cre_num} AND mem_num=#{mem_num}")
+	public void deleteReFav(CommunityReFavVO fav);
 	//댓글(답글) 삭제 시 좋아요 삭제
+	@Delete("DELETE FROM cboard_re_fav WHERE cre_num=#{cre_num}")
+	public void deleteReFavByReNum(Long cre_num);
+	//게시판 삭제 시 좋아요 삭제
+	@Delete("DELETE FROM cboard_re_fav WHERE cre_num IN (SELECT cre_num FROM cboard_re_fav WHERE cbo_num=#{cbo_num})")
+	public void deleteReFavByCommunityNum(Long board_num);
 }

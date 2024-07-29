@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import kr.spring.community.service.CommunityService;
 import kr.spring.community.vo.CommunityFavVO;
+import kr.spring.community.vo.CommunityReFavVO;
 import kr.spring.community.vo.CommunityReplyVO;
 import kr.spring.community.vo.CommunityVO;
 import kr.spring.doctor.vo.DoctorVO;
@@ -180,12 +181,22 @@ public class CommunityController {
 		log.debug("<<게시판 좋아요>> : " + fav);
 		
 		Map<String, Object> mapJson = new HashMap<String, Object>();
-		MemberVO user = (MemberVO)session.getAttribute("user");
+		Object user = session.getAttribute("user");
 		
 		if(user==null) {
-			mapJson.put("result", "logout");
-		}else {
-			fav.setMem_num(user.getMem_num());
+			mapJson.put("status", "noFav");
+		}else if(user!=null && user instanceof DoctorVO){
+			DoctorVO doctor = (DoctorVO) user;
+			fav.setMem_num(doctor.getMem_num());
+			CommunityFavVO cboardFav = communityService.selectFav(fav);
+			if(cboardFav != null) {
+				mapJson.put("status", "yesFav");
+			}else {
+				mapJson.put("status", "noFav");
+			}
+		}else if(user!=null && user instanceof MemberVO){
+			MemberVO member = (MemberVO) user;
+			fav.setMem_num(member.getMem_num());
 			CommunityFavVO cboardFav = communityService.selectFav(fav);
 			if(cboardFav != null) {
 				mapJson.put("status", "yesFav");
@@ -197,7 +208,48 @@ public class CommunityController {
 		
 		return mapJson;
 	}
-	
+	//좋아요 등록/삭제
+	@PostMapping("/medichatCommunity/writeFav")
+	@ResponseBody
+	public Map<String, Object> wrtieFav(CommunityFavVO fav, HttpSession session){
+		log.debug("<<게시판 좋아요 등록>> : " + fav);
+		
+		Map<String, Object> mapJson = new HashMap<String, Object>();
+		Object user = session.getAttribute("user");
+		
+		if(user==null) {
+			mapJson.put("result", "logout");
+		}else if(user!=null && user instanceof DoctorVO){
+			DoctorVO doctor = (DoctorVO) user;
+			fav.setMem_num(doctor.getMem_num());
+			
+			CommunityFavVO cboardFav = communityService.selectFav(fav);
+			if(cboardFav!=null) {//등록->삭제
+				communityService.deleteFav(fav);
+				mapJson.put("status", "noFav");
+			}else {//등록
+				communityService.insertFav(fav);
+				mapJson.put("status", "yesFav");
+			}
+			
+		}else if(user!= null && user instanceof MemberVO) {
+			MemberVO member = (MemberVO) user;
+			fav.setMem_num(member.getMem_num());
+			
+			CommunityFavVO cboardFav = communityService.selectFav(fav);
+			if(cboardFav!=null) {//등록->삭제
+				communityService.deleteFav(fav);
+				mapJson.put("status", "noFav");
+			}else {//등록
+				communityService.insertFav(fav);
+				mapJson.put("status", "yesFav");
+			}
+			mapJson.put("result", "success");
+			mapJson.put("count", communityService.selectFavCount(fav.getCbo_num()));
+		}
+		
+		return mapJson;
+	}
 	
 	/*==============================댓글==============================*/
 	//댓글 목록
@@ -349,6 +401,41 @@ public class CommunityController {
 		return mapJson;
 	}
 	
+	/*==============================댓글 좋아요==============================*/
+	//댓글 좋아요 읽기
+	@PostMapping("/medichatCommunity/getReFav")
+	@ResponseBody
+	public Map<String, Object> getReFav(CommunityReFavVO fav, HttpSession session){
+		
+		log.debug("<<댓글 좋아요>> : " + fav);
+		Map<String, Object> mapJson = new HashMap<String, Object>();
+		Object user = session.getAttribute("user");
+		
+		if(user==null) {
+			mapJson.put("result", "logout");
+			mapJson.put("status", "noFav");
+		}else {
+			if(user instanceof DoctorVO) {
+				DoctorVO doctor = (DoctorVO)user;
+				fav.setMem_num(doctor.getMem_num());
+			}else if(user instanceof MemberVO) {
+				MemberVO member = (MemberVO)user;
+				fav.setMem_num(member.getMem_num());
+			}
+			CommunityReFavVO cboardReFav = communityService.selectReFav(fav);
+			
+			if(cboardReFav!=null) {
+				mapJson.put("result", "success");
+				mapJson.put("status", "yesFav");
+			}else {
+				mapJson.put("result", "success");
+				mapJson.put("status", "noFav");
+			}
+		}
+		mapJson.put("count", communityService.selectReFavCount(fav.getCre_num()));
+		
+		return mapJson;
+	}
 	
 	/*==============================답글==============================*/
 	//답글 목록
