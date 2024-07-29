@@ -23,5 +23,7 @@ public class ReviewVO {
 	private int rev_report;
 	private String mem_id;
 	
+	private String mem_name;
+	
 	private String hos_name;
 }

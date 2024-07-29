@@ -167,7 +167,6 @@
 		                                     LEFT JOIN( SELECT AVG(rev_grade) rev_avg, hos_num 
 		                                     			FROM review
 		                                    			GROUP BY hos_num
-												
 											 ) re ON h.hos_num =re.hos_num 
 		                     where hos_lat between #{user_lat}-0.04 and #{user_lat}+0.04 and hos_lon between #{user_lon}-0.04 and #{user_lon}+0.04
 		                     <include refid="searchHospitalByKeyword"/>
