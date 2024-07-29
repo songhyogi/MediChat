@@ -41,11 +41,11 @@ $(function(){
 					//댓글 좋아요
 					
 					let output = '<div class="item cboard-comment">';
-					output += '     <ul class="detail-info">';
+					output += '     <ul class="detail-info cboard-info">';
 					output +='        <li>';
 					output += '         <img src="../member/memViewProfile?mem_num='+item.mem_num+'" width="40" height="40" class="profile">';
 					output +='        </li>';
-					output +='        <li>';
+					output +='        <li class="cboard-profile">';
 					output += item.mem_id + '<br>';
 					output += '<span class="modify-date">' + item.cre_rdate + '</span>';
 					output +='        </li>';
@@ -56,9 +56,9 @@ $(function(){
 						//로그인 한 회원번호와 댓글 작성자 회원번호가 같으면
 						output += '<div class="dropdown">'
 						output += '<img src="../images/dots.png" width="20" id="dropdownToggle_re">'
-						output += '<ul class="dropdown-remenu">'
+						output += '<ul class="dropdown-menu">'
 						output += '<li><a class="dropdown-btn modify-btn" data-num="'+item.cre_num+'">수정</a></li>'
-						/*output += '<li><hr></li>'*/
+						output += '<li><hr></li>'
 						output += '<li><a class="dropdown-btn delete-btn" data-num="'+item.cre_num+'">삭제</a></li>'
 						output += '</ul>'
 						output += '</div>'
@@ -113,19 +113,11 @@ $(function(){
 	}
 	
 	//수정/삭제 드롭다운(왜 적용이 안되져,,,)
-	/*const dropdownToggle = document.getElementById('dropdownToggle_re');
-	const dropdownMenu = document.getElementById('dropdown-remenu');
-	
-	$(document).on('click',dropdownToggle,function(){
-		dropdownMenu.classList.toggle('show');
+	$(document).on('click','#dropdownToggle_re',function(event){
+		  event.stopPropagation();
+        $(this).siblings('.dropdown-menu').toggle();
 	});
-	window.onclick = function(event) {
-        if (!event.target.matches('#dropdownToggle')) {
-            if (dropdownMenu.classList.contains('show')) {
-                dropdownMenu.classList.remove('show');
-            }
-        }
-    };*/
+	
 	
 	//다음 댓글 보기 버튼 클릭시 데이터 추가
 	$('.paging-button input').click(function(){
@@ -344,7 +336,7 @@ $(function(){
 					let sign_depth = '@';
 										
 					output += '<div class="respitem">';
-					output += ' <ul class="detail-info">';
+					output += ' <ul class="detail-info cboard-info">';
 					output +='    <li>';
 					
 					output += '<img src="../member/memViewProfile?mem_num='+item.mem_num+'" width="40" height="40" class="reply-profile">';
@@ -362,7 +354,7 @@ $(function(){
 					if(param.user_num==item.mem_num){//로그인 한 회원번호와 답글 작성자 회원번호가 일치할 경우
 						output += '<div class="dropdown">'
 						output += '<img src="../images/dots.png" width="20" id="dropdownToggle_re">'
-						output += '<ul class="dropdown-remenu">'
+						output += '<ul class="dropdown-menu">'
 						output += '<li><a class="dropdown-btn remodify-btn" data-num="'+item.cre_num+'">답글수정</a></li><br>'
 						/*output += '<li><hr></li>'*/
 						output += '<li><a class="dropdown-btn redelete-btn" data-num="'+item.cre_num+'">답글삭제</a></li>'
