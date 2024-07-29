@@ -2,12 +2,40 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"  %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
+<script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/review.css"
 	type="text/css">
+	<script type="text/javascript">
+		$(function(){
+			$('#wrev').submit(function(event){
+				if($('#rev_title').val().length>30){
+					alert('30자 미만으로 작성해주세요');
+					$('#rev_title').focus();
+					return false;
+				}
+				if($('#rev_title').val().trim()==''){
+					alert('리뷰 제목 필수 입력');
+					$('#rev_title').val('').focus();
+					return false;
+				}
+				if($('#rev_content').val().length>300){
+					alert('300자 미만으로 작성해주세요');
+					$('#rev_content').focus();
+					return false;
+				}
+				if($('#rev_content').val().trim()==''){
+					alert('리뷰 내용 필수 입력');
+					$('#rev_content').val('').focus();
+					return false;
+				}
+				
+			})
+		})	
+	</script>
 <div class="align-center" style="padding: 0 auto;">
 	<div class="align-left" style="margin: 0 auto; width: 60%;">
-		<form:form action="updateReview" method="post" modelAttribute="reviewVO">
+		<form:form action="updateReview" method="post"  id="wrev" modelAttribute="reviewVO">
 		<br><br>
 		<h4>후기 수정</h4>
 		<br>
@@ -97,7 +125,7 @@
 		<br><br><br><br><span style="position:relative;">별점을 클릭하여 선택</span><br><br><br>
 				<form:hidden path="rev_num"/>
 				<form:input  path="rev_title" placeholder="리뷰 제목을 입력해주세요" style="width:95%; height: 40px; border-radius: 5px;" /><br><br>
-				<form:textarea rows="8" cols="51" path="rev_content"  style="resize:none; border-radius:5px;" placeholder="리뷰 내용은 300자까지 입력가능합니다." ></form:textarea>
+				<form:textarea rows="8"  path="rev_content"  style="resize:none; width:95% !important; border-radius:5px;" placeholder="리뷰 내용은 300자까지 입력가능합니다." ></form:textarea>
 				<br><br>
 				<input type="submit" value="후기수정" class="default-btn">
 		</div>

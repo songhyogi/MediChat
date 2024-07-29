@@ -81,11 +81,11 @@
 			</div>
 			<div class="row d-flex justify-content-between">
 				<c:forEach var="healthy" items="${hList}">
-					<div class="main-magagine-item col-5">
+					<div class="main-magagine-item col-5"  style="cursor:pointer;" onclick="location.href='${pageContext.request.contextPath}/health/healthDetail?healthy_num=${healthy.healthy_num}'">
 						<div class="row d-flex align-items-center" onclick="location.href='${pageContext.request.contextPath}/health/healthDetail?healthy_num=${healthy.healthy_num}'">
 							<div class="col-9">
 								<div class="main-magagine-item-title">
-									<a href="${pageContext.request.contextPath}/health/healthDetail?healthy_num=${healthy.healthy_num}">${healthy.healthy_title}</a>
+									${healthy.healthy_title}
 								</div>
 								<div class="main-magagine-item-date">
 									${healthy.h_reg_date}

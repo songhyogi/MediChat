@@ -49,4 +49,6 @@ public class HospitalVO {
 	private int doc_cnt;				//병원에 소속한 의사회원 인원수
 	private int rev_cnt;				//병원의 리뷰 갯수
 	private int around;					//현재 지점서부터 병원까지의 실제거리
+	
+	private double rev_avg; 			//병원 평점
 }

@@ -21,6 +21,7 @@ public class HealthyReplyVO {
 	private int refav_cnt;
 	private long click_num;
     private String re_id;
+    private String healthy_title;
 	//대댓글 갯수
 	private int rereply_cnt;
     
