@@ -64,19 +64,19 @@ a {
 			<div class="result-display">표시할 게시물이 없습니다</div>
 		</c:if>
 		<c:if test="${count > 0}">
-			<table class="drug-table">
-				<tr class="table-light align-center bg-gray-1">
+			<table class="table table-hover drug-table">
+				<tr class="table-light align-center">
 					<!-- <th class="fs-18 fw-4">번호</th>-->
 					<th class="fs-18 fw-4 drug-name-th">제품명</th>
-					<th class="fs-18 fw-4 drug-company">회사명</th>
-					<th class="fs-18 fw-4 drug-effect">효능</th>
+					<th class="fs-18 fw-4">회사명</th>
+					<th class="fs-18 fw-4">효능</th>
 				</tr>
 				<c:forEach var="drug" items="${list}">
 				<tr>
 					<!--<td class="align-center fs-18 fw-4">${drug.drg_num}</td>-->
 					<td class="fs-18 fw-4 drug-name-td"><a href="detail?drg_num=${drug.drg_num}" class="list-drug-name"> ${drug.drg_name}</a></td>
-					<td class="align-center fs-18 fw-4 drug-company">${drug.drg_company}</td>
-					<td class="align-center fs-18 fw-4 drug-effect"><img src="${pageContext.request.contextPath}/images/magnifier.png" width="20" class="drg-effect-icon" data-drg_num="${drug.drg_num}"></td>
+					<td class="align-center fs-18 fw-4">${drug.drg_company}</td>
+					<td class="align-center fs-18 fw-4"><img src="${pageContext.request.contextPath}/images/magnifier.png" width="20"></td>
 				</tr>
 				</c:forEach>
 			</table><br>
@@ -85,61 +85,48 @@ a {
 			<div class="align-center">${page}</div>
 		</nav>
 	</div>
-	
-	<!-- 모달 끝 -->
-	<!-- 의약품 효능 상세보기 -->
-	<div class="drug-effect-info">
-		<div class="effect-info-header bg-green-5">
-			<div class="drug-effect-header-content"></div>
-			<div class="close" style="color:white;">&times;</div>
-		</div>
-		<div class="effect-info-body">
-			<div class="drug-effect-content"></div>
+	<!-- 모달 시작 --> 	
+	<div class="modal">
+		<!-- 이미지 모달 -->
+		<div class="drugImg-modal">
+			<div class="modal-header">
+				<div>의약품 이미지 확대보기</div>
+				<div class="close">&times;</div>
+			</div>
+			<div class="modal-body">
+				<img class="drugModal-img" src="${drug.drg_img}" width="300">
+			</div>
+		<br>
 		</div>
 	</div>
-	<!-- 의약품 효능 상세보기 끝-->	
+	<!-- 모달 끝 --> 	
 </div>
 <!-- 의약품 검색 끝 -->
-
+<!-- 
+스크립트 시작
 <script>
 $(document).ready(function(){
-    let drg_num = '';
-    
-    $('.drg-effect-icon').click(function(){
-        drg_num = $(this).data('drg_num');
-        let offset = $(this).offset();
-        $('.drug-effect-info').css({
-            top: offset.top+ $(this).outerWidth(),
-            left: offset.left - 140
-        });
-        
-        $.ajax({
-            url:'/drug/drugEffect',
-            type:'get',
-            data:{drg_num:drg_num},
-            dataType:'JSON',
-            success:function(param){
-                // 이전 내용 초기화
-                $('.drug-effect-header-content').empty();
-                $('.drug-effect-content').empty();
-                
-                // 새 내용 추가
-                $('.drug-effect-header-content').append(param.drg_name);
-                $('.drug-effect-content').text(param.drg_effect);
-                
-                // drug-effect-info 요소를 slideToggle로 표시
-                $('.drug-effect-info').slideToggle('fast');
-            },
-            error:function(){
-                alert('네트워크 오류 발생');
-            }
-        }); // end of ajax
-    }); //end of click event
-    
-    // 모달 닫기 기능
-    $('.close').click(function(){
-        $('.drug-effect-info').slideToggle('fast');
-    });
+	const imgModal = document.querySelector("#img_modal")
+	const img = document.querySelector(".img")
+	const modal_img = document.querySelector("#imgModal")
+	const close = document.querySelector(".close")
 	
-}); //end of ready function
+	$(".img").click(function(){//이미지 클릭 이벤트
+		modal.style.display = "block";
+		modalImg.src = this.src;
+	});
+	
+	// 모달 닫기
+	close.onclick = function() { 
+		modal.style.display = "none";
+	}
+
+	// 모달 외부 클릭 시 닫기
+	window.onclick = function(event) {
+		if (event.target == modal) {
+			modal.style.display = "none";
+		}
+	}
+});
 </script>
+스크립트 끝 -->

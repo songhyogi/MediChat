@@ -38,20 +38,21 @@ public class HealthAjaxController {
 	public Map<String,Object> selectHreList(long healthy_num,@RequestParam(defaultValue="1") int pageNum,HttpSession session){
 
 		Map<String,Object> map = new HashMap<String,Object>();
-		String user_type = (String)session.getAttribute("user_type");
+		Object user_type = (Object)session.getAttribute("user_type");
 		Object user = (Object) session.getAttribute("user");
 		long user_num =0;
 		if(user == null) {
 			user_num=0;
 		}else{
-			if(user_type.equals("doctor")) {
-				DoctorVO duser = (DoctorVO)user;
-				map.put("user_num", duser.getMem_num());
-				user_num= duser.getMem_num();
-			}else {
+			if(user_type.equals("membert")) {
 				MemberVO mem = (MemberVO) user;
 				map.put("user_num", mem.getMem_num());
 				user_num= mem.getMem_num();
+			}else {
+				
+				DoctorVO duser = (DoctorVO)user;
+				map.put("user_num", duser.getMem_num());
+				user_num= duser.getMem_num();
 			}	
 		}
 
@@ -76,21 +77,22 @@ public class HealthAjaxController {
 	@ResponseBody
 	public Map<String,Object> clickFav(long healthy_num,HttpSession session){
 		Map<String,Object> map = new HashMap<String,Object>();
-		String user_type = (String)session.getAttribute("user_type");
+		Object user_type = (Object)session.getAttribute("user_type");
 		Object user = (Object) session.getAttribute("user");
 		long user_num =0;
 		if(user == null) {
 			map.put("result", "logout");
 		}else {
-			if(user_type.equals("doctor")) {
-				DoctorVO duser = (DoctorVO)user;
-				map.put("user_num", duser.getMem_num());
-				user_num= duser.getMem_num();
-			}else {
+			if(user_type.equals("membert")) {
 				MemberVO mem = (MemberVO) user;
 				map.put("user_num", mem.getMem_num());
 				user_num= mem.getMem_num();
-			}	
+			}else {
+				
+				DoctorVO duser = (DoctorVO)user;
+				map.put("user_num", duser.getMem_num());
+				user_num= duser.getMem_num();
+			}		
 			HealthyFavVO userfav= new HealthyFavVO();
 			userfav.setHealthy_num(healthy_num);
 			userfav.setMem_num(user_num);
@@ -112,21 +114,22 @@ public class HealthAjaxController {
 	@ResponseBody
 	public Map<String,Object> insertHre(HealthyReplyVO vo, HttpSession session){
 		Map<String,Object> map = new HashMap<String,Object>();
-		String user_type = (String)session.getAttribute("user_type");
+		Object user_type = (Object)session.getAttribute("user_type");
 		Object user = (Object) session.getAttribute("user");
 		long user_num =0;
 		if(user == null) {
 			map.put("result", "logout");
 		}else {
-			if(user_type.equals("doctor")) {
-				DoctorVO duser = (DoctorVO)user;
-				map.put("user_num", duser.getMem_num());
-				user_num= duser.getMem_num();
-			}else {
+			if(user_type.equals("membert") ) {
 				MemberVO mem = (MemberVO) user;
 				map.put("user_num", mem.getMem_num());
 				user_num= mem.getMem_num();
-			}	
+			}else {
+				
+				DoctorVO duser = (DoctorVO)user;
+				map.put("user_num", duser.getMem_num());
+				user_num= duser.getMem_num();
+			}		
 			NotificationVO notice = new NotificationVO ();
 			map.put("healthy_num", vo.getHealthy_num());
 			map.put("user_num",user_num);
@@ -147,20 +150,21 @@ public class HealthAjaxController {
 	@ResponseBody
 	public Map<String,Object> updateHre(HealthyReplyVO vo, HttpSession session){
 		Map<String,Object> map = new HashMap<String,Object>();
-		String user_type = (String)session.getAttribute("user_type");
+		Object user_type = (Object)session.getAttribute("user_type");
 		Object user = (Object) session.getAttribute("user");
 		long user_num =0;
 		if(user == null) {
 			map.put("result", "logout");
 		}else{
-			if(user_type.equals("doctor")) {
-				DoctorVO duser = (DoctorVO)user;
-				map.put("user_num", duser.getMem_num());
-				user_num= duser.getMem_num();
-			}else {
+			if(user_type.equals("membert")) {
 				MemberVO mem = (MemberVO) user;
 				map.put("user_num", mem.getMem_num());
 				user_num= mem.getMem_num();
+			}else {
+				
+				DoctorVO duser = (DoctorVO)user;
+				map.put("user_num", duser.getMem_num());
+				user_num= duser.getMem_num();
 			}	
 			if(user_num == vo.getMem_num()) {
 				service.updateHre(vo);
@@ -175,21 +179,22 @@ public class HealthAjaxController {
 	@ResponseBody
 	public Map<String,Object> deleteHre(HealthyReplyVO vo, HttpSession session){
 		Map<String,Object> map = new HashMap<String,Object>();
-		String user_type = (String)session.getAttribute("user_type");
+		Object user_type = (Object)session.getAttribute("user_type");
 		Object user = (Object) session.getAttribute("user");
 		long user_num =0;
 		if(user == null) {
 			map.put("result", "logout");
 		}else {
-			if(user_type.equals("doctor")) {
-				DoctorVO duser = (DoctorVO)user;
-				map.put("user_num", duser.getMem_num());
-				user_num= duser.getMem_num();
-			}else {
+			if(user_type.equals("membert") ) {
 				MemberVO mem = (MemberVO) user;
 				map.put("user_num", mem.getMem_num());
 				user_num= mem.getMem_num();
-			}	
+			}else {
+				
+				DoctorVO duser = (DoctorVO)user;
+				map.put("user_num", duser.getMem_num());
+				user_num= duser.getMem_num();
+			}		
 			if(user_num == vo.getMem_num()) {
 				service.deleteHre(vo.getHre_num());
 				map.put("result", "success");
@@ -204,20 +209,21 @@ public class HealthAjaxController {
 	@ResponseBody
 	public Map<String,Object> clickHreFav(long hre_num,HttpSession session){
 		Map<String,Object> map = new HashMap<String,Object>();
-		String user_type = (String)session.getAttribute("user_type");
+		Object user_type = (Object)session.getAttribute("user_type");
 		Object user = (Object) session.getAttribute("user");
 		long user_num =0;
 		if(user == null) {
 			map.put("result", "logout");
 		}else {
-			if(user_type.equals("doctor")) {
-				DoctorVO duser = (DoctorVO)user;
-				map.put("user_num", duser.getMem_num());
-				user_num= duser.getMem_num();
-			}else {
+			if(user_type.equals("membert")) {
 				MemberVO mem = (MemberVO) user;
 				map.put("user_num", mem.getMem_num());
 				user_num= mem.getMem_num();
+			}else {
+				
+				DoctorVO duser = (DoctorVO)user;
+				map.put("user_num", duser.getMem_num());
+				user_num= duser.getMem_num();
 			}	
 			HealthyReFavVO userfav= new HealthyReFavVO();
 			userfav.setHre_num(hre_num);
@@ -242,21 +248,22 @@ public class HealthAjaxController {
 	@ResponseBody
 	public Map<String,Object> writereHre(HealthyReplyVO vo, HttpSession session){
 		Map<String,Object> map = new HashMap<String,Object>();
-		String user_type = (String)session.getAttribute("user_type");
+		Object user_type = (Object)session.getAttribute("user_type");
 		Object user = (Object) session.getAttribute("user");
 		long user_num =0;
 		if(user == null) {
 			map.put("result", "logout");
 		}else {
-			if(user_type.equals("doctor")) {
-				DoctorVO duser = (DoctorVO)user;
-				map.put("user_num", duser.getMem_num());
-				user_num= duser.getMem_num();
-			}else {
+			if(user_type.equals("membert") ) {
 				MemberVO mem = (MemberVO) user;
 				map.put("user_num", mem.getMem_num());
 				user_num= mem.getMem_num();
-			}	
+			}else {
+				
+				DoctorVO duser = (DoctorVO)user;
+				map.put("user_num", duser.getMem_num());
+				user_num= duser.getMem_num();
+			}		
 			
 			NotificationVO notice = new NotificationVO ();
 
@@ -285,20 +292,21 @@ public class HealthAjaxController {
 	public Map<String,Object> selectReHreList(long hre_renum,HttpSession session){
 
 		Map<String,Object> map = new HashMap<String,Object>();
-		String user_type = (String)session.getAttribute("user_type");
+		Object user_type = (Object)session.getAttribute("user_type");
 		Object user = (Object) session.getAttribute("user");
 		long user_num =0;
 		if(user == null) {
 			user_num=0;
 		}else{
-			if(user_type.equals("doctor")) {
-				DoctorVO duser = (DoctorVO)user;
-				map.put("user_num", duser.getMem_num());
-				user_num= duser.getMem_num();
-			}else {
+			if(user_type.equals("membert") ) {
 				MemberVO mem = (MemberVO) user;
 				map.put("user_num", mem.getMem_num());
 				user_num= mem.getMem_num();
+			}else {
+				
+				DoctorVO duser = (DoctorVO)user;
+				map.put("user_num", duser.getMem_num());
+				user_num= duser.getMem_num();
 			}	
 		}
 		map.put("hre_renum", hre_renum);

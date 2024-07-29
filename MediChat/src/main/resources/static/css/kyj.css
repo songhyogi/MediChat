@@ -183,7 +183,7 @@
 	top:0;
 	left:0;
 	width:100%;
-	height:150%;
+	height:131%;
 	background-color: rgba(0,0,0,0.5);
 	z-index:998;
 	display:none;
@@ -463,6 +463,9 @@ label[for="file_valid_date"]{
 	height:70px;
 	color:white;
 }
+/*.modal-header .close{
+	보류
+}*/
 .modal-body{
 	width:500px;
 	background-color:white;
@@ -481,9 +484,7 @@ label[for="file_valid_date"]{
 	vertical-align:middle;
 	padding-left:20px;
 }
-/*=======================
-	  의약품 상세보기 목록
-=========================*/
+
 .drug-table{
 	table-layout:fixed;
 }
@@ -526,9 +527,6 @@ label[for="file_valid_date"]{
 	width:900px;
 	margin:0 auto 100px auto;
 }
-.drug-table{
-	margin:auto;
-}
 .drug-table tr th,
 .drug-table tr td{
 	padding:20px 0;
@@ -537,20 +535,10 @@ label[for="file_valid_date"]{
 	 text-overflow:ellipsis;
 	 overflow:hidden;
 	 white-space:nowrap;
-	 border-bottom:1px solid #e0e0e0;
-}
-.drug-name-td>a:hover{
-	color:#a3a3a3;
 }
 .drug-name-th,
 .drug-name-td{
 	width:550px;
-}
-.drug-company{
-	width:150px;
-}
-.drug-effect{
-	width:80px;
 }
 .drug-search{
 	width:500px;
@@ -569,34 +557,4 @@ label[for="file_valid_date"]{
 }
 .text-lightgray{
 	color:#71767a;
-}
-.warin{
-	text-align:center;
-	margin:300px 0;
-}
-/*=======================
-	  의약품 효능 modal
-=========================*/
-.drug-effect-info{
-	display:none;
-	position:absolute;
-	z-index:999;
-	width:400px;
-}
-.effect-info-header{
-	display:flex;
-	justify-content:space-between;
-	align-items:center;
-	padding: 0 5px;
-	color:white;
-	width:400px;
-	height:50px;
-}
-.effect-info-body{
-	display:table-cell;
-	text-align:center;
-	vertical-align:middle;
-	background-color:white;
-	width:400px;
-	height:90px;
 }

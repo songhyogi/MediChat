@@ -11,19 +11,23 @@
 		<br>
 		<hr size="1" width="100%">
 		<br>
-		<p class="fs-18"><b>질병코드</b><br>
+		<p class="fs-18"><img src="${pageContext.request.contextPath}/images/discode.png" width="25px;">&nbsp;<b>질병코드</b><br>
 			<p>
 			${disease.sickcd}
-		</p>
-		<p class="fs-18"><b>진료과</b><br>
+		</p><br>
+		<p class="fs-18"><img src="${pageContext.request.contextPath}/images/dishos.png" width="25px;">&nbsp;<b>진료과</b><br>
 			<p>
 			${disease.dis_department}
-		</p>
-		<p class="fs-18" ><b>증상</b><br>
+		</p><br>
+		<p class="fs-18" ><img src="${pageContext.request.contextPath}/images/diseasealert.png" width="25px;">&nbsp;<b>증상</b><br>
 			<p>
 			${fn:replace(fn:replace(disease.dis_symptoms, ".", ".<br>"),"▶","<br>▶")}
 			
 		</p>
+		<br><br>
+		참고문헌 <br>
+		<span class=" fs-12 fw-4 text-black-3">네이버 백과사전</span>
 	</div>
+	
 	<br>
 </div>

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.spring.drug.service.DrugService;
@@ -65,20 +64,5 @@ public class DrugController {
     	DrugInfoVO drugVO = drugService.selectDrug(drg_num);
     	
     	return new ModelAndView("drugDetail","drug",drugVO);
-    }
-    
-    @GetMapping("/drug/drugEffect")
-    @ResponseBody
-    public Map<String,String> drugEffect(@RequestParam("drg_num") long drg_num) {
-    	Map<String,String> mapAjax = new HashMap<String,String>();
-    	
-    	log.debug("<<의약품 효능>> : " + drg_num);
-    	
-    	DrugInfoVO drugVO = drugService.selectDrug(drg_num);
-    	
-    	mapAjax.put("drg_name", drugVO.getDrg_name());
-    	mapAjax.put("drg_effect",drugVO.getDrg_effect());
-    	
-    	return mapAjax;
     }
 }

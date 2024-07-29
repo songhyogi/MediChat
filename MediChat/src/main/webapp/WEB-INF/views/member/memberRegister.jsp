@@ -4,8 +4,18 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- 회원가입 시작 -->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.3/dist/sweetalert2.all.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.3/dist/sweetalert2.min.css" rel="stylesheet">
+<style>
+.rounded {
+	border-radius: 10px;
+}
+.btn {
+	position: relative;
+	border: 0;
+	display: inline-block;
+	text-align: center;
+	color: white;
+}
+</style>
 <div class="container">
 	<h2 class="title">회원가입</h2>
 	<hr size="1" width="100%" noshade="noshade">
@@ -17,7 +27,7 @@
 		<ul>
 			<li style="margin-top:20px;">
 				    <form:label path="mem_id">아이디</form:label>
-				    <form:input path="mem_id" placeholder="영문or숫자사용하여 4~12자 입력" autocomplete="off" class="effect-1" style="width:290px;"/>
+				    <form:input path="mem_id" placeholder="영문or숫자사용하여 4~12자 입력" autocomplete="off" class="effect-1" style="width:300px;"/>
 				    <input type="button" id="confirmId" value="중복확인" class="default-btn" style="margin-left: 10px;">
 				    <form:errors path="mem_id" cssClass="error-color" style="display:inline;"/><br>
 				    <span id="message_id"></span>
@@ -53,7 +63,7 @@
 				<li>
 				    <form:label path="mem_zipcode">주소</form:label>
 				    <form:input path="mem_zipcode" class="effect-1"/>
-				    <input type="button" onclick="execDaumPostcode()" value="우편번호" class="default-btn" style="margin:0 2px; background-color:#40916C;">
+				    <input type="button" onclick="execDaumPostcode()" value="우편번호" class="btn rounded" style="margin: 0 2px; background-color:#40916C;">
 				    <form:input path="mem_address1" class="effect-1"/>
 				    <br>
 				    <form:errors path="mem_zipcode" cssClass="error-color" style="margin-left:200px;"/>
@@ -75,9 +85,7 @@
 				<span style="font-weight:bold;">인증문자 입력</span>
 				<div id="captcha_div">
 					<img src="getCaptcha" id="captcha_img" width="200" height="90">
-					<button type="button" class="btn" id="reload_captcha">
-					    <i class="fas fa-sync-alt"></i>
-					</button>
+					<input type="button" value="새로고침" id="reload_btn">
 				</div>
 			</li>
 			<li>
@@ -99,7 +107,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script>
 	$(function(){
-		$('#reload_captcha').click(function(){
+		$('#reload_btn').click(function(){
 		 $.get('getCaptcha', function(data) {
 	            $('#captcha_img').attr('src', 'getCaptcha?' + new Date().getTime());
 	        }).fail(function() {

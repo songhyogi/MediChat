@@ -278,3 +278,9 @@ button.defaul-tbtn:hover {
 div.float-clear{
 	clear:both;
 }
+
+#myList:hover {
+
+	background-color: #f2f2f2;
+	border-radius: 10px;
+}

@@ -72,7 +72,6 @@ public class AppConfig implements WebMvcConfigurer,WebSocketConfigurer{
 		
 		//WriterCheckInterceptor 설정
 		registry.addInterceptor(writeCheck)
-				.addPathPatterns("/medichatCommunity/write")
 				.addPathPatterns("/medichatCommunity/update")
 				.addPathPatterns("/medichatCommunity/delete");
 	}

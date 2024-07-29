@@ -148,18 +148,6 @@ public class ChatController {
 		ReservationVO reservation = chatService.selectReservationByChatNum(chat_num);
 		ChatVO chat = chatService.selectChat(chat_num);
 		
-		//환자 회원 정보
-		MemberVO patient = memberService.selectMember(chat.getMem_num());
-		
-		//환자 회원이 탈퇴 or 정지 회원인 경우
-		if(patient.getMem_auth()==0) { //탈퇴 회원인 경우
-			map.put("patient", "withdrawal");
-			return map;
-		}else if(patient.getMem_auth()==1){ //정지 회원인 경우
-			map.put("patient", "suspended");
-			return map;
-		}
-		
 		//파라미터를 날짜 및 시각으로 파싱
 		LocalDate resDate = LocalDate.parse(reservation.getRes_date(), DateTimeFormatter.ISO_DATE);
 		LocalTime resTime = LocalTime.parse(reservation.getRes_time(), DateTimeFormatter.ofPattern("HH:mm"));
@@ -371,28 +359,22 @@ public class ChatController {
 	@GetMapping("/chat/myFiles")
 	public String selectFiles(Model model, HttpSession session) {
 		//해당 페이지는 환자만 들어올 수 있으므로 회원 등급 조회 x
-		Object user = session.getAttribute("user");
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		
 		if(user==null) {
 			model.addAttribute("message","로그인이 필요합니다.");
 			model.addAttribute("url","/member/login");
 			return "/common/resultAlert";
-		}else if (user instanceof DoctorVO) {
-			//의사 계정으로 나의 서류함에 접근을 시도한 경우
-			model.addAttribute("message","환자 본인만 접근할 수 있습니다.");
-			model.addAttribute("url","/chat/chatView");
-			return "/common/resultAlert";
-		}else if(user instanceof MemberVO){
-			MemberVO member = (MemberVO)user;
-			long mem_num = member.getMem_num();
-		
-			List<ChatVO> chat = chatService.selectChatListForMem(mem_num);
-		
-			model.addAttribute("chat",chat);
 		}
 		
+		
+		long mem_num = user.getMem_num();
+		
+		List<ChatVO> chat = chatService.selectChatListForMem(mem_num);
+		
+		model.addAttribute("chat",chat);
+		
 		return "chatMyFiles";
-
 	}
 	
 	/*=======================

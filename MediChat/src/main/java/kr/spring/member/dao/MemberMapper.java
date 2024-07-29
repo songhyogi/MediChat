@@ -11,7 +11,6 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import kr.spring.consulting.vo.ConsultingVO;
-import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.member.vo.MemberVO;
  
 @Mapper
@@ -58,12 +57,6 @@ public interface MemberMapper {
 	
 	//아이디 중복확인
 	public MemberVO checkId(String mem_id);
-	//이메일 확인
-	@Select("SELECT mem_email FROM member_detail WHERE mem_email=#{mem_email}")
-	public MemberVO checkEmail(String mem_email);
-	//이름 확인
-	@Select("SELECT mem_name FROM member WHERE mem_name=#{mem_name}")
-	public MemberVO checkName(String mem_name);
 	//아이디 찾기
 	@Select("SELECT m.mem_id FROM member m JOIN member_detail d ON m.mem_num=d.mem_num WHERE mem_name=#{mem_name} AND mem_email=#{mem_email}")
 	public MemberVO findId(MemberVO member);

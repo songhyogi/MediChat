@@ -167,20 +167,11 @@
 			<div class="header-menu">
 				<a href="/health/healthBlog" class="header-menu-text">건강 블로그</a>
 			</div>
-			<div class="header-menu" id="dictionary_menu">
-				<a class="header-menu-text">의료 백과사전</a>
-				<div id="dictionary_menu_div">
-					<div class="dictionary-menu-item">
-						<a href="/disease/diseaseDictionary" class="text-black-6">질병 백과사전</a>
-					</div>
-					<div class="select-line"></div>
-					<div class="dictionary-menu-item">
-						<a href="/drug/search" class="text-black-6">의약품 백과사전</a>
-					</div>
-				</div>
+			<div class="header-menu">
+				<a href="/disease/diseaseDictionary" class="header-menu-text">질병 백과사전</a>
 			</div>
 			<div class="header-menu">
-				<a href="/medichatCommunity/list" class="header-menu-text">커뮤니티</a>
+				<a href="/drug/search" class="header-menu-text">의약품 백과사전</a>
 			</div>
 			<div class="header-menu">
 				<a href="/faq/faqList" class="header-menu-text">고객센터</a>
@@ -192,30 +183,30 @@
 		<c:if test="${empty user}">
 		<!-- 로그인/회원가입 시작 -->
 		<div id="header-status-logout" class="d-flex">
-		    <div class="header-status-leftBox">
-		        <a id="header-login-text">로그인</a>
-		        <div id="header-login-div">
-		            <div class="header-login-select">
-		                <a href="/member/login">일반 로그인</a>
-		            </div>
-		            <div class="select-line"></div>
-		            <div class="header-login-select">
-		                <a href="/doctor/login">의사 로그인</a>
-		            </div>
-		        </div>
-		    </div>
-		    <div class="header-status-rightBox">
-		        <a id="header-register-text">회원가입</a>
-		        <div id="header-register-div">
-		            <div class="header-register-select">
-		                <a href="/member/registerUser">일반 회원가입</a>
-		            </div>
-		            <div class="select-line"></div>
-		            <div class="header-register-select">
-		                <a href="/doctor/registerDoc">의사 회원가입</a>
-		            </div>
-		        </div>
-		    </div>
+			<div class="header-status-leftBox">
+				<a id="header-login-text">로그인</a>
+			</div>
+			<div class="header-status-rightBox">
+				<a id="header-register-text">회원가입</a>
+			</div>
+			<div id="header-login-div" style="display: none;">
+				<div class="header-login-select">
+					<a href="/member/login">일반 로그인</a>
+				</div>
+				<div class="select-line"></div>
+				<div class="header-login-select">
+					<a href="/doctor/login">의사 로그인</a>
+				</div>
+			</div>
+			<div id="header-register-div" style="display: none;">
+				<div class="header-register-select">
+					<a href="/member/registerUser">일반 회원가입</a>
+				</div>
+				<div class="select-line"></div>
+				<div class="header-register-select">
+					<a href="/doctor/registerDoc">의사 회원가입</a>
+				</div>
+			</div>
 		</div>
 		<!-- 로그인/회원가입 끝 -->
 		</c:if>
@@ -333,12 +324,10 @@
         if (param.result == 'success') {
             $('#header-notification-unreaded').text('');
             $('#header-notification-unreaded').text(param.cnt);
-            
-            var output = ' ';
-            
+
             if (param.list.length > 0) {
                 $('#noti_box').empty();
-                
+                var output = '';
                 for (let i = 0; i < param.list.length; i++) {
                     output += '<div data-notiNum="' + param.list[i].noti_num + '" class="noti-item'
                     if (param.list[i].noti_isRead == 1) {
@@ -420,9 +409,8 @@
 		});
 	});
 	
-	
+	/* 알림 읽기 */
 	$(document).ready(function() {
-		/* 알림 읽기 */
 	    $('#noti_box').on("click", ".noti-item", function() {
 	        $.ajax({
 	        	url: "/notificationReaded",
@@ -439,45 +427,65 @@
 	});
 	
 	
+	
+	
 	/* 로그인 시 */
-	if (${!empty user}) {
-	    const header_profile = document.getElementById('header-profile');
-	    const header_status_div = document.getElementById('header-status-div');
-
-	    // 클릭 대신 hover로 변경
-	    header_profile.onmouseover = function() {
-	        header_status_div.style.display = 'block';
-	    };
-	    header_profile.onmouseout = function() {
-	        header_status_div.style.display = 'none';
-	    };
-	    header_status_div.onmouseover = function() {
-	        header_status_div.style.display = 'block';
-	    };
-	    header_status_div.onmouseout = function() {
-	        header_status_div.style.display = 'none';
-	    };
-
-	    const noti_div = document.getElementById('noti_div');
-	    const header_notification = document.getElementById('header-notification');
-	    const overlay = document.getElementById('overlay');
-	    header_notification.onclick = function() {
-	        document.getElementById('noti_div').style.display = 'block';
-	        overlay.style.display = 'block';
-	        document.body.style.overflow = 'hidden'; // 외부 스크롤 비활성화
-	    };
-	    overlay.onclick = function() {
-	        document.getElementById('noti_div').style.display = 'none';
-	        overlay.style.display = 'none';
-	        document.body.style.overflow = 'auto'; // 외부 스크롤 활성화
-	    };
-	    const header_notification_unreaded = document.getElementById('header-notification-unreaded');
-	    header_notification_unreaded.onclick = function() {
-	        document.getElementById('noti_div').style.display = 'block';
-	        overlay.style.display = 'block';
-	        document.body.style.overflow = 'hidden'; // 외부 스크롤 비활성화
-	    };
-	} else {
-	    // 비로그인 시 JavaScript는 필요 없음
+	if(${!empty user}){
+		/* 로그인 시 */
+		const header_profile = document.getElementById('header-profile');
+		const header_status_div = document.getElementById('header-status-div');
+		header_profile.onclick = function(){
+			if(header_status_div.style.display == 'block'){
+				header_status_div.style.display = 'none';
+			} else {
+				header_status_div.style.display = 'block';
+			}
+		};
+		/* 로그인 시 */
+		const noti_div = document.getElementById('noti_div');
+		
+		const header_notification = document.getElementById('header-notification');
+		const overlay = document.getElementById('overlay');
+		header_notification.onclick = function(){
+			document.getElementById('noti_div').style.display = 'block';
+		    overlay.style.display = 'block';
+		    document.body.style.overflow = 'hidden'; // 외부 스크롤 비활성화
+		};
+		overlay.onclick = function() {
+		    document.getElementById('noti_div').style.display = 'none';
+		    overlay.style.display = 'none';
+		    document.body.style.overflow = 'auto'; // 외부 스크롤 활성화
+		};
+		
+		
+		const header_notification_unreaded = document.getElementById('header-notification-unreaded');
+		header_notification_unreaded.onclick = function(){
+			document.getElementById('noti_div').style.display = 'block';
+		    overlay.style.display = 'block';
+		    document.body.style.overflow = 'hidden'; // 외부 스크롤 비활성화
+		};
+	} else {/* 비로그인 시 */
+		/* 비로그인 시 */
+		const loginText = document.getElementById('header-login-text');
+		const headerLoginDiv = document.getElementById('header-login-div');
+		if(${empty user}){
+			loginText.onclick = function(){
+				if(headerLoginDiv.style.display == 'block'){
+					headerLoginDiv.style.display = 'none';
+				} else {
+					headerLoginDiv.style.display = 'block';
+				}
+			};
+		}
+		/* 비로그인 시 */
+		const registerText = document.getElementById('header-register-text');
+		const headerRegisterDiv = document.getElementById('header-register-div');
+		registerText.onclick = function(){
+			if(headerRegisterDiv.style.display == 'block'){
+				headerRegisterDiv.style.display = 'none';
+			} else {
+				headerRegisterDiv.style.display = 'block';
+			}
+		};
 	}
 </script>

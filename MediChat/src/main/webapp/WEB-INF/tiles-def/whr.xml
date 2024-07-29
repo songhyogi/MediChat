@@ -25,26 +25,22 @@
 	</definition>
 	
 	<!-- 커뮤니티 -->
-	<definition name="cboardList" extends="ksy">
+	<definition name="cboardList" extends="whr">
 		<put-attribute name="title" value="MediChat Community"/>
 		<put-attribute name="body" value="/WEB-INF/views/community/cboardList.jsp"/>
-		<put-attribute name="css" value="/WEB-INF/views/drug/drugCSS.jsp"/>
 	</definition>
 	<!-- 커뮤니티 등록 -->
-	<definition name="cboardWrite" extends="ksy">
+	<definition name="cboardWrite" extends="whr">
 		<put-attribute name="title" value="MediChat Community"/>
 		<put-attribute name="body" value="/WEB-INF/views/community/cboardWrite.jsp"/>
-		<put-attribute name="css" value="/WEB-INF/views/drug/drugCSS.jsp"/>
 	</definition>
-	<definition name="cboardDetail" extends="ksy">
+	<definition name="cboardDetail" extends="whr">
 		<put-attribute name="title" value="MediChat Community"/>
 		<put-attribute name="body" value="/WEB-INF/views/community/cboardDetail.jsp"/>
-		<put-attribute name="css" value="/WEB-INF/views/drug/drugCSS.jsp"/>
 	</definition>
-	<definition name="cboardModify" extends="ksy">
+	<definition name="cboardModify" extends="whr">
 		<put-attribute name="title" value="MediChat Community"/>
 		<put-attribute name="body" value="/WEB-INF/views/community/cboardUpdate.jsp"/>
-		<put-attribute name="css" value="/WEB-INF/views/drug/drugCSS.jsp"/>
 	</definition>
 </tiles-definitions>
 

@@ -74,20 +74,5 @@ public class ReservationServiceImpl implements ReservationService{
 		return reservationMapper.getReservationById(res_num);
 	}
 
-	@Override
-	public long selectDoc_num(long res_num) {
-		return reservationMapper.selectDoc_num(res_num);
-	}
-
-	@Override
-	public Integer selectCountByCompleted(Map<String, Object> map) {
-		return reservationMapper.selectCountByCompleted(map);
-	}
-
-	@Override
-	public List<ReservationVO> getDocCompletedList(Map<String, Object> map) {
-		return reservationMapper.getDocCompletedList(map);
-	}
-
 	
 }

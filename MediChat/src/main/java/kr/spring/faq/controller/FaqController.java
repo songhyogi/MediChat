@@ -40,7 +40,7 @@ public class FaqController {
 		map.put("keyword", keyword);
 		map.put("keyfield", keyfield);
 		int count = service.selectCountF(map);
-		PagingUtil page = new PagingUtil(keyfield,keyword,pageNum,count,10,10,"faqList");
+		PagingUtil page = new PagingUtil(keyfield,keyword,pageNum,count,8,10,"faqList");
 		map.put("start", page.getStartRow());
 		map.put("end", page.getEndRow());
 		List<FaqVO> list = service.selectFList(map);

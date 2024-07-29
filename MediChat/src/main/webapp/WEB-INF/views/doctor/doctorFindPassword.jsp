@@ -2,22 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.3/dist/sweetalert2.all.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.3/dist/sweetalert2.min.css" rel="stylesheet">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/doctor.find.js"></script> 
-<style>
-input[type="password"],
-input[type="text"]{
-	width:350px;
-	border-bottom:1px solid #000;
-}
-input[type="password"]:focus,
-input[type="text"]:focus{
-	outline:none;
-	border-bottom:2px solid #000;
-}
-</style>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/doctor.find.js"></script>  
 <div class="container">
     <h2 class="title">비밀번호 찾기</h2>
     <hr size="1" width="100%" noshade="noshade">

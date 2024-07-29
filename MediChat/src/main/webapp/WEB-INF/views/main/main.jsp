@@ -45,8 +45,6 @@
 		<!-- 검색 시작 -->
 		<div id="main-search-form-box" >
 			<form id="main-search-form" action="/hospitals/search" method="get">
-				<input type="hidden" name="user_lat" value="${user_lat}">
-				<input type="hidden" name="user_lon" value="${user_lon}">
 				<img id="main-search-logo" width="55px" height="35px" src="/images/loginLogo.png">
 				<input type="text" id="main-search-input" name="keyword" placeholder="병원 이름, 지역 + 과목, 증상">
 				<img id="main-search-icon" width="30px" height="30px" src="/images/search.png">
@@ -83,11 +81,11 @@
 			</div>
 			<div class="row d-flex justify-content-between">
 				<c:forEach var="healthy" items="${hList}">
-					<div class="main-magagine-item col-5">
+					<div class="main-magagine-item col-5"  style="cursor:pointer;" onclick="location.href='${pageContext.request.contextPath}/health/healthDetail?healthy_num=${healthy.healthy_num}'">
 						<div class="row d-flex align-items-center" onclick="location.href='${pageContext.request.contextPath}/health/healthDetail?healthy_num=${healthy.healthy_num}'">
 							<div class="col-9">
 								<div class="main-magagine-item-title">
-									<a href="${pageContext.request.contextPath}/health/healthDetail?healthy_num=${healthy.healthy_num}">${healthy.healthy_title}</a>
+									${healthy.healthy_title}
 								</div>
 								<div class="main-magagine-item-date">
 									${healthy.h_reg_date}
@@ -110,9 +108,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 	$(document).ready(function() {
-		$('#main-search-icon').on('click',function(){
-			$('#main-search-form').submit();
-		});
 	    $('.main-consult-item').on('click', function() {
 	        window.location.href = '/consultings/detail/' + $(this).data('cnum');
 	    });

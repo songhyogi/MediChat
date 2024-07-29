@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/hos.css" type="text/css">
 <div>
 	<div class="p-3">
@@ -175,7 +177,7 @@
 		<p class="fs-18 fw-7">병원 위치</p>
 		<div class="fs-14 text-black-6 fw-7 mb-3">${hospital.hos_addr}</div>
 		<div class="mb-3">
-			<jsp:include page="/WEB-INF/views/hospital/staticHosMap.jsp"/>
+			<jsp:include page="/WEB-INF/views/common/staticHosMap.jsp"/>
 		</div>
 		<c:if test="${hospital.hos_mapImg!='null'}">
 			<div class="fs-15 text-black-7 fw-9 text-center">&lt;간이약도&gt;</div>
@@ -203,60 +205,73 @@
 	<div style="height:18px;" class="bg-gray-0"></div>
 	
 	<div id="detail_hosRev">
-		<p class="fs-18 fw-7">진료 후기</p>
+		<p class="fs-18 fw-7">진료 후기 (<img src="/images/star.png" width="20" height="20"> 		<fmt:formatNumber value="${hospital.rev_avg}" pattern=".0"/>)</p>
 		<c:if test="${reviewCount == 0}">
 			<div class="align-center">
-				<p>등록된 후기가 없습니다.
+				<p>등록된 후기가 없습니다.<br>
 			</div>
 		</c:if>
+		<br>
 		<c:if test="${reviewCount >0}">
 			<c:forEach var="r" items="${reviewList}">
+				<div  id="review_content"   style="margin:0 auto; width:70%">
+					<div class="align-right" style="width:95%;" ></div>
+						<div style="margin:0 15px;"><b>${r.rev_title}</b><br>
+								<span id="${r.rev_num}"> ${fn:substring(r.rev_content,0,171)} <c:if test="${fn:length(r.rev_content) > 170}">...</c:if></span>
+								<span class="${r.rev_num} hide"> ${r.rev_content} </span>
+							<c:if test="${fn:length(r.rev_content) > 170}">					
+								<div class="align-right" style="margin-left:85%; margin-top:0; padding-top:0; height:20px;">
+								<label class="container"  style="transform: rotate(180deg); zoom:0.7">
+								<input checked="checked"   type="checkbox"  >
+								<svg viewBox="0 0 512 512" height="1em"  data-num="${r.rev_num}"  data-content="${r.rev_content}"
+								xmlns="http://www.w3.org/2000/svg" class="chevron-down toggle" >
+								<path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path></svg>
+								</label></c:if>
+							</div>
+							</div>							
 				<div class="detail-hosRev-item d-flex align-items-center bg-black-1" style="margin:0 15%;">
-					<div class="detail_hosRev_profile">
-						<img src="${pageContext.request.contextPath}/member/memViewProfile?mem_num=${r.mem_num}" width="35" height="35" class="rounded-circle">
-						<div class="text-black-6 fw-7 fs-15 text-center">${r.mem_id}</div>
+				</div>														
+				<div style="padding:0; margin:0; ">	
+					<div class="detail_hosRev_profile" style="width:30px; float:left; padding-top:5px; ">
+						<img  style="margin-bottom:15px;" src="${pageContext.request.contextPath}/member/memViewProfile?mem_num=${r.mem_num}" width="35" height="35" class="rounded-circle">
 					</div>
-					<div class="detail_hosRev_content">
-						${r.rev_title}
-					</div>
-					<div class="detail_hosRev_score d-flex justify-content-center align-items-center">
+					<span class="text-black-6 fw-7 fs-15 text-center"  style="margin:0; padding:0px; width:20px;"><span style="margin:0; padding:0; padding-bottom:0;">${r.mem_id}</span>
+					</span><br>
+					<span   style=" padding:0px;" class="fs-15 fw-5 text-black-3"><c:if test="${empty r.rev_modify}">작성일 : ${r.rev_reg}</c:if><c:if test="${!empty r.rev_modify}">수정일 : ${r.rev_modify}</c:if></span>
+					<div class="align-right" style="width:40%; zoom:1.2; padding-right:20px; float:right;">
 						<img src="/images/star.png" width="15" height="15">
-						<div>${r.rev_grade}</div>
-					</div>
-					<div   style="float:right; margin-left:60px; padding-top:10px;">
-					   <label class="container"  style="transform: rotate(180deg);">
-						<input checked="checked"   type="checkbox"  >
-						<svg viewBox="0 0 512 512" height="1em" 
-						xmlns="http://www.w3.org/2000/svg" class="chevron-down toggle" >
-						<path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path></svg>
-					</label>
-					</div>
+						${r.rev_grade}
+					</div>			
 				</div>
-				<div  id="review_content" class="hide"  style="margin:0 20%;">
-					<div class="align-right" style="width:95%;" ><c:if test="${empty r.rev_modify}">작성일 : ${r.rev_reg}</c:if><c:if test="${!empty r.rev_modify}">수정일 : ${r.rev_modify}</c:if></div>
-					<hr width="100%" size="1">
-					<div style="margin:0 15px;"> ${r.rev_content}</div>
+				
+				<hr width="100%" size="1">
 				</div>
+				<br>
 			</c:forEach>
 			<div style="text-align:center;">
 				${reviewPage}
 			</div>
 			<script type="text/javascript">
-				$('.chevron-down').click(function(){
-					if($('#review_content').hasClass('hide')){
-						$('#review_content').removeClass('hide');
-					}else{
-						$('#review_content').addClass('hide');
-					}
-				 });
-		</script>
+					$('.chevron-down').click(function(){
+						if($('.'+$(this).attr('data-num')).hasClass('hide')){
+							$('#'+$(this).attr('data-num')).addClass('hide');
+							$('.'+$(this).attr('data-num')).removeClass('hide');
+							
+						}else{
+							$('.'+$(this).attr('data-num')).addClass('hide');
+							$('#'+$(this).attr('data-num')).removeClass('hide');
+						}
+					 });
+					
+			
+			</script>
 		</c:if>
 	</div>
 	
 	<div class="line"></div>
 	<div style="height:20px;" class="bg-gray-0"></div>
 	
-	<div id="detail_btn_box">
+	<div class="float-cleatr" id="detail_btn_box">
 		<div class="d-flex justify-content-center align-items-center">
 			<c:if test="${hospital.doc_cnt>0}">
 			<button id="reservation_btn" data-hos-name="${hospital.hos_name}" data-hos-num="${hospital.hos_num}">

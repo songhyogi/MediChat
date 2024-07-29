@@ -34,14 +34,9 @@ $(function(){
 	//파일 업로드 처리
 	$('#photo_submit').click(function(){
 		if($('#upload').val()==''){
-			Swal.fire({
-               title:'파일을 선택하세요!',
-               icon:'warning',
-               confirmButtonText:'확인'
-            }).then(() => {
-               $('#upload').focus();
-            });
-            return;
+			alert('파일을 선택하세요!');
+			$('#upload').focus();
+			return;
 		}
 		//서버에 전송할 파일 선택
 		const form_data = new FormData();
@@ -57,30 +52,18 @@ $(function(){
 			processData:false,
 			success:function(param){
 				if(param.result == 'success'){
-					Swal.fire({
-                       title:'프로필 사진이 저장되었습니다.',
-                       icon:'success',
-                       confirmButtonText:'확인'
-                    })
+					alert('프로필 사진이 저장되었습니다.');
 					//교체된 이미지 저장
 					photo_path = $('.my-photo').attr('src');
 					$('#upload').val('');
 					$('#photo_choice').hide();
 					$('#photo_btn').show();
 				}else{
-					Swal.fire({
-                       title:'파일 전송 오류 발생',
-                       icon:'error',
-                       confirmButtonText:'확인'
-                    });
+					alert('파일 전송 오류 발생');
 				}
 			},
 			error:function(){
-				Swal.fire({
-                   title:'네트워크 오류 발생',
-                   icon:'error',
-                   confirmButtonText:'확인'
-                });
+				alert('네트워크 오류 발생');
 			}
 		});
 	});
