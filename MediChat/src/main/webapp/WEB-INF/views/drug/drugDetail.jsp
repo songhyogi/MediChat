@@ -55,7 +55,7 @@ ul li {
 		<h4>허가정보 · 복약정보</h4>
 		<!-- 모든 데이터가 존재하지 않을 경우 -->
 		<c:if test="${empty drug.drg_dosage && empty drug.drg_effect && empty drug.drg_warning && empty drug.drg_precaution && empty drug.drg_interaction && empty drug.drg_seffect && empty drug.drg_storage}">
-			<div class="warin fs-24">
+			<div class="warin">
 				제공되는 데이터가 없습니다
 			</div>
 		</c:if>

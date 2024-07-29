@@ -175,7 +175,7 @@
 		<p class="fs-18 fw-7">병원 위치</p>
 		<div class="fs-14 text-black-6 fw-7 mb-3">${hospital.hos_addr}</div>
 		<div class="mb-3">
-			<jsp:include page="/WEB-INF/views/hospital/staticHosMap.jsp"/>
+			<jsp:include page="/WEB-INF/views/common/staticHosMap.jsp"/>
 		</div>
 		<c:if test="${hospital.hos_mapImg!='null'}">
 			<div class="fs-15 text-black-7 fw-9 text-center">&lt;간이약도&gt;</div>

@@ -45,8 +45,6 @@
 		<!-- 검색 시작 -->
 		<div id="main-search-form-box" >
 			<form id="main-search-form" action="/hospitals/search" method="get">
-				<input type="hidden" name="user_lat" value="${user_lat}">
-				<input type="hidden" name="user_lon" value="${user_lon}">
 				<img id="main-search-logo" width="55px" height="35px" src="/images/loginLogo.png">
 				<input type="text" id="main-search-input" name="keyword" placeholder="병원 이름, 지역 + 과목, 증상">
 				<img id="main-search-icon" width="30px" height="30px" src="/images/search.png">
@@ -110,9 +108,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 	$(document).ready(function() {
-		$('#main-search-icon').on('click',function(){
-			$('#main-search-form').submit();
-		});
 	    $('.main-consult-item').on('click', function() {
 	        window.location.href = '/consultings/detail/' + $(this).data('cnum');
 	    });

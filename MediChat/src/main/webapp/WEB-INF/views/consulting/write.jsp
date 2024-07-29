@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
-<div class="p-3">
+<div>
 	<p class="text-lightgray fw-7 fs-13">홈 > 의료 상담 > 글 상세</p>
 	<img src="/images/question-icon.gif" width="55px" height="55px" class="mb-3">
 	<div class="fs-22 fw-7 text-black-6">
@@ -10,7 +10,6 @@
 	<div class="fs-17 fw-6 text-black-4 my-3">
 		의사 선생님들이 대기 중입니다
 	</div>
-	
 	
 	<form action="/consultings/create" method="post">
 		<div id="con_title_div">
@@ -23,7 +22,7 @@
 		<div id="con_content_div">
 			<div id="con_content_label" class="d-flex justify-content-between">
 				<label for="con_content">내용</label>
-				<span id="content_length">0 / 2000</span>
+				<span id="content_length">0 / 500</span>
 			</div>
 			<textarea rows="6" id="con_content" name="con_content" class="form-control"></textarea>
 		</div>
@@ -67,13 +66,21 @@
 <script>
     $(document).ready(function() {
       $('#con_content').on('input', function() {
-          var content = $(this).val();
-          var contentLength = content.length;
-          if (contentLength > 2000) {
-              $(this).val(content.substring(0, 2000)); // 2000자까지만 입력되도록 자르기
-              contentLength = 2000;
-          }
-          $('#content_length').text(contentLength + ' / 2000');
+        var contentLength = $(this).val().length;
+        $('#content_length').text(contentLength + ' / 500');
+
+        // 글자 수에 따라 폰트 크기 조절
+        if(contentLength < 100) {
+          $('#content_length').css('font-size', '16px');
+        } else if(contentLength < 200) {
+          $('#content_length').css('font-size', '18px');
+        } else if(contentLength < 300) {
+          $('#content_length').css('font-size', '20px');
+        } else if(contentLength < 400) {
+          $('#content_length').css('font-size', '22px');
+        } else {
+          $('#content_length').css('font-size', '24px');
+        }
       });
     });
   </script>

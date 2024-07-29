@@ -10,10 +10,6 @@
 		<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>
 		<put-attribute name="body" value="/WEB-INF/views/main/main.jsp"/>
 	</definition>
-	<definition name="docCompletedList" extends="ychdoctor">
-      <put-attribute name="title" value="나의 진료 내역"/>
-      <put-attribute name="body" value="/WEB-INF/views/reservation/docCompletedList.jsp"/>
-    </definition>
 </tiles-definitions>
 
 

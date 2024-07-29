@@ -168,7 +168,7 @@
 	<!-- 지도 시작 -->
 	<div id="mapDiv">
 		<h4 class="fw-7 my-4 fs-22">내 주변 병원</h4>
-		<jsp:include page="/WEB-INF/views/hospital/map.jsp"/>
+		<jsp:include page="/WEB-INF/views/common/map.jsp"/>
 	</div>
 	<!-- 지도 끝 -->
 </div>

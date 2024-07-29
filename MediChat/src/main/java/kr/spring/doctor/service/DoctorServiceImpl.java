@@ -102,15 +102,5 @@ public class DoctorServiceImpl implements DoctorService{
 		
 	}
 
-	@Override
-	public DoctorVO checkEmail(String doc_email) {
-		return doctorMapper.checkEmail(doc_email);
-	}
-
-	@Override
-	public DoctorVO checkName(String mem_name) {
-		return doctorMapper.checkName(mem_name);
-	}
-
 
 }

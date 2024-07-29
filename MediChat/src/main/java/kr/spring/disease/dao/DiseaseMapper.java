@@ -40,6 +40,6 @@ public interface DiseaseMapper {
 	
 	public List<DiseaseVO> selectDisListByHit(int itemNum);
 	
-	@Select("select a.dis_department from ( select dis_department,count(dis_department) as cnt from disease where dis_department != '병의원과 상담' and (dis_name like '%${keyword}%' or dis_symptoms like '%${keyword}%') and dis_department not like '%,%' group by dis_department order by cnt desc)a where rownum<=2")
+	@Select("select distinct dis_department from disease where dis_name like '%' || #{keyword} || '%' or dis_symptoms like '%' || #{keyword} || '%'")
 	public List<String> selectDisListBykeyword(String keyword);
 }

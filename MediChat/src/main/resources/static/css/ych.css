@@ -112,7 +112,9 @@ a {
 	text-decoration: none;
 	color: rgb(0,0,0);
 }
-
+a.detail-btn{
+	color:#5f5f5f;
+}
 a:hover {
 	text-decoration: underline;
 }
@@ -121,16 +123,23 @@ ul {
     list-style-type: none;
 }
 .side-bar{
-	margin-top:-25%;
+	margin-top:-23%;
 	text-align:center;
-	
+box-shadow: 5px 5px 7px rgba(0,0,0,0.3);
+	padding: 20px 0;
+	border-radius: 10px;
+	background-color:rgba(183, 228, 199,0.2);
+}
+.side-bar ul{
+	height:auto;
+	padding-bottom:30px;
 }
 #main_leftNav{
 	margin-top:5%;
 	background-color:#fff;
 
 	height:auto;
-	box-shadow: 5px 5px 5px rgba(57, 174, 164, 0.4);
+
 }
 .camera{
 	width:45px;

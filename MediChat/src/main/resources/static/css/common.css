@@ -221,11 +221,13 @@ body{
     position: -webkit-sticky; /* Safari용 */
     position: sticky;
     top: 0;
+    z-index: 1000; /* 다른 콘텐츠 위에 있도록 조정 필요 */
 }
 .sticky-bottom-container {
     position: -webkit-sticky; /* Safari용 */
     position: sticky;
     bottom: 0;
+    z-index: 1000; /* 다른 콘텐츠 위에 있도록 조정 필요 */
 }
 /* ================= 버튼 ================= */
 .btn-green {
@@ -328,9 +330,6 @@ body{
 #main-search-input:focus{
 	outline: none;
 }
-#main-search-icon{
-	cursor: pointer;
-}
 
 .main-titleAndMore{
 	display: flex;
@@ -362,23 +361,13 @@ body{
 	font-weight: 600;
 	color: #333333;
 	margin-bottom: 13px;
-	
-	height: 22px;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
 }
 .main-consult-item-content{
 	font-size: 14px;
 	color: #757575; 
 	margin-bottom: 5px;
 	
-	display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2; /* 줄 수 */
-    
-	height: 40px;
-	white-space: normal;
+	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
@@ -455,8 +444,8 @@ body{
 	background-color: #f2f2f2;
 }
 .header-menu-text {
-	text-decoration: none !important;
-	color: black !important;
+	text-decoration: none;
+	color: black;
 	font-weight: 900;
 	font-size: 18px;
 }
@@ -696,8 +685,8 @@ body{
 	width: 100%;
 	height:1px;
 	border-bottom: 1px solid #dfe1e2;
-	margin-top: 0px;
-	margin-bottom: 0px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 /* ================= 오른쪽 메뉴 ================= */
 
