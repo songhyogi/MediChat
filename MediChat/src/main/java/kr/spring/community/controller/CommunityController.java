@@ -180,12 +180,22 @@ public class CommunityController {
 		log.debug("<<게시판 좋아요>> : " + fav);
 		
 		Map<String, Object> mapJson = new HashMap<String, Object>();
-		MemberVO user = (MemberVO)session.getAttribute("user");
+		Object user = session.getAttribute("user");
 		
 		if(user==null) {
-			mapJson.put("result", "logout");
-		}else {
-			fav.setMem_num(user.getMem_num());
+			mapJson.put("status", "noFav");
+		}else if(user!=null && user instanceof DoctorVO){
+			DoctorVO doctor = (DoctorVO) user;
+			fav.setMem_num(doctor.getMem_num());
+			CommunityFavVO cboardFav = communityService.selectFav(fav);
+			if(cboardFav != null) {
+				mapJson.put("status", "yesFav");
+			}else {
+				mapJson.put("status", "noFav");
+			}
+		}else if(user!=null && user instanceof MemberVO){
+			MemberVO member = (MemberVO) user;
+			fav.setMem_num(member.getMem_num());
 			CommunityFavVO cboardFav = communityService.selectFav(fav);
 			if(cboardFav != null) {
 				mapJson.put("status", "yesFav");
@@ -197,7 +207,48 @@ public class CommunityController {
 		
 		return mapJson;
 	}
-	
+	//좋아요 등록/삭제
+	@PostMapping("/medichatCommunity/writeFav")
+	@ResponseBody
+	public Map<String, Object> wrtieFav(CommunityFavVO fav, HttpSession session){
+		log.debug("<<게시판 좋아요 등록>> : " + fav);
+		
+		Map<String, Object> mapJson = new HashMap<String, Object>();
+		Object user = session.getAttribute("user");
+		
+		if(user==null) {
+			mapJson.put("result", "logout");
+		}else if(user!=null && user instanceof DoctorVO){
+			DoctorVO doctor = (DoctorVO) user;
+			fav.setMem_num(doctor.getMem_num());
+			
+			CommunityFavVO cboardFav = communityService.selectFav(fav);
+			if(cboardFav!=null) {//등록->삭제
+				communityService.deleteFav(fav);
+				mapJson.put("status", "noFav");
+			}else {//등록
+				communityService.insertFav(fav);
+				mapJson.put("status", "yesFav");
+			}
+			
+		}else if(user!= null && user instanceof MemberVO) {
+			MemberVO member = (MemberVO) user;
+			fav.setMem_num(member.getMem_num());
+			
+			CommunityFavVO cboardFav = communityService.selectFav(fav);
+			if(cboardFav!=null) {//등록->삭제
+				communityService.deleteFav(fav);
+				mapJson.put("status", "noFav");
+			}else {//등록
+				communityService.insertFav(fav);
+				mapJson.put("status", "yesFav");
+			}
+			mapJson.put("result", "success");
+			mapJson.put("count", communityService.selectFavCount(fav.getCbo_num()));
+		}
+		
+		return mapJson;
+	}
 	
 	/*==============================댓글==============================*/
 	//댓글 목록

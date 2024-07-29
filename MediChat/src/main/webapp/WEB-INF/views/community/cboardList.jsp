@@ -39,17 +39,17 @@
 				</script>
 				</li>
 			</ul>
-			<div class="align-right" style="padding:16px;">
+			<%-- <div class="align-right" style="padding:16px;">
 				<select id="order" name="order">
 					<option value="1" <c:if test="${param.order == 1}">selected</c:if>>최신순</option>
 					<option value="2" <c:if test="${param.order == 1}">selected</c:if>>조회수순</option>
 					<option value="3" <c:if test="${param.order == 1}">selected</c:if>>공감순</option>
 					<option value="4" <c:if test="${param.order == 1}">selected</c:if>>댓글순</option>
 				</select>
-			</div>
+			</div> --%>
 		</form><br>
 		<c:if test="${!empty user}">
-			<input type="button" value="글쓰기" onclick="location.href='write'" class="write-btn"><br><br>
+			<div class="cboard_write_btn"><input type="button" value="글쓰기" onclick="location.href='write'" class="write-btn"></div>
 		</c:if>
 		<c:if test="${count == 0}">
 			<div class="text-black-5 text-center fs-17 fw-7">표시할 게시물이 없습니다</div>
@@ -117,7 +117,6 @@
 							 });
 						};
 					</script>
-					
 					<div class="cboard-info">
 				        <img src="${pageContext.request.contextPath}/member/memViewProfile?mem_num=${cboard.mem_num}" width="40" height="40">
 				        <div class="cboard-profile">
@@ -126,7 +125,7 @@
 				        </div>
 				        <div class="cboard-likes-views">
 				            <span>👁 ${cboard.cbo_hit}</span>&nbsp;
-				            <span>❤️ ${cboard.fav_cnt}</span>&nbsp;
+				            <span id="output_fcount">❤️ ${cboard.fav_cnt}</span>&nbsp;
 				            <span>💬 ${cboard.re_cnt}</span>
 				        </div>
 				    </div>

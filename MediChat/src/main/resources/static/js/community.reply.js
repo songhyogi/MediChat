@@ -63,11 +63,16 @@ $(function(){
 					output += '    <p>' + item.cre_content.replace(/\r\n/g,'<br>') + '</p>';
 					
 					/*---좋아요 시작---*/
+					if(item.click_num==0 || param.user_num!==item.click_num){
+						output += ' <img class="output_rfav" src="../images/heart01.png" data-num="'+item.cre_num+'"> <span class="output_rfcount">'+item.refav_cnt+'</span>';
+					}else{
+						output += ' <img class="output_rfav" src="../images/heart02.png" data-num="'+item.cre_num+'"> <span class="output_rfcount">'+item.refav_cnt+'</span>';
+					}
 					/*---좋아요 끝---*/
 					
 					//답글이 있을 경우에만 버튼이 보여지도록 처리 변경 필요
 					//output += '  <div><input type="button" data-level="1" data-ref="'+item.cre_num+'" value="답글목록" class="rescontent-btn"></div>';
-					output += '<a class="rescontent-btn" data-level="1" data-ref="'+item.cre_num+'">💬답글목록</a>&nbsp;&nbsp;';
+					output += '<a class="rescontent-btn" data-status="0" data-level="1" data-ref="'+item.cre_num+'">💬답글목록</a>&nbsp;&nbsp;';
 					/*---답글 시작---*/
 					console.log("답글수 : "+param.resp_cnt)
 					if(param.user_num){
@@ -287,7 +292,7 @@ $(function(){
 	}
 	
 	/*---------------댓글 좋아요---------------*/
-	
+	;
 	/*---------------댓글/답글 등록, 수정 공통---------------*/
 	$(document).on('keyup','textarea',function(){
 		//입력한 글자수 체크
@@ -313,10 +318,6 @@ $(function(){
 	
 	
 	/*==============================답글==============================*/
-	/*----------답글 노출/숨김 버튼 이벤트 처리----------*/
-	$(document).on('click','.rescontent-btn',function(){
-		
-	});
 	/*----------답글 목록----------*/
 	function getListReply(cre_num, replyUI) {
         // 서버와 통신하여 답글 목록을 가져옵니다.
@@ -326,7 +327,7 @@ $(function(){
             data: {cre_num: cre_num},
             dataType: 'json',
             success: function(param) {
-                replyUI.find('.respitem').remove();
+                replyUI.find('.respitem').remove();	//기존 답글 제거
                 
                 let output = '';
                 $(param.list).each(function(index, item) {
@@ -334,7 +335,7 @@ $(function(){
 					console.log("답글 부모 id : " + item.parent_id);
 					
 					//처음에는 보여지지 않고 다음 답글부터 수평선에 보이게 처리
-					 if (index > 0) output += '<hr size="1" width="90%">';
+					output += '<hr size="1" width="100%">';
 					
 					let sign_depth = '@';
 										
@@ -343,7 +344,7 @@ $(function(){
 					output +='    <li>';
 					
 					output += '<img src="../member/memViewProfile?mem_num='+item.mem_num+'" width="40" height="40" class="reply-profile">';
-					output += '<input type="hidden" name="cre_num" id="mcre_num" value="'+item.mem_num+'">';
+					output += '<input type="hidden" name="cre_num" id="mcre_num" value="'+item.cre_num+'">';
 					output += '</li>';
 					output += '<li>';
 					
@@ -358,7 +359,7 @@ $(function(){
 						output += '<div class="dropdown">'
 						output += '<img src="../images/dots.png" width="20" id="dropdownToggle_re">'
 						output += '<ul class="dropdown-remenu">'
-						output += '<li><a class="dropdown-btn remodify-btn" data-num="'+item.cre_num+'">답글수정</a></li>'
+						output += '<li><a class="dropdown-btn remodify-btn" data-num="'+item.cre_num+'">답글수정</a></li><br>'
 						/*output += '<li><hr></li>'*/
 						output += '<li><a class="dropdown-btn redelete-btn" data-num="'+item.cre_num+'">답글삭제</a></li>'
 						output += '</ul>'
@@ -373,7 +374,7 @@ $(function(){
 					if(item.cre_level > 1){
 						output += '<b> '+sign_depth+item.parent_id+'</b> ';
 					}
-					output += item.cre_content.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</p>';
+					output += item.cre_content.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\r\n/g,'<br>').replace(/\r/g,'<br>').replace(/\n/g,'<br>') + '</p>';
 					if(param.user_num){
 						output += ' <a class="reply2-btn" data-ref="'+item.cre_num+'" data-parent="'+item.cbo_num+'" data-level="'+(item.cre_level+1)+'">답글작성</a>';
 					}
@@ -396,27 +397,15 @@ $(function(){
 	$(document).on('click','.rescontent-btn',function(){
 		let cre_num = $(this).attr('data-ref');
 		console.log("rescontent-btn 클릭됨. cre_num:", cre_num);
-		getListReply(cre_num,$(this).parent());//.cboard-sub-item
-		
-/*		//data-status의 값이 0이면 답글 미표시 상태 1이면 답급 표시 상태	
-		if($(this).attr('data-status') == 0){
-			//0이면 답글 미표시 상태이므로 답글이 있으면 답글을 표시
-			//댓글 번호
-			let cre_num = $(this).attr('data-num');
-			
-			getListReply(cre_num,$(this).parent());//.su-item
-			
-			//현재 선택한 내용의 답글 표시 아이콘 토글 처리	
-			$(this).val($(this).val().replace('▲','▼'));
+		if($(this).attr('data-status')==0){
 			$(this).attr('data-status',1);
+			getListReply(cre_num,$(this).parent());//.cboard-sub-item	
 		}else{
-			//현재 선택한 내용의 답글 표시 아이콘 토글 처리
-			$(this).val($(this).val().replace('▼','▲'));
-			$(this).attr('data-status',0);	
-			//현재 선택한 내용 삭제
-			$(this).parents('.item').find('.').remove();
+			$(this).attr('data-status',0);
+			$(this).parents('.item').find('.respitem').remove();
+			$(this).parents('.item').find('hr').remove(); // hr 태그 제거
 		}
-*/	});
+	});
 	
 	/*----------답글 등록----------*/
 	//output += '<input type="button data-num"'+item.cre_num+'"data-parent="'+item.cbo_num+'"data-level="1" data-ref="" value="답글" class="reply-btn">'
@@ -453,7 +442,7 @@ $(function(){
 	
 	//답글 작성 폼 초기화
 	function initReplyForm(){
-		$('.reply-btn').show();
+		$('.reply-btn, .reply2-btn').show();
 		$('#reply_form').remove();
 	}
 	
@@ -483,11 +472,11 @@ $(function(){
 					//답글 갯수
 					if(resp_form.parent().attr('class')=='cboard-sub-item'){//답글을 최초 작성시에 .sub-item에 자식으로 form이 생성됨
 						//답글을 처음 등록할 때 숨겨져 있는 버튼을 노출함
-						//resp_form.parent().find('div .rescontent-btn').show();
-						//resp_form.parent().find('div .rescontent-btn').attr('data-status',1);
-						//resp_form.parent().find('div .rescontent-btn').val('▼ 답글 ' + (Number(resp_form.parent().find('div .rescontent-btn').val().substring(5)) + 1));
+						resp_form.parent().find('div .rescontent-btn').show();
+						resp_form.parent().find('div .rescontent-btn').attr('data-status',1);
+						resp_form.parent().find('div .rescontent-btn').val('▼ 답글 ' + (Number(resp_form.parent().find('div .rescontent-btn').val().substring(5)) + 1));
 					}else{//답글에 답글을 작성할 때
-						//resp_form.parents('.cboard-sub-item').find('div .rescontent-btn').val('▼ 답글 ' + (Number(resp_form.parents('.cboard-sub-item').find('div .rescontent-btn').val().substring(5)) + 1));
+						resp_form.parents('.cboard-sub-item').find('div .rescontent-btn').val('▼ 답글 ' + (Number(resp_form.parents('.cboard-sub-item').find('div .rescontent-btn').val().substring(5)) + 1));
 					}
 					getListReply(cre_num,resp_form.parents('.cboard-sub-item'));//.sub-item
 					initReplyForm();
@@ -500,7 +489,6 @@ $(function(){
 			}
 		});
 	});
-	
 	/*----------답글 수정----------*/
 	$(document).on('click','.remodify-btn',function(){
 		let cre_num = $(this).attr('data-num');
@@ -547,8 +535,10 @@ $(function(){
 		initReplyModifyForm();
 	});
 	
-	
-	$(document).on('submit','.remodify-btn',function(){
+	//답글수정
+	$(document).on('submit','#mresp_form',function(){
+		event.preventDefault();
+		alert('답글수정');
 		if($('#mresp_content').val().trim()==''){
 			alert('내용을 입력하세요');
 			$('#mresp_content').val('').focus();
@@ -556,7 +546,6 @@ $(function(){
 		}
 		//폼에 입력한 데이터 반환
 		let form_data = $(this).serialize();
-		
 		$.ajax({
 			url:'updateComment',
 			type:'post',
@@ -573,7 +562,7 @@ $(function(){
 					//$('#mresp_form').parent().find('.modify-date') .text('최근 수정일 : 5초미만');
 					
 					//수정 폼 초기화
-					initResponseModifyForm();                        
+					initReplyModifyForm();                        
 				}else if(param.result=='wrongAccess'){
 					alert('타인의 글은 수정할 수 없습니다.');
 				}else{
