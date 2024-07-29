@@ -52,22 +52,22 @@
 				<form:errors path="doc_email" cssClass="error-color"/>
 			</li>
 			<li>
-				<!-- 병원 목록 검색 -->
-				<form:label path="hos_num">병원</form:label>
-				<form:hidden path="hos_num"/>
-				<input type="search" name="keyword" id="keyword" value="${keyword}" class="effect-1" onkeypress="return handleEnter(event)">
-                <button type="button" id="search_button" class="btn">
-				    <i class="fas fa-search"></i>
-				</button>
-                <form:errors path="hos_num" cssClass="error-color"/>
-            </li>
-            <li style="margin-left:205px;">
-            	<form:select path="hos_num" class="custom-select" style="width:400px;">
-              	 	<c:forEach var="hos" items="${hosList}">
-            			<option value="${hos.hos_num}">${hos.hos_name}/${hos.hos_addr}</option>
-            		</c:forEach>
-                </form:select>
-            </li>
+			    <!-- 병원 목록 검색 -->
+			    <form:label path="hos_num">병원</form:label>
+			    <form:hidden path="hos_num"/>
+			    <input type="search" name="keyword" id="keyword" value="${keyword}" class="effect-1" placeholder="병원 이름 검색 후 선택">
+			    <button type="button" id="search_button" class="btn">
+			        <i class="fas fa-search"></i>
+			    </button>
+			    <form:errors path="hos_num" cssClass="error-color"/>
+			</li>
+			<li style="margin-left:205px;">
+			    <form:select path="hos_num" class="custom-select" style="width:400px;">
+			        <c:forEach var="hos" items="${hosList}">
+			            <option value="${hos.hos_num}">${hos.hos_name}/${hos.hos_addr}</option>
+			        </c:forEach>
+			    </form:select>
+			</li>
 			<li>
 				<form:label path="doc_history">연혁</form:label>
 				<form:textarea path="doc_history" placeholder="연혁을 입력해주세요." class="msg" style="height:150px; vertical-align:top;"/>
@@ -116,45 +116,61 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/doctor.register.js"></script>
 <script src="${pageContext.request.contextPath}/js/uploadAdapter.js"></script>
 <script type="text/javascript">
-    // Enter 키를 눌렀을 때 검색 호출
-    function handleEnter(event) {
-        if (event.key === 'Enter') {
-            performSearch();
-            return false; // 폼 제출 방지
-        }
-        return true;
-    }
-    // 검색 버튼 클릭 시 또는 Enter 키를 눌렀을 때 실행될 검색 함수
-    function performSearch() {
-        var keyword = $('#keyword').val();
-
-        $.ajax({
-            url: '${pageContext.request.contextPath}/doctor/hosList',
-            type: 'post',
-            dataType: 'json',
-            data: { keyword: keyword },
-            success: function(data) {
-                if (data.success) {
-                    var hosList = data.hosList;
-                    var options = '';
-                    // 기존 옵션 초기화
-                    $('form').find('select[name="hos_num"]').empty();
-
-                    $.each(hosList, function(index, hospital) {
-                        options += '<option value="' + hospital.hos_num + '">' 
-                                + hospital.hos_name + ' / ' + hospital.hos_addr + '</option>';
-                    });
-                    // 검색 결과를 select 태그에 반영
-                    $('form').find('select[name="hos_num"]').append(options);
-                } else {
-                    alert('병원 목록을 가져오는 중에 오류가 발생하였습니다.');
-                }
-            },
-            error: function() {
-                alert('서버 통신 중 오류가 발생하였습니다.');
+    $(document).ready(function() {
+        function handleEnter(event) {
+            if (event.key === 'Enter') {
+                performSearch();
+                return false;
             }
+            return true;
+        }
+        function performSearch() {
+            var keyword = $('#keyword').val();
+
+            $.ajax({
+                url:'${pageContext.request.contextPath}/doctor/hosList',
+                type:'post',
+                dataType:'json',
+                data:{keyword:keyword},
+                success:function(data){
+                    if (data.success){
+                        var hosList = data.hosList;
+                        var options = '';
+                        
+                        var $select = $('form').find('select[name="hos_num"]');
+                        $select.empty();
+
+                        $.each(hosList,function(index,hospital) {
+                            options += '<option value="' + hospital.hos_num + '">' 
+                                    + hospital.hos_name + ' / ' + hospital.hos_addr + '</option>';
+                        });
+                        $select.append(options);
+                        
+                        var selectedValue = $('form').find('input[name="hos_num"]').val();
+                        if(selectedValue) {
+                            $select.val(selectedValue);
+                        }
+                    }else {
+                        alert('병원 목록을 가져오는 중에 오류가 발생하였습니다.');
+                    }
+                },
+                error:function() {
+                    alert('서버 통신 중 오류가 발생하였습니다.');
+                }
+            });
+        }
+
+        $('#search_button').click(function() {
+            performSearch();
         });
-    }
+
+        $('#keyword').keypress(handleEnter);
+
+        $('form').on('submit',function() {
+            var selectedValue = $('form').find('select[name="hos_num"]').val();
+            $('form').find('input[name="hos_num"]').val(selectedValue);
+        });
+    });
 </script>
 <script>
 	$(function(){
