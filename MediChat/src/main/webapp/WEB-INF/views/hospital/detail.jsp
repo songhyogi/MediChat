@@ -170,9 +170,7 @@
 		</div>
 	</div>
 	
-	<div class="line"></div>
-	<div style="height:15px;" class="bg-gray-0"></div>
-	
+	<!-- 여기에 의사 연혁 -->
 	<div id="doctor_history"></div>
 	
 	<div class="line"></div>
@@ -284,5 +282,41 @@ $(function(){
             }
         });
     }); //end of click event 
+    
+    console.log(${hospital.hos_num});
+    
+    let doctor_history_content = '';
+    
+    $.ajax({
+    	url:'/doctor/doctorHistory',
+    	method:'get',
+    	data:{hos_num:'${hospital.hos_num}'},
+    	dataType:'json',
+    	success: function(param) {
+    		if(param.doctor == 'empty'){
+    			doctor_history_content += ''; //근무 의사가 없는 경우 공간 만들지 않기
+    		}else{
+	    		doctor_history_content += '<div class="line"></div><div style="height:15px;" class="bg-gray-0"></div>';
+	    		doctor_history_content += '<p class="fs-18 fw-7" style="padding:0 20px;">의사 소개</p>';
+	    		
+	    		param.doctor.forEach(function(doctor) {
+	    			doctor_history_content += '<div style="padding:20px 30px">'
+	                doctor_history_content += '<div><img src="/doctor/docViewProfile?mem_num=' + doctor.doc_num + '" alt="' + doctor.mem_name + '" class="doctor-image" style="width: 80px; height: 80px;"></div>';
+	                doctor_history_content += '<div><span class="fs-15 fw-7 text-black-6">' + doctor.mem_name + ' 의사</span>';
+	
+	                if (doctor.doc_history) {
+	                    doctor_history_content += '<br><span class="fs-14">' + doctor.doc_history + '</span>';
+	                }
+					
+	                doctor_history_content += '</div>';
+	                doctor_history_content += '</div>';
+	            });
+    		}
+    		$('#doctor_history').append(doctor_history_content);
+    	},
+    	error: function(){
+    		alert('의사 연혁 출력 오류');
+    	}
+    });
 });
 </script>

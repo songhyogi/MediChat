@@ -32,6 +32,8 @@ public interface DoctorMapper {
 	//회원 목록
 	@Select("SELECT * FROM member m JOIN doctor_detail d ON m.mem_num=d.doc_num WHERE doc_agree=0")
 	public List<DoctorVO> docList(Map<String, Object> map);
+	@Select("SELECT * FROM member m JOIN doctor_detail d ON m.mem_num=d.doc_num WHERE hos_num=#{hos_num}")
+	public List<DoctorVO> docListByHosNum(long hos_num);
 	//회원정보 수정
 	@Update("UPDATE member SET mem_name=#{mem_name} WHERE mem_num=#{mem_num}")
 	public void updateDoctor(DoctorVO doctor);
