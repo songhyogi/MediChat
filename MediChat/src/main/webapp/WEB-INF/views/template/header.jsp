@@ -17,7 +17,7 @@
 .header-status-rightBox:hover #header-status-div,
 #header-status-div:hover,
 #dictionary_menu:hover #dictionary_menu_div,
-#dictionary_menu_div:hover{
+#dictionary_menu_div:hover{ 
     display: block;
 }
 .header-status-leftBox, .header-status-rightBox, .header-status-rightBox {
