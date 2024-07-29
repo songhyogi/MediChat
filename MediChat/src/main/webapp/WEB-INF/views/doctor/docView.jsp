@@ -110,7 +110,7 @@
 </style>
 </head>
 <body>
-<div class="dropdown">
+<%-- <div class="dropdown">
   <button class="dropbtn"> 
     <span class="dropbtn_icon"></span>
       나의 활동
@@ -130,7 +130,7 @@
       <a class="dropdown-item" href="${pageContext.request.contextPath}/reservation/docResList">예약내역</a>
       <a class="dropdown-item" href="#">후기</a>
     </div>
-</div>
+</div> --%>
     <div class="docInfo">
         <div class="leftInfo">
             <ul>

@@ -20,7 +20,7 @@
 #main_body{
 	border-radius: 10px;
 	background-color: #fff;
-	}
+}
 </style>
 </head>
 <body>
@@ -37,7 +37,7 @@
 			<tiles:insertAttribute name="body"/>
 		</div>
 	</div>
-		<div id="main_footer">
+		<div id="main_footer" style="margin-top:130px;">
 			<tiles:insertAttribute name="footer"/>
 		</div>
 </div>

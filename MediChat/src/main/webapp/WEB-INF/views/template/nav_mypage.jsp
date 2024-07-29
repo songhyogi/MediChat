@@ -8,7 +8,7 @@
 <div class="side-bar">
 	<ul style="padding: 0 0 !important; margin-top:20px;">
 		<li style="font-size:25px; font-weight:bold;">마이페이지</li>
-		<li class="fs-17 text-black-5"><span class="fs-20 fw-7 text-black-7" style="color:darkgreen;">${user.mem_id}님</span> 반갑습니다.</li>
+		<li class="fs-17 text-black-5"><span class="fs-20 fw-7 text-black-7" style="color:darkgreen;">${user.mem_name}님</span> 반갑습니다.</li>
 		<li>
 			<c:if test="${mem_profile == null}">
 				<img src="${pageContext.request.contextPath}/member/memPhotoView"

@@ -11,7 +11,7 @@
 		<li>
 				<img src="${pageContext.request.contextPath}/doctor/docPhotoView"
 				width="150" height="150" class="my-photo border rounded-circle" 
-				onclick="location.href='${pageContext.request.contextPath}/doctor/docPage'">
+				onclick="location.href='${pageContext.request.contextPath}/schedule/list'">
 				<div class="camera" id="photo_btn">
 					<img src="${pageContext.request.contextPath}/images/reset.png">
 				</div>			
@@ -24,23 +24,42 @@
 				<input type="button" value="취소" id="photo_reset"> 
 			</div>
 		</li>
-        <li style="margin-bottom:10px;">
-            <a href="${pageContext.request.contextPath}/schedule/list" class="detail-btn">스케줄관리</a>
-        </li>
-        <li style="margin-bottom:10px;">
-	        <c:if test="${user.doc_treat == 0}">
-	            <a href="${pageContext.request.contextPath}/doctor/registerTreat" class="detail-btn">비대면 진료 신청</a>
-	        </c:if>
-	        <c:if test="${user.doc_treat == 1}">
-            	<a href="${pageContext.request.contextPath}/chat/chatView" class="detail-btn">비대면 진료</a>
-        	</c:if>
-        </li>
-		<li style="margin-bottom:10px;">
-            <a href="${pageContext.request.contextPath}/doctor/modifyDoctor" class="detail-btn">회원정보 수정</a>
-        </li>
-        <li style="margin-top:50px;">
-            <a href="${pageContext.request.contextPath}/doctor/logout" class="detail-btn">로그아웃</a>
-        </li>
+		<div class="nav_align" style="text-align:left; margin-left:85px; padding:10px;">
+			<ul>
+				<li>
+					<h5>이용내역</h5>
+				</li>
+		        <li style="margin-bottom:10px; font-size:15px;">
+		            <a href="${pageContext.request.contextPath}/reservation/docCompletedList" class="detail-btn">진료기록</a>
+		        </li>
+		        <li style="margin-bottom:10px; font-size:15px;">
+		            <a href="${pageContext.request.contextPath}/reservation/docResList" class="detail-btn">예약내역</a>
+		        </li>
+		        <li style="margin-bottom:10px; font-size:15px;">
+			        <c:if test="${user.doc_treat == 0}">
+			            <a href="${pageContext.request.contextPath}/doctor/registerTreat" class="detail-btn">비대면 진료 신청</a>
+			        </c:if>
+			        <c:if test="${user.doc_treat == 1}">
+		            	<a href="${pageContext.request.contextPath}/chat/chatView" class="detail-btn">비대면 진료</a>
+		        	</c:if>
+		        </li>
+		         <li>
+					<h5 style="margin-top:30px;">나의 활동</h5>
+				</li>
+		         <li style="margin-bottom:10px; font-size:15px;">
+		            <a href="${pageContext.request.contextPath}/schedule/list" class="detail-btn">후기</a>
+		        </li>
+		        <li style="margin-bottom:50px; font-size:15px;">
+		            <a href="${pageContext.request.contextPath}/schedule/list" class="detail-btn">댓글</a>
+		        </li>
+				<li style="margin-bottom:10px; font-size:15px;">
+		            <a href="${pageContext.request.contextPath}/doctor/modifyDoctor" class="detail-btn">회원정보 수정</a>
+		        </li>
+		        <li style="font-size:15px; padding-bottom:10px;">
+		            <a href="${pageContext.request.contextPath}/doctor/logout" class="detail-btn">로그아웃</a>
+		        </li>
+	        </ul>
+        </div>
 	</ul>
 </div>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
