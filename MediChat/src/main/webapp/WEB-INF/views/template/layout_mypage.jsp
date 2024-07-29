@@ -19,7 +19,7 @@
 }
 #main_body{
 	border-radius: 10px;
-	background-color:rgba(249, 247, 242, 0.7);
+	background-color: #fff;
 	}
 </style>
 </head>

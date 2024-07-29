@@ -222,7 +222,7 @@ public class CommunityController {
 			DoctorVO doctor = (DoctorVO)user;
 			user_num = doctor.getMem_num();
 		}else {
-			user_num = -1; //에러발생..?
+			user_num = -1; //에러발생..?(이를 명시하지 않는 경우 mapJson에 put할 때 에러 발생)
 		}
 		
 		log.debug("<<댓글 목록 - user_num>> : " + user_num);
@@ -352,6 +352,28 @@ public class CommunityController {
 	
 	/*==============================답글==============================*/
 	//답글 목록
+	@GetMapping("/medichatCommunity/listReply")
+	@ResponseBody
+	public Map<String, Object> getListReply(long cre_num, HttpSession session){
+		log.debug("<<답글 목록 - cre_num>> : " + cre_num);
+		
+		List<CommunityReplyVO> list = communityService.selectListReply(cre_num);
+		log.debug("<<답글 list>>>" + list);
+		Object user = session.getAttribute("user");
+		
+		Map<String, Object> mapJson = new HashMap<String, Object>();
+		mapJson.put("list", list);
+		
+		if(user!=null && user instanceof DoctorVO) {
+			DoctorVO doctor = (DoctorVO) user;
+			mapJson.put("user_num", doctor.getMem_num());
+		}else if(user!=null && user instanceof MemberVO) {
+			MemberVO member = (MemberVO) user;
+			mapJson.put("user_num", member.getMem_num());
+		}
+		
+		return mapJson;
+	}
 	
 	//답글 등록
 	@PostMapping("/medichatCommunity/writeReply")
@@ -382,6 +404,29 @@ public class CommunityController {
 		
 		return mapJson;
 	}
+	@GetMapping("/myPage/comments")
+	public String getUserComments(HttpSession session, Model model) {
+	    Object user = session.getAttribute("user");
+	    
+	    if (user == null) {
+	        return "redirect:/member/login"; // 로그인 페이지로 리디렉션
+	    }
+	    
+	    long userNum;
+	    if (user instanceof MemberVO) {
+	        userNum = ((MemberVO) user).getMem_num();
+	    } else if (user instanceof DoctorVO) {
+	        userNum = ((DoctorVO) user).getMem_num();
+	    } else {
+	        throw new RuntimeException("Unknown user type");
+	    }
+	    
+	    List<CommunityReplyVO> comments = communityService.selectCommentsByUser(userNum);
+	    
+	    model.addAttribute("comments", comments);
+	    return "myPageComments";
+	}
+
 }
 
 

@@ -1,5 +1,57 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/shg.css" type="text/css">
+<style>
+#calendar {
+    margin: 0 auto;
+    width: 80%;
+    max-width: 800px;
+}
+.fc .fc-button-primary{
+    background-color: #fff;
+    border-color: #fff;
+    color: #000;
+    width: 80px;
+}
+.fc .fc-button-primary:hover{
+    background-color: #d8f3dc;
+    border-color: #fff;
+    color: #fff;
+}
+.fc .fc-button-primary:focus, .fc .fc-button-primary:active {
+    outline: none;
+    box-shadow: none;
+}
+.fc .fc-button-primary:active{
+    background-color: transparent !important;
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: transparent !important;
+}
+.fc .fc-button-primary:disabled{
+    background-color: #fff;
+    border-color: #fff;
+    color: #000;
+}
+.fc-day-sun a {
+    color: red;
+    text-decoration: none;
+}
+.fc-day-sat a {
+    color: blue;
+    text-decoration: none;
+}
+.fc-day-mon a, .fc-day-tue a, .fc-day-wed a, .fc-day-thu a, .fc-day-fri a {
+    color: black;
+    text-decoration: none;
+}
+.fc .fc-daygrid-day.fc-day-today {
+    background-color: #fafffb;
+}
+.fc .fc-highlight{
+    background-color: #e4f8e5;
+}
+</style>
 <script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/index.global.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/schedule.list.js"></script>
@@ -91,8 +143,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     const doc_etime = param.workingHours.DOC_ETIME;
                     const reservedTimes = param.reservedTimes;
                     const allTimes = generateTimesForDay(doc_stime, doc_etime);
-                    let output = '<div class="time-section">';
-                    output += '<h3>오전</h3><div class="time-row">';
+                    let output = ''
+                    output += '<div class="time-section">';
+                    output += '<h5 class="time-header">오전</h5><div class="time-row">';
                     allTimes.forEach((time, index) => {
                         if (index > 0 && index % 4 == 0) {
                             output += '</div><div class="time-row">';
@@ -101,19 +154,19 @@ document.addEventListener('DOMContentLoaded', function() {
                             if (index > 0 && index % 4 == 0) {
                                 output += '</div><div class="time-row">';
                             }
-                            output += '<button class="' + getButtonClass(time, date, reservedTimes) + '" data-time="' + time + '">' + time + '</button>';
+                            output += '<button id="schedule_mobtn" class="' + getButtonClass(time, date, reservedTimes) + '" data-time="' + time + '">' + time + '</button>';
                         }
                     });
                     output += '</div></div>';
 
                     output += '<div class="time-section">';
-                    output += '<h3>오후</h3><div class="time-row">';
+                    output += '<h5 class="time-header">오후</h5><div class="time-row">';
                     allTimes.forEach((time, index) => {
                         if (time >= "12:00") {
                             if (index > 0 && index % 4 == 0) {
                                 output += '</div><div class="time-row">';
                             }
-                            output += '<button class="' + getButtonClass(time, date, reservedTimes) + '" data-time="' + time + '">' + time + '</button>';
+                            output += '<button id="schedule_afbtn" class="' + getButtonClass(time, date, reservedTimes) + '" data-time="' + time + '">' + time + '</button>';
                         }
                     });
                     output += '</div></div>';
@@ -242,11 +295,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // 버튼 행 HTML을 반환하는 함수
     function getButtonRowHtml() {
         return `
+        	
             <div class="button-row">
                 <input type="button" value="근무수정하기" class="modify-btn">
                 <input type="button" value="근무수정완료" class="complete-modify-btn" style="display:none;">
                 <input type="button" value="취소" class="cancel-btn" style="display:none;">
             </div>
+            <p style="font-size: 10px; margin-bottom: 20px;">근무수정하기 버튼을 클릭해야만 근무를 수정할 수 있습니다.</p>
         `;
     }
 
@@ -272,7 +327,6 @@ document.addEventListener('DOMContentLoaded', function() {
     width: 80%;
 }
 .regular-day-off {/*정기휴무요일*/
-
 }
 .time-off {
     background-color: #f2f2f2;
@@ -344,6 +398,5 @@ button:disabled {
     pointer-events: auto;
 }
 </style>
-
 <div id="calendar"></div>
 <div id="time-buttons"></div>

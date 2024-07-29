@@ -59,6 +59,11 @@ public class CommunityServiceImpl implements CommunityService{
 		communityMapper.updateHit(cbo_num);
 	}
 	
+	public List<CommunityReplyVO> selectCommentsByUser(long userNum) {
+	    return communityMapper.selectCommentsByUser(userNum);
+	}
+
+	
 	/*-----------------------------게시판글 좋아요-----------------------------*/
 	@Override
 	public CommunityFavVO selectFav(CommunityFavVO fav) {
@@ -125,8 +130,8 @@ public class CommunityServiceImpl implements CommunityService{
 	
 	/*-----------------------------게시판글 대댓글-----------------------------*/
 	@Override
-	public List<CommunityReplyVO> selectListReply(Map<String, Object> map) {
-		return communityMapper.selectListReply(map);
+	public List<CommunityReplyVO> selectListReply(Long cre_num) {
+		return communityMapper.selectListReply(cre_num);
 	}
 	
 	@Override
@@ -135,6 +140,11 @@ public class CommunityServiceImpl implements CommunityService{
 		return null;
 	}
 
+	@Override
+	public Integer selectCountReply(Long cre_num) {
+		return communityMapper.selectCountReply(cre_num);
+	}
+	
 	@Override
 	public void insertReply(CommunityReplyVO communityReply) {
 		communityMapper.insertReply(communityReply);
@@ -151,6 +161,7 @@ public class CommunityServiceImpl implements CommunityService{
 		// TODO Auto-generated method stub
 		
 	}
+
 
 	
 }
