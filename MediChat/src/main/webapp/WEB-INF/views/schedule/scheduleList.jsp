@@ -54,9 +54,6 @@
 .fc-daygrid-day-selected {
     background-color: #e4f8e5;
 }
-.fc-daygrid-day-selected {
-    background-color: #e4f8e5;
-}
 </style>
 <script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/index.global.min.js"></script>
@@ -152,6 +149,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     const reservedTimes = param.reservedTimes;
                     const allTimes = generateTimesForDay(doc_stime, doc_etime);
                     let output = ''
+                   	output += '<div class="legend">';
+                   	output += '<div class="legend-item"><div class="green-circle"></div><span>근무하는 시간입니다.</span></div>';
+                   	output += '<div class="legend-item"><div class="white-circle"></div><span>근무하지 않는 시간입니다.</span></div>';
+                   	output += '<div class="legend-item"><div class="gray-circle"></div><span>예약되어 있는 시간입니다. 수정할 수 없습니다.</span></div>';
+                   	output += '<div class="legend-item"><div class="btn-circle-info"></div><span>※ 근무수정하기 버튼을 클릭해야만 근무를 수정할 수 있습니다.</span></div>';
+                   	output += '</div>';
                     output += '<div class="time-section">';
                     output += '<h5 class="time-header">오전</h5><div class="time-row">';
                     allTimes.forEach((time, index) => {
@@ -311,7 +314,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 <input type="button" value="근무수정완료" class="complete-modify-btn" style="display:none;">
                 <input type="button" value="취소" class="cancel-btn" style="display:none;">
             </div>
-            <p style="font-size: 10px; margin-bottom: 20px;">근무수정하기 버튼을 클릭해야만 근무를 수정할 수 있습니다.</p>
         `;
     }
 

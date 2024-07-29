@@ -534,3 +534,39 @@ p{
 	height: 195px;
 	margin-top: 10px;
 }
+.green-circle, .white-circle, .gray-circle {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.green-circle {
+    background-color: #e4f8e5;
+}
+
+.white-circle {
+    background-color: white;
+    border: 1px solid #cecece;
+}
+
+.gray-circle {
+    background-color: #cecece;
+}
+.legend {
+    margin-bottom: 10px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    padding-left:350px;
+}
+
+.legend-item span {
+    margin-left: 5px;
+    font-size: 14px;
+}

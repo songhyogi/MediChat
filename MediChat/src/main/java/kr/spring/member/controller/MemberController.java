@@ -567,14 +567,12 @@ public class MemberController {
 	    }
 	    try{
 	        MemberVO member = memberService.selectMember(user.getMem_num());
-	        List<ReservationVO> reservations = reservationService.getReservationsByMember(user.getMem_num());
 	        if(member != null) {
 	            int count = reservationService.selectCountByMem(user.getMem_num());
 	            member.setReservationCount(count);
 	            log.debug("<<MY페이지>> : " + member);
 	            model.addAttribute("member", member);
 	            model.addAttribute("count", count);
-	            model.addAttribute("reservations", reservations);
 	            return "myPage";
 	        }else{
 	            return "redirect:/login";
