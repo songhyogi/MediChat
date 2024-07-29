@@ -61,7 +61,15 @@
 	<div id="hospitalListBox">
 		<c:forEach items="${hosList}" var="hospital">
 			<div class="hospital-box" data-hosNum="${hospital.hos_num}">
-				<div class="hospital-name fs-17 fw-8 text-black-6">${hospital.hos_name}</div>
+				<div class="d-flex align-items-center">
+					<div class="hospital-name fs-17 fw-8 text-black-6">${hospital.hos_name}</div>
+					<c:if test="${hospital.rev_avg != '0.0'}">
+						<div class="ms-3 d-flex align-items-center">
+							<img src="/images/star.png" width="15" height="15">
+							<span class="fs-14 fw-7 ms-1">${hospital.rev_avg}</span>
+						</div>
+					</c:if>
+				</div>
 				<div class="hospital-around fs-11 fw-9 text-gray-7">${hospital.around}m</div>
 				
 				<!-- 진료시간이 있으면-->
@@ -335,8 +343,17 @@ $(document).ready(function() {
                 let output = '';
                 for(let i=0; i<param.length; i++){
                 	output += '<div class="hospital-box" data-hosNum="'+param[i].hos_num+'">';
+                	output += '<div class="d-flex align-itmes-center">';
                 	output += '<div class="hospital-name fs-17 fw-8 text-black-6">'+param[i].hos_name+'</div>';
-                	output += '<div class="hospital-sub fs-11 fw-9 text-gray-7">'+param[i].around+'m</div>';
+                	if(param[i].rev_avg != '0.0'){
+                		output += '<div class="ms-3 d-flex align-items-center">';
+                		ouput += '<img src="/images/star.png" width="15" height="15">';
+                		output += '<span class="fs-14 fw-7 ms-1">'
+                		output += param[i].rev_avg;
+                		output += '</span>';
+                	}
+            		output += '</div>';
+                	output += '<div class="hospital-around fs-11 fw-9 text-gray-7">'+param[i].around+'m</div>';
                 	output += '<div class="hospital-open fs-13 fw-7 text-black-4 d-flex align-items-center">';
                 	if(param[i].hos_time${day}S!='null' || param[i].hos_time${day}C!='null'){
 	                	if(param[i].hos_time${day}S<=${time} && ${time}<param[i].hos_time${day}C){
