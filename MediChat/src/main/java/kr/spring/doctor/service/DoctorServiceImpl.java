@@ -29,6 +29,11 @@ public class DoctorServiceImpl implements DoctorService{
 	public DoctorVO selectDoctor(Long mem_num) {
 		return doctorMapper.selectDoctor(mem_num);
 	}
+	
+	@Override
+	public List<DoctorVO> docListByHosNum(long hos_num) {
+		return doctorMapper.docListByHosNum(hos_num);
+	}
 
 	@Override
 	public void updateDoctor(DoctorVO doctor) {

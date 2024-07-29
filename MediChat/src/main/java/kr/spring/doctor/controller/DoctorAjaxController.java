@@ -153,4 +153,21 @@ public class DoctorAjaxController {
 		}
 		return mapJson;
 	}
+	
+	//의사 연혁 가져오기
+	@GetMapping("/doctor/doctorHistory")
+	@ResponseBody
+	public Map<String,Object> selectDoctorHistory(long hos_num){
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		List<DoctorVO> doctor = doctorService.docListByHosNum(hos_num);
+		
+		if(doctor.isEmpty()) {
+			map.put("doctor", "empty");
+		}else {
+			map.put("doctor", doctor);
+		}
+		
+		return map;
+	}
 }
