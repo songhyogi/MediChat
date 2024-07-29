@@ -54,6 +54,9 @@
 .fc-daygrid-day-selected {
     background-color: #e4f8e5;
 }
+.fc-daygrid-day-selected {
+    background-color: #e4f8e5;
+}
 </style>
 <script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/index.global.min.js"></script>
