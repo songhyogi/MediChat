@@ -114,6 +114,53 @@
 	padding:30px;
 	width:650px;
 }
+.fc .fc-button-primary{
+    background-color: #fff;
+    border-color: #fff;
+    color: #000;
+    width: 80px;
+}
+.fc .fc-button-primary:hover{
+    background-color: #d8f3dc;
+    border-color: #fff;
+    color: #fff;
+}
+.fc .fc-button-primary:focus, .fc .fc-button-primary:active {
+    outline: none;
+    box-shadow: none;
+}
+.fc .fc-button-primary:active{
+    background-color: transparent !important;
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: transparent !important;
+}
+.fc .fc-button-primary:disabled{
+    background-color: #fff;
+    border-color: #fff;
+    color: #000;
+}
+.fc-day-sun a {
+    color: red;
+    text-decoration: none;
+}
+.fc-day-sat a {
+    color: blue;
+    text-decoration: none;
+}
+.fc-day-mon a, .fc-day-tue a, .fc-day-wed a, .fc-day-thu a, .fc-day-fri a {
+    color: black;
+    text-decoration: none;
+}
+.fc .fc-daygrid-day.fc-day-today {
+    background-color: #fafffb;
+}
+.fc .fc-highlight{
+    background-color: #e4f8e5;
+}
+.fc-daygrid-day-selected {
+    background-color: #e4f8e5;
+}
 </style>
 </head>
 <body>
@@ -172,26 +219,41 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
+    document.addEventListener('DOMContentLoaded', function() {
 
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth', // 달력을 월 단위로 시작
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                },
-                editable: true,
-                selectable: true,
-                events: [
-                    // 여기에 이벤트를 추가할 수 있습니다
-                    // 예: { title: '이벤트 제목', start: '2024-07-30', end: '2024-07-31' }
-                ]
-            });
+        // FullCalendar 초기화
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            selectable: true, // 사용자가 날짜를 선택할 수 있게 설정
+            height: 'auto',
+            width: 'auto',
+            headerToolbar: {
+                left: 'title',
+                right: 'today prev,next'
+            },
+            initialView: 'dayGridMonth', // 초기 보여줄 뷰 설정
+            locale: 'ko', // 로케일 설정
+            dayCellContent: function(e) {
+                // 날짜 셀 내용 설정 (1일, 2일 -> '일' 빼고 1, 2만 보이게)
+                var dayNumber = e.date.getDate();
+                var html = '<div class="fc-daygrid-day-number">' + dayNumber + '</div>';
+                return { html: html };
+            },
+            fixedWeekCount: false // 다음 달의 날짜가 보여지지 않게 설정
 
-            calendar.render();
         });
+        var reservations = ${reservations};
+        var events = reservations.map(function(reservation) {
+            return {
+                start: reservation.res_date,
+                display: 'background',
+                backgroundColor: '#ff9f89'
+            };
+        });
+        calendar.addEventSource(events);
+        
+        calendar.render();
+     });
     </script>
 </body>
 </html>

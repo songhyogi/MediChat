@@ -32,6 +32,7 @@ import kr.spring.member.vo.MemberVO;
 import kr.spring.notification.service.NotificationService;
 import kr.spring.notification.vo.NotificationVO;
 import kr.spring.reservation.service.ReservationService;
+import kr.spring.reservation.vo.ReservationVO;
 import kr.spring.util.AuthCheckException;
 import kr.spring.util.CaptchaUtil;
 import kr.spring.util.FileUtil;
@@ -566,12 +567,14 @@ public class MemberController {
 	    }
 	    try{
 	        MemberVO member = memberService.selectMember(user.getMem_num());
+	        List<ReservationVO> reservations = reservationService.getReservationsByMember(user.getMem_num());
 	        if(member != null) {
 	            int count = reservationService.selectCountByMem(user.getMem_num());
 	            member.setReservationCount(count);
 	            log.debug("<<MY페이지>> : " + member);
 	            model.addAttribute("member", member);
 	            model.addAttribute("count", count);
+	            model.addAttribute("reservations", reservations);
 	            return "myPage";
 	        }else{
 	            return "redirect:/login";

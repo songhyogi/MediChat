@@ -43,4 +43,8 @@ public interface ReservationMapper {
 	//진료 완료된 내역 가져오기
 	public Integer selectCountByCompleted(Map<String,Object> map);
 	public List<ReservationVO> getDocCompletedList(Map<String,Object> map);
+	//마이페이지 캘린더용 예약내역 가져오기
+    @Select("SELECT * FROM reservation WHERE mem_num=#{mem_num}")
+    public List<ReservationVO> getReservationsByMember(Long mem_num);
+	
 }
