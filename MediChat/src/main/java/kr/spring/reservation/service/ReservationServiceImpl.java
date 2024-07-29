@@ -89,5 +89,10 @@ public class ReservationServiceImpl implements ReservationService{
 		return reservationMapper.getDocCompletedList(map);
 	}
 
+	@Override
+	public List<ReservationVO> getReservationsByMember(Long mem_num) {
+		return reservationMapper.getReservationsByMember(mem_num);
+	}
+
 	
 }

@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.member.vo.MemberVO;
@@ -107,4 +108,6 @@ public class ReservationController {
 		}
 		return "common/resultAlert";
 	}
+	
+
 }

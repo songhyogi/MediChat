@@ -150,6 +150,7 @@ public class DoctorController {
 				// =====자동 로그인 끝=====
 				// 로그인 처리
 				session.setAttribute("user", doctor);
+				session.setAttribute("user_type", "doctor");
 				
 				/* ksy 알림 처리 시작 */
 				int noti_cnt = notificationService.selectCountNotification(doctor.getMem_num());
