@@ -276,7 +276,7 @@
 				</div>
 				<div id="header-status-div" style="display: none;">
 					<div class="header-status-select">
-						<a href="/schedule/list">내 정보</a>
+						<a href="/doctor/modifyDoctor">내 정보</a>
 					</div>
 					<div class="select-line"></div>
 					<div class="header-status-select">
