@@ -29,16 +29,21 @@
 				<li>
 					<h5>이용내역</h5>
 				</li>
+			 	<li style="margin-bottom:10px; font-size:15px;">
+			        <a href="${pageContext.request.contextPath}/schedule/list" class="detail-btn">스케줄 관리</a>
+			    </li>
 		        <li style="margin-bottom:10px; font-size:15px;">
+		        	<c:if test="${user.doc_treat == 1}">
 		            <a href="${pageContext.request.contextPath}/reservation/docCompletedList" class="detail-btn">진료기록</a>
+		            </c:if>
 		        </li>
 		        <li style="margin-bottom:10px; font-size:15px;">
+		        	<c:if test="${user.doc_treat == 1}">
 		            <a href="${pageContext.request.contextPath}/reservation/docResList" class="detail-btn">예약내역</a>
+		            </c:if>
 		        </li>
-		        <li style="margin-bottom:10px; font-size:15px;">
-			        <c:if test="${user.doc_treat == 0}">
-			            <a href="${pageContext.request.contextPath}/doctor/registerTreat" class="detail-btn">비대면 진료 신청</a>
-			        </c:if>
+
+			    <li style="margin-bottom:10px; font-size:15px;">
 			        <c:if test="${user.doc_treat == 1}">
 		            	<a href="${pageContext.request.contextPath}/chat/chatView" class="detail-btn">비대면 진료</a>
 		        	</c:if>
