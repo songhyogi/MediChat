@@ -8,7 +8,7 @@
     }
 </style>
 <div class="p-3">
-	<p class="text-lightgray fw-7 fs-13">홈 > 의료 상담 > 글 상세</p>
+	<p class="text-lightgray fw-7 fs-13">홈 > 의료 상담 > 글 작성</p>
 	<img src="/images/question-icon.gif" width="55px" height="55px" class="mb-3">
 	<div class="fs-22 fw-7 text-black-6">
 		간단하게 진단 받아 보세요
