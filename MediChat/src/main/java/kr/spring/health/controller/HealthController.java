@@ -43,76 +43,81 @@ public class HealthController {
 		return new HealthyBlogVO();
 	}
 	//마이페이지 댓글
-			@GetMapping("/doctor/healthyMydoc")
-			public String getMyDocHeathList(HttpServletRequest request,HttpSession session,@RequestParam(defaultValue="1") int pageNum,Model model) {
-				Map<String,Object> map = new HashMap<String,Object>();
-				Object user_type = (Object)session.getAttribute("user_type");
-				Object user = (Object) session.getAttribute("user");
+	@GetMapping("/doctor/healthyMydoc")
+	public String getMyDocHeathList(HttpServletRequest request,HttpSession session,@RequestParam(defaultValue="1") int pageNum,Model model) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		Object user_type = (Object)session.getAttribute("user_type");
+		Object user = (Object) session.getAttribute("user");
 
-				if(user != null) {
-					if(user_type != null) {
-						DoctorVO duser = (DoctorVO) user;
-						map.put("mem_num", duser.getMem_num());
-					
-					}else{
-						model.addAttribute("message","접근 권한이 없습니다.");
-						model.addAttribute("url",request.getContextPath()+"/main/main");
-						return "common/resultAlert";
-					}
-						
-					
-				}else {
-					model.addAttribute("message","로그인 후 사용가능합니다.");
-					model.addAttribute("url",request.getContextPath()+"/doctor/login");
-					return "common/resultAlert";
-				}
-				int count = service.selectDocByHealCount(map);
-				PagingUtil page = new PagingUtil(pageNum,count,5,10,"healthyMydoc");
-
-				map.put("start", page.getStartRow());
-				map.put("end", page.getEndRow());
-
-				List<HealthyBlogVO> list = service.selectDocByHealList(map);
-
-				model.addAttribute("list",list);
-				model.addAttribute("count",count);
-				model.addAttribute("page",page.getPage());
-
-				
-				return"docPagehealthyList";
-			}
-	//마이페이지 댓글
-		@GetMapping("/member/healthyMyreply")
-		public String getMyHeathReplyList(HttpServletRequest request,HttpSession session,@RequestParam(defaultValue="1") int pageNum,Model model) {
-			Map<String,Object> map = new HashMap<String,Object>();
-			String user_type = (String)session.getAttribute("user_type");
-			Object user = (Object) session.getAttribute("user");
-
-			if(user != null) {
-				
-					MemberVO muser = (MemberVO) user;
-					map.put("mem_num", muser.getMem_num());
-				
+		if(user != null) {
+			if(user_type.equals("doctor")) {
+				DoctorVO doctor = (DoctorVO) user;
+				map.put("mem_num", doctor.getMem_num());
 			}else {
-				model.addAttribute("message","로그인 후 사용가능합니다.");
-				model.addAttribute("url",request.getContextPath()+"/member/login");
+				model.addAttribute("message","권한이 없습니다.");
+				model.addAttribute("url",request.getContextPath()+"/main/main");
 				return "common/resultAlert";
 			}
-			int count = service.selectMyHealReCount(map);
-			PagingUtil page = new PagingUtil(pageNum,count,5,10,"healthyMyreply");
 
-			map.put("start", page.getStartRow());
-			map.put("end", page.getEndRow());
+		}else {
+			model.addAttribute("message","로그인 후 사용가능합니다.");
+			model.addAttribute("url",request.getContextPath()+"/doctor/login");
+			return "common/resultAlert";
+		}
+		int count = service.selectDocByHealCount(map);
+		PagingUtil page = new PagingUtil(pageNum,count,5,10,"healthyMydoc");
 
-			List<HealthyReplyVO> list = service.selectMyReHealList(map);
+		map.put("start", page.getStartRow());
+		map.put("end", page.getEndRow());
 
-			model.addAttribute("list",list);
-			model.addAttribute("count",count);
-			model.addAttribute("page",page.getPage());
+		List<HealthyBlogVO> list = service.selectDocByHealList(map);
+
+		model.addAttribute("list",list);
+		model.addAttribute("count",count);
+		model.addAttribute("page",page.getPage());
+
+
+		return"docPagehealthyList";
+	}
+	//마이페이지 댓글
+	@GetMapping("/member/healthyMyreply")
+	public String getMyHeathReplyList(HttpServletRequest request,HttpSession session,@RequestParam(defaultValue="1") int pageNum,Model model) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		String user_type = (String)session.getAttribute("user_type");
+		Object user = (Object) session.getAttribute("user");
+
+		if(user != null) {
+			if(user_type.equals("doctor")) {
+				model.addAttribute("message","회원전용페이지입니다.");
+				model.addAttribute("url",request.getContextPath()+"/main/main");
+				return "common/resultAlert";
+			}else {
+				MemberVO muser = (MemberVO) user;
+				map.put("mem_num", muser.getMem_num());
+
+				}
 
 			
-			return"myReHealthyList";
+		}else {
+			model.addAttribute("message","로그인 후 사용가능합니다.");
+			model.addAttribute("url",request.getContextPath()+"/member/login");
+			return "common/resultAlert";
 		}
+		int count = service.selectMyHealReCount(map);
+		PagingUtil page = new PagingUtil(pageNum,count,5,10,"healthyMyreply");
+
+		map.put("start", page.getStartRow());
+		map.put("end", page.getEndRow());
+
+		List<HealthyReplyVO> list = service.selectMyReHealList(map);
+
+		model.addAttribute("list",list);
+		model.addAttribute("count",count);
+		model.addAttribute("page",page.getPage());
+
+
+		return"myReHealthyList";
+	}
 	//마이페이지
 	@GetMapping("/member/healthyMy")
 	public String getMyHeathList(HttpServletRequest request,HttpSession session,@RequestParam(defaultValue="1") int pageNum,@RequestParam(defaultValue="1") int rpageNum,Model model) {
@@ -121,10 +126,10 @@ public class HealthController {
 		Object user = (Object) session.getAttribute("user");
 
 		if(user != null) {
-			
-				MemberVO muser = (MemberVO) user;
-				map.put("mem_num", muser.getMem_num());
-			
+
+			MemberVO muser = (MemberVO) user;
+			map.put("mem_num", muser.getMem_num());
+
 		}else {
 			model.addAttribute("message","로그인 후 사용가능합니다.");
 			model.addAttribute("url",request.getContextPath()+"/member/login");
@@ -132,7 +137,7 @@ public class HealthController {
 		}
 		int count = service.selectMyFavHealCount(map);
 
-		PagingUtil page = new PagingUtil(pageNum,count,5,10,"healthyMy");
+		PagingUtil page = new PagingUtil(pageNum,count,3,10,"healthyMy");
 
 		map.put("start", page.getStartRow());
 		map.put("end", page.getEndRow());
@@ -143,20 +148,20 @@ public class HealthController {
 		model.addAttribute("count",count);
 		model.addAttribute("page",page.getPage());
 
-		
+
 		int reFavcount = service.selectMyFavHealReCount(map);
-		PagingUtil repage = new PagingUtil(rpageNum,reFavcount,5,10,"healthyMy");
+		PagingUtil repage = new PagingUtil(rpageNum,reFavcount,3,10,"healthyMy");
 		map.put("start", repage.getStartRow());
 		map.put("end", repage.getEndRow());
 		List<HealthyReplyVO> relist = service.selectMyFavReHealList(map);
 		model.addAttribute("relist",relist);
 		model.addAttribute("recount",reFavcount);
 		model.addAttribute("repage",repage.getPage());
-	
+
 		log.debug("<<<<<<<<<<<<<<<<<<"+ relist);
 		return"myFavHealthyList";
 	}
-	
+
 	@GetMapping("/health/healthBlog")
 	public String getHeathList(@RequestParam(defaultValue="1") int pageNum,String keyword, String keyfield,@RequestParam(defaultValue="1") int vpageNum,String vkeyword, String vkeyfield,Model model) {
 		Map<String,Object> map =new HashMap<String,Object>();
@@ -189,7 +194,7 @@ public class HealthController {
 		model.addAttribute("vpageNum",vpageNum);
 		int maxPage =(int) Math.ceil((double)vcount/3);
 		model.addAttribute("maxPage", maxPage);
-	
+
 		return"healthy_Blog";
 	}
 	@GetMapping("/health/healthM")
@@ -210,7 +215,7 @@ public class HealthController {
 		model.addAttribute("list",list);
 		model.addAttribute("count",count);
 		model.addAttribute("page",page.getPage());
-		
+
 		return"healthy_M";
 	}
 
@@ -272,7 +277,7 @@ public class HealthController {
 	}
 
 	@GetMapping("/health/healthDetail")
-	public String getHealthDetail(long healthy_num,HttpSession session,Model model) {
+	public String getHealthDetail(long healthy_num,HttpServletRequest request,HttpSession session,Model model) {
 
 		service.updateHealHit(healthy_num);
 		Map<String,Object> map = new HashMap<String,Object>();
@@ -281,7 +286,7 @@ public class HealthController {
 		Object user = (Object) session.getAttribute("user");
 
 		if(user != null) {
-			if(user_type != null && user.equals("doctor")) {
+			if(user_type.equals("doctor")) {
 				DoctorVO duser = (DoctorVO)user;
 				map.put("user_num", duser.getMem_num());
 				model.addAttribute("user_num", duser.getMem_num());
@@ -293,11 +298,15 @@ public class HealthController {
 
 		}else
 			map.put("user_num", 0);
-		
-		HealthyBlogVO vo = service.getHealthy(map);
 
+		HealthyBlogVO vo = service.getHealthy(map);
+		if(vo ==  null) {
+			model.addAttribute("message","삭제된 글입니다.");
+			model.addAttribute("url",request.getContextPath()+"/main/main");
+			return "common/resultAlert";
+		}
 		model.addAttribute("healthy",vo);
-		log.debug("<<<<<<<<<<"+ vo);
+		
 		return "healthy_Detail";
 	}
 
@@ -314,7 +323,7 @@ public class HealthController {
 			model.addAttribute("url",request.getContextPath()+"/member/login");
 
 		}else if( user != null) {
-			if(user_type != null) {
+			if(user_type.equals("doctor")) {
 				DoctorVO duser = (DoctorVO)user;
 				map.put("user_num", duser.getMem_num());
 				mem_num= duser.getMem_num();
@@ -322,7 +331,8 @@ public class HealthController {
 				MemberVO mem = (MemberVO) user;
 				map.put("user_num", mem.getMem_num());
 				mem_num= mem.getMem_num();
-			}	
+			}
+			
 			HealthyBlogVO vo = service.getHealthy(map);
 			if(mem_num == vo.getMem_num() ) {
 				model.addAttribute("healthyBlogVO",vo);
@@ -347,7 +357,7 @@ public class HealthController {
 			model.addAttribute("message","로그인 후 사용가능합니다.");
 			model.addAttribute("url",request.getContextPath()+"/member/login");
 		}else if(user != null) {
-			if(user_type != null) {
+			if(user_type.equals("doctor")) {
 				DoctorVO duser = (DoctorVO)user;
 				map.put("user_num", duser.getMem_num());
 				mem_num= duser.getMem_num();
@@ -355,7 +365,8 @@ public class HealthController {
 				MemberVO mem = (MemberVO) user;
 				map.put("user_num", mem.getMem_num());
 				mem_num= mem.getMem_num();
-			}	
+				}
+			
 			map.put("user_num", mem_num);
 			HealthyBlogVO db_vo = service.getHealthy(map);
 			if( mem_num == db_vo.getMem_num() ) {
@@ -388,7 +399,7 @@ public class HealthController {
 			model.addAttribute("url",request.getContextPath()+"/member/login");
 		}else if(user != null) { 
 
-			if(user_type != null) {
+			if(user_type.equals("doctor")) {
 				DoctorVO duser = (DoctorVO)user;
 				map.put("user_num", duser.getMem_num());
 				mem_num= duser.getMem_num();
@@ -396,7 +407,8 @@ public class HealthController {
 				MemberVO mem = (MemberVO) user;
 				map.put("user_num", mem.getMem_num());
 				mem_num= mem.getMem_num();
-			}	
+				}
+			
 			map.put("user_num", mem_num);
 			HealthyBlogVO vo = service.getHealthy(map);
 			if(mem_num== vo.getMem_num() ) {

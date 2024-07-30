@@ -41,7 +41,7 @@
 	  <select id="selectV" parameterType="long" resultType="videoVO">
 	 	SELECT 
 	 			*
-	 	FROM  video_healthy
+	 	FROM  video_healthy  JOIN member  USING(mem_num)
 	 	WHERE video_num=#{video_num}
 	 </select>
 	 

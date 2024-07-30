@@ -3,12 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <div class="page-main">
-	<div class="page-one" style="margin: auto;">
-		<h5>홈 > 건강 블로그 > 건강매거진</h5>
-		<p>
-
-			<h1><img src="${pageContext.request.contextPath}/images/magazine.png"
-				width="45px;"> <b>건강 매거진</b></h1>
+	<div class="page-one" style="padding-top:16px;">
+		<span class="text-lightgray fw-7 fs-13">홈 > 건강 블로그 > 건강매거진 </span>
+		<h3 style="margin-top:16px;"><img src="${pageContext.request.contextPath}/images/magazine.png"
+				width="45px;"> <b>건강 매거진</b></h3>
 		<br>
 		<form action="healthBlog" method="get" id="form-health"
 			class="align-center">
@@ -55,9 +53,7 @@
 							<ul>
 								<li style="font-size: 16pt;" style="col-9" >${h.healthy_title}</li>
 								<li>${fn:substring(h.healthy_content,0,fn:indexOf(h.healthy_content, '.')+1)}</li>
-								<li class="fs-15 fw-5 text-black-3">${h.h_reg_date} 조회수:${h.healthy_hit} &nbsp; ♡ :
-									${h.fav_cnt} &nbsp; <img src="../images/speech.png"
-									width="15px;"> : ${h.re_cnt}
+								<li class="fs-15 fw-5 text-black-3">👁 ${h.healthy_hit}&nbsp;&nbsp;❤️ ${h.fav_cnt}&nbsp;&nbsp;💬 ${h.re_cnt}
 								</li>
 							</ul>
 					</div>

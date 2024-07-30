@@ -26,9 +26,9 @@
  	});
 </script>
 <div class="page-main">
-	<div class="page-one">
-		<h4>홈 > 건강 블로그 > 건강 비디오 >  글쓰기</h4> 		
-		<h2>&nbsp;&nbsp;&nbsp;건강 비디오 </h2>
+	<div class="page-one" style="padding-top:16px;">
+		<span class="text-lightgray fw-7 fs-13">홈 > 건강 블로그 > 건강 비디오 >  글쓰기</span>		
+		<h3 style="padding-top:16px;">&nbsp;&nbsp;&nbsp;건강 비디오 </h3>
 		
 		<hr size="1" width="80%">
 		

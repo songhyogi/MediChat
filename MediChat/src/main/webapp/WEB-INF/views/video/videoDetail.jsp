@@ -6,10 +6,18 @@
   <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
   <script src="${pageContext.request.contextPath}/js/videoAdapter.js"></script>
 <div class="page-main">
-	<div class="page-one">
-		<h4>홈 > 건강 블로그 > 건강 비디오 > ${video.video_title}</h4> 		
-		<h2>&nbsp;&nbsp;&nbsp;${video.video_title}</h2>
-		${video.v_reg_date}  조회수 :  ${video.video_hit} <br>
+	<div class="page-one" style="padding-top:16px;">
+		<span class="text-lightgray fw-7 fs-13">홈 > 건강 블로그 > 건강 비디오 > ${video.video_title}</span>	
+		<h3 style="margin-top:16px;">&nbsp;&nbsp;&nbsp;<b>${video.video_title}</b></h3>
+		<ul>
+			<li><img
+				src="${pageContext.request.contextPath}/member/memViewProfile?mem_num=${video.mem_num}"
+				width="35" height="35" class="rounded-circle"> &nbsp;&nbsp;
+				${video.mem_id}</li>
+				<li>
+					${video.v_reg_date}  &nbsp;👁  ${video.video_hit} 
+				</li>
+		</ul>
 		<br>
 		<div class="line"></div>
 		<br><br>

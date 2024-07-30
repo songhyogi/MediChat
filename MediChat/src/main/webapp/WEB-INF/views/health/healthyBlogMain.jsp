@@ -20,15 +20,14 @@
 	})
 </script>
 <div class="page-main">
-	<div class="page-one" style="margin: auto;">
-		<h5>홈 > 건강 블로그</h5><a href="${pageContext.request.contextPath}/member/healthyMy">(개발)내 좋아요 목록 보러가기>></a><a href="${pageContext.request.contextPath}/member/healthyMyreply">(개발)내 댓글 목록 보러가기>></a>
-		<br><a href="${pageContext.request.contextPath}/doctor/healthyMydoc">(개발)의사 healthy글 목록 보러가기>></a>
-		<p>
-		<h1>
+	<div class="page-one" style="padding-top:16px;">
+		<span class="text-lightgray fw-7 fs-13">홈 > 건강 블로그</span>
+		<h3 style="margin-top:16px;">
 			<img src="${pageContext.request.contextPath}/images/blogging.png" width="45px;"> <b>건강 블로그</b>
-		</h1>
+		</h3>
 		<br>
-		
+		<br><a href="${pageContext.request.contextPath}/member/healthyMy">(개발)내 좋아요 목록 보러가기>></a><a href="${pageContext.request.contextPath}/member/healthyMyreply">(개발)내 댓글 목록 보러가기>></a>
+		<br><a href="${pageContext.request.contextPath}/doctor/healthyMydoc">(개발)의사 healthy글 목록 보러가기>></a>
 		<hr size="1" width="100%">
 		<br>
 		<div class="page-one" id="healthyVideo" style="margin: auto;">
@@ -38,9 +37,9 @@
 						onclick="location.href='${pageContext.request.contextPath}/video/videoWrite'">글쓰기</button>
 				</div>
 			</c:if>
-			<h2>
+			<h3>
 			<img src="${pageContext.request.contextPath}/images/marketing.png" width="35px;"> <b>건강 비디오</b>
-		   </h2>
+		   </h3>
 			<c:if test="${vcount  == 0}">
 				건강 비디오 내역이 없습니다.
 			</c:if>
@@ -68,7 +67,7 @@
 							<ul class="align-center">
 								<li style="font-size: 16pt;">${fn:substring(v.video_title,0,10)}<c:if
 										test="${fn:length(v.video_title) >10}">...</c:if></li>
-								<li class="fs-15 fw-5 text-black-3" >${v.v_reg_date} 조회수: ${v.video_hit} &nbsp;</li>
+								<li class="fs-15 fw-5 text-black-3" >${v.v_reg_date} &nbsp;👁 ${v.video_hit} &nbsp;</li>
 							</ul>
 						</a>
 					</div>
@@ -87,14 +86,14 @@
 			</c:if>
 			<div style="clear: both;"></div>
 			<div class="align-right float-clear">
-				<a href="${pageContext.request.contextPath}/video/videoList">건강비디오 목록 보러가기>></a>
+				<a href="${pageContext.request.contextPath}/video/videoList" style=" text-decoration: underline;">건강비디오 목록 보러가기>></a>
 			</div>
 
 		</div>
 		<br><br>
-		<h2>
+		<h3>
 			<img src="${pageContext.request.contextPath}/images/magazine.png" width="35px;"> <b>건강 매거진</b>
-		</h2>
+		</h3>
 		<br><br>
 		<c:if test="${count  == 0}">
 			건강 블로그 내역이 없습니다.
@@ -108,8 +107,7 @@
 							<ul style="height:200px">
 								<li style="font-size: 16pt;">${h.healthy_title}</li>
 								<li>${fn:substring(fn:substring(h.healthy_content,0,fn:indexOf(h.healthy_content, '.')+1),0,52)}<br><span class="fs-15 fw-5 text-black-3">${h.h_reg_date}</span><br></li>
-								<li class="align-right fs-14 fw-5 text-black-3" style="padding-right:18px;">조회수: ${h.healthy_hit}&nbsp; ♡ : ${h.fav_cnt}&nbsp; &nbsp;<img src="../images/speech.png"
-									width="15px;"> : ${h.re_cnt}
+								<li class="align-right fs-14 fw-5 text-black-3" style="padding-right:18px;">👁 ${h.healthy_hit}&nbsp;&nbsp;❤️ ${h.fav_cnt}&nbsp;&nbsp;💬 ${h.re_cnt}
 								</li>
 								<li><div class="line"></div></li>
 							</ul>
@@ -135,7 +133,7 @@
 		<br>
 		<br>
 		<div class="align-right float-clear">
-			<a href="${pageContext.request.contextPath}/health/healthM">건강매거진 목록 보러가기>></a>
+			<a href="${pageContext.request.contextPath}/health/healthM" style=" text-decoration: underline;">건강매거진 목록 보러가기>></a>
 		</div>
 	</div>
 </div>

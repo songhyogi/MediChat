@@ -6,13 +6,11 @@
 <script src="${pageContext.request.contextPath}/js/faq.total.js"></script>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <div class="page-main">
-	<div class="page-one">
-		<h5>홈 > 자주 묻는 질문(FAQ)</h5>
-		<p>
-
-			<h1><img
+	<div class="page-one" style="padding-top:16px;">
+		<span class="text-lightgray fw-7 fs-13">홈 > 자주 묻는 질문(FAQ)</span>
+		<h3 style="margin-top:16px;"><img
 				src="${pageContext.request.contextPath}/images/communication.png"
-				width="45px;"> <b>자주 묻는 질문(FAQ)</b></h1>
+				width="45px;"> <b>자주 묻는 질문(FAQ)</b></h3>
 		<br>
 		<form action="faqList" id="form-faq" method="get" class="align-center">
 			<div class="container-input " style="width: 500px; margin: 0 auto;">
@@ -54,7 +52,7 @@
 						<ul  id="faqList" style="margin: 0 auto; float: left; width: 70%">
 							<li style="font-size: 16pt;">Q. ${f.faq_title}</li>
 							<li class="fs-16 fw-5 text-black-3">${f.f_reg_date}
-								&nbsp;조회수 : ${f.faq_hit} &nbsp;</li>
+								&nbsp;&nbsp;👁 ${f.faq_hit} &nbsp;</li>
 						</ul>
 					</a>
 					<div style="float: right; margin-right: 30px; padding-top: 30px;">
@@ -78,7 +76,7 @@
 						<hr width="100%" size="1">
 						<br> <img
 							src="${pageContext.request.contextPath}/images/faqdoc.png"
-							width="50px;"> <br>
+							width="50px;">&nbsp; ${f.mem_id} 의사 <br>
 						<br>${f.faq_content} <br><br><br>
 						<img src="${pageContext.request.contextPath}/images/alertfaq.png" width="20px;"> 꼭 확인해주세요.<br> 
 						 <span class=" fs-12 fw-4 text-black-3">본 답변은 의학적 판단이나 진료 행위로 해석

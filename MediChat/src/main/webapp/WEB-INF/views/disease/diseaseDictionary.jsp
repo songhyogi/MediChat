@@ -3,12 +3,10 @@
     pageEncoding="UTF-8"%>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="page-main">
-	<div class="page-one">
-		<h5>홈 > 질병백과사전</h5> 		
-		<p>
-		<h1><img src="${pageContext.request.contextPath}/images/dictionary.png" width="45px;"> <b>질병 백과사전</b></h1>
+	<div class="page-one"  style="padding-top:16px;">
+		<span class="text-lightgray fw-7 fs-13">홈 > 질병백과사전</span>	
+		<h3   style="margin-top:16px;"><img src="${pageContext.request.contextPath}/images/dictionary.png" width="45px;"> <b>질병 백과사전</b></h3>
 		<br>
- 
 	<form class="align-center" id="form-disease" action="${pageContext.request.contextPath}/disease/diseaseDictionary" method="get">
 		
 		<div class="container-input" style="width:500px; margin:0 auto;">

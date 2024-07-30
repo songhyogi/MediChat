@@ -41,7 +41,7 @@
 	  <select id="selectF" parameterType="long" resultType="faqVO">
 	 	SELECT 
 	 			*
-	 	FROM  faq
+	 	FROM  faq JOIN member USING(mem_num)
 	 	WHERE faq_num=#{faq_num}
 	 </select>
 	 

@@ -44,16 +44,16 @@ public class HealthAjaxController {
 		if(user == null) {
 			user_num=0;
 		}else{
-			if(user_type.equals("membert")) {
-				MemberVO mem = (MemberVO) user;
-				map.put("user_num", mem.getMem_num());
-				user_num= mem.getMem_num();
-			}else {
-				
+			if(user_type.equals("doctor")) {
 				DoctorVO duser = (DoctorVO)user;
 				map.put("user_num", duser.getMem_num());
 				user_num= duser.getMem_num();
-			}	
+			}else {
+				MemberVO mem = (MemberVO) user;
+				map.put("user_num", mem.getMem_num());
+				user_num= mem.getMem_num();
+				}
+			
 		}
 
 		int count = service.selectHreCount(healthy_num);
@@ -137,7 +137,7 @@ public class HealthAjaxController {
 			notice.setMem_num(health.getMem_num());
 			notice.setNoti_category(2L);
 			notice.setNoti_message(health.getHealthy_title()+" 게시글에 댓글이 달렸습니다.");
-			notice.setNoti_link("<a href='../health/healthDetail?healthy_num="+health.getHealthy_num()+"'>"+health.getHealthy_title()+" 게시글 바로가기 </a>");
+			notice.setNoti_link("<a href='/health/healthDetail?healthy_num="+health.getHealthy_num()+"'>"+health.getHealthy_title()+" 게시글 바로가기 </a>");
 			notificationService.insertNotification(notice);
 			vo.setMem_num(user_num);
 			service.insertHre(vo);
