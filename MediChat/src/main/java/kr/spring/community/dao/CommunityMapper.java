@@ -81,18 +81,23 @@ public interface CommunityMapper {
 	//댓글 삭제 시 답글 삭제
 	
 	/*---댓글(답글) 좋아요---*/
-	@Select("SELECT * FROM cboard_re_fav WHERE cre_num=#{cre_num} AND mem_num=#{mem_num}")
-	public CommunityReFavVO selectReFav(CommunityReFavVO fav);
-	@Select("SELECT COUNT(*) FROM cboard_re_fav WHERE cre_num=#{cre_num}")
-	public Integer selectReFavCount(Long cre_num);
-	@Insert("INSERT INTO cboard_re_fav (cre_num,mem_num) VALUES (#{cre_num},#{mem_num})")
-	public void insertReFav(CommunityReFavVO fav);
-	@Delete("DELETE FROM cboard_re_fav WHERE cre_num=#{cre_num} AND mem_num=#{mem_num}")
-	public void deleteReFav(CommunityReFavVO fav);
-	//댓글(답글) 삭제 시 좋아요 삭제
-	@Delete("DELETE FROM cboard_re_fav WHERE cre_num=#{cre_num}")
-	public void deleteReFavByReNum(Long cre_num);
-	//게시판 삭제 시 좋아요 삭제
-	@Delete("DELETE FROM cboard_re_fav WHERE cre_num IN (SELECT cre_num FROM cboard_re_fav WHERE cbo_num=#{cbo_num})")
-	public void deleteReFavByCommunityNum(Long board_num);
+	/*
+	 * @Select("SELECT * FROM cboard_re_fav WHERE cre_num=#{cre_num} AND mem_num=#{mem_num}"
+	 * ) public CommunityReFavVO selectReFav(CommunityReFavVO fav);
+	 * 
+	 * @Select("SELECT COUNT(*) FROM cboard_re_fav WHERE cre_num=#{cre_num}") public
+	 * Integer selectReFavCount(Long cre_num);
+	 * 
+	 * @Insert("INSERT INTO cboard_re_fav (cre_num,mem_num) VALUES (#{cre_num},#{mem_num})"
+	 * ) public void insertReFav(CommunityReFavVO fav);
+	 * 
+	 * @Delete("DELETE FROM cboard_re_fav WHERE cre_num=#{cre_num} AND mem_num=#{mem_num}"
+	 * ) public void deleteReFav(CommunityReFavVO fav); //댓글(답글) 삭제 시 좋아요 삭제
+	 * 
+	 * @Delete("DELETE FROM cboard_re_fav WHERE cre_num=#{cre_num}") public void
+	 * deleteReFavByReNum(Long cre_num); //게시판 삭제 시 좋아요 삭제
+	 * 
+	 * @Delete("DELETE FROM cboard_re_fav WHERE cre_num IN (SELECT cre_num FROM cboard_re_fav WHERE cbo_num=#{cbo_num})"
+	 * ) public void deleteReFavByCommunityNum(Long board_num);
+	 */
 }

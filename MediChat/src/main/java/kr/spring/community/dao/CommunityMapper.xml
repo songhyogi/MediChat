@@ -210,7 +210,7 @@
 		START WITH r.cre_ref = #{cre_num} /*답글에 해당하는 댓글*/
 		CONNECT BY PRIOR r.cre_num = r.cre_ref
 		
-		ORDER SIBLINGS BY r.cre_rdate
+		ORDER SIBLINGS BY r.cre_rdate DESC
 	</select>
 	<!-- 답글 등록 -->
 	<insert id="insertReply" parameterType="communityReplyVO">

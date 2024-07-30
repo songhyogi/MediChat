@@ -24,15 +24,12 @@
 						<form:option value="8">영앙제</form:option>
 						<form:option value="9">자유게시판</form:option>
 					</form:select>
-					<form:errors path="cbo_type" cssClass="error-color"/>
 				</li>
 				<li>
-					<form:input path="cbo_title" class="form-control" placeholder="제목"/>
-					<form:errors path="cbo_title" cssClass="error-color"/>
+					<form:input path="cbo_title" class="form-control" placeholder="제목" maxlength="50"/>
 				</li>
 				<li>
 					<form:textarea path="cbo_content"/>
-					<form:errors path="cbo_content" cssClass="error-color"/>
 					<script>
 					 function MyCustomUploadAdapterPlugin(editor) {
 						    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
@@ -61,3 +58,9 @@
 	</div>
 </div>
 <!-- 커뮤니티 글쓰기 끝 -->
+<style>
+    .ck-editor__editable {
+        height: 500px !important;
+        overflow: auto;
+    }
+</style>
