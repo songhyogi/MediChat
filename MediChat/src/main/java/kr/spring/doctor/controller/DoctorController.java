@@ -251,8 +251,8 @@ public class DoctorController {
 		}
 		DoctorVO doctor = null;
 		try {
-			doctor = doctorService.checkEmail(doctorVO.getDoc_email());
-			doctor = doctorService.checkName(doctorVO.getMem_name());
+			doctor = doctorService.checkEmailAndName(doctorVO.getDoc_email(),doctorVO.getMem_name());
+			
 			boolean check = false;
 			if(doctor!=null && doctor.getDoc_email() != null) {
 				//이메일 일치확인
