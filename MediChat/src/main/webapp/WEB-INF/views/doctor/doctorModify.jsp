@@ -4,9 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.3/dist/sweetalert2.all.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.3/dist/sweetalert2.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/kcy.css">
 <style>
 .custom-select {
@@ -66,6 +64,9 @@
 			</li>
 		</ul>
 		<hr size="1" width="100%" noshade="noshade">
+		<div style="text-align:left;">
+			<input type="button" value="비밀번호 변경" id="reload_btn" style="width:150px;" onclick="location.href='changePasswd'">
+		</div>
 		<div style="text-align:right">
 			<input type="button" value="MY페이지" id="reload_btn" onclick="location.href='docPage'">
 			<form:button class="default-btn">수정</form:button>

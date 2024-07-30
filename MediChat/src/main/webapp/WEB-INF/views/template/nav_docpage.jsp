@@ -6,8 +6,9 @@
 <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.3/dist/sweetalert2.min.css" rel="stylesheet">
 <!-- MyPage 메뉴 시작 -->
 <div class="side-bar">
-<h1>마이페이지</h1>
-	<ul style="padding: 0 0 !important; margin-top:20px;">
+<ul style="padding: 0 0 !important; margin-top:20px;">
+		<li style="font-size:25px; font-weight:bold;">마이페이지</li>
+		<li class="fs-17 text-black-5"><span class="fs-20 fw-7 text-black-7" style="color:darkgreen;">${user.mem_name}님</span> 반갑습니다.</li>
 		<li>
 				<img src="${pageContext.request.contextPath}/doctor/docPhotoView"
 				width="150" height="150" class="my-photo border rounded-circle" 
@@ -59,6 +60,9 @@
 		        </li>
 				<li style="margin-bottom:10px; font-size:15px;">
 		            <a href="${pageContext.request.contextPath}/doctor/modifyDoctor" class="detail-btn">회원정보 수정</a>
+		        </li>
+		        <li style="margin-bottom:10px; font-size:15px;">
+		            <a href="${pageContext.request.contextPath}/doctor/deleteDoctor" class="detail-btn">회원탈퇴</a>
 		        </li>
 		        <li style="font-size:15px; padding-bottom:10px;">
 		            <a href="${pageContext.request.contextPath}/doctor/logout" class="detail-btn">로그아웃</a>
