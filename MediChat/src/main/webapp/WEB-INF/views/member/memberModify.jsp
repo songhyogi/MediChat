@@ -81,9 +81,6 @@
 			<input type="button" value="비밀번호 변경" id="reload_btn" style="width:150px;" onclick="location.href='changePasswd'">
 		</div>
 		<div style="text-align:right; margin-bottom:10px;">
-			<input type="button" value="MY페이지" id="reload_btn" onclick="location.href='changePasswd'">
-		</div>
-		<div style="text-align:right; margin-bottom:10px;">
 			<input type="button" value="MY페이지" id="reload_btn" onclick="location.href='myPage'">
 			<form:button class="default-btn">수정</form:button>
 		</div>
