@@ -49,12 +49,14 @@ $(function(){
 					output += item.mem_id + '<br>';
 					output += '<span class="modify-date">' + item.cre_rdate + '</span>';
 					output +='        </li>';
-					output +='     </ul>';
+					
+					output += '<li id="cbo_reply_info">'
 					output +='     <div class="cboard-sub-item">';
 					//신고기능을 추가할 경우 dropdown div를 밖으로 빼내기
 					if(param.user_num==item.mem_num){
 						//로그인 한 회원번호와 댓글 작성자 회원번호가 같으면
-						output += '<div class="dropdown">'
+						
+						output += '<div class="dropdown" id="re-dropdown">'
 						output += '<img src="../images/dots.png" width="20" id="dropdownToggle_re">'
 						output += '<ul class="dropdown-menu">'
 						output += '<li><a class="dropdown-btn modify-btn" data-num="'+item.cre_num+'">수정</a></li>'
@@ -62,8 +64,9 @@ $(function(){
 						output += '<li><a class="dropdown-btn delete-btn" data-num="'+item.cre_num+'">삭제</a></li>'
 						output += '</ul>'
 						output += '</div>'
+						output += '</li>'
 					}
-					
+					output +='     </ul>';
 					output += '    <p>' + item.cre_content.replace(/\r\n/g,'<br>') + '</p>';
 					
 					/*---좋아요 시작---*/
@@ -81,7 +84,7 @@ $(function(){
 					console.log("답글수 : "+param.resp_cnt)
 					if(param.user_num){
 						//output += '<input type="button" data-parent="'+item.cbo_num+'"data-level="1" data-ref="'+item.cre_num+'" value="답글" class="reply-btn">'
-						output += '<a class="reply-btn" data-parent="'+item.cbo_num+'"data-level="'+(item.cre_level+1)+'" data-ref="'+item.cre_num+'">답글작성</a><br><b'
+						output += '<a class="reply-btn text-black-6" data-parent="'+item.cbo_num+'"data-level="'+(item.cre_level+1)+'" data-ref="'+item.cre_num+'">답글작성</a><br>'
 					}
 					/*---답글 끝---*/
 					
@@ -112,7 +115,7 @@ $(function(){
 		});//end of ajax
 	}
 	
-	//수정/삭제 드롭다운(왜 적용이 안되져,,,)
+	//수정/삭제 드롭다운
 	$(document).on('click','#dropdownToggle_re',function(event){
 		  event.stopPropagation();
         $(this).siblings('.dropdown-menu').toggle();
@@ -168,7 +171,7 @@ $(function(){
 	$(document).on('click','.modify-btn',function(){
 		let cre_num = $(this).attr('data-num');
 		console.log("댓글번호:"+cre_num);
-		let cre_content = $(this).closest('.item').find('p').html().replace(/<br>/gi, '\r\n');
+		let cre_content = $(this).parents('.item').find('p').html().replace(/<br>/gi, '\r\n');
 
 		console.log("댓글내용:"+cre_content);
 		
@@ -186,7 +189,9 @@ $(function(){
 		
 		//열어둔 수정댓글 존재시 숨김처리
 		initModifyForm(); //폼초기화
-		$(this).closest('.item').find('.cboard-sub-item').hide();
+		
+		$(this).parents('.item').find('p').hide(); //p 태그 숨기기
+    	$(this).parents('.item').find('.cboard-sub-item').hide(); //댓글 수정 버튼 및 기타 정보를 숨김
 		
 		//수정폼 노출
 		 $(this).closest('.item').append(modifyUI);
@@ -207,7 +212,9 @@ $(function(){
 	//댓글 수정 폼 초기화
 	function initModifyForm(){
 		$('.cboard-sub-item').show();	//댓글 보여지게 처리
+		$('.item p').show();//숨긴 p태그 보여지게 처리
 		$('#mcomment_form').remove(); //수정폼 숨기기
+		$('.dropdown-menu').hide(); //드롭다운 메뉴 숨기기
 	}
 	
 	//댓글 수정 전송
@@ -352,11 +359,11 @@ $(function(){
 					output += '</li>';
 					
 					if(param.user_num==item.mem_num){//로그인 한 회원번호와 답글 작성자 회원번호가 일치할 경우
-						output += '<div class="dropdown">'
+						output += '<div class="dropdown resp-dropdown">'
 						output += '<img src="../images/dots.png" width="20" id="dropdownToggle_re">'
 						output += '<ul class="dropdown-menu">'
-						output += '<li><a class="dropdown-btn remodify-btn" data-num="'+item.cre_num+'">답글수정</a></li><br>'
-						/*output += '<li><hr></li>'*/
+						output += '<li><a class="dropdown-btn remodify-btn" data-num="'+item.cre_num+'">답글수정</a></li>'
+						output += '<li><hr></li>'
 						output += '<li><a class="dropdown-btn redelete-btn" data-num="'+item.cre_num+'">답글삭제</a></li>'
 						output += '</ul>'
 						output += '</div>'
@@ -372,7 +379,7 @@ $(function(){
 					}
 					output += item.cre_content.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\r\n/g,'<br>').replace(/\r/g,'<br>').replace(/\n/g,'<br>') + '</p>';
 					if(param.user_num){
-						output += ' <a class="reply2-btn" data-ref="'+item.cre_num+'" data-parent="'+item.cbo_num+'" data-level="'+(item.cre_level+1)+'">답글작성</a>';
+						output += ' <a class="reply2-btn text-black-6" data-ref="'+item.cre_num+'" data-parent="'+item.cbo_num+'" data-level="'+(item.cre_level+1)+'">답글작성</a>';
 					}
 					output += '</div>';
 					output += '</div>';
@@ -440,6 +447,7 @@ $(function(){
 	function initReplyForm(){
 		$('.reply-btn, .reply2-btn').show();
 		$('#reply_form').remove();
+		$('.dropdown-menu').hide(); //드롭다운 메뉴 숨기기
 	}
 	
 	//답글 등록
@@ -465,18 +473,8 @@ $(function(){
 				if(param.result == 'logout'){
 					alert('로그인해야 답글을 작성할 수 있습니다');
 				}else if(param.result == 'success'){
-					//답글 갯수
-					/*
-					if(resp_form.parent().attr('class')=='cboard-sub-item'){//답글을 최초 작성시에 .sub-item에 자식으로 form이 생성됨
-						//답글을 처음 등록할 때 숨겨져 있는 버튼을 노출함
-						resp_form.parent().find('div .rescontent-btn').show();
-						resp_form.parent().find('div .rescontent-btn').attr('data-status',1);
-						resp_form.parent().find('div .rescontent-btn').val('▼ 답글 ' + (Number(resp_form.parent().find('div .rescontent-btn').val().substring(5)) + 1));
-					}else{//답글에 답글을 작성할 때
-						resp_form.parents('.cboard-sub-item').find('div .rescontent-btn').val('▼ 답글 ' + (Number(resp_form.parents('.cboard-sub-item').find('div .rescontent-btn').val().substring(5)) + 1));
-					}
-					*/
-					getListReply(cre_num,resp_form.parents('.cboard-sub-item'));//.sub-item
+					resp_form.parent().find('a.rescontent-btn').attr('data-status',1);//토글을 강제로 열면서 status를 1로 변경
+					getListReply(cre_num,resp_form.parent());//.item에 접근
 					initReplyForm();
 				}else{
 					alert('답글 작성 오류 발생');

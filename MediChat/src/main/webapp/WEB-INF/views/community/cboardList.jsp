@@ -114,7 +114,7 @@
 							 });
 						};
 					</script>
-					<div class="cboard-info">
+					<div class="cboard-info" id="cboard_list_info">
 				        <img src="${pageContext.request.contextPath}/member/memViewProfile?mem_num=${cboard.mem_num}" width="40" height="40">
 				        <div class="cboard-profile">
 				            <span>${cboard.mem_id}</span>
@@ -129,10 +129,11 @@
 				</div>
 				<hr style="margin: 0; padding: 0;">
 			</c:forEach>
-			<c:if test="${!empty user}">
-				<div class="sticky-bottom-container"><input type="button" value="글쓰기" onclick="location.href='write'" class="cboard_write_btn"></div>
-			</c:if>
+			
 			<div class="align-center">${page}</div>
+		</c:if>
+		<c:if test="${!empty user}">
+			<div class="sticky-bottom-container"><input type="button" value="글쓰기" onclick="location.href='write'" class="cboard_write_btn"></div>
 		</c:if>
 	</div>
 </div>

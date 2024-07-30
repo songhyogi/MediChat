@@ -90,7 +90,7 @@ a {
 			<div class="drug-effect-header-content"></div>
 			<div class="close" style="color:white;">&times;</div>
 		</div>
-		<div class="effect-info-body bg-green-1">
+		<div class="effect-info-body" style="background-color:#ebf5ec;">
 			<div class="drug-effect-content"></div>
 		</div>
 	</div>

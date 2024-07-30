@@ -4,6 +4,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import kr.spring.util.DurationFromNow;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -29,4 +30,13 @@ public class CommunityVO {
 	
 	private int re_cnt;			//댓글 개수
 	private int fav_cnt;			//좋아요 개수
+	
+	public void setCbo_rdate(String cbo_rdate) {
+		this.cbo_rdate = 
+			    DurationFromNow.getTimeDiffLabel(cbo_rdate);
+	}
+	public void setCbo_mdate(String cbo_mdate) {
+		this.cbo_mdate = 
+				DurationFromNow.getTimeDiffLabel(cbo_mdate);
+	}
 }

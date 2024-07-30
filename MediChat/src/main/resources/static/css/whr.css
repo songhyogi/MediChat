@@ -210,6 +210,9 @@ a {
     cursor: pointer;
     margin-right:30px;
 }
+#cboard_list_info{
+	margin-top:20px;
+}
 /*-----글 등록-----*/
 .cboard-write-body{
 	padding:16px;
@@ -295,6 +298,23 @@ a {
     color: black;
 }
 /*-----댓글-----*/
+#re-dropdown.show {
+    display: block;
+}
+
+#re-dropdown li {
+    list-style: none;
+    padding: 8px 16px;
+    display: block; /* 가로에서 세로로 변경 */
+}
+
+#re-dropdown li a {
+    display: block; /* 링크를 블록 요소로 설정하여 전체 영역 클릭 가능 */
+}
+
+#re-dropdown li hr {
+    margin: 4px 0;
+}
 ul.detail-info{
 	list-style:none;
 	margin:0;
@@ -407,4 +427,13 @@ form#mresp_form{/*답글수정폼*/
 	background-color: #40916c;
 	margin: 20px 0;
 }
-/*-----드롭다운*/
+/*-----댓글 드롭다운-----*/
+.cboard-profile{
+	margin-right:200px;	
+}
+#cbo_reply_info{
+	margin-left:880px;
+}
+.resp-dropdown{
+	margin-left:830px;
+}

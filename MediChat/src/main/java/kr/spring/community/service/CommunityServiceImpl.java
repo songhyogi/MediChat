@@ -49,7 +49,6 @@ public class CommunityServiceImpl implements CommunityService{
 	public void deleteCommunity(Long cbo_num) {//게시판글 삭제
 		//댓글(답글) 삭제
 		//댓글(답글) 좋아요 삭제
-		communityMapper.deleteReFavByCommunityNum(cbo_num);
 		//게시판 좋아요 삭제
 		communityMapper.deleteFavByCommunityNum(cbo_num);
 		//글 삭제
@@ -129,7 +128,6 @@ public class CommunityServiceImpl implements CommunityService{
 	public void deleteComment(Long cre_num) {
 		communityMapper.deleteComment(cre_num);
 		//댓글 좋아요 삭제
-		communityMapper.deleteReFavByReNum(cre_num);
 	}
 	
 	/*-----------------------------게시판글 대댓글-----------------------------*/
@@ -155,23 +153,4 @@ public class CommunityServiceImpl implements CommunityService{
 	}
 
 	/*-----------------------------댓글 좋아요-----------------------------*/
-	@Override
-	public CommunityReFavVO selectReFav(CommunityReFavVO fav) {
-		return communityMapper.selectReFav(fav);
-	}
-
-	@Override
-	public Integer selectReFavCount(Long cre_num) {
-		return communityMapper.selectReFavCount(cre_num);
-	}
-
-	@Override
-	public void insertReFav(CommunityReFavVO fav) {
-		communityMapper.insertReFav(fav);
-	}
-
-	@Override
-	public void deleteReFav(CommunityReFavVO fav) {
-		communityMapper.deleteReFav(fav);
-	}
 }

@@ -22,9 +22,9 @@ ul li {
 }
 </style>
 <!-- 의약품 목록 상세 시작 -->
-<div class="page-main main-margin">
+<div class="page-main main-margin" style="margin:40px 40px 0px 40px;">
 	<div class="body-header">
-		<p class="text-lightgray fw-7 fs-13">홈 > 의약품 백과사전</p>
+		<p class="text-lightgray fw-7 fs-13" style="margin-top:10px;">홈 > 의약품 백과사전</p>
 		<h1>의약품 상세정보</h1>
 	</div><br>
 	<div class="drug-body">

@@ -49,11 +49,6 @@ public interface CommunityService {
 	public CommunityReplyVO selectReply(Long cre_num);
 	public Integer selectCountReply(Long cre_num);
 	public void insertReply(CommunityReplyVO communityReply);
-		
-	//댓글 좋아요
-	public CommunityReFavVO selectReFav(CommunityReFavVO fav);
-	public Integer selectReFavCount(Long cre_num);
-	public void insertReFav(CommunityReFavVO fav);
-	public void deleteReFav(CommunityReFavVO fav);
+	
 	/*-----------------------------답글(대댓글)-----------------------------*/
 }

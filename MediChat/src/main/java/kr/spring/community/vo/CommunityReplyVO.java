@@ -30,11 +30,11 @@ public class CommunityReplyVO {
 	
 	private String postTitle; // 게시글 제목 추가
 	
-	public void setRe_date(String cre_rdate) {
+	public void setCre_rdate(String cre_rdate) {
 		this.cre_rdate = 
 			    DurationFromNow.getTimeDiffLabel(cre_rdate);
 	}
-	public void setRe_mdate(String cre_mdate) {
+	public void setCre_mdate(String cre_mdate) {
 		this.cre_mdate = 
 				DurationFromNow.getTimeDiffLabel(cre_mdate);
 	}
