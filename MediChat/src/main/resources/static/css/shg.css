@@ -563,7 +563,7 @@ p{
     display: flex;
     align-items: center;
     margin-bottom: 5px;
-    padding-left:350px;
+    /* padding-left:350px; */
 }
 
 .legend-item span {

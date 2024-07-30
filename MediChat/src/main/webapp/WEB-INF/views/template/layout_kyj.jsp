@@ -20,7 +20,7 @@
 		<tiles:insertAttribute name="header"/>
 	</div>
 	<div class="custom-container row d-flex justify-content-center pt-4 display-body">
-		<div id="main_leftNav" class="col-3" style="margin-top:55px	;">
+		<div id="main_leftNav" class="col-3 display-body" style="margin-top:55px	;">
 			<tiles:insertAttribute name="nav"/>
 		</div>
 		<div id="main_body" class="col-9 display">

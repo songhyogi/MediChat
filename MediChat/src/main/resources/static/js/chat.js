@@ -52,6 +52,8 @@ $(function(){
 	=========================*/
 	function selectChat(){
         
+        $('.chat-select-notice').css('display','none');
+        
 		//서버와 통신
 		$.ajax({
 			url:'/chat/chatDetail',
@@ -110,6 +112,7 @@ $(function(){
 							$('.chat-input input').prop('disabled', false);
 	                    	$('.chat-input button').prop('disabled', false);
 	                    	$('#chat_close').prop('disabled',false);
+	                    	$('.chat-input input').attr('placeholder','');
                     	}
                     	$(param.list).each(function(index, item) {
                         	if (param.type === '1' || param.type === '2') {
@@ -602,8 +605,8 @@ $(function(){
         const not_selected = $('.file-room').parent().parent();
         console.log(selected);
         
-        not_selected.removeClass('selected-chat bg-gray-6');
-        selected.addClass('selected-chat bg-gray-6');
+        not_selected.removeClass('selected-chat chat-nav-selected-bg');
+        selected.addClass('selected-chat chat-nav-selected-bg');
         
 		$('#chat_num').val(chat_num);
 		$('#res_date').val(res_date);

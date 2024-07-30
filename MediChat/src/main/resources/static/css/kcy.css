@@ -22,7 +22,7 @@ div.container {
 	display: block;
 	margin: 0 auto;
 	margin-top: 10px;
-	background: rgba(57, 174, 164, 0.7);
+	background:#95d5b2;
 	color: #fff;
 	font-weight: bold;
 }
@@ -50,7 +50,7 @@ button {
 	overflow: hidden;
 }
 .btn-15 {
-	background:rgba(57, 174, 164, 0.7);
+	background:#95d5b2;
 	color: #fff;
 	z-index: 1;
 	overflow: hidden;
@@ -149,7 +149,7 @@ input[type="tel"]:focus,
 }
 #member_register .default-btn,#doctor_register .default-btn,
 #member_modify .default-btn,#doctor_modify .default-btn{
-	background-color:#40916C;
+	background-color:#95d5b2;
 	font-weight: 100 !important;
 	font-size: 16px;
 	font-weight:bold;
@@ -361,10 +361,6 @@ select,textarea{
 	height: 80%;
 	width: 73%;
 	margin: auto;
-}
-.left h3{
-	text-align: center;
-	margin-bottom: 40px;
 }
 .left input#mem_passwd,.left input#doc_passwd {
 	border: none;

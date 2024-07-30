@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/kcy.css">
 <style>
 .rounded {
 	border-radius: 10px;
@@ -62,7 +64,7 @@
 			<li >
 				<form:label path="mem_zipcode">주소</form:label>
 				<form:input path="mem_zipcode" class="effect-1"/>
-				<input type="button" onclick="execDaumPostcode()" value="우편번호" class="btn green rounded" style="margin:0 2px;">
+				<input type="button" onclick="execDaumPostcode()" value="우편번호" class="default-btn" style="margin:0 2px; background-color:#40916C;">
 				<form:errors path="mem_zipcode" cssClass="error-color"/>
 				<form:input path="mem_address1" class="effect-1"/>
 				<form:errors path="mem_address1" cssClass="error-color"/>

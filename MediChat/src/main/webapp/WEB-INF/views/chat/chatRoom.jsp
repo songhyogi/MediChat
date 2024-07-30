@@ -12,7 +12,12 @@
 		</div>
 		<!-- 채팅방 표시 시작 -->
 		<div class="chat-body" id="chat_body">
+			<div class="chat-select-notice">
+				<img src="/images/chatSelectNotice.png" width="55px" height="55px" style="margin-bottom:8px;">	
+				<span class="fs-21 chat-notice fw-8">좌측 채팅방을 선택해주세요.</span>
+			</div>
 		</div>
+		
 		<!-- 입력창 표시 -->
 		<div class="chat-input">
 			<form action="#" id="chat_input">
