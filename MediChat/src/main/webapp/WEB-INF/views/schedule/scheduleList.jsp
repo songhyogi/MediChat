@@ -1,7 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/shg.css" type="text/css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="styles.css">
 <style>
+.info-icon::before{
+	margin-right:660px;
+}
+.tooltip-content {
+	position:relative;
+    display: none; /* 기본적으로 숨김 */
+}
+.info-icon:hover {
+    background-color:#fff; /* 호버 시 배경색 */
+    cursor:pointer; /* 커서를 손 모양으로 변경 */
+    transition:background-color 0.3s ease; /* 부드러운 색상 전환 */
+}
+.tooltip-container:hover .tooltip-content {
+    display:block; /* 호버 시 표시 */
+    margin-bottom:30px;
+}
 #calendar {
     margin: 0 auto;
     width: 80%;
@@ -149,14 +167,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     const reservedTimes = param.reservedTimes;
                     const allTimes = generateTimesForDay(doc_stime, doc_etime);
                     let output = ''
-                   	output += '<div class="legend">';
-                   	output += '<div class="legend-item"><div class="green-circle"></div><span>근무하는 시간입니다.</span></div>';
-                   	output += '<div class="legend-item"><div class="white-circle"></div><span>근무하지 않는 시간입니다.</span></div>';
-                   	output += '<div class="legend-item"><div class="gray-circle"></div><span>예약되어 있는 시간입니다. 수정할 수 없습니다.</span></div>';
-                   	output += '<div class="legend-item"><div class="btn-circle-info"></div><span>※ 근무수정하기 버튼을 클릭해야만 근무를 수정할 수 있습니다.</span></div>';
-                   	output += '</div>';
+                    output += '<div class="tooltip-container">';
+                    output += '<i class="fas fa-question-circle info-icon"></i>';
+                    output += '<div class="tooltip-content">';
+                    output += '<div class="legend-item"><div class="green-circle"></div><span>근무하는 시간입니다.</span></div>';
+                    output += '<div class="legend-item"><div class="white-circle"></div><span>근무하지 않는 시간입니다.</span></div>';
+                    output += '<div class="legend-item"><div class="gray-circle"></div><span>예약되어 있는 시간입니다. 수정할 수 없습니다.</span></div>';
+                    output += '<div class="legend-item"><div class="btn-circle-info"></div><span>※ 근무수정하기 버튼을 클릭해야만 근무를 수정할 수 있습니다.</span></div>';
+                    output += '</div>';
+                    output += '</div>';
                     output += '<div class="time-section">';
-                    output += '<h5 class="time-header">오전</h5><div class="time-row">';
+                    output += '<h5 class="time-header mt-3">오전</h5><div class="time-row">';
                     allTimes.forEach((time, index) => {
                         if (index > 0 && index % 4 == 0) {
                             output += '</div><div class="time-row">';
