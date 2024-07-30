@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
+<style>
+    .error { 
+	    color: red; 
+	    display: none; 
+    }
+</style>
 <div class="p-3">
 	<p class="text-lightgray fw-7 fs-13">홈 > 의료 상담 > 글 상세</p>
 	<img src="/images/question-icon.gif" width="55px" height="55px" class="mb-3">
@@ -12,12 +18,13 @@
 	</div>
 	
 	
-	<form action="/consultings/create" method="post">
+	<form id="con_form" action="/consultings/create" method="post">
 		<div id="con_title_div">
 			<div id="con_title_label">
 				<label for="con_title">제목</label>
 			</div>
 			<input type="text" name="con_title" id="con_title" class="form-control">
+			<span class="error" id="title_error">제목을 입력해 주세요.</span>
 		</div>
 		
 		<div id="con_content_div">
@@ -26,6 +33,7 @@
 				<span id="content_length">0 / 2000</span>
 			</div>
 			<textarea rows="6" id="con_content" name="con_content" class="form-control"></textarea>
+			<span class="error" id="content_error">내용을 입력해 주세요.</span>
 		</div>
 		
 		<div id="con_type_div">
@@ -44,6 +52,7 @@
 				<option value="9">여드름,피부염</option>
 				<option value="10">임신,성고민</option>
 			</select>
+			<span class="error" id="type_error">카테고리를 선택해 주세요.</span>
 		</div>
 		
 		<div id="con_info_div">
@@ -75,5 +84,45 @@
           }
           $('#content_length').text(contentLength + ' / 2000');
       });
+      
+      function validateForm() {
+          let isValid = true;
+
+          if ($('#con_title').val().trim() === '') {
+              $('#title_error').show();
+              isValid = false;
+          } else {
+              $('#title_error').hide();
+          }
+
+          if ($('#con_content').val().trim() === '') {
+              $('#content_error').show();
+              isValid = false;
+          } else {
+              $('#content_error').hide();
+          }
+
+          if ($('#con_type').val() === '증상 선택') {
+              $('#type_error').show();
+              isValid = false;
+          } else {
+              $('#type_error').hide();
+          }
+
+          return isValid;
+      }
+
+      $('#consulting-write-btn').click(function(event){
+          if (!validateForm()) {
+              event.preventDefault();
+          }
+      });
+
+      $('#con_form').on('submit', function(event) {
+          if (!validateForm()) {
+              event.preventDefault();
+          }
+      });
+      
     });
   </script>
