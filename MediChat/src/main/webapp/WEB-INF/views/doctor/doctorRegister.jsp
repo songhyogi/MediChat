@@ -32,7 +32,7 @@
 			<li style="margin-top:20px;">
 				<form:label path="mem_id">아이디</form:label>
 				<form:input path="mem_id" placeholder="영문or숫자 사용하여 4~12자 입력" autocomplete="off" class="effect-1" style="width:300px;"/>
-				<input type="button" id="confirmId" value="중복확인" class="default-btn" style="margin-left:0px;">
+				<input type="button" id="confirmId" value="중복확인" class="default-btn" style="margin-left:0px; background-color:#40916C;">
 				<form:errors path="mem_id" cssClass="error-color" style="display:inline;"/><br>
 				<span id="message_id" style=""></span>
 			</li>
