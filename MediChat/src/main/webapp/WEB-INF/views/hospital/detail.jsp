@@ -315,11 +315,9 @@ $(function(){
 	    			doctor_history_content += '<div style="padding:20px 30px">'
 	                doctor_history_content += '<div><img src="/doctor/docViewProfile?mem_num=' + doctor.doc_num + '" alt="' + doctor.mem_name + '" class="doctor-image" style="width: 80px; height: 80px;"></div>';
 	                doctor_history_content += '<div><span class="fs-15 fw-7 text-black-6">' + doctor.mem_name + ' 의사</span>';
-	
 	                if (doctor.doc_history) {
 	                    doctor_history_content += '<br><span class="fs-14">' + doctor.doc_history + '</span>';
 	                }
-					
 	                doctor_history_content += '</div>';
 	                doctor_history_content += '</div>';
 	            });

@@ -121,11 +121,12 @@
 	top:92px;
 	width:130px;
 	z-index:998;
-	border: 3px solid #40916c;
+	border: 2px solid #40916c;
 	background-color:white;
+	border-radius: 3px;
 }
 .dictionary-menu-item{
-	height:60px;
+	height:45px;
 	display: flex;
   	justify-content: center;
   	align-items: center;  
