@@ -21,6 +21,7 @@
 }
 .display-body{
 	height:850px;
+	margin-bottom:50px;
 }
 .display{
 	display:flex;
@@ -102,6 +103,15 @@
 	padding:0;
 	margin-bottom:5px;
 	overflow:auto;	
+}
+.chat-select-notice{
+	position:absolute;
+	top:54%;
+	left:57%;
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .close-room{
 	transform: translateY(265px);
@@ -355,7 +365,7 @@
 }
 .list-delete{
 	width:20px;
-	color:rgb(76, 165, 165);
+	color:#2d6a4f;
 }
 #select_file{
 	width:305px;
@@ -544,7 +554,7 @@ label[for="file_valid_date"]{
 }
 .page-one{
 	width:900px;
-	margin:0 auto 100px auto;
+	margin:30px auto 100px auto;
 }
 .drug-table{
 	margin:auto;
