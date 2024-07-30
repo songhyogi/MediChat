@@ -19,5 +19,5 @@ public class VideoVO {
 	 private int video_hit;
 	 private String v_category;
 	 
-	 private String id;
+	 private String mem_id;
 }

@@ -9,9 +9,9 @@
 <script src="${pageContext.request.contextPath}/js/uploadAdapter.js"></script>
 
 <div class="page-main">
-	<div class="page-one">
-		<h4>홈 > 자주 묻는 질문(FAQ) >  글수정</h4> 		
-		<h2>&nbsp;&nbsp;&nbsp;자주 묻는 질문(FAQ) </h2>
+	<div class="page-one" style="padding-top:16px;">
+		<span class="text-lightgray fw-7 fs-13">홈 > 자주 묻는 질문(FAQ) >  글수정</span>
+		<h3 style="margin-top:16px;">&nbsp;&nbsp;&nbsp;자주 묻는 질문(FAQ) </h3>
 		
 		<hr size="1" width="80%">
 		

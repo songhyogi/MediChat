@@ -11,16 +11,22 @@
 <br><br>
 <c:if test="${count==0}">
 	작성한 글이 없습니다.
-	<br><br><br><br>
+	<br><br>
 </c:if>
 <c:if test="${count > 0}">
 <div style="width:100%; ">
-		<table class="align-center" id="review-table" >
-		 	<tr style="width:100%; margin-bottom:10px;">
+		<table class="align-center" id="review-table" style="border:3px black; ">
+		 	<tr style="width:100%; margin-bottom:20px;   background-color: #f8f8f8; height: 50px; border-top: 2px solid #000000; border-bottom: 1px solid #000000;">
 			 	<th>번호</th>
 			 	<th>글 제목</th>
 				<th>좋아요</th>
 			 	<th>작성일</th>
+			</tr>
+			<tr>
+				<td>&nbsp; </td>
+				<td> </td>
+				<td> </td>
+				<td> </td>
 			</tr>
 	<c:forEach var="r" items="${list}">
 			<tr id="myList"  style="cursor:pointer; margin:20px;" onclick="location.href='${pageContext.request.contextPath}/health/healthDetail?healthy_num=${r.healthy_num}'">
@@ -37,7 +43,7 @@
 	<div class="align-center">
 		${page}
 	</div>
-	<br><br>
+	<br><br><br><br>
 </div>
 </c:if>
 </div>

@@ -19,6 +19,6 @@ public class FaqVO {
 	private int faq_hit;
 	private String f_category;
 	
-	private String id;
+	private String mem_id;
 	
 }

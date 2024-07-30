@@ -8,42 +8,47 @@
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/healthy.total.js"></script>
 <div class="page-main">
-	<div class="page-one">
-		<h4>홈 > 건강 블로그 > 건강매거진 > ${healthy.healthy_title}</h4>
-		<h2>&nbsp;&nbsp;&nbsp;${healthy.healthy_title}</h2>
+	<div class="page-one" style="padding-top: 16px;">
+		<span class="text-lightgray fw-7 fs-13">홈 > 건강 블로그 > 건강매거진 >
+			${healthy.healthy_title}</span>
+		<h3 style="margin-top: 16px;">
+			&nbsp;&nbsp;&nbsp;<b>${healthy.healthy_title}</b>
+		</h3>
 		<ul>
 			<li><img
 				src="${pageContext.request.contextPath}/member/memViewProfile?mem_num=${healthy.mem_num}"
 				width="35" height="35" class="rounded-circle"> &nbsp;&nbsp;
 				${healthy.id}</li>
+				<li>
+					👁 ${healthy.healthy_hit}&nbsp;&nbsp;❤️ ${healthy.fav_cnt}&nbsp;&nbsp;💬 ${healthy.re_cnt}
+				</li>
 		</ul>
-		${healthy.h_reg_date} 조회수 : ${healthy.healthy_hit} <br>
+		
 		<c:if test="${!empty healthy.h_filename}">
 			<br>
 			<br>
-		<div class="align-center">
-			<img width="480" height="480"
-				src="${pageContext.request.contextPath}/upload/${healthy.h_filename}" />
-		</div>
+			<div class="align-center">
+				<img width="480" height="480"
+					src="${pageContext.request.contextPath}/upload/${healthy.h_filename}" />
+			</div>
 		</c:if>
-		<br>
-		<br>
+		<br> <br>
 		<div>
 			<p>${healthy.healthy_content}</p>
-			<br><br>
-			<img src="${pageContext.request.contextPath}/images/alertfaq.png"
+			<br>
+			<br> <img
+				src="${pageContext.request.contextPath}/images/alertfaq.png"
 				width="20px;"> 꼭 확인해주세요.<br> <span
 				class=" fs-12 fw-4 text-black-3"> 메디챗는 특정 약품 추천 및 권유를 위해 콘텐츠를
 				제작하지 않으며 메디챗회원의 건강한 생활을 돕는 것을 주 목적으로 합니다. <br>콘텐츠의 내용은 의학적 지식을
-				자문 받아 활용했습니다.<br> 그 외 출처 : 디지털타임스, 메디컬투데이</span>
+				자문 받아 활용했습니다.<br> 그 외 출처 : 디지털타임스, 메디컬투데이
+			</span>
 		</div>
-		<br>
-		<br>
-		<br>
+		<br> <br> <br>
 		<div title="Like" class="heart-container" id="hFav"
 			data-num="${healthy.healthy_num}">
 			<input id="Give-It-An-Id" class="checkbox" type="checkbox"
-				<c:if test="${healthy.click_num == user_num}" >checked="checked"</c:if> >
+				<c:if test="${healthy.click_num == user_num}" >checked="checked"</c:if>>
 			<div class="svg-container">
 				<svg xmlns="http://www.w3.org/2000/svg" class="svg-outline"
 					viewBox="0 0 24 24">
@@ -130,10 +135,7 @@
 		<p>
 		<p>
 		<div class="align-center">
-			<br>
-			<br>
-			<br>
-			<br>
+			<br> <br> <br> <br>
 		</div>
 	</div>
 </div>

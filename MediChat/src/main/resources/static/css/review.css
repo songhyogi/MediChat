@@ -251,7 +251,7 @@ table#review-table tr {
 }
 
 button.default-btn {
-  	background-color: rgb(102, 178, 178);
+  	background-color: #40916c;
     color: #fff; /* 버튼 텍스트를 하얀색으로 */
     border: none; /* 기본 테두리 제거 */
     padding: 10px 20px;
@@ -259,7 +259,7 @@ button.default-btn {
     cursor: pointer;
 }
 input.default-btn {
-    background-color: rgb(102, 178, 178);
+    background-color: #40916c;
     color: #fff; /* 버튼 텍스트를 하얀색으로 */
     border: none; /* 기본 테두리 제거 */
     padding: 10px 20px;
@@ -267,12 +267,12 @@ input.default-btn {
     cursor: pointer;
 }
 input.defaul-tbtn:hover {
- 	background-color: rgb(76, 165, 165);
+ 	background-color: #40916c;
     transform: scale(1.05);
 }
 
 button.defaul-tbtn:hover {
- 	background-color: rgb(76, 165, 165);
+ 	background-color: #40916c;
     transform: scale(1.05);
 }
 div.float-clear{

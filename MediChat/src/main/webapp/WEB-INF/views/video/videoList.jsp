@@ -5,10 +5,9 @@
 <script src="${pageContext.request.contextPath}/js/videoAdapter.js"></script>
  <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div class="page-main">
-<div class="page-one">
-		<h5>홈 > 건강 블로그 > 건강 비디오</h5> 
-		<p>		
-		<h1><img src="${pageContext.request.contextPath}/images/marketing.png" width="45px;"> <b>건강 비디오</b></h1>
+<div class="page-one" style="padding-top:16px;">
+		<span class="text-lightgray fw-7 fs-13">홈 > 건강 블로그 > 건강 비디오</span>	
+		<h3 style="margin-top:16px;"><img src="${pageContext.request.contextPath}/images/marketing.png" width="45px;"> <b>건강 비디오</b></h3>
 		<br>
 		<form action="videoList" id="form-video" method="get" class="align-center">
 			<div class="container-input"  style="width:500px; margin:0 auto;">
@@ -46,7 +45,7 @@
 					<a href="${pageContext.request.contextPath}/video/videoDetail?video_num=${v.video_num}">
 							<ul class="align-center">
 								<li style="font-size:16pt;">${v.video_title}</li>
-								<li class="fs-16 fw-5 text-black-3"> ${v.v_reg_date} 조회수 : ${v.video_hit} &nbsp;   </li>
+								<li class="fs-16 fw-5 text-black-3"> ${v.v_reg_date} &nbsp;👁 ${v.video_hit} &nbsp;   </li>
 							</ul>
 						</a>
 			</div>	
