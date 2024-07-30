@@ -208,7 +208,9 @@ public class DoctorController {
 			return "common/resultAlert";
 		}
 		DoctorVO doctor = doctorService.selectDoctor(user.getDoc_num());
+		HospitalVO hospital = hospitalService.selectHospital(doctor.getHos_num());
 		
+		model.addAttribute("hos_name",hospital.getHos_name());
 		model.addAttribute("doctorVO",doctor);
 		
 		return "doctorModify";
@@ -615,7 +617,7 @@ public class DoctorController {
 	           return "redirect:/login"; // 로그인되지 않은 경우 로그인 페이지로 리다이렉트
 	       }
 
-	       DoctorVO doctor = doctorService.selectDoctor(user.getDoc_num());
+	       DoctorVO doctor = doctorService.selectDoctor(user.getMem_num());
 	       if (doctor == null) {
 	           // 의사 정보를 가져오지 못한 경우 적절히 처리 (예: 오류 페이지로 리다이렉트)
 	           return "redirect:/error"; // 예시로 오류 페이지로 리다이렉트
@@ -624,7 +626,7 @@ public class DoctorController {
 	       doctor.setMem_name(user.getMem_name());
 	       doctor.setDoc_email(user.getDoc_email());
 	       model.addAttribute("doctor", doctor);
-
+	       
 	       return "registerTreat";
 	   }
 
@@ -633,25 +635,24 @@ public class DoctorController {
 	                                     BindingResult result,
 	                                     HttpSession session,
 	                                     Model model) {
-
-	       log.debug("<비대면 진료 신청>" + doctorVO);
-
+		   DoctorVO user = (DoctorVO) session.getAttribute("user");
+		   if (user == null) {
+			   return "redirect:/login"; // 로그인되지 않은 경우 로그인 페이지로 리다이렉트
+		   }
+		   
 	       if (result.hasFieldErrors("now_passwd") || result.hasFieldErrors("doc_passwd")) {
 	           return registerTreatForm(model, session); // 유효성 검사 에러가 있으면 폼으로 되돌림
 	       }
-
-	       DoctorVO user = (DoctorVO) session.getAttribute("user");
-	       if (user == null) {
-	           return "redirect:/login"; // 로그인되지 않은 경우 로그인 페이지로 리다이렉트
-	       }
-
-	       DoctorVO loggedInDoctor = doctorService.selectDoctor(user.getDoc_num());
-
-	       if (loggedInDoctor == null || !loggedInDoctor.checkPasswd(doctorVO.getNow_passwd())) {
+	       doctorVO.setMem_num(user.getMem_num());
+	       
+	       DoctorVO db_doctor = doctorService.selectDoctor(doctorVO.getMem_num());
+	       log.debug("<<비대면 진료 신청 로그인 정보>> : " +db_doctor);
+	       
+	       if (!db_doctor.getDoc_passwd().equals(doctorVO.getNow_passwd())) {
 	           result.rejectValue("now_passwd", "invalidPasswd", "현재 비밀번호가 일치하지 않습니다."); // 에러 메시지 설정
-	           return registerTreatForm(model, session); // 비밀번호가 일치하지 않으면 폼으로 되돌림
+	           return "registerTreat";
 	       }
-
+	       
 	       doctorService.updateDoctorTreat(doctorVO); // 비밀번호가 일치하면 진료 정보 업데이트
 	       return "redirect:/doctor/docPage"; // 성공적으로 처리된 경우 다른 페이지로 리다이렉트
 	   }
