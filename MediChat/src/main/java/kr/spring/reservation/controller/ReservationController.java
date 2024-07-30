@@ -40,6 +40,7 @@ public class ReservationController {
 		if(user == null) {
 			model.addAttribute("message","로그인 후 이용해주세요");
 			model.addAttribute("url",request.getContextPath()+"/member/login");
+			model.addAttribute("alertType","warning");
 		}else {
 			Map<String,Object> map = new HashMap<String,Object>();
 			map.put("mem_num", user.getMem_num());
@@ -65,6 +66,7 @@ public class ReservationController {
 		if(user == null) {
 			model.addAttribute("message","로그인 후 이용해주세요");
 			model.addAttribute("url",request.getContextPath()+"/doctor/login");
+			model.addAttribute("alertType","warning");
 		}else {
 			Map<String,Object> map = new HashMap<String,Object>();
 			map.put("doc_num",user.getMem_num());
@@ -90,6 +92,7 @@ public class ReservationController {
 		if(user == null) {
 			model.addAttribute("message","로그인 후 이용해주세요");
 			model.addAttribute("url",request.getContextPath()+"/doctor/login");
+			model.addAttribute("alertType","warning");
 		}else {
 			Map<String,Object> map = new HashMap<String,Object>();
 			map.put("doc_num",user.getMem_num());

@@ -85,7 +85,7 @@ public class ConsultingController {
 				model.addAttribute("alertType","warning");
 				return "/common/resultAlert";
 			} else {
-				return "404Error";
+				return "404";
 			}
 		} else {
 			model.addAttribute("url", "/member/login");
