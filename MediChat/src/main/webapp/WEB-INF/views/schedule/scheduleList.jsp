@@ -174,162 +174,178 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 선택한 날짜의 근무/휴무 시간을 표시하는 함수
     function displayTimes(date) {
-        $('#time-buttons').empty();
-        modifiedTimes = {}; // 선택한 날짜가 바뀔 때마다 수정된 시간을 초기화
-        // AJAX 요청을 통해 근무 시간 정보를 가져옴
-        $.ajax({
-            url: '/schedule/workingTimes',
-            method: 'get',
-            data: { doc_num: doc_num, res_date: date},
-            dataType: 'json',
-            success: function(param) {
-                if (param.result == 'success') {
-                    const doc_stime = param.workingHours.DOC_STIME;
-                    const doc_etime = param.workingHours.DOC_ETIME;
-                    const reservedTimes = param.reservedTimes;
-                    const allTimes = generateTimesForDay(doc_stime, doc_etime);
-                    let output = ''
-                    output += '<div class="tooltip-container">';
-                    output += '<i class="fas fa-question-circle info-icon"></i>';
-                    output += '<div class="tooltip-content">';
-                    output += '<div class="legend-item"><div class="green-circle"></div><span>근무하는 시간입니다.</span></div>';
-                    output += '<div class="legend-item"><div class="white-circle"></div><span>근무하지 않는 시간입니다.</span></div>';
-                    output += '<div class="legend-item"><div class="gray-circle"></div><span>예약되어 있는 시간입니다. 수정할 수 없습니다.</span></div>';
-                    output += '<div class="legend-item"><div class="btn-circle-info"></div><span>※ 근무수정하기 버튼을 클릭해야만 근무를 수정할 수 있습니다.</span></div>';
-                    output += '</div>';
-                    output += '</div>';
-                    output += '<div class="time-section">';
-                    output += '<h5 class="time-header mt-3">오전</h5><div class="time-row">';
-                    allTimes.forEach((time, index) => {
+    $('#time-buttons').empty();
+    // 초기화된 modifiedTimes
+    modifiedTimes = {};
+    // AJAX 요청을 통해 근무 시간 정보를 가져옴
+    $.ajax({
+        url: '/schedule/workingTimes',
+        method: 'get',
+        data: { doc_num: doc_num, res_date: date },
+        dataType: 'json',
+        success: function(param) {
+            if (param.result == 'success') {
+                const doc_stime = param.workingHours.DOC_STIME;
+                const doc_etime = param.workingHours.DOC_ETIME;
+                const reservedTimes = param.reservedTimes;
+                const allTimes = generateTimesForDay(doc_stime, doc_etime);
+                let output = '';
+                output += '<div class="tooltip-container">';
+                output += '<i class="fas fa-question-circle info-icon"></i>';
+                output += '<div class="tooltip-content">';
+                output += '<div class="legend-item"><div class="green-circle"></div><span>근무하는 시간입니다.</span></div>';
+                output += '<div class="legend-item"><div class="white-circle"></div><span>근무하지 않는 시간입니다.</span></div>';
+                output += '<div class="legend-item"><div class="gray-circle"></div><span>예약되어 있는 시간입니다.<br> 수정할 수 없습니다.</span></div>';
+                output += '<div class="legend-item"><div class="btn-circle-info"></div><span>※ 근무수정하기 버튼을 클릭해야만 근무를 수정할 수 있습니다.</span></div>';
+                output += '</div>';
+                output += '</div>';
+                output += '<div class="time-section">';
+                output += '<h5 class="time-header mt-3">오전</h5><div class="time-row">';
+                allTimes.forEach((time, index) => {
+                    if (index > 0 && index % 4 == 0) {
+                        output += '</div><div class="time-row">';
+                    }
+                    if (time < "12:00") {
                         if (index > 0 && index % 4 == 0) {
                             output += '</div><div class="time-row">';
                         }
-                        if (time < "12:00") {
-                            if (index > 0 && index % 4 == 0) {
-                                output += '</div><div class="time-row">';
-                            }
-                            output += '<button id="schedule_mobtn" class="' + getButtonClass(time, date, reservedTimes) + '" data-time="' + time + '">' + time + '</button>';
-                        }
-                    });
-                    output += '</div></div>';
+                        output += '<button id="schedule_mobtn" class="' + getButtonClass(time, date, reservedTimes) + '" data-time="' + time + '">' + time + '</button>';
+                    }
+                });
+                output += '</div></div>';
 
-                    output += '<div class="time-section">';
-                    output += '<h5 class="time-header">오후</h5><div class="time-row">';
-                    allTimes.forEach((time, index) => {
-                        if (time >= "12:00") {
-                            if (index > 0 && index % 4 == 0) {
-                                output += '</div><div class="time-row">';
-                            }
-                            output += '<button id="schedule_afbtn" class="' + getButtonClass(time, date, reservedTimes) + '" data-time="' + time + '">' + time + '</button>';
+                output += '<div class="time-section">';
+                output += '<h5 class="time-header">오후</h5><div class="time-row">';
+                allTimes.forEach((time, index) => {
+                    if (time >= "12:00") {
+                        if (index > 0 && index % 4 == 0) {
+                            output += '</div><div class="time-row">';
                         }
-                    });
-                    output += '</div></div>';
-                    output += getButtonRowHtml();
-                    $('#time-buttons').html(output);
+                        output += '<button id="schedule_afbtn" class="' + getButtonClass(time, date, reservedTimes) + '" data-time="' + time + '">' + time + '</button>';
+                    }
+                });
+                output += '</div></div>';
+                output += getButtonRowHtml();
+                $('#time-buttons').html(output);
 
-                    handleButtonEvents(date, reservedTimes);
-                 	// 선택된 날짜 셀 유지
-                    $('td.fc-daygrid-day[data-date="' + date + '"]').addClass('fc-daygrid-day-selected');
-                } else if (param.result == 'logout') {
-                    alert('로그인이 필요합니다.');
-                } else if (param.result == 'wrongAccess') {
-                    alert('잘못된 접근입니다.');
-                }
-            },
-            error: function() {
-                alert('근무 시간을 가져오는 데 실패했습니다.');
+                handleButtonEvents(date, reservedTimes);
+                // 선택된 날짜 셀 유지
+                $('td.fc-daygrid-day[data-date="' + date + '"]').addClass('fc-daygrid-day-selected');
+            } else if (param.result == 'logout') {
+                alert('로그인이 필요합니다.');
+            } else if (param.result == 'wrongAccess') {
+                alert('잘못된 접근입니다.');
             }
-        });
-    }
+        },
+        error: function() {
+            alert('근무 시간을 가져오는 데 실패했습니다.');
+        }
+    });
+}
 
     // 시간 버튼의 CSS 클래스를 반환하는 함수
-    function getButtonClass(time, date,reservedTimes) {
-        let buttonClass = 'working-time';
-        const selectedDate = new Date(date);
-        const selectedDay = selectedDate.getDay();
-        if (regularDayOff.includes(selectedDay)) {
+    function getButtonClass(time, date, reservedTimes) {
+    let buttonClass = 'working-time';
+    const selectedDate = new Date(date);
+    const selectedDay = selectedDate.getDay();
+    if (regularDayOff.includes(selectedDay)) {
+        buttonClass = 'time-off';
+    }
+    holidays.forEach(function(holi) {
+        if (holi.holi_status == 1 && holi.holi_date == date && holi.holi_time == time) {
             buttonClass = 'time-off';
         }
-        holidays.forEach(function(holi) {
-            if (holi.holi_status == 1 && holi.holi_date == date && holi.holi_time == time) {
-                buttonClass = 'time-off';
-            }
-            if (holi.holi_status == 2 && holi.holi_date == date && holi.holi_time == time) {
-                buttonClass = 'working-time-red';
-            }
-        });
-        if (reservedTimes.includes(time)) {
-            buttonClass = 'reserved-time'; // 예약된 시간은 비활성화
+        if (holi.holi_status == 2 && holi.holi_date == date && holi.holi_time == time) {
+            buttonClass = 'working-time-red';
         }
-        return buttonClass;
+    });
+    if (reservedTimes.includes(time)) {
+        buttonClass = 'reserved-time'; // 예약된 시간은 비활성화
     }
+    if (modifiedTimes[time] !== undefined) {
+        buttonClass = modifiedTimes[time] === 1 ? 'time-off' : 'working-time';
+    }
+    return buttonClass;
+}
+
 
     // 시간 버튼의 클릭 이벤트를 처리하는 함수
     function handleButtonEvents(date, reservedTimes) {
-        $('.modify-btn').click(function() {
-        	modifiedTimes = {}; // 근무수정버튼을 클릭할 때마다 수정된 시간을 초기화
-            $('.working-time, .time-off, .working-time-red').prop('disabled', false).addClass('active');
-            $(this).hide();
-            $('.complete-modify-btn, .cancel-btn').show();
-            
-         	// 이미 예약된 시간은 비활성화 상태 유지
-            reservedTimes.forEach(function(time) {
-                $('button[data-time="' + time + '"]').prop('disabled', true).removeClass('active');
+    $('.modify-btn').click(function() {
+        modifiedTimes = {}; // 근무수정버튼을 클릭할 때마다 수정된 시간을 초기화
+        $('.working-time, .time-off, .working-time-red').prop('disabled', false).addClass('active');
+        $(this).hide();
+        $('.complete-modify-btn, .cancel-btn').show();
+        
+        // 이미 예약된 시간은 비활성화 상태 유지
+        reservedTimes.forEach(function(time) {
+            $('button[data-time="' + time + '"]').prop('disabled', true).removeClass('active');
+        });
+    });
+
+    $('.cancel-btn').click(function() {
+        displayTimes(date);
+    });
+
+    $(document).off('click', '.active').on('click', '.active', function() {
+        const time = $(this).data('time');
+        if ($(this).hasClass('working-time')) {
+            $(this).removeClass('working-time').addClass('time-off');
+            modifiedTimes[time] = 1; // 수정된 상태를 저장
+        } else if ($(this).hasClass('time-off')) {
+            $(this).removeClass('time-off').addClass('working-time');
+            modifiedTimes[time] = 2; // 수정된 상태를 저장
+        } else if ($(this).hasClass('working-time-red')) {
+            $(this).removeClass('working-time-red').addClass('time-off');
+            modifiedTimes[time] = 1; // 수정된 상태를 저장
+        }
+    });
+
+    $('.complete-modify-btn').click(function() {
+        let dataToSend = [];
+        Object.keys(modifiedTimes).forEach(function(time) {
+            dataToSend.push({
+                doc_num: doc_num,
+                holi_date: date,
+                holi_time: time,
+                holi_status: modifiedTimes[time]
             });
         });
-
-        $('.cancel-btn').click(function() {
-            displayTimes(date);
-        });
-
-        $(document).off('click', '.active').on('click', '.active', function() {
-            const time = $(this).data('time');
-            if ($(this).hasClass('working-time')) {
-                $(this).removeClass('working-time').addClass('time-off');
-                modifiedTimes[time] = 1;
-            } else if ($(this).hasClass('time-off')) {
-                $(this).removeClass('time-off').addClass('working-time');
-                modifiedTimes[time] = 2;
-            } else if ($(this).hasClass('working-time-red')) {
-                $(this).removeClass('working-time-red').addClass('time-off');
-                modifiedTimes[time] = 1;
+        $.ajax({
+            url: '/schedule/updateTimes',
+            method: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify(dataToSend),
+            success: function(response) {
+                if (response.result == 'success') {
+                    alert('근무 시간이 성공적으로 업데이트되었습니다.');
+                    // 서버에서 업데이트된 데이터를 다시 받아와야 합니다.
+                    $.ajax({
+                        url: '/schedule/holidays',
+                        method: 'get',
+                        data: { doc_num: doc_num },
+                        dataType: 'json',
+                        success: function(param) {
+                            holidays = param.holidays || [];
+                            // 수정된 데이터가 반영된 새로운 데이터를 화면에 표시
+                            displayTimes(date);
+                        },
+                        error: function() {
+                            alert('업데이트된 데이터를 가져오는 데 실패했습니다.');
+                        }
+                    });
+                } else {
+                    alert('근무 시간 업데이트에 실패했습니다.');
+                    console.error(response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                alert('근무 시간 업데이트 중 오류가 발생했습니다.');
+                console.error(error);
             }
         });
-
-        $('.complete-modify-btn').click(function() {
-            let dataToSend = [];
-            Object.keys(modifiedTimes).forEach(function(time) {
-                dataToSend.push({
-                    doc_num: doc_num,
-                    holi_date: date,
-                    holi_time: time,
-                    holi_status: modifiedTimes[time]
-                });
-            });
-            $.ajax({
-                url: '/schedule/updateTimes',
-                method: 'post',
-                contentType: 'application/json',
-                data: JSON.stringify(dataToSend),
-                success: function(response) {
-                    if (response.result == 'success') {
-                        alert('근무 시간이 성공적으로 업데이트되었습니다.');
-                        // 수정 완료 후 즉시 반영
-                        holidays = holidays.filter(holi => holi.holi_date !== date);
-                        dataToSend.forEach(holi => holidays.push(holi));
-                        displayTimes(date);
-                    } else {
-                        alert('근무 시간 업데이트에 실패했습니다.');
-                        console.error(response.message);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    alert('근무 시간 업데이트 중 오류가 발생했습니다.');
-                    console.error(error);
-                }
-            });
-        });
-    }
+    });
+}
 
     // 시간 범위를 생성하는 함수
     function generateTimesForDay(doc_stime, doc_etime) {
