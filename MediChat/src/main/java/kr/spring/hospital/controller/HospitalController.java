@@ -265,7 +265,7 @@ public class HospitalController {
 	
 	// 병원 > 검색 결과 > 상세 페이지
 	@GetMapping("/hospitals/search/detail/{hos_num}")
-	public String detail(@RequestParam(defaultValue="1") int pageNum,@RequestParam(defaultValue="1") String  keyfield,Model model, @PathVariable Long hos_num) {
+	public String detail(@RequestParam(defaultValue="1") int pageNum,Model model, @PathVariable Long hos_num) {
 		model.addAttribute("apiKey", apiKey);
 		
 		HospitalVO hospital = hospitalService.selectHospital(hos_num);

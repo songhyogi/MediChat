@@ -41,8 +41,7 @@ public class PharmacyServiceImpl implements PharmacyService{
 
 	@Override
 	public void updateHitPharmacy(Long pha_num) {
-		// TODO Auto-generated method stub
-		
+		pharmacyMapper.updateHitPharmacy(pha_num);
 	}
 
 	@Override

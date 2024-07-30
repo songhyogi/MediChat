@@ -369,7 +369,9 @@
                         output += '커뮤니티 관련 알림';
                     } else if (param.list[i].noti_category == 3) {
                         output += '정보 관련 알림';
-                    } else {
+                    } else if (param.list[i].noti_category == 5) {
+                        output += '상담 관련 알림';
+                    }  else {
                         output += '일반 관련 알림'
                     }
                     output += '</div>';
