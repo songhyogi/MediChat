@@ -200,3 +200,23 @@
 </div>
 <script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+$('#call_btn').click(function() {
+ 	// 복사할 텍스트 지정
+    var textToCopy = '${pharmacy.pha_tell1}';
+    
+    // 임시 텍스트 영역 생성
+    var tempInput = $('<input>');
+    $('body').append(tempInput);
+    tempInput.val(textToCopy).select();
+    
+    // 클립보드에 텍스트 복사
+    document.execCommand('copy');
+    
+    // 임시 텍스트 영역 제거
+    tempInput.remove();
+    
+    // 알림 메시지
+    alert('전화번호가 클립보드에 복사되었습니다: ' + textToCopy);
+});
+</script>
