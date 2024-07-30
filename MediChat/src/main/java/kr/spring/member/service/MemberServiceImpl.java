@@ -115,13 +115,8 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public MemberVO checkEmail(String mem_email) {
-		return memberMapper.checkEmail(mem_email);
-	}
-
-	@Override
-	public MemberVO checkName(String mem_name) {
-		return memberMapper.checkName(mem_name);
+	public MemberVO checkEmailAndName(String mem_email,String mem_name) {
+		return memberMapper.checkEmailAndName(mem_email,mem_name);
 	}
 
 }

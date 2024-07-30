@@ -253,8 +253,7 @@ public class MemberController {
 		}
 		MemberVO member = null;
 		try {
-			member = memberService.checkEmail(memberVO.getMem_email());
-			member = memberService.checkName(memberVO.getMem_name());
+			member = memberService.checkEmailAndName(memberVO.getMem_email(),memberVO.getMem_name());
 			
 			boolean check = false;
 			if(member!=null && member.getMem_email() != null) {
