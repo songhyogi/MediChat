@@ -654,7 +654,12 @@ public class DoctorController {
 	       }
 	       
 	       doctorService.updateDoctorTreat(doctorVO); // 비밀번호가 일치하면 진료 정보 업데이트
-	       return "redirect:/doctor/docPage"; // 성공적으로 처리된 경우 다른 페이지로 리다이렉트
+	       DoctorVO updatedUser = doctorService.selectDoctor(user.getMem_num());
+	       session.setAttribute("user", updatedUser);
+	       model.addAttribute("message","예약서비스 신청이 완료되었습니다.");
+	       model.addAttribute("url","/doctor/modifyDoctor");
+	       return "/common/resultAlert";
+
 	   }
 
 
