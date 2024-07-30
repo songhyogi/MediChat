@@ -110,27 +110,6 @@
 </style>
 </head>
 <body>
-<%-- <div class="dropdown">
-  <button class="dropbtn"> 
-    <span class="dropbtn_icon"></span>
-      나의 활동
-  </button>
-    <div class="dropdown-content">
-      <a class="dropdown-item" href="#">좋아요</a>
-      <a class="dropdown-item" href="#">댓글</a>
-    </div>
-  </div>
-  <div class="dropdown">
-    <button class="dropbtn"> 
-      <span class="dropbtn_icon"></span>
-      이용내역
-    </button>
-    <div class="dropdown-content">
-      <a class="dropdown-item" href="#">진료기록</a>
-      <a class="dropdown-item" href="${pageContext.request.contextPath}/reservation/docResList">예약내역</a>
-      <a class="dropdown-item" href="#">후기</a>
-    </div>
-</div> --%>
     <div class="docInfo">
         <div class="leftInfo">
             <ul>

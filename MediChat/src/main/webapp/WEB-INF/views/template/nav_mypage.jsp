@@ -59,6 +59,9 @@
 				<li style="margin-bottom:10px; font-size:15px;">
 		            <a href="${pageContext.request.contextPath}/member/modifyUser" class="detail-btn">회원정보 수정</a>
 		        </li>
+		        <li style="margin-bottom:10px; font-size:15px;">
+		            <a href="${pageContext.request.contextPath}/member/deleteUser" class="detail-btn">회원탈퇴</a>
+		        </li>
 		        <li style="font-size:15px; padding-bottom:10px;">
 		            <a href="${pageContext.request.contextPath}/member/logout" class="detail-btn">로그아웃</a>
 		        </li>

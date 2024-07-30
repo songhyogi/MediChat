@@ -37,7 +37,7 @@
 			<tiles:insertAttribute name="body"/>
 		</div>
 	</div>
-		<div id="main_footer" style="margin-top:130px;">
+		<div id="main_footer" style="margin-top:70px;">
 			<tiles:insertAttribute name="footer"/>
 		</div>
 </div>

@@ -4,21 +4,43 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="styles.css">
 <style>
-.info-icon::before{
-	margin-right:660px;
+.tooltip-container {
+     position: relative;
+    display: flex;
+    margin-left: auto;
+    margin-right: 100px; /* 아이콘을 약간 오른쪽으로 이동 */
+    align-items: center;
 }
+
+.info-icon {
+    font-size: 18px; /* 아이콘 크기 조정 */
+    padding: 5px; /* 아이콘 주위의 여백 */
+    display: inline-block;
+}
+
 .tooltip-content {
-	position:relative;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
     display: none; /* 기본적으로 숨김 */
+    z-index: 1;
+    background-color: white;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.1);
+    min-width: 200px;
 }
+
+/* 아이콘에만 호버했을 때 툴팁 표시 */
+.info-icon:hover + .tooltip-content {
+    display: block; 
+}
+
 .info-icon:hover {
-    background-color:#fff; /* 호버 시 배경색 */
-    cursor:pointer; /* 커서를 손 모양으로 변경 */
-    transition:background-color 0.3s ease; /* 부드러운 색상 전환 */
-}
-.tooltip-container:hover .tooltip-content {
-    display:block; /* 호버 시 표시 */
-    margin-bottom:30px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 #calendar {
     margin: 0 auto;

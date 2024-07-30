@@ -21,6 +21,10 @@
 		<put-attribute name="title" value="회원정보수정(의사)"/>
 		<put-attribute name="body" value="/WEB-INF/views/doctor/doctorModify.jsp"/>
 	</definition>
+	<definition name="doctorChangePasswd" extends="ychdoctor">
+		<put-attribute name="title" value="비밀번호 변경(의사)"/>
+		<put-attribute name="body" value="/WEB-INF/views/doctor/doctorChangePasswd.jsp"/>
+	</definition>
 	<definition name="docReservationList" extends="ychdoctor">
 		<put-attribute name="title" value="예약내역" />
 		<put-attribute name="body" value="/WEB-INF/views/reservation/docReservationList.jsp" />
