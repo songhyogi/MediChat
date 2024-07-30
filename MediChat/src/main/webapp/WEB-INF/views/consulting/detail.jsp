@@ -84,17 +84,21 @@
 </div>
 
 <c:if test="${user.mem_auth==3 and !checkReply}">
-	<form action="/consultings/createReply" method="post" class="p-3 my-4">
-		<input type="hidden" name="con_num" value="${consulting.con_num}">
-		<div class="d-flex justify-content-between">
-			<label for="con_re_content">답글 달기</label>
-			<span id="reply_length">0 / 2000</span>
+	<div class="p-3">
+		<div class="bg-gray-0 rounded-3 p-5">
+			<form action="/consultings/createReply" method="post">
+				<input type="hidden" name="con_num" value="${consulting.con_num}">
+				<div class="d-flex justify-content-between">
+					<label for="con_re_content" id="con_re_content_label">답글 달기</label>
+					<span id="reply_length">0 / 2000</span>
+				</div>
+				<textarea rows="10" class="form-control" name="con_re_content" id="con_re_content"></textarea>
+				<div class="text-end mt-2 mb-3">
+					<input type="submit" value="전송" class="btn-green">
+				</div>
+			</form>
 		</div>
-		<textarea rows="10" class="form-control" name="con_re_content" id="con_re_content"></textarea>
-		<div class="text-end mt-1 mb-4">
-			<input type="submit" value="전송" class="btn-green">
-		</div>
-	</form>
+	</div>
 </c:if>
 
 <style>

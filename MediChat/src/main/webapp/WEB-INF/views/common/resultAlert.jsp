@@ -8,10 +8,12 @@
         var alertType = '${alertType}';
 
         Swal.fire({
-            title: '${message}',
+        	title: '<div style="font-weight:700; font-size: 17px; color: #4a4a4a;">${message}</div>',
             text: '${message2}',
             icon: alertType,// 알림 아이콘 (success, error, warning, info)
             confirmButtonText: '확인',
+            confirmButtonColor: "#41A652",
+            cancelButtonColor: "#E60634"
         }).then((result) => {
             if (result.isConfirmed) {
                 // 확인 버튼 클릭 시 리다이렉트
