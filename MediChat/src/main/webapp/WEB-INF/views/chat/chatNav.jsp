@@ -14,7 +14,7 @@
 		<!-- li에 들어가야 할 항목(일반회원)- 진료일시, 의사명 -->
 			<c:if test="${user.getMem_auth()==2}">
 				<c:if test="${item.getChat_status()==1}">
-				<tr class="chat-nav-bg">
+				<tr class="chat-nav-completed-bg">
 					<td><a href="/chat/chatRoom" class="chat-room fs-18 text-black-4" data-chat-num="${item.chat_num}" data-res-date="${item.res_date}" data-res-time="${item.res_time}" data-res-num="${item.res_num}">
 					${item.res_date} ${item.res_time}
 					<br>${item.mem_name} 의사</a></td>

@@ -201,7 +201,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 output += '</div>';
                 output += '<div class="time-section">';
                 output += '<h5 class="time-header mt-3">오전</h5><div class="time-row">';
+                
+                let arr = [];
+                let arr2 = [];
                 allTimes.forEach((time, index) => {
+                	if (time < "12:00") {
+						arr.push(time);
+					}
+				});
+				allTimes.forEach((time, index) => {
+                	if (time >= "12:00") {
+						arr2.push(time);
+					}
+				});
+				
+                arr.forEach((time, index) => {
                     if (index > 0 && index % 4 == 0) {
                         output += '</div><div class="time-row">';
                     }
@@ -216,7 +230,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 output += '<div class="time-section">';
                 output += '<h5 class="time-header">오후</h5><div class="time-row">';
-                allTimes.forEach((time, index) => {
+                arr2.forEach((time, index) => {
                     if (time >= "12:00") {
                         if (index > 0 && index % 4 == 0) {
                             output += '</div><div class="time-row">';
