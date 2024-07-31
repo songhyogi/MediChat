@@ -25,9 +25,6 @@
 		<h3 style="margin-top:16px;">
 			<img src="${pageContext.request.contextPath}/images/blogging.png" width="45px;"> <b>건강 블로그</b>
 		</h3>
-		<br>
-		<br><a href="${pageContext.request.contextPath}/member/healthyMy">(개발)내 좋아요 목록 보러가기>></a><a href="${pageContext.request.contextPath}/member/healthyMyreply">(개발)내 댓글 목록 보러가기>></a>
-		<br><a href="${pageContext.request.contextPath}/doctor/healthyMydoc">(개발)의사 healthy글 목록 보러가기>></a>
 		<hr size="1" width="100%">
 		<br>
 		<div class="page-one" id="healthyVideo" style="margin: auto;">

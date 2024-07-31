@@ -100,7 +100,21 @@ function displayHosTimes(date, dayOfWeek, hos_num) {
                     let times = generateTimesForDay(startTime, endTime);
                     let output = '<div class="time-section"><h5 class="time-header">오전</h5><div class="time-row">';
                     
+                    let arr = [];
+                    let arr2 = [];
                     times.forEach((time, index) => {
+                    	if (time < "12:00") {
+							arr.push(time);
+						}
+					});
+					times.forEach((time, index) => {
+                    	if (time >= "12:00") {
+							arr2.push(time);
+						}
+					});
+					
+					
+                    arr.forEach((time, index) => {
                         if (time < "12:00") {
                             if (index > 0 && index % 4 == 0) {
                                 output += '</div><div class="time-row">';
@@ -111,7 +125,7 @@ function displayHosTimes(date, dayOfWeek, hos_num) {
                     output += '</div></div>';
 
                     output += '<div class="time-section"><h5 class="time-header">오후</h5><div class="time-row">';
-                    times.forEach((time, index) => {
+                    arr2.forEach((time, index) => {
                         if (time >= "12:00") {
                             if (index > 0 && index % 4 == 0) {
                                 output += '</div><div class="time-row">';

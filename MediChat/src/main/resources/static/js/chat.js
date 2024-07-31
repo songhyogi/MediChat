@@ -747,7 +747,20 @@ $(function(){
                    		dataType: 'json',
                    		success: function(param) {
 							if(param.result == 'paySuccess'){
-                       			alert("결제가 완료되었습니다.");
+                       			 var alertType = 'success';
+
+						        Swal.fire({
+						        	title: '<div style="font-weight:700; font-size: 17px; color: #4a4a4a;">결제가 완료되었습니다.</div>',
+						            icon: alertType,// 알림 아이콘 (success, error, warning, info)
+						            confirmButtonText: '확인',
+						            confirmButtonColor: "#41A652",
+						            cancelButtonColor: "#E60634"
+						        }).then((result) => {
+						            if (result.isConfirmed) {
+						                // 확인 버튼 클릭 시 리다이렉트
+						            }
+						        });
+						        
                        			$('#chat_close').css('display','none');
                        			$('.chat-input input').prop('disabled', true);
 								$('.chat-input button').prop('disabled', true);
