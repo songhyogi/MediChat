@@ -1,5 +1,7 @@
 package kr.spring.video.vo;
 
+import java.sql.Date;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,10 +14,10 @@ public class VideoVO {
 	 private long mem_num;
 	 private String video_title;
 	 private String video_content;
-	 private String v_reg_date;
-	 private String v_modify_date;
+	 private Date v_reg_date;
+	 private Date v_modify_date;
 	 private int video_hit;
 	 private String v_category;
 	 
-	 private String id;
+	 private String mem_id;
 }

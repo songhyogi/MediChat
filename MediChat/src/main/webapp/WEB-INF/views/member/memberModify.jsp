@@ -2,11 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/kcy.css">
 <style>
-.btn.green{
-	background-color:rgb(102, 178, 178);
-}
 .rounded {
 	border-radius: 10px;
 }
@@ -16,14 +15,6 @@
 	display: inline-block;
 	text-align: center;
 	color: white;
-}
-#calendarButton {
-    width: 30px;
-    height: 30px;
-    margin:0 auto;
-    border: none;
-    cursor: pointer;
-    text-align:center;
 }
 </style>
 <!-- 회원정보 수정 시작 -->
@@ -39,47 +30,55 @@
 		<ul>
 			<li style="margin-top:20px;">
 				<form:label path="mem_name">이름</form:label>
-				<form:input path="mem_name"/>
+				<form:input path="mem_name" class="effect-1"/>
 				<form:errors path="mem_name" cssClass="error-color"/>
 			</li>
 			<li>
 			    <form:label path="mem_birth">생년월일</form:label>
-			    <input type="text" id="mem_birth" placeholder="년-월-일">
-			    <button id="calendarButton" type="button">
-			    	<img src="${pageContext.request.contextPath}/images/calendar.jpg" style="width:30px; height:30px;">
+			    <input type="text" name="mem_birth" id="mem_birth" placeholder="년-월-일" class="effect-1">
+			    <button type="button" id="calendarButton">
+			    	<img src="${pageContext.request.contextPath}/images/calendar.jpg" style="width:30px; height:30px; margin-right:5px;">
 			    </button>
+			    <form:errors path="mem_birth" cssClass="error-color" style="margin-left:5px;"/>
 			</li>
 			<li>
-				<c:if test="${mem_profile == null}">
+				<c:if test="${mem_profile == null && mem_gender == null}">
 					<form:label path="mem_email">이메일</form:label>
-					<form:input path="mem_email"/>
+					<form:input path="mem_email" class="effect-1"/>
 					<form:errors path="mem_email" cssClass="error-color"/>			
 				</c:if>
-				<c:if test="${mem_profile != null}">
+				<c:if test="${mem_profile != null && mem_gender == null}">
 					<form:label path="mem_email">이메일</form:label>
-					<form:input path="mem_email" class="readonly" readonly="true"/>			
+					<form:input path="mem_email" class="readonly effect-1" readonly="true"/>			
+				</c:if>
+				<c:if test="${mem_profile == null && mem_gender != null}">
+					<form:label path="mem_email">이메일</form:label>
+					<form:input path="mem_email" class="readonly effect-1" readonly="true"/>			
 				</c:if>
 			</li>
 			<li>
 				<form:label path="mem_phone">전화번호</form:label>
-				<form:input path="mem_phone"/>
+				<form:input path="mem_phone" class="effect-1"/>
 				<form:errors path="mem_phone" cssClass="error-color"/>
 			</li>
 			<li >
 				<form:label path="mem_zipcode">주소</form:label>
-				<form:input path="mem_zipcode"/>
-				<input type="button" onclick="execDaumPostcode()" value="우편번호" class="btn green rounded" style="margin:0 2px;">
+				<form:input path="mem_zipcode" class="effect-1"/>
+				<input type="button" onclick="execDaumPostcode()" value="우편번호" class="default-btn" style="margin:0 2px; background-color:#40916C;">
 				<form:errors path="mem_zipcode" cssClass="error-color"/>
-				<form:input path="mem_address1"/>
+				<form:input path="mem_address1" class="effect-1"/>
 				<form:errors path="mem_address1" cssClass="error-color"/>
 			</li>
 			<li>
 				<form:label path="mem_address2">상세주소</form:label>
-				<form:input path="mem_address2"/>
+				<form:input path="mem_address2" class="effect-1"/>
 				<form:errors path="mem_address2" cssClass="error-color"/>
 				<hr size="1" width="100%" noshade="noshade">
 			</li>
 		</ul>
+		</div>
+		<div style="text-align:left;">
+			<input type="button" value="비밀번호 변경" id="reload_btn" style="width:150px;" onclick="location.href='changePasswd'">
 		</div>
 		<div style="text-align:right; margin-bottom:10px;">
 			<input type="button" value="MY페이지" id="reload_btn" onclick="location.href='myPage'">
@@ -93,9 +92,31 @@
 <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
 </div>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
-<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
-<script src="https://code.jquery.com/ui/1.13.0/i18n/jquery.ui.datepicker-ko.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/datepicker.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#mem_birth').datepicker({
+            dateFormat: 'yy-mm-dd',
+            changeYear: true,
+            changeMonth: true,
+            yearRange: 'c-100:c+0',
+            maxDate: '0',
+            prevText: '이전 달',
+            nextText: '다음 달',
+            monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+            dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+            dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+            showMonthAfterYear: true,
+            yearSuffix: '년'
+        });
+        
+        $('#calendarButton').click(function() {
+            $('#mem_birth').datepicker('show');
+        });
+    });
+</script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     // 우편번호 찾기 화면을 넣을 element

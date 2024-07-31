@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Getter;
@@ -21,7 +22,7 @@ import lombok.ToString;
 @ToString(exclude = {"mem_photo"})
 public class MemberVO {
    private long mem_num;
-   @Pattern(regexp="^[A-Za-z0-9]{4,12}$")
+   @Pattern(regexp="^[A-Za-z0-9-]{4,}$")
    private String mem_id;
    @NotBlank
    private String mem_name;
@@ -33,9 +34,9 @@ public class MemberVO {
    @Pattern(regexp="^[A-Za-z0-9]{4,12}$")
    //영문자와 숫자의 조합이며 길이가 4에서 12 사이
    /* @Pattern(regexp="^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{4,12}$") */
-   private   String mem_passwd;
-   @NotNull
-   private Date mem_birth;
+   private String mem_passwd;
+   @NotEmpty
+   private String mem_birth;
    @Email
    @NotBlank
    private String mem_email;
@@ -66,6 +67,20 @@ public class MemberVO {
       }  
       return false;
    }
+   //아이디 찾기 (이메일 일치 여부 체크)
+ 	public boolean checkEmail(String userEmail) {
+ 		if(mem_auth>1 && mem_email.equals(userEmail)) {
+ 			return true;
+ 		}
+ 		return false;
+ 	}
+ 	//아이디 찾기 (이메일 일치 여부 체크)
+ 	public boolean checkName(String userName) {
+ 		if(mem_auth>1 && mem_name.equals(userName)) {
+ 			return true;
+ 		}
+ 		return false;
+ 	}
    //이미지 BLOB 처리
    public void setUpload(MultipartFile upload)throws IOException {
       //MultipartFile > byte[] 

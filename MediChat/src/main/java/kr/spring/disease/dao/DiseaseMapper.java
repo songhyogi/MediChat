@@ -36,4 +36,10 @@ public interface DiseaseMapper {
 	
 	@Update("UPDATE disease SET dis_hit= dis_hit+1 WHERE sickcd Like #{sickcd}")
 	public void updateDisHit(String sickcd);
+	
+	
+	public List<DiseaseVO> selectDisListByHit(int itemNum);
+	
+	@Select("select a.dis_department from ( select dis_department,count(dis_department) as cnt from disease where dis_department != '병의원과 상담' and (dis_name like '%${keyword}%' or dis_symptoms like '%${keyword}%') and dis_department not like '%,%' group by dis_department order by cnt desc)a where rownum<=2")
+	public List<String> selectDisListBykeyword(String keyword);
 }

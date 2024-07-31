@@ -12,11 +12,12 @@
         window.calendar = new FullCalendar.Calendar(calendarEl, {
         	timeZone: 'Asia/Seoul',	//날짜를 한국 기준으로 설정
             selectable: true,	//날짜 선택가능
-            height: 500,	//높이 자동 조절
-            width: 500,	//너비 자동 조절
+            height: 'auto',	//높이 자동 조절
+            width: 'auto',	//너비 자동 조절
             headerToolbar: {
             	left: 'title',
-                right: 'prev,next today,dayGridMonth,multiMonthYear'
+                //right: 'today,dayGridMonth,multiMonthYear prev,next'
+            	right: 'today prev,next'
             },
             locale: 'ko', // 로케일 설정
             initialDate: new Date().toISOString().slice(0, 10), // 오늘 날짜로 설정
@@ -50,6 +51,7 @@
             	</c:forEach>
             	
             ],
+            eventColor: '#40916c',
             /*----------캘린더에서 드래그로 이벤트 생성----------*/
             select:function(arg){
             	var today = new Date(); //현재 날짜 및 시간
@@ -262,7 +264,7 @@
 				<textarea name="med_note"></textarea>
 			</li>
 		</ul>
-		<div>
+		<div class="modal-btn">
 			<input type="submit" value="수정" class="submit-btn">
 			<input type="button" value="삭제" class="delete-btn">
 		</div>
@@ -272,26 +274,69 @@
 <!-- 수정 모달 끝 -->
 <br>
 <!-- 캘린더 -->
+<h4 class="drug-title"><b>약 복용 내역</b></h4>
 <div id='calendar'></div>
 <br>
 <!-- 스타일 적용 -->
 <style>
 /*----------FullCalendar----------*/
 .fc-day-sun a {
-    color: red;
+    color: #ff4242;
     text-decoration: none;
 }
 .fc-day-sat a {
-    color: blue;
+    color: #2027f7;
     text-decoration: none;
 }
 .fc-day-mon a, .fc-day-tue a, .fc-day-wed a, .fc-day-thu a, .fc-day-fri a {
-    color: black;
+    color: #4a4a4a;
     text-decoration: none;
 }
+.fc .fc-daygrid-day.fc-day-today {
+    background-color: #fafffb;
+}
+.fc .fc-highlight{
+    background-color: #e4f8e5;
+}
+.fc-daygrid-day-selected {
+    background-color: #e4f8e5;
+}
+.fc-daygrid-day-selected {
+    background-color: #e4f8e5;
+}
+.fc .fc-button-primary{
+    background-color: #fff;
+    border-color: #fff;
+    color: #000;
+    width: 80px;
+}
+.fc .fc-button-primary:hover{
+    background-color: #d8f3dc;
+    border-color: #fff;
+    color: #fff;
+}
+.fc .fc-button-primary:focus, .fc .fc-button-primary:active {
+    outline: none;
+    box-shadow: none;
+}
+.fc .fc-button-primary:active{
+    background-color: transparent !important;
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: transparent !important;
+}
+.fc .fc-button-primary:disabled{
+    background-color: #fff;
+    border-color: #fff;
+    color: #000;
+}
 #calendar {
-   width: 700px;
-   height: 2000px;
+    margin: 0 auto;
+    width: 90%;
+    max-width: 800px;
+}
+.drug-title{
+	margin-bottom:50px;
 }
 /*----------모달 스타일----------*/
 .modal {
@@ -324,7 +369,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgb(76, 165, 165); /* 헤더 배경색 */
+    background-color: #40916c; /* 헤더 배경색 */
     color: white; /* 헤더 글자색 */
     height: 50px; /* 헤더 높이 */
 }
@@ -370,26 +415,29 @@ textarea {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+.modal-btn{
+	float: right; /* 버튼 오른쪽 정렬 */
+}
 /*전송 버튼*/
 .submit-btn {
-    background-color: rgb(76, 165, 165); /* 버튼 배경색 */
+    background-color: #40916c; /* 버튼 배경색 */
     color: white; /* 버튼 글자색 */
     border: none;
-    padding: 10px 20px;
+    padding: 8px 18px;
     cursor: pointer;
     border-radius: 4px;
     margin-top: 10px;
-    justify-content:center;
-	align-items: center;
+    font-size: 16px; /* 폰트 크기 조절 */
 }
 .delete-btn{
 	background-color: white; /* 버튼 배경색 */
-    color: rgb(76, 165, 165); /* 버튼 글자색 */
+    color: #40916c; /* 버튼 글자색 */
      border: 2px solid rgb(76, 165, 165); /* 버튼 테두리 추가 */
-    padding: 10px 20px;
+   padding: 6px 16px;
     cursor: pointer;
     border-radius: 4px;
     margin-top: 10px;
+     font-size: 16px; /* 폰트 크기 조절 */
 }
 
 input[type="submit"]:hover,
@@ -429,6 +477,7 @@ label {
     margin-right: 5px;
     margin-bottom: 5px;
     margin-top: 10px;
+    font-size: 14px;
 }
 
 .moDrugSelect-span sup, .drugSelect-span sup {

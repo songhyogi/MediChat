@@ -16,6 +16,7 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 
 import kr.spring.interceptor.AutoLoginCheckInterceptor;
 import kr.spring.interceptor.LoginCheckInterceptor;
+import kr.spring.interceptor.WriterCheckInterceptor;
 import kr.spring.websocket.SocketHandler;
 
 //자바코드 기반 설정 클래스
@@ -24,6 +25,7 @@ import kr.spring.websocket.SocketHandler;
 public class AppConfig implements WebMvcConfigurer,WebSocketConfigurer{
 	//private AutoLoginCheckInterceptor autoLoginCheck;
 	private LoginCheckInterceptor loginCheck;
+	private WriterCheckInterceptor writeCheck;
 	
 	/*
 	 * @Bean public AutoLoginCheckInterceptor interceptor() { autoLoginCheck = new
@@ -34,6 +36,12 @@ public class AppConfig implements WebMvcConfigurer,WebSocketConfigurer{
 	public LoginCheckInterceptor interceptor2() {
 		loginCheck = new LoginCheckInterceptor();
 		return loginCheck;
+	}
+	
+	@Bean
+	public WriterCheckInterceptor interceptor4() {
+		writeCheck = new WriterCheckInterceptor();
+		return writeCheck;
 	}
 	
 	@Override
@@ -60,7 +68,13 @@ public class AppConfig implements WebMvcConfigurer,WebSocketConfigurer{
 		        .addPathPatterns("/member/delete")
 		        .addPathPatterns("/board/write")
 		        .addPathPatterns("/board/update")
-		        .addPathPatterns("/board/delete");
+		        .addPathPatterns("/board/delete")
+		        .addPathPatterns("/medichatCommunity/write");
+		
+		//WriterCheckInterceptor 설정
+		registry.addInterceptor(writeCheck)
+				.addPathPatterns("/medichatCommunity/update")
+				.addPathPatterns("/medichatCommunity/delete");
 	}
 	
 	@Bean

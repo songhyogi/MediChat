@@ -1,9 +1,14 @@
 package kr.spring.member.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.spring.consulting.vo.ConsultingVO;
+import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.member.dao.MemberMapper;
 import kr.spring.member.vo.MemberVO;
  
@@ -80,7 +85,10 @@ public class MemberServiceImpl implements MemberService{
 	public void updateAuth(MemberVO member) {
 		memberMapper.updateAuth(member);
 	}
-
+	@Override
+	public void cancelAuth(MemberVO member) {
+		memberMapper.cancelAuth(member);
+	}
 	@Override
 	public MemberVO checkId(String mem_id) {
 		return memberMapper.checkId(mem_id);
@@ -91,6 +99,24 @@ public class MemberServiceImpl implements MemberService{
 		return memberMapper.checkUser(mem_id);
 	}
 
+	@Override
+	public List<MemberVO> getMemList(Map<String, Object> map) {
+		return memberMapper.getMemList(map);
+	}
 
+	@Override
+	public Integer selectRowCount(Map<String, Object> map) {
+		return memberMapper.selectRowCount(map);
+	}
+
+	@Override
+	public List<ConsultingVO> consultList(Map<String, Object> map) {
+		return memberMapper.consultList(map);
+	}
+
+	@Override
+	public MemberVO checkEmailAndName(String mem_email,String mem_name) {
+		return memberMapper.checkEmailAndName(mem_email,mem_name);
+	}
 
 }

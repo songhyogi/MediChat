@@ -32,6 +32,8 @@ public interface DoctorMapper {
 	//회원 목록
 	@Select("SELECT * FROM member m JOIN doctor_detail d ON m.mem_num=d.doc_num WHERE doc_agree=0")
 	public List<DoctorVO> docList(Map<String, Object> map);
+	@Select("SELECT * FROM member m JOIN doctor_detail d ON m.mem_num=d.doc_num WHERE hos_num=#{hos_num}")
+	public List<DoctorVO> docListByHosNum(long hos_num);
 	//회원정보 수정
 	@Update("UPDATE member SET mem_name=#{mem_name} WHERE mem_num=#{mem_num}")
 	public void updateDoctor(DoctorVO doctor);
@@ -50,13 +52,18 @@ public interface DoctorMapper {
 	
 	//아이디 중복확인
 	public DoctorVO checkId(String mem_id);
+	//이메일 확인
+	@Select("SELECT * FROM member m JOIN doctor_detail d ON m.mem_num=d.doc_num WHERE doc_email=#{doc_email} AND mem_name=#{mem_name}")
+	public DoctorVO checkEmailAndName(String doc_email,String mem_name);
 	//아이디 찾기
-	public void findId(DoctorVO doctor);
+	@Select("SELECT m.mem_id FROM member m JOIN doctor_detail d ON m.mem_num=d.doc_num WHERE mem_name=#{mem_name} AND doc_email=#{doc_email}")
+	public DoctorVO findId(DoctorVO doctor);
 	//비밀번호 찾기
+	@Update("UPDATE doctor_detail SET doc_passwd=#{doc_passwd} WHERE doc_num=#{mem_num}")
 	public void findPasswd(DoctorVO doctor);
 	
 	//비대면 신청
-	@Update("UPDATE doctor_detail SET doc_treat=#{doc_treat} WHERE doc_num=#{doc_num}")
+	@Update("UPDATE doctor_detail SET doc_treat=1, doc_stime=#{doc_stime}, doc_etime=#{doc_etime}, doc_off=#{doc_off} WHERE doc_num=#{mem_num}")
 	public void updateDoctorTreat(DoctorVO doctor);
 	
 	

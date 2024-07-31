@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Select;
 
 import kr.spring.community.vo.CommunityFavVO;
+import kr.spring.community.vo.CommunityReFavVO;
 import kr.spring.community.vo.CommunityReplyVO;
 import kr.spring.community.vo.CommunityVO;
 
@@ -33,19 +34,21 @@ public interface CommunityService {
 	public List<CommunityReplyVO> selectListCommentAndReply(Map<String, Object> map); //댓글 및 답글 총 목록
 	public Integer selectRowCountCommentAndReply(Map<String, Object> map); //댓글 및 답글 총 개수
 	
+	public List<CommunityReplyVO> selectCommentsByUser(long userNum);
+	
 	//댓글
+	public List<CommunityReplyVO> selectListComment(Map<String, Object> map);
 	public CommunityReplyVO selectComment(Long cre_num); //댓글개수
+	public Integer selectCountComment(Long cre_num);
 	public void insertComment(CommunityReplyVO communityReply);
 	public void updateComment(CommunityReplyVO communityReply);
 	public void deleteComment(Long cre_num);
 	
 	//대댓글
+	public List<CommunityReplyVO> selectListReply(Long cre_num);
 	public CommunityReplyVO selectReply(Long cre_num);
+	public Integer selectCountReply(Long cre_num);
 	public void insertReply(CommunityReplyVO communityReply);
-	public void updateReply(CommunityReplyVO communityReply);
-	public void deleteReply(Long cre_num);
-		
-	//댓글 좋아요
-
+	
 	/*-----------------------------답글(대댓글)-----------------------------*/
 }

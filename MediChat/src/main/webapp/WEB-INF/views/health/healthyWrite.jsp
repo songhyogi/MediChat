@@ -7,11 +7,28 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/ckeditor.js"></script>
 <script src="${pageContext.request.contextPath}/js/uploadAdapter.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/healthy.total.js"></script>
+<script  type="text/javascript">
+ 	$(function(){
+ 		$('#register_form').submit(function(){
+ 				if($('#healthy_title').val().trim() ==''){
+ 					alert('제목을 입력하세요.');
+ 					$('#healthy_title').val('').focus();
+ 					return false;
+ 				}
+ 				if($('#healthy_content').val().trim() ==''){
+ 					alert('내용을 입력하세요.');
+ 					$('#healthy_content').val('').focus();
+ 					return false;
+ 				}
+ 			
+ 		})
+ 		
+ 	});
+</script>
 <div class="page-main">
-	<div class="page-one">
-		<h4>홈 > 건강 블로그 >  글쓰기</h4> 		
-		<h2>&nbsp;&nbsp;&nbsp;건강 블로그 </h2>
+	<div class="page-one" style="padding-top:16px;">
+		<span class="text-lightgray fw-7 fs-13">홈 > 건강 블로그 > 글쓰기</span>	
+		<h3 style="margin-top:16px;">&nbsp;&nbsp;&nbsp;건강 블로그 </h3>
 		
 		<hr size="1" width="80%">
 		

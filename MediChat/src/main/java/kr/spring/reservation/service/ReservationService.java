@@ -28,5 +28,13 @@ public interface ReservationService {
     //예약내역 업데이트 (0:예약승인대기, 1:진료예정, 2:진료완료, 3:예약취소)
     public void updateReservation(Long res_num,Long res_status);
     //예약내역 존재 여부
-    public Integer getResExist(Map<String,Object> map);
+    public List<String> getResExist(Map<String,Object> map);
+    ReservationVO getReservationById(long res_num);
+	//예약 번호를 기반으로 의사 번호 가져오기
+	public long selectDoc_num(long res_num);
+	//진료 완료된 내역 가져오기
+	public Integer selectCountByCompleted(Map<String,Object> map);
+	public List<ReservationVO> getDocCompletedList(Map<String,Object> map);
+	//마이페이지 캘린더용 예약내역 가져오기
+    public List<String> getReservationsByMember(Long mem_num);
 }

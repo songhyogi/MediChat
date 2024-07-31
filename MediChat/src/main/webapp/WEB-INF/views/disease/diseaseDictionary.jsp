@@ -3,15 +3,10 @@
     pageEncoding="UTF-8"%>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="page-main">
-	<div class="page-one">
-		<h5>홈 > 질병백과사전</h5> 		
-		<p>
-		<h2>&nbsp;&nbsp;&nbsp;<b>질병 백과사전</b></h2>
-	<a href="${pageContext.request.contextPath}/health/healthBlog">건강 블로그</a> <a href="${pageContext.request.contextPath}/video/videoList">건강 비디오</a> <a href="${pageContext.request.contextPath}/faq/faqList">자주 묻는 질문</a>
-
-	<br><a href="${pageContext.request.contextPath}/disease/diseamain">테스트</a> 
-	
- 
+	<div class="page-one"  style="padding-top:16px;">
+		<span class="text-lightgray fw-7 fs-13">홈 > 질병백과사전</span>	
+		<h3   style="margin-top:16px;"><img src="${pageContext.request.contextPath}/images/dictionary.png" width="45px;"> <b>질병 백과사전</b></h3>
+		<br>
 	<form class="align-center" id="form-disease" action="${pageContext.request.contextPath}/disease/diseaseDictionary" method="get">
 		
 		<div class="container-input" style="width:500px; margin:0 auto;">
@@ -39,7 +34,7 @@
 				질병 사전 내역이 없습니다.
 		</c:if>
 		<c:if test="${count > 0}">
-				<table style="width:90%; margin:0 auto;">
+				<table style="width:90%; margin:0 auto;"class="fs-18 fw-4">
 					<tr>
 						<th>
 						</th>

@@ -216,13 +216,20 @@ body{
 	width: 1400px; /* 원하는 고정 너비 */
 	margin-left: auto;
 	margin-right: auto;
-	padding-left: 15px;
-	padding-right: 15px;
 }
-
+.sticky-top-container {
+    position: -webkit-sticky; /* Safari용 */
+    position: sticky;
+    top: 0;
+}
+.sticky-bottom-container {
+    position: -webkit-sticky; /* Safari용 */
+    position: sticky;
+    bottom: 0;
+}
 /* ================= 버튼 ================= */
 .btn-green {
-    background-color: rgb(102, 178, 178);
+    background-color: #40916c;
     color: #fff; /* 버튼 텍스트를 하얀색으로 */
     border: none; /* 기본 테두리 제거 */
     padding: 10px 20px;
@@ -230,7 +237,7 @@ body{
     cursor: pointer;
 }
 .btn-green:hover {
-    background-color: rgb(76, 165, 165);
+    background-color: #52b788;
     transform: scale(1.05);
 }
 
@@ -239,8 +246,6 @@ body{
 	width: 100%;
 	height:1px;
 	border-bottom: 1px solid #dfe1e2;
-	padding-top: 5px;
-	padding-bottom: 5px;
 }
 .mline{
 	width: 100%;
@@ -323,6 +328,9 @@ body{
 #main-search-input:focus{
 	outline: none;
 }
+#main-search-icon{
+	cursor: pointer;
+}
 
 .main-titleAndMore{
 	display: flex;
@@ -347,19 +355,30 @@ body{
 	width:450px;
 	margin-top: 15px;
 	margin-bottom: 30px;
+	cursor:pointer;
 }
 .main-consult-item-title{
 	font-size: 16px;
 	font-weight: 600;
 	color: #333333;
 	margin-bottom: 13px;
+	
+	height: 22px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 .main-consult-item-content{
 	font-size: 14px;
 	color: #757575; 
 	margin-bottom: 5px;
 	
-	white-space: nowrap;
+	display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* 줄 수 */
+    
+	height: 40px;
+	white-space: normal;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
@@ -436,8 +455,8 @@ body{
 	background-color: #f2f2f2;
 }
 .header-menu-text {
-	text-decoration: none;
-	color: black;
+	text-decoration: none !important;
+	color: black !important;
 	font-weight: 900;
 	font-size: 18px;
 }
@@ -485,7 +504,7 @@ body{
 	position:absolute;
 	right:2%;
 	top:10%;
-	width: 410px;
+	width: 460px;
 	height: 610px;
 	border: 2px outset black;
 	border-radius: 10px;
@@ -528,6 +547,31 @@ body{
 	border-bottom: 1px solid #E60634;
 	box-sizing: border-box;
 }
+.noti-item-message {
+	width: 330px; /* 원하는 너비 */
+    overflow: hidden; /* 컨테이너를 넘치는 내용을 숨깁니다 */
+    white-space: nowrap; /* 텍스트가 한 줄로 유지되도록 설정 */
+    text-overflow: ellipsis; /* 넘치는 내용에 '...' 추가 */
+}
+.noti-item-message-wrap {
+	display: inline-block;
+    animation: scroll-left 10s linear infinite; /* 애니메이션 설정 */
+}
+@keyframes scroll-left {
+    0% {
+        transform: translateX(0%); /* 시작 위치 */
+    }
+    100% {
+        transform: translateX(0%); /* 끝 위치 */
+    }
+}
+.noti-item-link a{
+	font-size: 12px;
+	font-weight: 700;
+	text-decoration: none;
+	color: #2F3E46;
+}
+
 
 .header-status-rightBox{
 	width: 70px;
@@ -652,8 +696,8 @@ body{
 	width: 100%;
 	height:1px;
 	border-bottom: 1px solid #dfe1e2;
-	margin-top: 5px;
-	margin-bottom: 5px;
+	margin-top: 0px;
+	margin-bottom: 0px;
 }
 /* ================= 오른쪽 메뉴 ================= */
 

@@ -1,12 +1,47 @@
 @charset "UTF-8";
+.margin-top-5{
+	margin-top:5px;
+}
+
+.margin-top-50{
+	margin-top:50px;
+}
+.margin-left-30{
+	margin-left:30px;
+}
+.margin-left-15{
+	margin-left:15px;
+}
+.margin-left-15{
+	text-align:left;
+	margin-left:15px;
+}
+.padding-left-40{
+	padding-left:40px;
+}
+.display-body{
+	height:850px;
+	margin-bottom:50px;
+}
 .display{
 	display:flex;
-	padding:0 10px 10px 10px;
 }
 .nav-body{
 	width:200px;
-	height:800px;
-	overflow:auto;
+	height:798px;
+	overflow-y:auto;
+	overflow-x:hidden;
+	border-top-left-radius: 15px; /* 좌측 상단 모서리 둥글게 */
+    border-bottom-left-radius: 15px;
+    box-shadow: -8px 8px 15px #e0e0e0;
+    background-color:#f2f0e9;
+}
+
+.chat-nav-selected-bg{
+	background-color:#95c7a7;
+}
+.chat-nav-completed-bg{
+	background-color:#e0ded5;
 }
 .nav-item{
 	width:200px;
@@ -27,8 +62,8 @@
 	cursor:pointer;
 }
 .nav-title th{
-	height:130px;
-	color: rgb(76, 165, 165);
+	height:110px;
+	color: #2d6a4f;
 }
 .selected-chat td a{
 	color:white;
@@ -39,13 +74,17 @@
 .chat-main{
 	width:600px;
 	height:800px;
+	border-top-right-radius:15px;
+	border-bottom-right-radius:15px;
+	box-shadow:8px 8px 15px #e0e0e0;
 }
 .chat-header{
 	padding:10px;
 	width:600px;
-	height:130px;
+	height:110px;
 	display:flex;
 	align-items: center;
+	border-top-right-radius:15px;
 }
 .res-title{
 	display:table-cell;
@@ -60,10 +99,19 @@
 }
 .chat-body{
 	width:100%;
-	height:77%;
+	height:79%;
 	padding:0;
 	margin-bottom:5px;
 	overflow:auto;	
+}
+.chat-select-notice{
+	position:absolute;
+	top:54%;
+	left:57%;
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .close-room{
 	transform: translateY(265px);
@@ -72,13 +120,14 @@
     justify-content: center;
     align-items: center;
 }
+
 .chat-close-btn{
 	border-radius: 5px;
 	border:none;
 	width:100px;
 	height:50px;
 	background-color:white;
-	color:rgb(76, 165, 165);
+	color:#40916c;
 	display:flex;
 	justify-content:center;
 	align-items: center;
@@ -111,12 +160,10 @@
 	height:50px;
 	padding:0 10px;
 	border-width:thin;
-	border-color:rgb(68, 207, 195);
 	border-radius:5px;
 }
 .chat-body ul li{
 	border-radius:10px;
-	margin:5px 0;
 	clear:both;
 }
 .other-message{
@@ -126,6 +173,7 @@
 	word-wrap: break-word; /* 긴 단어의 줄바꿈 처리 */
   	overflow-wrap: break-word;
   	padding:10px;
+  	margin:5px 0 5px 5px;
 }
 .my-message{
 	overflow:auto;
@@ -135,9 +183,68 @@
 	word-wrap: break-word; /* 긴 단어의 줄바꿈 처리 */
   	overflow-wrap: break-word;
   	padding:10px;
+  	margin:5px 5px 5px 0;
+}
+.msg-image{
+	border-radius: 5px;
+	border:none;
+	max-width:300px;
+	color:white;
+	display:flex;
+	justify-content:center;
+	align-items: center;
 }
 .image-form{
 	display:none;
+}
+.msg-image-modal{
+	display:none;
+	position:fixed;
+	top: 50%; /* 화면의 중앙으로 위치 설정 */
+    left: 50%; /* 화면의 중앙으로 위치 설정 */
+    transform: translate(-50%, -50%); /* 중앙 정렬을 위한 변환 */
+	background-color:white;
+	justify-content: center;
+    align-items: center;
+    z-index:999;
+}
+.msg-image-modal-bg{ /* 모달 뒤편 어두운 배경 */
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:150%;
+	background-color: rgba(0,0,0,0.5);
+	z-index:998;
+	display:none;
+}
+.btn-chat{
+	background-color: #40916c;
+    color: #fff; /* 버튼 텍스트를 하얀색으로 */
+    border: none; /* 기본 테두리 제거 */
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.btn-chat:hover{
+	background-color: #74c69d;
+    transform: scale(1.02);
+}
+.btn-message{
+	font-size:15px;
+	font-weight:500;
+	width:300px;
+	background-color: #fff;
+    color: #40916c; /* 버튼 텍스트를 어두운 초록으로 */
+    border: none; /* 기본 테두리 제거 */
+    margin-top:20px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.btn-message:hover{
+	background-color: #d8f3dc;
+    transform: scale(1.02);
 }
 /*===========================
 		모달창 구성(이미지 전송)
@@ -225,6 +332,7 @@
 }
 
 #file_table{
+	margin-left:15px;
 	border-collapse:collapse;
 }
 #file_table tr{
@@ -235,9 +343,10 @@
 	text-align:center;
 	border-bottom: 1px solid #ccc;
 }
-.form-list{
+.form-list{ 
 	height:200px;
 	margin:10px 0;
+	overflow:auto;
 }
 .form-notice{
 	padding-top:5px;
@@ -256,10 +365,20 @@
 }
 .list-delete{
 	width:20px;
-	color:rgb(76, 165, 165);
+	color:#2d6a4f;
 }
 #select_file{
-	width:298px;
+	width:305px;
+}
+select#file_type{
+	width:130px;
+	height:38px;
+}
+label[for="file_valid_date"]{
+	margin-left:12px;
+}
+#form_charge{
+	margin-bottom:10px;
 }
 .close-file-form .form-button{
 	display:flex;
@@ -316,3 +435,209 @@
 /*=======================
 		나의 서류함
 =========================*/
+.file-body{
+	width:100%;
+	height:700px;
+	padding:0;
+	margin-bottom:5px;
+	overflow:auto;
+	align-items: center;
+}
+.file-table{
+	width:550px;
+	margin:17px;
+}
+.file-table th:first-child,
+.file-table td:first-child {
+	border-left: 0;
+}
+.file-table th:last-child,
+.file-table td:last-child {
+	border-right: 0;
+}
+.file-table tr th,
+.file-table tr td{
+	text-align:center;
+	border:1px solid #f2f2f2;
+}
+.list-head th{
+	padding: 10px 0;
+}
+.btn-td{
+	text-align:center;
+	padding: 12px 0;
+}
+.file-body .close-room{
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+/*=======================
+		의약품 상세보기
+=========================*/
+.modal{
+	justify-content: center;
+    align-items: center;
+}
+.drugImg-modal{
+	width:700px;
+	height:700px;
+	display:flex;
+	flex-direction: column;
+	align-items:center;
+	justify-content:center;
+}
+.modal-header{
+	width:500px;
+	height:70px;
+	color:white;
+}
+.modal-body{
+	width:500px;
+	background-color:white;
+	display:flex;
+	flex-direction: column;
+	align-items:center;
+	justify-content:center;
+	flex:0 0 auto;
+}
+.main-margin{
+	margin: 0 20px;
+}
+
+.table-bordered tr td{
+	height:70px;
+	vertical-align:middle;
+	padding-left:20px;
+}
+/*=======================
+	  의약품 상세보기 목록
+=========================*/
+.drug-table{
+	table-layout:fixed;
+}
+.drug-table-title{
+	width:150px;
+}
+.drug-table-image{
+	width:500px;
+	text-align:center;
+	vertical-align:middle;
+}
+.drug-btn button{
+	color:white;
+	background-color: #40916c;
+	border: 1px solid;
+}
+.list-margin{
+	margin-top:50px;
+	margin-bottom:100px;
+	transform:translateX(-20px);
+}
+.modal-header .close{
+	position:static;
+	color:white;
+	transform:translateX(260px);
+}
+.list-drug-name{
+	margin:0 60px 0 60px;
+}
+
+.drug-keyfield{
+	height:50px;
+	width:130px;
+	margin-right:7px;
+}
+.drug-keyword{
+	height:50px;	
+}
+.page-one{
+	width:900px;
+	margin:30px auto 100px auto;
+}
+.drug-table{
+	margin:auto;
+}
+.drug-table tr th,
+.drug-table tr td{
+	white-space:nowrap;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    width:600px;
+    max-width:600px;
+	padding:20px 0;
+}
+.drug-table tr td{
+	border-bottom:1px solid #e0e0e0;
+}
+.drug-name-td>a{
+	white-space:nowrap;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    width:100%;
+}
+.drug-name-td>a:hover{
+	color:#a3a3a3;
+}
+
+.drug-name-th,
+.drug-name-td{
+	width:550px !important;
+	border-bottom:1px solid #e0e0e0;
+}
+.drug-company{
+	width:150px;
+}
+.drug-effect{
+	width:80px;
+}
+.drug-search{
+	width:500px;
+	margin:0 auto;
+}
+.drug-search ul li{
+	display:flex;
+	justify-content: center;
+	margin-right:0;
+}
+#h-search-icon{
+	font-size:20px;
+	transform:translateX(-30px);
+	align-self:center;
+	cursor:pointer;
+}
+.text-lightgray{
+	color:#71767a;
+}
+.warin{
+	text-align:center;
+	margin:300px 0;
+}
+/*=======================
+	  의약품 효능 modal
+=========================*/
+.drug-effect-info{
+	display:none;
+	position:absolute;
+	z-index:999;
+	width:400px;
+}
+.effect-info-header{
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+	padding: 0 10px;
+	color:white;
+	width:400px;
+	height:50px;
+}
+.effect-info-body{
+	display:table-cell;
+	text-align:center;
+	vertical-align:middle;
+	/*background-color:white;*/
+	padding: 0 5px;
+	width:400px;
+	height:90px;
+}

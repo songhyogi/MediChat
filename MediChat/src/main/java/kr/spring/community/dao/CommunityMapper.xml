@@ -7,25 +7,29 @@
 	<!-- 목록 -->
 	<sql id="typeSearch">
 		<where>
+			<!-- 누적신고수 10이상이 되면 보여지지 않게 처리 -->
+			<![CDATA[
+				cbo_report < 10
+			]]>
 			<!-- 카테고리 -->
 			<if test="cbo_type != null and cbo_type != ''">
-				cbo_type=#{cbo_type}
+				AND cbo_type=#{cbo_type}
 			</if>
 			<!-- 검색 -->
 			<if test="keyword !=null and keyword != ''">
 				<!-- 카테고리가 있는 경우 -->
 				<if test="cbo_type != null and cbo_type != ''">
-					AND
+					
 				</if>
 				<!-- 카테고리가 없는 경우 -->
 				<if test="keyfield == 1">
-					cbo_title LIKE '%' || #{keyword} || '%' 
+					AND cbo_title LIKE '%' || #{keyword} || '%' 
 				</if>
 				<if test="keyfield == 2">
-					cbo_content LIKE '%' || #{keyword} || '%' 
+					AND cbo_content LIKE '%' || #{keyword} || '%' 
 				</if>
 				<if test="keyfield == 3">
-					(cbo_title LIKE '%' || #{keyword} || '%' OR
+					AND (cbo_title LIKE '%' || #{keyword} || '%' OR
 					cbo_content LIKE '%' || #{keyword} || '%')
 				</if>
 			</if>
@@ -111,8 +115,8 @@
 	</update>
 	
 	<!-- =================댓글================= -->
-	<!-- 댓글 목록 -->
-	<select id="selectListCommentAndReply">
+	<!-- 댓글/답글 전체 목록 -->
+	<select id="selectListCommentAndReply" parameterType="map" resultType="communityReplyVO">
 		SELECT
 			*
 		FROM (SELECT
@@ -123,11 +127,51 @@
 			  		FROM cboard_re
 			  		JOIN member USING(mem_num)
 			  		WHERE cbo_num=#{cbo_num}
-			  		ORDER BY cre_num DESC)a)
+			  		ORDER BY 
+			  			/*cre_ref ASC, -- 답글이 속한 댓글 기준으로 정렬
+                		cre_level ASC, -- 댓글 및 답글의 레벨 기준으로 정렬
+                		cre_rdate DESC -- 작성일 기준으로 정렬*/
+			  			cre_num DESC /* (기존에 작성한 코드)*/
+			  		)a)
 		<![CDATA[
 		WHERE rnum >= #{start} AND rnum <= #{end}
 		]]>
 	</select>
+	
+	<!-- 댓글 목록 -->
+	<select id="selectListComment" parameterType="map" resultType="communityReplyVO">
+		SELECT 
+			cre_num, 
+			cbo_num, 
+			mem_num,
+			mem_id, 
+			cre_content, 
+			cre_rdate, 
+			cre_mdate, 
+			cre_report, 
+			reply_cnt
+		FROM(SELECT rownum rnum, 
+						a.*
+			FROM (SELECT 
+						* 
+				  FROM cboard_re JOIN member USING(mem_num)
+								 LEFT OUTER JOIN(SELECT cre_ref ref, COUNT(*) reply_cnt 
+								 				FROM cboard_re 
+								 				<![CDATA[
+								 				WHERE cre_level > 0 AND cre_report < 10
+								 				]]>
+								 				GROUP BY cre_ref) 
+								 				ON ref=cre_num
+								 <![CDATA[
+								 WHERE cbo_num=#{cbo_num} AND cre_level=0 AND cre_report < 10
+								 ]]>
+				 				 ORDER BY cre_num DESC
+				   ) a)
+		<![CDATA[
+		WHERE rnum >= #{start} AND rnum <= #{end}
+		]]>
+	</select>
+	
 	<!-- 댓글 등록 -->
 	<insert id="insertComment">
 		INSERT INTO cboard_re(
@@ -143,6 +187,47 @@
 	</insert>
 	
 	<!-- =================답글/대댓글================= -->
-	
+	<!-- 답글 목록 -->
+	<select id="selectListReply" >
+		SELECT 
+		    r.cre_num,
+		    r.cbo_num,
+		    r.cre_content,
+		    r.mem_num,
+		    m.mem_id,
+		    r.cre_rdate,
+		    r.cre_mdate,
+		    r.cre_level,
+		    r.cre_ref,
+		    re.mem_id parent_id
+		FROM cboard_re r
+		JOIN member m ON r.mem_num = m.mem_num 
+		LEFT OUTER JOIN cboard_re p ON r.cre_ref = p.cre_num
+		LEFT OUTER JOIN member re ON p.mem_num = re.mem_num
+		<![CDATA[
+		WHERE r.cre_report < 10
+		]]>
+		START WITH r.cre_ref = #{cre_num} /*답글에 해당하는 댓글*/
+		CONNECT BY PRIOR r.cre_num = r.cre_ref
+		
+		ORDER SIBLINGS BY r.cre_rdate DESC
+	</select>
+	<!-- 답글 등록 -->
+	<insert id="insertReply" parameterType="communityReplyVO">
+		INSERT INTO cboard_re(
+			cre_num,
+			cbo_num,
+			mem_num,
+			cre_content,
+			cre_level,
+			cre_ref)
+		VALUES(
+			cboard_re_seq.nextval,
+			#{cbo_num},
+			#{mem_num},
+			#{cre_content},
+			#{cre_level},
+			#{cre_ref})
+	</insert>
 </mapper>
 

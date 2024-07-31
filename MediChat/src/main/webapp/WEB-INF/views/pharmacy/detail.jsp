@@ -3,16 +3,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div>
-	<span class="text-lightgray fw-7 fs-13">홈 > 약국 찾기 > 검색 결과 > 약국 상세</span>
-	<div id="detail_hosName">
-		<h4 class="fw-7">${pharmacy.pha_name}</h4>
-		<div class="d-flex">
-			<c:if test="${pharmacy.pha_weekendAt=='Y'}">
-				<div class="detail-hospital-info-item fs-14 fw-7">주말 운영</div>
-			</c:if>
+	<div class="p-3">
+		<span class="text-lightgray fw-7 fs-13">홈 > 약국 찾기 > 검색 결과 > 약국 상세</span>
+		<div id="detail_hosName">
+			<h4 class="fw-7">${pharmacy.pha_name}</h4>
+			<div class="d-flex">
+				<c:if test="${pharmacy.pha_weekendAt=='Y'}">
+					<div class="detail-hospital-info-item fs-14 fw-7">주말 운영</div>
+				</c:if>
+			</div>
 		</div>
 	</div>
-	
 	<div class="line"></div>
 	<div style="height:15px;" class="bg-gray-0"></div>
 	
@@ -168,7 +169,7 @@
 		<p class="fs-18 fw-7">약국 위치</p>
 		<div class="fs-14 text-black-6 fw-7 mb-3">${pharmacy.pha_addr}</div>
 		<div class="mb-3">
-			<jsp:include page="/WEB-INF/views/common/staticPhaMap.jsp"/>
+			<jsp:include page="/WEB-INF/views/pharmacy/staticPhaMap.jsp"/>
 		</div>
 		<c:if test="${pharmacy.pha_mapImg!='null'}">
 			<div class="fs-15 text-black-7 fw-9 text-center">&lt;간이약도&gt;</div>
@@ -199,3 +200,23 @@
 </div>
 <script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+$('#call_btn').click(function() {
+ 	// 복사할 텍스트 지정
+    var textToCopy = '${pharmacy.pha_tell1}';
+    
+    // 임시 텍스트 영역 생성
+    var tempInput = $('<input>');
+    $('body').append(tempInput);
+    tempInput.val(textToCopy).select();
+    
+    // 클립보드에 텍스트 복사
+    document.execCommand('copy');
+    
+    // 임시 텍스트 영역 제거
+    tempInput.remove();
+    
+    // 알림 메시지
+    alert('전화번호가 클립보드에 복사되었습니다: ' + textToCopy);
+});
+</script>

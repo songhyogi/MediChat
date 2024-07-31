@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.notification.dao.NotificationMapper;
 import kr.spring.notification.vo.NotificationVO;
+import kr.spring.util.DurationFromNow;
 
 @Service
 @Transactional
@@ -38,7 +39,12 @@ public class NotificationServiceImpl implements NotificationService{
 
 	@Override
 	public List<NotificationVO> selectListNotification(Long mem_num) {
-		return notificationMapper.selectListNotification(mem_num);
+		List<NotificationVO> nList = notificationMapper.selectListNotification(mem_num);
+		for(NotificationVO noti : nList) {
+			noti.setNoti_createdDate(DurationFromNow.getTimeDiffLabel(noti.getNoti_createdDate()));
+		}
+		
+		return nList;
 	}
 
 	@Override

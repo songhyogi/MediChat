@@ -1,4 +1,4 @@
-package kr.spring.member.controller;
+ package kr.spring.member.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.checkerframework.checker.units.qual.s;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,15 +23,20 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.spring.consulting.vo.ConsultingVO;
+import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.notification.service.NotificationService;
 import kr.spring.notification.vo.NotificationVO;
 import kr.spring.reservation.service.ReservationService;
+import kr.spring.reservation.vo.ReservationVO;
 import kr.spring.util.AuthCheckException;
 import kr.spring.util.CaptchaUtil;
 import kr.spring.util.FileUtil;
+import kr.spring.util.PagingUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -62,9 +68,9 @@ public class MemberController {
 	}
 	//회원가입 처리
 	@PostMapping("/member/registerUser")
-	public String submit(@Valid MemberVO member,BindingResult result,HttpServletRequest request,Model model,
+	public String submit(@Valid MemberVO memberVO,BindingResult result,HttpServletRequest request,Model model,
 									HttpSession session) {
-		log.debug("<회원가입>" + member);
+		log.debug("<회원가입> : " + memberVO);
 
 		//유효성 체크 결과 오류가 있다면 다시 폼으로
 		if(result.hasErrors()) {
@@ -75,7 +81,7 @@ public class MemberController {
 		//캡챠 키 발급시 받은 키값
 		String key = (String)session.getAttribute("captcha_key");
 		//사용자가 입력한 캡챠 이미지 글자값
-		String value = member.getCaptcha_chars();
+		String value = memberVO.getCaptcha_chars();
 		String apiURL = "https://openapi.naver.com/v1/captcha/nkey?code=" + code + "&key=" + key + "&value=" + value;
 
 		Map<String, String> requestHeaders = new HashMap<String, String>();
@@ -95,11 +101,15 @@ public class MemberController {
 			return form();
 		}
 		//========캡챠 끝=============//
-
+		
 		//회원가입
-		memberService.insertMember(member);
-
-		return "redirect:/main/main";
+		memberService.insertMember(memberVO);
+		
+		model.addAttribute("message","성공적으로 회원가입 되었습니다.");
+		model.addAttribute("url",request.getContextPath()+"/main/main");
+		model.addAttribute("alertType","success");
+		
+		return "common/resultAlert";
 	}
 	//===========로그인===========
 	@GetMapping("/member/login")
@@ -145,13 +155,10 @@ public class MemberController {
 				//=====자동 로그인 끝=====
 				//로그인 처리
 				session.setAttribute("user", member);
-				
+				session.setAttribute("user_type", "membert");
 				/* ksy 알림 처리 시작 */
 				int noti_cnt = notificationService.selectCountNotification(member.getMem_num());
 				session.setAttribute("noti_cnt", noti_cnt);
-				List<NotificationVO> noti_list = notificationService.selectListNotification(member.getMem_num());
-				session.setAttribute("noti_list", noti_list);
-				log.debug("<<알림 갯수 >> : " + noti_cnt + "<<알림 목록 >> : " + noti_list);
 				/* ksy 알림 처리 끝 */
 				
 				log.debug("<인증 성공> : "+ member);
@@ -200,17 +207,19 @@ public class MemberController {
 		if(user == null) {
 	         model.addAttribute("message","로그인이 필요합니다.");
 	         model.addAttribute("url","/member/login");
-	         return "/common/resultAlert";
+	         model.addAttribute("alertType","warning");
+	         
+	         return "common/resultAlert";
 	    }
 		MemberVO memberVO = memberService.selectMember(user.getMem_num());
 
 		model.addAttribute("memberVO",memberVO);
-
+		
 		return "memberModify";
 	}
 	//회정정보 수정 폼에서 전송된 데이터 처리
 	@PostMapping("/member/modifyUser")
-	public String updateSubmit(@Valid MemberVO memberVO,BindingResult result,HttpSession session) {
+	public String updateSubmit(@Valid MemberVO memberVO,BindingResult result,HttpSession session,Model model) {
 		log.debug("<회원정보 수정> : " + memberVO);
 		//유효성 체크
 		if(result.hasErrors()) {
@@ -223,7 +232,11 @@ public class MemberController {
 		//세선에 저장된 정보 변경
 		user.setMem_email(memberVO.getMem_email());
 
-		return "myPage";
+		model.addAttribute("message","정보가 수정되었습니다.");
+        model.addAttribute("url","/member/myPage");
+        model.addAttribute("alertType","success");
+		
+        return "common/resultAlert";
 	}
 	/*=============================
 	 * 아이디 찾기
@@ -238,14 +251,41 @@ public class MemberController {
 		if(result.hasFieldErrors("mem_name")||result.hasFieldErrors("mem_email")) {
 			return "memberFindId";
 		}
-		//아이디 찾기
-		MemberVO member = memberService.findId(memberVO);
-		
-		log.debug("<< 아이디 찾기 결과 >> : " + member.getMem_id());
-		
-		model.addAttribute("mem_id",member.getMem_id());
-		
-		return "member/memberResultId";
+		MemberVO member = null;
+		try {
+			member = memberService.checkEmailAndName(memberVO.getMem_email(),memberVO.getMem_name());
+			
+			boolean check = false;
+			if(member!=null && member.getMem_email() != null) {
+				//이메일 일치확인
+				check = member.checkEmail(memberVO.getMem_email());
+				//이름 일치 확인
+				check = member.checkName(memberVO.getMem_name());
+			}else {
+				result.reject("notFoundUser2");
+				
+				return "memberFindId";
+			}
+			if(check) {
+				//아이디 찾기
+				member = memberService.findId(memberVO);
+
+				log.debug("<<아이디 찾기 결과>> : " + member.getMem_id());
+				
+				model.addAttribute("mem_id",member.getMem_id());
+				
+				return "/member/memberResultId";
+			}
+			//인증 실패
+			throw new AuthCheckException();
+		}catch(AuthCheckException e) {
+			if(member!=null && member.getMem_auth() == 1) {
+				result.reject("noAuthority");
+			}
+			log.debug("<인증 실패>");
+
+			return "memberFindId";
+		}
 	}
 	
 	/*=============================
@@ -265,7 +305,9 @@ public class MemberController {
 		if(user == null) {
 	         model.addAttribute("message","로그인이 필요합니다.");
 	         model.addAttribute("url","/member/login");
-	         return "/common/resultAlert";
+	         model.addAttribute("alertType","warning");
+	         
+	         return "common/resultAlert";
 	    }
 		return "memberChangePasswd";
 	}
@@ -314,8 +356,12 @@ public class MemberController {
 		memberService.updatePasswd(memberVO);
 		//자동 로그인 해제
 		//memberService.deleteMem_au_id(memberVO.getMem_num());
-
-		return "redirect:/member/myPage";
+		
+		model.addAttribute("message","비밀번호가 수정되었습니다.");
+		model.addAttribute("url","/member/myPage");
+		model.addAttribute("alertType","success");
+		
+		return "common/resultAlert";
 	}
 	/*=============================
 	 * 회원탈퇴
@@ -326,13 +372,16 @@ public class MemberController {
 		if(user == null) {
 	         model.addAttribute("message","로그인이 필요합니다.");
 	         model.addAttribute("url","/member/login");
-	         return "/common/resultAlert";
+	         model.addAttribute("alertType","warning");
+	         
+	         return "common/resultAlert";
 	    }
 		return "memberDelete";
 	}
 	//탈퇴 폼에서 전송된 데이터 처리
 	@PostMapping("/member/deleteUser")
-	public String deleteSubmit(@Valid MemberVO memberVO,BindingResult result,HttpSession session) {
+	public String deleteSubmit(@Valid MemberVO memberVO,BindingResult result,HttpSession session,Model model,
+													HttpServletRequest request) {
 		
 		//아이디와 비밀번호만 유효성 체크하여 오류가 있다면 폼으로
 		if(result.hasFieldErrors("mem_id") || result.hasFieldErrors("mem_passwd")
@@ -374,8 +423,53 @@ public class MemberController {
 		
 		session.invalidate();
 		
-		return "redirect:/main/main";
+		model.addAttribute("message","회원탈퇴 되었습니다.");
+		model.addAttribute("message2","그 동안 MediChat을 이용해주셔서 감사합니다.");
+		model.addAttribute("url",request.getContextPath()+"/main/main");
+		model.addAttribute("alertType","success");
+		
+        return "common/resultAlert";
 	}
+	/*=============================
+	 * 관리자 회원등급 수정
+	 ============================*/
+	@GetMapping("/member/changeAuth")
+	public String changeAuth(@RequestParam(defaultValue="1") int pageNum,
+							String keyfield,String keyword,Long mem_num,HttpSession session, Model model,
+															HttpServletRequest request) {
+		MemberVO user = (MemberVO) session.getAttribute("user");
+		if (user == null || user.getMem_auth() != 9) {
+			model.addAttribute("message","접근 권한이 없습니다.");
+			model.addAttribute("url",request.getContextPath()+"/main/main");
+			model.addAttribute("alertType","warning");
+			
+			return "common/resultAlert";
+		} else {
+			Map<String, Object> map = new HashMap<String, Object>();
+			
+			map.put("keyfield", keyfield);
+			map.put("keyword", keyword);
+			
+			//레코드수 
+			int count = memberService.selectRowCount(map);
+			//페이지 처리
+			PagingUtil page = new PagingUtil(keyfield, keyword, pageNum,count,20,10,"list");
+			
+			List<MemberVO> memList = null;
+			if(count > 0) {
+				map.put("start", page.getStartRow());
+				map.put("end", page.getEndRow());
+				
+				memList = memberService.getMemList(map);
+			}
+
+			model.addAttribute("count",count);
+			model.addAttribute("memList", memList);
+			model.addAttribute("page",page.getPage());
+		}
+		return "adminChangeAuth";
+	}
+	
 	/*=============================
 	 * 프로필 사진 출력
 	 ============================*/
@@ -486,9 +580,8 @@ public class MemberController {
 	        return "redirect:/login";
 	    }
 	}
-
 	@GetMapping("/mypage/memberInfo")
-   public String process1(HttpSession session,Model model) {
+    public String process1(HttpSession session,Model model) {
       MemberVO user = (MemberVO)session.getAttribute("user");
       if(user == null) {
          return "login";
@@ -501,20 +594,30 @@ public class MemberController {
       model.addAttribute("member", member);
         
       return "memberInfo";
-   }
-     @GetMapping("/review/reviewMyList")
-   public String process3(HttpSession session,Model model) {
-      MemberVO user = (MemberVO)session.getAttribute("user");
-      if(user == null) {
-         return "login";
-      }
-      //회원정보
-      MemberVO member = memberService.selectMember(user.getMem_num());
-      
-      log.debug("<<MY페이지>> : " + member);
-      
-      model.addAttribute("member", member);
-        
-      return "reviewMyList";
-   }
+    }
+	/*=============================
+	 * 의료상담 내역(마이페이지)
+    ============================*/
+	@GetMapping("/mypage/myConsult")
+	public String myConsult(HttpSession session,Model model) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user == null) {
+			model.addAttribute("message","로그인이 필요합니다.");
+			model.addAttribute("url","/member/login");
+			model.addAttribute("alertType","warning");
+			
+	        return "common/resultAlert";
+		}else {
+			Map<String, Object> map = new HashMap<String, Object>();
+			MemberVO member = new MemberVO();
+			member.setMem_num(user.getMem_num());
+			
+			map.put("mem_num",member.getMem_num());
+			
+			List<ConsultingVO> consultList = memberService.consultList(map);
+			
+			model.addAttribute("consultList",consultList);
+		}
+		return "myConsult";
+	}
 }

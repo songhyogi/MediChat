@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <div>
 	<!-- 베너 -->
 	<div>
@@ -45,6 +45,8 @@
 		<!-- 검색 시작 -->
 		<div id="main-search-form-box" >
 			<form id="main-search-form" action="/hospitals/search" method="get">
+				<input type="hidden" name="user_lat" value="${user_lat}">
+				<input type="hidden" name="user_lon" value="${user_lon}">
 				<img id="main-search-logo" width="55px" height="35px" src="/images/loginLogo.png">
 				<input type="text" id="main-search-input" name="keyword" placeholder="병원 이름, 지역 + 과목, 증상">
 				<img id="main-search-icon" width="30px" height="30px" src="/images/search.png">
@@ -55,17 +57,17 @@
 		<!-- 실시간 상담 시작 -->
 		<div id="main-consult-box">
 			<div class="main-titleAndMore">
-				<div class="main-titleAndMore-title">실시간 상담</div>
-				<div class="main-titleAndMore-more"><a href="#">더보기</a></div>
+				<div class="main-titleAndMore-title">의료 상담</div>
+				<div class="main-titleAndMore-more"><a href="/consultings">더보기</a></div>
 			</div>
 			<div class="row d-flex justify-content-between">
-				<c:forEach begin="1" end="4">
-				<div class="col-5 main-consult-item">
-					<div class="main-consult-item-title">제목</div>
-					<div class="main-consult-item-content">내용</div>
+				<c:forEach items="${cList}" var="consulting">
+				<div class="col-5 main-consult-item" data-cnum="${consulting.con_num}">
+					<div class="main-consult-item-title">${consulting.con_title}</div>
+					<div class="main-consult-item-content">${consulting.con_content}</div>
 					<div class="d-flex align-items-center">
 						<div class="rounded-4 bg-success"><img src="/images/doctor.png" width="20px" height="20px"></div>
-						<div class="main-consult-item-replyCnt">1개의 답변</div>
+						<div class="main-consult-item-replyCnt">${consulting.con_re_cnt}개의 답변</div>
 					</div>
 				</div>
 				</c:forEach>
@@ -77,27 +79,27 @@
 		<div id="main-magagine-box">
 			<div class="main-titleAndMore">
 				<div class="main-titleAndMore-title">건강 매거진</div>
-				<div class="main-titleAndMore-more"><a href="#">더보기</a></div>
+				<div class="main-titleAndMore-more"><a href="/health/healthBlog">더보기</a></div>
 			</div>
 			<div class="row d-flex justify-content-between">
-				<c:forEach var="healthy" items="${list}">
-				<div class="main-magagine-item col-5">
-					<div class="row d-flex align-items-center">
-						<div class="col-9">
-							<div class="main-magagine-item-title">
-								${healthy.healthy_title}
+				<c:forEach var="healthy" items="${hList}">
+					<div class="main-magagine-item col-5"  style="cursor:pointer;" onclick="location.href='${pageContext.request.contextPath}/health/healthDetail?healthy_num=${healthy.healthy_num}'">
+						<div class="row d-flex align-items-center" onclick="location.href='${pageContext.request.contextPath}/health/healthDetail?healthy_num=${healthy.healthy_num}'">
+							<div class="col-9">
+								<div class="main-magagine-item-title">
+									${healthy.healthy_title}
+								</div>
+								<div class="main-magagine-item-date">
+									${healthy.h_reg_date}
+								</div>
 							</div>
-							<div class="main-magagine-item-date">
-								${healthy.h_reg_date}
-							</div>
-						</div>
-						<div class="col-3">
-							<div>
-								<c:if test="${!empty healthy.h_filename}"><img  width="80" height="80" src="${pageContext.request.contextPath}/upload/${healthy.h_filename}"/></c:if>
+							<div class="col-3">
+								<div>
+									<c:if test="${!empty healthy.h_filename}"><img  width="80" height="80" style="border-radius:10px;" src="${pageContext.request.contextPath}/upload/${healthy.h_filename}"/></c:if>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 				</c:forEach>
 			</div>
 		</div>
@@ -106,3 +108,13 @@
 	</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$('#main-search-icon').on('click',function(){
+			$('#main-search-form').submit();
+		});
+	    $('.main-consult-item').on('click', function() {
+	        window.location.href = '/consultings/detail/' + $(this).data('cnum');
+	    });
+	});
+</script>

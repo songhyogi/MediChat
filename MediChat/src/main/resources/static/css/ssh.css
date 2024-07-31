@@ -1,6 +1,6 @@
 @charset "UTF-8";
 .heart-container {
-  --heart-color: rgb(57, 174, 164);
+  --heart-color: #95d5b2;
   position: relative;
   width: 50px;
   height: 50px;
@@ -203,7 +203,7 @@ table#diseaseDict tr td{
 }
 
 button.default-btn {
-  	background-color: rgb(102, 178, 178);
+  	background-color: #40916c;
     color: #fff; /* 버튼 텍스트를 하얀색으로 */
     border: none; /* 기본 테두리 제거 */
     padding: 10px 20px;
@@ -211,7 +211,7 @@ button.default-btn {
     cursor: pointer;
 }
 input.default-btn {
-    background-color: rgb(102, 178, 178);
+    background-color: #40916c;
     color: #fff; /* 버튼 텍스트를 하얀색으로 */
     border: none; /* 기본 테두리 제거 */
     padding: 10px 20px;
@@ -219,12 +219,12 @@ input.default-btn {
     cursor: pointer;
 }
 input.defaul-tbtn:hover {
- 	background-color: rgb(76, 165, 165);
+ 	background-color: #40916c;
     transform: scale(1.05);
 }
 
 button.defaul-tbtn:hover {
- 	background-color: rgb(76, 165, 165);
+ 	background-color: #40916c;
     transform: scale(1.05);
 }
 
@@ -255,6 +255,21 @@ input#healthy_title{
 	width:100%;
 	height:35px;
 }
+input#faq_title{
+	margin-left:0px;
+	width:86.3%;
+	height:35px;
+}
+input#video_title{
+	margin-left:0px;
+	width:86.3%;
+	height:35px;
+
+}
+#selectinputw{
+	height:35px;
+	width:115px;
+}
 .ck-editor__editable_inline{/*CKEditor 전용*/
 	min-height:250px;
 }
@@ -265,82 +280,18 @@ input#healthy_title{
 
 
 /*faq*/
-.checkbox {
-  display: none;
-}
 
-.toggle {
-  margin:15px 0;
-  position: relative;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 9px;
-  transition-duration: .5s;
-  transform: rotate(90deg);
-}
-
-.bars {
-  width: 75%;
-  height: 4px;
-  background-color: rgb(57, 174, 164);
-  border-radius: 4px;
-}
-
-#bar2 {
-  transition-duration: .8s;
-}
-
-#bar1 {
-  width: 55%;
-  transform: rotate(-140deg);
-}
-
-#bar2 {
-  width: 75%;
-}
-#bar3{
-	width: 55%;
-	  transform: rotate(140deg);
-}
-
-.checkbox:checked + .toggle .bars {
-  position: absolute;
-  transition-duration: .5s;
-}
-
-.checkbox:checked + .toggle #bar2 {
-  transform: scaleX(0);
-  transition-duration: .1s;
-}
-
-.checkbox:checked + .toggle #bar1 {
-  width: 75%;
-  transform: rotate(45deg);
-  transition-duration: .5s;
-}
-
-.checkbox:checked + .toggle #bar3 {
-  width: 75%;
-  transform: rotate(-45deg);
-  transition-duration: .5s;
-}
-
-.checkbox:checked + .toggle {
-  transition-duration: .5s;
-  transform: rotate(180deg);
-}
 .hide{
 	display:none;
 }
 .subitems{
 	padding-left:50px;
 }
-
+#faqList:hover {
+	border-radius: 5px;
+	background-color: #f2f2f2;
+	height:65px;
+}
 
 /**/
 #search_form {
@@ -357,3 +308,61 @@ input#healthy_title{
 	height: 50px;
 	padding-right: 30px;
 }
+
+/*------ Settings ------*/
+.container {
+  --color: #a5a5b0;
+  --size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  font-size: var(--size);
+  user-select: none;
+  fill: var(--color);
+}
+
+.container .chevron-down {
+  position: absolute;
+  animation: keyframes-return .5s;
+}
+
+/* ------ On check event ------ */
+.container input:checked ~ .chevron-down {
+  animation: keyframes-rotate .5s;
+  transform: rotate(180deg);
+}
+
+/* ------ Hide the default checkbox ------ */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* ------ Animation ------ */
+@keyframes keyframes-rotate {
+  0% {
+    transform: rotate(0deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform: rotate(-180deg);
+  }
+}
+
+@keyframes keyframes-return {
+  0% {
+    transform: rotate(-180deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+

@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/ych.css" type="text/css">
 <tiles:insertAttribute name="font" ignore="true"/>
 <tiles:insertAttribute name="css" ignore="true"/>
+<tiles:insertAttribute name="chatCss" ignore="true"/>
 <tiles:insertAttribute name="bootstrap" ignore="true"/>
 <style>
 .container{
@@ -16,11 +17,10 @@
 	margin-bottom: 10px;
 	border:none;
 }
-#main_leftNav{
-	margin-top:5%;
-	background-color:#fff;
+#main_body{
+	border-radius: 10px;
+	background-color: #fff;
 }
-
 </style>
 </head>
 <body>
@@ -36,11 +36,10 @@
 		<div id="main_body" class="col-9">
 			<tiles:insertAttribute name="body"/>
 		</div>
-
 	</div>
-	<div id="main_footer">
-		<tiles:insertAttribute name="footer"/>
-	</div>
+		<div id="main_footer" style="margin-top:70px;">
+			<tiles:insertAttribute name="footer"/>
+		</div>
 </div>
 </div>
 </body>

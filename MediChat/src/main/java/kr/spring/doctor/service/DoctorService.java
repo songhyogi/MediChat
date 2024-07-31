@@ -21,6 +21,7 @@ public interface DoctorService {
 	public DoctorVO selectDoctor(Long mem_num);
 	//회원 목록
 	public List<DoctorVO> docList(Map<String, Object> map);
+	public List<DoctorVO> docListByHosNum(long hos_num);
 	//회원정보 수정
 	public void updateDoctor(DoctorVO doctor);
 	//비밀번호 수정
@@ -35,8 +36,10 @@ public interface DoctorService {
 
 	//아이디 중복확인
 	public DoctorVO checkId(String mem_id);
+	//이메일 확인
+	public DoctorVO checkEmailAndName(String doc_email,String mem_name);
 	//아이디 찾기
-	public void findId(DoctorVO doctor);
+	public DoctorVO findId(DoctorVO doctor);
 	//비밀번호 찾기
 	public void findPasswd(DoctorVO doctor);
 	

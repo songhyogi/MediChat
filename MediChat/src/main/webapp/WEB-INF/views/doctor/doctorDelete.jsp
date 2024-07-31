@@ -3,6 +3,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- 회원탈퇴 시작 -->
+<style>
+input[type="password"],
+input[type="text"]{
+	width:320px;
+	border-bottom:1px solid #000;
+}
+input[type="password"]:focus,
+input[type="text"]:focus{
+	outline:none;
+	border-bottom:2px solid #000;
+}
+</style>
 <div class="container">
 	<h2 class="title">회원탈퇴</h2>
 	<hr size="1" width="100%" noshade="noshade">
@@ -35,7 +47,9 @@
 				<span style="font-weight:bold;">인증문자 입력</span>
 				<div id="captcha_div">
 					<img src="getCaptcha" id="captcha_img" width="200" height="90">
-					<input type="button" value="새로고침" id="reload_btn">
+					<button type="button" class="btn" id="reload_captcha">
+					    <i class="fas fa-sync-alt"></i>
+					</button>
 				</div>
 			</li>
 			<li>
@@ -58,7 +72,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/member.passwd.js"></script>
 	<script>
 		$(function(){
-			$('#reload_btn').click(function(){
+			$('#reload_captcha').click(function(){
 			 $.get('getCaptcha', function(data) {
 		            $('#captcha_img').attr('src', 'getCaptcha?' + new Date().getTime());
 		        }).fail(function() {

@@ -2,19 +2,24 @@ package kr.spring.doctor.vo;
 
 
 import java.io.IOException;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 import java.sql.Date;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.validation.Constraint;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+import javax.validation.Payload;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.spring.util.FileUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -32,8 +37,8 @@ public class DoctorVO {
 	private String mem_photoname;	//프로필 사진명
 	private int mem_auth;			//권한 등급(0:탈퇴,1:정지,2:일반,3:의사,9:관리자)
 	private long doc_num;
-	@Min(value = 1, message = "병원을 선택하세요.")
-	private long hos_num;
+	@NotNull(message = "병원을 선택하세요.")
+	private Long hos_num;
 	private String hos_name;
 	@Pattern(regexp="^[A-Za-z0-9]{4,12}$")
 	private String doc_passwd;
@@ -41,7 +46,9 @@ public class DoctorVO {
 	@NotBlank
 	private String doc_email;
 	private Date doc_reg;
-	private MultipartFile doc_upload;	//파일
+	@NotEmptyFile(message = "의사 면허증은 필수 첨부")
+	private MultipartFile doc_upload;
+
 	private String doc_license;		//의사 면허증
 
 	private String doc_history;
@@ -79,7 +86,20 @@ public class DoctorVO {
 		}
 		return false;
 	}
-
+	//아이디 찾기 (이메일 일치 여부 체크)
+	public boolean checkEmail(String userEmail) {
+		if(mem_auth>1 && doc_email.equals(userEmail)) {
+			return true;
+		}
+		return false;
+	}
+	//아이디 찾기 (이메일 일치 여부 체크)
+	public boolean checkName(String userName) {
+		if(mem_auth>1 && mem_name.equals(userName)) {
+			return true;
+		}
+		return false;
+	}
 	//이미지 BLOB 처리
 	public void setUpload(MultipartFile upload)throws IOException {
 		//MultipartFile > byte[]

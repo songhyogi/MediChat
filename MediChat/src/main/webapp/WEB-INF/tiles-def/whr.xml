@@ -14,33 +14,37 @@
 	</definition>
 	
 	<!-- 의약품 목록 -->
-	<definition name="drugSearch" extends="whr">
+	<definition name="drugSearch" extends="ksy">
 		<put-attribute name="title" value="의약품 검색"/>
 		<put-attribute name="body" value="/WEB-INF/views/drug/drugSearch.jsp"/>
 	</definition>
-	<definition name="drugDetail" extends="whr">
+	<definition name="drugDetail" extends="ksy">
 		<put-attribute name="title" value="의약품 상세"/>
 		<put-attribute name="body" value="/WEB-INF/views/drug/drugDetail.jsp"/>
 		<put-attribute name="bootstrap" value="/WEB-INF/views/common/bootStrap.jsp"/>
 	</definition>
 	
 	<!-- 커뮤니티 -->
-	<definition name="cboardList" extends="whr">
+	<definition name="cboardList" extends="ksy">
 		<put-attribute name="title" value="MediChat Community"/>
 		<put-attribute name="body" value="/WEB-INF/views/community/cboardList.jsp"/>
+		<put-attribute name="css" value="/WEB-INF/views/drug/drugCSS.jsp"/>
 	</definition>
 	<!-- 커뮤니티 등록 -->
-	<definition name="cboardWrite" extends="whr">
+	<definition name="cboardWrite" extends="ksy">
 		<put-attribute name="title" value="MediChat Community"/>
 		<put-attribute name="body" value="/WEB-INF/views/community/cboardWrite.jsp"/>
+		<put-attribute name="css" value="/WEB-INF/views/drug/drugCSS.jsp"/>
 	</definition>
-	<definition name="cboardDetail" extends="whr">
+	<definition name="cboardDetail" extends="ksy">
 		<put-attribute name="title" value="MediChat Community"/>
 		<put-attribute name="body" value="/WEB-INF/views/community/cboardDetail.jsp"/>
+		<put-attribute name="css" value="/WEB-INF/views/drug/drugCSS.jsp"/>
 	</definition>
-	<definition name="cboardModify" extends="whr">
+	<definition name="cboardModify" extends="ksy">
 		<put-attribute name="title" value="MediChat Community"/>
 		<put-attribute name="body" value="/WEB-INF/views/community/cboardUpdate.jsp"/>
+		<put-attribute name="css" value="/WEB-INF/views/drug/drugCSS.jsp"/>
 	</definition>
 </tiles-definitions>
 

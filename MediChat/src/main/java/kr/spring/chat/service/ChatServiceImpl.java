@@ -36,14 +36,23 @@ public class ChatServiceImpl implements ChatService{
 	}
 
 	@Override
-	public void createChat(ReservationVO reservationVO) {
-		// TODO Auto-generated method stub
-		
+	public long selectMem_num(long res_num) {
+		return chatMapper.selectMem_num(res_num);
+	}
+
+	@Override
+	public void createChat(ChatVO chatVO) {
+		chatMapper.createChat(chatVO);
 	}
 	
 	@Override
 	public ChatVO selectChat(long chat_num) {
 		return chatMapper.selectChat(chat_num);
+	}
+	
+	@Override
+	public long selectResType(long res_num) {
+		return chatMapper.selectResType(res_num);
 	}
 
 	@Override
@@ -93,8 +102,6 @@ public class ChatServiceImpl implements ChatService{
 	
 	@Override
 	public void updateChatStatus(long chat_num) {
-		// TODO Auto-generated method stub
-		
+		chatMapper.updateChatStatus(chat_num);
 	}
-
 }

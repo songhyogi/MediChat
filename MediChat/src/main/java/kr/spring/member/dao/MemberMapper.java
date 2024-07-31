@@ -1,5 +1,8 @@
 package kr.spring.member.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -7,6 +10,8 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import kr.spring.consulting.vo.ConsultingVO;
+import kr.spring.doctor.vo.DoctorVO;
 import kr.spring.member.vo.MemberVO;
  
 @Mapper
@@ -18,6 +23,9 @@ public interface MemberMapper {
 	@Insert("INSERT INTO member(mem_num,mem_id,mem_name) VALUES(#{mem_num},#{mem_id},#{mem_name})")
 	public void insertMember(MemberVO member);
 	public void insertMember_detail(MemberVO member);
+	//회원목록
+	public List<MemberVO> getMemList(Map<String,Object> map);
+	public Integer selectRowCount(Map<String, Object> map);
 	//회원상세정보
 	@Select("SELECT * FROM member JOIN member_detail USING(mem_num) WHERE mem_num=#{mem_num}")
 	public MemberVO selectMember(Long mem_num);
@@ -37,6 +45,8 @@ public interface MemberMapper {
 	@Delete("DELETE FROM member_detail WHERE mem_num=#{mem_num}")
 	public void deleteMember_detail(MemberVO member);
 	
+	//나의 의료상담 목록
+	public List<ConsultingVO> consultList(Map<String,Object> map);
 	
 	//자동 로그인
 	@Update("UPDATE member_detail SET mem_au_id=#{mem_au_id} WHERE mem_num=#{mem_num}")
@@ -48,6 +58,9 @@ public interface MemberMapper {
 	
 	//아이디 중복확인
 	public MemberVO checkId(String mem_id);
+	//이메일,이름 확인
+	@Select("SELECT * FROM member JOIN member_detail USING(mem_num) WHERE mem_email=#{mem_email} AND mem_name=#{mem_name}")
+	public MemberVO checkEmailAndName(String mem_email,String mem_name);
 	//아이디 찾기
 	@Select("SELECT m.mem_id FROM member m JOIN member_detail d ON m.mem_num=d.mem_num WHERE mem_name=#{mem_name} AND mem_email=#{mem_email}")
 	public MemberVO findId(MemberVO member);
@@ -60,7 +73,9 @@ public interface MemberMapper {
 	public MemberVO checkUser(@Param("mem_id") String mem_id);
 	//==========관리자============
 	//회원등급수정
-	@Update("UPDATE member SET mem_auth=#{mem_auth} WHERE mem_num=#{mem_num}")
+	@Update("UPDATE member SET mem_auth=1 WHERE mem_num=#{mem_num}")
 	public void updateAuth(MemberVO member);
+	@Update("UPDATE member SET mem_auth=2 WHERE mem_num=#{mem_num}")
+	public void cancelAuth(MemberVO member);
 	
 }

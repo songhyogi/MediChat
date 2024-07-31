@@ -1,96 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<style>
-.container {
-    width: 80%;
-    margin: 0 auto;
-    padding-top: 20px;
-    padding-bottom: 60px;
-}
-.reservation-container {
-	background-color: #f9f9f9;
-	border-radius: 10px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	margin-bottom: 20px;
-	padding: 20px;
-	position: relative; /* 수정: relative로 설정 */
-	height: auto; /* height를 auto로 설정하여 내용에 따라 크기 조정 */
-}
-.reservation-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-.reservation-header img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-.reservation-header h3 {
-    margin: 0;
-}
-.reservation-body {
-    margin-top: 10px;
-}
-.reservation-body p {
-    margin: 5px 0;
-}
-.reservation-actions {
-    position: absolute; /* 수정: 절대 위치로 설정 */
-    bottom: 20px; /* 수정: 컨테이너의 하단에서 20px 위로 설정 */
-    right: 20px; /* 수정: 컨테이너의 오른쪽에서 20px 왼쪽으로 설정 */
-}
-.reservation-actions button {
-    padding: 5px 10px;
-    border: 1px solid #000;
-    background-color: #fff;
-    cursor: pointer;
-}
-.reservation-actions .review-button {
-    color: white;
-}
-.reservation-actions .cancel-button {
-    color: white;
-}
-.pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-.pagination a {
-    margin: 0 5px;
-    text-decoration: none;
-    color: #007bff;
-}
-.pagination a.active {
-    font-weight: bold;
-    color: #000;
-}
-</style>
-<h2>나의 예약 내역</h2>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/shg.css" type="text/css">
+<p>
+마이페이지>나의 예약 내역
 <c:forEach var="reservation" items="${list}">
-    <div class="reservation-container">
+<div class="reservation-container">
     <input type="hidden" id="hos_num" value="${reservation.hos_num}">
-        <div class="reservation-header">
-            <img src="/images/hos_icon.png">
-            <h3>${reservation.hos_name}</h3>
-        </div>
-        <div class="reservation-body">
-            <p><strong><c:choose>
-                <c:when test="${reservation.res_type == 0}">비대면 진료</c:when>
-                <c:otherwise>방문진료</c:otherwise>
-            </c:choose></strong> - <c:choose>
-                <c:when test="${reservation.res_status == 0}">예약 승인 대기</c:when>
-                <c:when test="${reservation.res_status == 1}">예약 확정</c:when>
-                <c:when test="${reservation.res_status == 2}">진료 완료</c:when>
-                <c:otherwise>예약 취소</c:otherwise>
-            </c:choose></p>
-            <p>${reservation.res_date} ${reservation.res_time}</p>
-            <p>${reservation.doc_name} 의사</p>
-            <p>상세증상: ${reservation.res_content}</p>
-        </div>
+    <div class="reservation-header">
+        <img src="/images/hos_icon.png">
+        <h4><a href="/hospitals/search/detail/${reservation.hos_num}">${reservation.hos_name}</a></h4>
+        <p style="margin-top:20px;">예약등록일 : ${reservation.res_reg}</p>
         <div class="reservation-actions">
             <c:choose>
                 <c:when test="${reservation.res_status == 0 || reservation.res_status == 1}">
@@ -102,6 +22,41 @@
             </c:choose>
         </div>
     </div>
+    <div class="reservation-body">
+        <div class="detail-info">
+            <label>비대면/진료 | </label>
+            <span>
+                <c:choose>
+                    <c:when test="${reservation.res_type == 0}">비대면 진료</c:when>
+                    <c:otherwise>방문진료</c:otherwise>
+                </c:choose>
+            </span>
+        </div>
+        <div class="detail-info">
+            <label>예약 상태 | </label>
+            <span>
+                <c:choose>
+                    <c:when test="${reservation.res_status == 0}">예약 승인 대기</c:when>
+                    <c:when test="${reservation.res_status == 1}">예약 확정</c:when>
+                    <c:when test="${reservation.res_status == 2}">진료 완료</c:when>
+                    <c:otherwise>예약 취소</c:otherwise>
+                </c:choose>
+            </span>
+        </div>
+        <div class="detail-info">
+            <label>진료일 | </label>
+            <span>${reservation.res_date} ${reservation.res_time}</span>
+        </div>
+        <div class="detail-info">
+            <label>담당 의사 | </label>
+            <span>${reservation.doc_name} 의사</span>
+        </div>
+        <div class="detail-info">
+            <label>상세증상 | </label>
+            <span>${reservation.res_content}</span>
+        </div>
+    </div>
+</div>
 </c:forEach>
 <div class="pagination">
     ${page}

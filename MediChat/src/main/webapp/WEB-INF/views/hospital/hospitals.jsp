@@ -5,11 +5,13 @@
 <!-- image: Flaticon.com -->
 <!-- 카테고리 시작 -->
 <div>
-	<p class="text-lightgray fw-7 fs-13">홈 > 병원 찾기</p>
-	<h4 class="text-black fw-6 fs-21 mb-4">병원 찾기</h4>
-	<p class="text-lightgray fw-6 fs-13 mb-1">병원 예약하고 편하게 방문해보세요</p>
-	<h4 class="text-black-6 fw-7 fs-23">어떤 병원을 찾으세요?</h4>
-	<div class="row justify-content-between">
+	<div class="p-3">
+		<p class="text-lightgray fw-7 fs-13">홈 > 병원 찾기</p>
+		<h4 class="text-black fw-6 fs-21 mb-4">병원 찾기</h4>
+		<p class="text-lightgray fw-6 fs-13 mb-1">병원 예약하고 편하게 방문해보세요</p>
+		<h4 class="text-black-6 fw-7 fs-23">어떤 병원을 찾으세요?</h4>
+	</div>
+	<div class="row justify-content-between px-3">
 		<div class="col-2">
 			<div class="subject rounded-2 bg-gray-0 text-center" data-keyword="피부과">
 				<p class="sub-icon"><img src="/images/subIcon/skin.png" width="30" height="30"></p>
@@ -47,7 +49,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="row justify-content-between">
+	<div class="row justify-content-between px-3">
 		<div class="col-2">
 			<div class="subject rounded-2 bg-gray-0 text-center" data-keyword="소아과">
 				<p class="sub-icon"><img src="/images/subIcon/child.png" width="30" height="30"></p>
@@ -86,7 +88,7 @@
 		</div>
 	</div>
 	<!-- 더 보기 시작 -->
-	<div class="line"></div>
+	<div class="line mt-3"></div>
 	<div id="more">
 		<p class="text-lightgray fw-7">더 보기</p>
 	</div>
@@ -121,19 +123,6 @@
 			</c:forEach>
 		</div>
 	</div>
-	<script>
-        document.getElementById('more').addEventListener('click', function() {
-            document.getElementById('more_box').style.display = 'block';
-            document.getElementById('overlay').style.display = 'block';
-            document.body.style.overflow = 'hidden'; // 외부 스크롤 비활성화
-        });
-
-        document.getElementById('overlay').addEventListener('click', function() {
-            document.getElementById('more_box').style.display = 'none';
-            document.getElementById('overlay').style.display = 'none';
-            document.body.style.overflow = 'auto'; // 외부 스크롤 활성화
-        });
-    </script>
 	<!-- 더 보기 끝 -->
 </div>
 <!-- 카테고리 끝 -->
@@ -179,7 +168,7 @@
 	<!-- 지도 시작 -->
 	<div id="mapDiv">
 		<h4 class="fw-7 my-4 fs-22">내 주변 병원</h4>
-		<jsp:include page="/WEB-INF/views/common/map.jsp"/>
+		<jsp:include page="/WEB-INF/views/hospital/map.jsp"/>
 	</div>
 	<!-- 지도 끝 -->
 </div>
@@ -190,6 +179,17 @@
 	<input type="hidden" id="lon" value="${user_lon}" name="user_lon">
 </form>
 <script>
+	$('#more').click(function() {
+	    $('#more_box').show();
+	    $('#overlay').show();
+	    $('body').css("overflow","hidden");
+	});
+	
+	$('#overlay').click(function() {
+		$('#more_box').hide();
+		$('#overlay').hide();
+		$('body').css("overflow","auto");
+	});
 	//위치 정보 가져오기
 	const locationForm = document.getElementById('locationForm');
 	if((${empty user_lat} && ${empty user_lon}) || ('${user_lat}'=='37.4981646510326' && '${user_lon}'=='127.028307900881')){
@@ -201,6 +201,12 @@
 				    document.getElementById('lat').value = lat;
 				    document.getElementById('lon').value = lon;
 				    locationForm.submit();
+				},
+				function(error) {
+					console.error("Error Code = " + error.code + " - " + error.message);
+				},
+				{
+					enableHighAccuracy: true
 				}
 			);
 		}

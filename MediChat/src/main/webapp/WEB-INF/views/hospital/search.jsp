@@ -4,63 +4,72 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
 <div>
-<p class="text-lightgray fw-7 fs-13">홈 > 병원 찾기 > 검색 결과</p>
-	<!-- 검색 창 시작 -->
-	<form id="search_form" method="get" action="/hospitals/search">
-		<input type="hidden" id="lat" name="user_lat" value="${user_lat}">
-		<input type="hidden" id="lon" name="user_lon" value="${user_lon}">
-		<input type="hidden" id="sortType" name="sortType" value="NEAR">
-		<input type="hidden" id="commonFilter" name="commonFilter" value="">
-
-		<div class="d-flex justify-content-center align-items-center">
-			<img id="search_back" src="/images/back.png" width="20" height="20">
-			<input type="text" id="h-search" class="form-control" placeholder="병원 이름, 지역 + 과목, 증상" name="keyword" value="${keyword}">
-			<img id="h-search-icon" src="/images/search.png" width="30" height="30">
-		</div>
-		<!-- 검색 모드 시작 -->
-		<div class="d-flex justify-content-start align-items-center m-3">
-			<div id="filter-img-box">
-				<img src="/images/filter.png" width="20" height="20">
-			</div>
-			<div class="border-end" style="height: 40px;"></div>
-			<!-- SortType -->
-			<div id="moreSortType" class="filter-item"><c:if test="${sortType=='NEAR'}">가까운 순</c:if>
-														<c:if test="${sortType=='REVIEW'}">리뷰 순</c:if>
-														<c:if test="${sortType=='SCORE'}">평점 순</c:if>
-														<c:if test="${sortType=='HIT'}">조회 순</c:if>
-														&nbsp;<img src="/images/down.png" width="10" height="10"></div>
-			<div class="overlay" id="overlay"></div>
-			<div id="more_box" class="p-5 rounded-top-3 border bg-white" style="display: none; height: 300px;">
-				<h5 class="fw-8">어떤 기준으로 정렬할까요?</h5>
-				<div class="sortType-item" data-sortType="NEAR">
-					거리 가까운 순
-				</div>
-				<div class="sortType-item" data-sortType="REVIEW">
-					리뷰 많은 순
-				</div>
-				<div class="sortType-item" data-sortType="SCORE">
-					평점 높은 순
-				</div>
-				<div class="sortType-item" data-sortType="HIT">
-					조회수 높은 순
-				</div>
-			</div>
-			<!-- commonFilter -->
-			<div class="filter-item filter-item-selected" data-commonFilter="${user_lat},${user_lon}">내 위치</div>
-			<div class="filter-item" data-commonFilter="NONFACE">비대면 진료</div> <!-- NONFACE -->
-			<div class="filter-item" data-commonFilter="ING">진료 중</div> <!-- ING -->
-			<div class="filter-item" data-commonFilter="NIGHTTIME">야간 진료</div> <!-- NIGHTTIME -->
-			<div class="filter-item" data-commonFilter="WEEKEND">주말 진료</div> <!-- WEEKEND -->
-		</div>
-		<!-- 검색 모드 끝 -->
-	</form>
-	<!-- 검색 창 끝 -->
+	<div class="p-3">
+		<p class="text-lightgray fw-7 fs-13">홈 > 병원 찾기 > 검색 결과</p>
+		<!-- 검색 창 시작 -->
+		<form id="search_form" method="get" action="/hospitals/search">
+			<input type="hidden" id="lat" name="user_lat" value="${user_lat}">
+			<input type="hidden" id="lon" name="user_lon" value="${user_lon}">
+			<input type="hidden" id="sortType" name="sortType" value="NEAR">
+			<input type="hidden" id="commonFilter" name="commonFilter" value="">
 	
+			<div class="d-flex justify-content-center align-items-center">
+				<img id="search_back" src="/images/back.png" width="20" height="20">
+				<input type="text" id="h-search" class="form-control" placeholder="병원 이름, 지역 + 과목, 증상" name="keyword" value="${keyword}">
+				<img id="h-search-icon" src="/images/search.png" width="30" height="30">
+			</div>
+			<!-- 검색 모드 시작 -->
+			<div class="d-flex justify-content-start align-items-center m-3">
+				<div id="filter-img-box">
+					<img src="/images/filter.png" width="20" height="20">
+				</div>
+				<div class="border-end" style="height: 40px;"></div>
+				<!-- SortType -->
+				<div id="moreSortType" class="filter-item"><c:if test="${sortType=='NEAR'}">가까운 순</c:if>
+															<c:if test="${sortType=='REVIEW'}">리뷰 순</c:if>
+															<c:if test="${sortType=='SCORE'}">평점 순</c:if>
+															<c:if test="${sortType=='HIT'}">조회 순</c:if>
+															&nbsp;<img src="/images/down.png" width="10" height="10"></div>
+				<div class="overlay" id="overlay"></div>
+				<div id="more_box" class="p-5 rounded-top-3 border bg-white" style="display: none; height: 300px;">
+					<h5 class="fw-8">어떤 기준으로 정렬할까요?</h5>
+					<div class="sortType-item" data-sortType="NEAR">
+						거리 가까운 순
+					</div>
+					<div class="sortType-item" data-sortType="REVIEW">
+						리뷰 많은 순
+					</div>
+					<div class="sortType-item" data-sortType="SCORE">
+						평점 높은 순
+					</div>
+					<div class="sortType-item" data-sortType="HIT">
+						조회수 높은 순
+					</div>
+				</div>
+				<!-- commonFilter -->
+				<div class="filter-item filter-item-selected" data-commonFilter="${user_lat},${user_lon}">내 위치</div>
+				<div class="filter-item" data-commonFilter="NONFACE">비대면 진료</div> <!-- NONFACE -->
+				<div class="filter-item" data-commonFilter="ING">진료 중</div> <!-- ING -->
+				<div class="filter-item" data-commonFilter="NIGHTTIME">야간 진료</div> <!-- NIGHTTIME -->
+				<div class="filter-item" data-commonFilter="WEEKEND">주말 진료</div> <!-- WEEKEND -->
+			</div>
+			<!-- 검색 모드 끝 -->
+		</form>
+		<!-- 검색 창 끝 -->
+	</div>
 	<!-- 병원 리스트 시작 -->
 	<div id="hospitalListBox">
 		<c:forEach items="${hosList}" var="hospital">
 			<div class="hospital-box" data-hosNum="${hospital.hos_num}">
-				<div class="hospital-name fs-17 fw-8 text-black-6">${hospital.hos_name}</div>
+				<div class="d-flex align-items-center">
+					<div class="hospital-name fs-17 fw-8 text-black-6">${hospital.hos_name}</div>
+					<c:if test="${hospital.rev_avg != '0.0'}">
+						<div class="ms-3 d-flex align-items-center">
+							<img src="/images/star.png" width="15" height="15">
+							<span class="fs-14 fw-7 ms-1">${hospital.rev_avg}</span>
+						</div>
+					</c:if>
+				</div>
 				<div class="hospital-around fs-11 fw-9 text-gray-7">${hospital.around}m</div>
 				
 				<!-- 진료시간이 있으면-->
@@ -334,8 +343,17 @@ $(document).ready(function() {
                 let output = '';
                 for(let i=0; i<param.length; i++){
                 	output += '<div class="hospital-box" data-hosNum="'+param[i].hos_num+'">';
+                	output += '<div class="d-flex align-itmes-center">';
                 	output += '<div class="hospital-name fs-17 fw-8 text-black-6">'+param[i].hos_name+'</div>';
-                	output += '<div class="hospital-sub fs-11 fw-9 text-gray-7">'+param[i].around+'m</div>';
+                	if(param[i].rev_avg != '0.0'){
+                		output += '<div class="ms-3 d-flex align-items-center">';
+                		ouput += '<img src="/images/star.png" width="15" height="15">';
+                		output += '<span class="fs-14 fw-7 ms-1">'
+                		output += param[i].rev_avg;
+                		output += '</span>';
+                	}
+            		output += '</div>';
+                	output += '<div class="hospital-around fs-11 fw-9 text-gray-7">'+param[i].around+'m</div>';
                 	output += '<div class="hospital-open fs-13 fw-7 text-black-4 d-flex align-items-center">';
                 	if(param[i].hos_time${day}S!='null' || param[i].hos_time${day}C!='null'){
 	                	if(param[i].hos_time${day}S<=${time} && ${time}<param[i].hos_time${day}C){

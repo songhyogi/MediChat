@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/review.css" type="text/css">
 <br><br>
-<h4>작성한 후기 리스트</h4>
+<h4><b>작성한 후기 리스트</b></h4>
 <br><br><br>
 <div class="align-center">
 <c:if test="${count  ==0}">
@@ -25,12 +25,13 @@
 				<td>${r.rev_grade}</td>
 				<td>${r.hos_name}</td>
 				<td> 
-				<div   style="float:right; margin-right:30px; padding-top:10px;">
-				   <input class="checkbox" type="checkbox" id="${r.rev_num}">
-				   <label class="toggle" for="${r.rev_num}" data-num="${r.rev_num}">
-				        <div id="bar1" class="bars"></div>
-				        <div id="bar3" class="bars"></div>
-				   </label>
+				<div   style="float:right; margin-bottom:50px;">
+				   <label class="container"  style="transform: rotate(180deg);">
+						<input checked="checked"   type="checkbox"  >
+						<svg viewBox="0 0 512 512" height="1em"  data-num="${r.rev_num}"
+						xmlns="http://www.w3.org/2000/svg" class="chevron-down toggle" >
+						<path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path></svg>
+					</label>
 				</div>
 				</td>
 			</tr>
@@ -127,7 +128,7 @@
 							 ${r.rev_content}
 							 </p>
 							 <br>
-							<div class="align-right">
+							<div class="align-right"  style="z-index:999;">
 								<button class="default-btn" onclick="location.href='${pageContext.request.contextPath}/review/updateReview?rev_num=${r.rev_num}'">수정</button > <button  data-num="${r.rev_num}" class="default-btn delete-btn" >삭제</button>
 						   </div>
 						    <script type="text/javascript">
@@ -141,7 +142,7 @@
 	</c:forEach>
 	</table>
 	<script type="text/javascript">
-		$('.toggle').click(function(){
+		$('.chevron-down').click(function(){
 			if($('.'+$(this).attr('data-num')).hasClass('hide')){
 				$('.'+$(this).attr('data-num')).removeClass('hide');
 			}else{

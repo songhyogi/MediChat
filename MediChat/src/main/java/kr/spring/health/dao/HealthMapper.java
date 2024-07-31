@@ -18,8 +18,8 @@ import kr.spring.health.vo.HealthyReplyVO;
 
 @Mapper
 public interface HealthMapper {
-	
-	
+
+
 	public void insertHeal(HealthyBlogVO vo);
 	public void updateHeal(HealthyBlogVO vo);
 	@Delete("DELETE FROM healthy_blog WHERE healthy_num=#{healthy_num}")
@@ -29,8 +29,8 @@ public interface HealthMapper {
 	public List<HealthyBlogVO> selectHealList(Map<String, Object> map);
 	@Update("UPDATE healthy_blog SET healthy_hit= healthy_hit+1 WHERE healthy_num=#{healthy_num}")
 	public void updateHealHit(Long healthy_num);
-	
-	
+
+
 	//게시글 좋아요
 	@Insert("INSERT INTO healthy_fav(healthy_num,mem_num) VALUES(#{healthy_num},#{mem_num})")
 	public void insertHFav(HealthyFavVO vo);
@@ -40,10 +40,10 @@ public interface HealthMapper {
 	public Integer selectHFavCount(Long healthy_num);
 	@Select("SELECT * FROM healthy_fav WHERE healthy_num=#{healthy_num} AND mem_num=#{mem_num}")
 	public HealthyFavVO selectHFav(HealthyFavVO vo);
-	
+
 	@Delete("DELETE FROM healthy_fav WHERE healthy_num=#{healthy_num}")
 	public void deleteHFavByHeal(Long healthy_num);
-	
+
 	//댓글 
 	@Insert("INSERT INTO healthy_re(hre_num,healthy_num,mem_num,hre_renum,hre_content,hre_level) VALUES(hre_seq.nextval,#{healthy_num},#{mem_num},#{hre_renum},#{hre_content},#{hre_level})")
 	public void insertHre(HealthyReplyVO vo);
@@ -57,11 +57,11 @@ public interface HealthMapper {
 	public Integer selectHreCount(Long healthy_num);
 	@Delete("DELETE FROM healthy_re WHERE healthy_num=#{healthy_num}")
 	public void deleteHReByHeal(Long healthy_num);
-	
-	
-	
+
+
+
 	//답댓글 삭제
-	
+
 	//댓글 좋아요
 	@Insert("INSERT INTO healthy_re_fav(hre_num,mem_num) VALUES(#{hre_num},#{mem_num})")
 	public void insertHreFav(HealthyReFavVO vo);
@@ -78,8 +78,26 @@ public interface HealthMapper {
 	public List<Long> selectDeleteByHBlog(Long healthy_num);
 	@Delete("DELETE FROM healthy_re_fav WHERE hre_num=#{hre_num}")
 	public void deleteHreFavByHeal(Long hre_num);
-	
+
 	//답글 불러오기
 	public List<HealthyReplyVO> selectReHreList(Map<String,Object> map);
+
+
+	//내가 한 좋아요목록
+	//좋아요 게시글
+	public Integer selectMyFavHealCount(Map<String, Object> map);
+	public List<HealthyBlogVO> selectMyFavHealList(Map<String, Object> map);
+	//좋아요 댓글
+	public Integer selectMyFavHealReCount(Map<String, Object> map);
+	public List<HealthyReplyVO> selectMyFavReHealList(Map<String, Object> map);
+
+	//내가 쓴 댓글 목록
+	//댓글
+	public Integer selectMyHealReCount(Map<String, Object> map);
+	public List<HealthyReplyVO> selectMyReHealList(Map<String, Object> map);
 	
+	//의사 글 목록
+	public Integer selectDocByHealCount(Map<String, Object> map);
+	public List<HealthyBlogVO> selectDocByHealList(Map<String, Object> map);
+
 }

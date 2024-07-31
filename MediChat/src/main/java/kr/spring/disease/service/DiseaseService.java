@@ -2,12 +2,11 @@ package kr.spring.disease.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-import org.apache.ibatis.annotations.Insert;
 import org.springframework.stereotype.Service;
 
 import kr.spring.disease.vo.DiseaInsertVO;
-import kr.spring.disease.vo.DiseaseCodeVO;
 import kr.spring.disease.vo.DiseaseVO;
 import kr.spring.disease.vo.Item;
 @Service
@@ -22,4 +21,8 @@ public interface DiseaseService {
 	public Integer selectDisCount(Map<String,Object> map);
 	public DiseaseVO getDis(String sickcd);
 	public void updateDisHit(String sickcd);
+	
+	
+	public List<DiseaseVO> selectDisListByHit(int itemNum);
+	public Set<String> selectDisListBykeyword(String keyword);
 }

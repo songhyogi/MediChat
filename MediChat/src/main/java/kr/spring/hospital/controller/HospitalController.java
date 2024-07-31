@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.spring.disease.service.DiseaseService;
+import kr.spring.disease.vo.DiseaseVO;
 import kr.spring.hospital.service.HospitalService;
 import kr.spring.hospital.vo.HospitalVO;
 import kr.spring.review.service.ReviewService;
@@ -37,6 +40,10 @@ public class HospitalController {
 	
 	@Autowired
 	private HospitalService hospitalService;
+	
+	@Autowired
+	private DiseaseService diseaseService;
+	
 	
 	// 병원
 	@GetMapping("/hospitals")
@@ -70,15 +77,29 @@ public class HospitalController {
 		subList.add(new ArrayList<>(Arrays.asList("치과","치아질환, 잇몸질환, 턱 관절 등", "tooth")));
 		subList.add(new ArrayList<>(Arrays.asList("피부과","두드러기, 가려움증, 탈모 등", "skin")));
 		subList.add(new ArrayList<>(Arrays.asList("한의원","한방 진료, 다이어트, 경옥고 등", "treatment")));
-
+		
+		
 		model.addAttribute("subList",subList);
 
 		// 병원 (어떻게 아프신가요) 리스트 생성 후 값 넣기 (미완성)
+		List<DiseaseVO> dList = diseaseService.selectDisListByHit(10);
+		List<String> dNameList = new ArrayList<>();
+		for(DiseaseVO d : dList) {
+			dNameList.add(d.getDis_name());
+		}
+		
+		//어떻게 아프신가요?
 		List<String> howSick = new ArrayList<>(Arrays.asList("독감","탈모","비염","대상포진","다이어트","아토피"));
 		model.addAttribute("howSick", howSick);
 
 		// 병원 (인기 검색어) 리스트 생성 후 값 넣기 (미완성)
-		List<String> hotKeyWord = new ArrayList<>(Arrays.asList("여드름","지루성 피부염","감기","두드러기","역류성 식도염","보톡스","발열","백옥주사","당뇨"));
+		List<String> hotKeyWord = null;
+		if(dNameList.size()>=10) {
+			hotKeyWord = dNameList;
+		} else {
+			hotKeyWord = new ArrayList<>(Arrays.asList("여드름","지루성 피부염","감기","두드러기","역류성 식도염","보톡스","발열","백옥주사","당뇨"));
+		}
+		
 		model.addAttribute("hotKeyWord", hotKeyWord);
 		
 		// 지도에 병원 마커용
@@ -149,7 +170,38 @@ public class HospitalController {
 		map.put("sortType", sortType);
 		model.addAttribute("sortType", sortType);
 		
-		
+		Set<String> kSet = null;
+		String sub_sql = "";
+		if(keyword!=null) {
+			if(!keyword.equals("가정의학과")&&
+					!keyword.equals("내과")&&
+					!keyword.equals("마취통증")&&
+					!keyword.equals("비뇨기과")&&
+					!keyword.equals("산부인과")&&
+					!keyword.equals("성형외과")&&
+					!keyword.equals("소아과")&&
+					!keyword.equals("신경과")&&
+					!keyword.equals("신경외과")&&
+					!keyword.equals("안과")&&
+					!keyword.equals("영상의학과")&&
+					!keyword.equals("외과")&&
+					!keyword.equals("응급의학과")&&
+					!keyword.equals("이비인후과")&&
+					!keyword.equals("재활의학과")&&
+					!keyword.equals("정신건강의학과")&&
+					!keyword.equals("정형외과")&&
+					!keyword.equals("치과")&&
+					!keyword.equals("피부과")&&
+					!keyword.equals("한의원")) {
+				kSet = diseaseService.selectDisListBykeyword(keyword);
+				if(kSet!=null) {
+					for(String key: kSet) {
+						sub_sql += "OR hos_name LIKE '%' || '" + key + "' || '%' ";
+					}
+				}
+				map.put("sub_sql", sub_sql);
+			}
+		}
 		// 병원 리스트 담기
 		List<HospitalVO> hosList = new ArrayList<>();
 		hosList = hospitalService.selectListHospital(map);
@@ -213,7 +265,7 @@ public class HospitalController {
 	
 	// 병원 > 검색 결과 > 상세 페이지
 	@GetMapping("/hospitals/search/detail/{hos_num}")
-	public String detail(@RequestParam(defaultValue="1") int pageNum,@RequestParam(defaultValue="1") String  keyfield,Model model, @PathVariable Long hos_num) {
+	public String detail(@RequestParam(defaultValue="1") int pageNum,Model model, @PathVariable Long hos_num) {
 		model.addAttribute("apiKey", apiKey);
 		
 		HospitalVO hospital = hospitalService.selectHospital(hos_num);
@@ -230,7 +282,7 @@ public class HospitalController {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("hos_num", hos_num);
 		int reviewCount = service.selectCountByHos(map);
-		PagingUtil page = new PagingUtil(pageNum,reviewCount, 5, 10,"/hospitals/search/detail/{hos_num}");
+		PagingUtil page = new PagingUtil(pageNum,reviewCount, 3, 3,"/hospitals/search/detail/{hos_num}");
 		map.put("start", page.getStartRow());
 		map.put("end", page.getEndRow());
 		List<ReviewVO> list = service.selectReviewListByHos(map);

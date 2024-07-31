@@ -29,6 +29,11 @@ public class DoctorServiceImpl implements DoctorService{
 	public DoctorVO selectDoctor(Long mem_num) {
 		return doctorMapper.selectDoctor(mem_num);
 	}
+	
+	@Override
+	public List<DoctorVO> docListByHosNum(long hos_num) {
+		return doctorMapper.docListByHosNum(hos_num);
+	}
 
 	@Override
 	public void updateDoctor(DoctorVO doctor) {
@@ -62,15 +67,13 @@ public class DoctorServiceImpl implements DoctorService{
 	}
 
 	@Override
-	public void findId(DoctorVO doctor) {
-		// TODO Auto-generated method stub
-		
+	public DoctorVO findId(DoctorVO doctor) {
+		return doctorMapper.findId(doctor);
 	}
 
 	@Override
 	public void findPasswd(DoctorVO doctor) {
-		// TODO Auto-generated method stub
-		
+		doctorMapper.findPasswd(doctor);
 	}
 
 	@Override
@@ -104,5 +107,9 @@ public class DoctorServiceImpl implements DoctorService{
 		
 	}
 
+	@Override
+	public DoctorVO checkEmailAndName(String doc_email,String mem_name) {
+		return doctorMapper.checkEmailAndName(doc_email,mem_name);
+	}
 
 }

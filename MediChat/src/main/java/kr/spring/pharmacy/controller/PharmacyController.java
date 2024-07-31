@@ -151,6 +151,9 @@ public class PharmacyController {
 		PharmacyVO pharmacy = pharmacyService.selectPharmacy(pha_num);
 		model.addAttribute("pharmacy",pharmacy);
 		
+		
+		pharmacyService.updateHitPharmacy(pha_num);
+		
 		// 현재 시간 변수 생성 후 값 넣기
 		LocalDateTime now = LocalDateTime.now();
 		String time = now.format(DateTimeFormatter.ofPattern("HHmm")); //hh:mm

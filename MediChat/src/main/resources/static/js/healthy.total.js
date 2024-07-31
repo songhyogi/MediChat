@@ -126,7 +126,7 @@ function selectReply(currentNum){
 					let output ='';
 					output +='<div class="items">';
 					output +='<ul>';
-					output+='<li>'+item.id+'</li>';
+					output+='<li><img src="../member/memViewProfile?mem_num='+item.mem_num+'" width="35" height="35" class="rounded-circle"> &nbsp;&nbsp; '+item.id+'</li>';
 					if(item.hre_modify_date){
 						output+='<li> 수정일 : '+item.hre_modify_date+'</li>';
 					}else{
@@ -156,12 +156,12 @@ function selectReply(currentNum){
 					}
 					if(param.user_num != 0)
 						output+=' <input type="button"  class="re-wirte-btn default-btn" data-id="'+item.id+'" data-renum="'+item.hre_num+'" data-healnum="'+item.healthy_num+'" data-level="1"  value="답글 쓰기">';
-					if(item.rere_cnt !=0){
-						output+=' <input type="button"  class="re-view-btn default-btn"data-renum="'+item.hre_num+'"  value="답글 보기">';
+					if(item.rereply_cnt !=0){
+						output+=' <input type="button"  class="re-view-btn default-btn"data-renum="'+item.hre_num+'"  value="'+item.rereply_cnt +'개의 답글 보기">';
 						output+=' <input type="button"  class="re-cancle-btn default-btn hide" data-renum="'+item.hre_num+'"  value="답글 닫기">';
 					}
 					output +='</div>';
-					output +='</div><div id="subitems'+item.hre_num+'"></div><br><br><br><div class="line"></div><br>';
+					output +='</div><div id="subitems'+item.hre_num+'"></div><br><br><div class="line"></div><br>';
 					$('#replyList').append(output);
 				})
 				
@@ -363,8 +363,7 @@ $(document).on('click','.hrefav',function(event){
 		});
 		
 		$(document).on('submit','#rehreWrite',function(event){
-				let relist = $(this).parent().parent('.items').find('.re-view-btn');
-				let relist2= $(this).closest('.btnspace').find('.re-view-btn');
+				
 				if($(this).find('textarea').val().trim()==''){
 					alert('내용을 입력해주세요.');+
 					$(this).find('textarea').val('').focus();
@@ -384,6 +383,9 @@ $(document).on('click','.hrefav',function(event){
 							alert('로그인 후 이용해주세요');
 			
 						}else if(param.result=='success'){
+							selectReply(pageNum);
+							let relist = $(this).parent().parent('.items').find('.re-view-btn');
+							let relist2= $(this).closest('.btnspace').find('.re-view-btn');
 							$('#rehreWriteform').remove();
 							relist.click();
 							relist2.click();
@@ -425,7 +427,7 @@ $(document).on('click','.re-view-btn',function(){
 					let output ='';
 					output +='<div class="subitems">';
 					output +='<ul>';
-					output+='<li>'+item.id+'</li>';
+					output+='<li><img src="../member/memViewProfile?mem_num='+item.mem_num+'" width="35" height="35" class="rounded-circle"> &nbsp;&nbsp; '+item.id+'</li>';
 					if(item.hre_modify_date){
 						output+='<li> 수정일 : '+item.hre_modify_date+'</li>';
 					}else{

@@ -122,4 +122,35 @@
         WHERE rnum >= #{start} AND rnum <= #{end}
         ]]>
 	</select>
+	    <!-- 예약 목록 (의사)  -->
+	<select id="selectCountByCompleted" parameterType="map" resultType="integer">
+		SELECT COUNT(*)
+        FROM reservation r
+        JOIN member m ON r.mem_num = m.mem_num
+        WHERE r.doc_num = #{doc_num} AND r.res_status = 2
+	</select>
+	<select id="getDocCompletedList" parameterType="map" resultType="ReservationVO">
+		SELECT 
+            *
+        FROM (
+            SELECT 
+                r.*,
+                m.mem_name AS patient_name,
+                h.hos_name,
+                ROW_NUMBER() OVER (ORDER BY r.res_date DESC, r.res_time DESC) AS rnum
+            FROM 
+                reservation r
+            JOIN 
+                member m ON r.mem_num = m.mem_num
+            JOIN 
+                doctor_detail d ON r.doc_num = d.doc_num
+            JOIN 
+                hospital h ON d.hos_num = h.hos_num
+            WHERE 
+                r.doc_num = #{doc_num} AND r.res_status = 2
+        )
+        <![CDATA[
+        WHERE rnum >= #{start} AND rnum <= #{end}
+        ]]>
+	</select>
  </mapper>

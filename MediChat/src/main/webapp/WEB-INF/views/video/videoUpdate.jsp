@@ -7,11 +7,28 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/ckeditor.js"></script>
 <script src="${pageContext.request.contextPath}/js/uploadAdapter.js"></script>
-
+<script  type="text/javascript">
+ 	$(function(){
+ 		$('#register_form').submit(function(){
+ 				if($('#video_title').val().trim() ==''){
+ 					alert('제목을 입력하세요.');
+ 					$('#video_title').val('').focus();
+ 					return false;
+ 				}
+ 				if($('#video_content').val().trim() ==''){
+ 					alert('내용을 입력하세요.');
+ 					$('#video_content').val('').focus();
+ 					return false;
+ 				}
+ 			
+ 		})
+ 		
+ 	});
+</script>
 <div class="page-main">
-	<div class="page-one">
-		<h4>홈 > 건강 비디오 >  글수정</h4> 		
-		<h2>&nbsp;&nbsp;&nbsp;건강 비디오 </h2>
+	<div class="page-one" style="padding-top:16px;">
+		<span class="text-lightgray fw-7 fs-13">홈 > 건강 블로그 > 건강 비디오 >  글수정</span>	
+		<h3 style="margin-top:16px;">&nbsp;&nbsp;&nbsp;건강 비디오 </h3>
 		
 		<hr size="1" width="80%">
 		
@@ -19,13 +36,11 @@
 				<form:hidden path="video_num"/>
 				<ul>
 					<li>
-						<select name="v_category" id="selectinput">
+						<select name="v_category" id="selectinputw">
 							<option value="a"<c:if test="${videoVO.v_category =='a'}">selected</c:if> >건강</option>
 							<option value="b" <c:if test="${videoVO.v_category =='b'}">selected</c:if>>미용</option>
 							<option value="c" <c:if test="${videoVO.v_category =='c'}">selected</c:if>>홍보</option>
 						</select>
-					</li>
-					<li>
 						<form:input path="video_title" placeholder="제목을 입력하세요"/>
 						<form:errors path="video_title" cssClass="error-color"/>
 					</li>

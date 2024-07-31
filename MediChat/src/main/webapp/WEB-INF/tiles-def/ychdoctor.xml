@@ -5,8 +5,7 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-	<definition name="ychdoctor"
-		template="/WEB-INF/views/template/layout_docpage.jsp">
+	<definition name="ychdoctor" template="/WEB-INF/views/template/layout_docpage.jsp">
 		<put-attribute name="css" value="/WEB-INF/views/common/css.jsp" />
 		<put-attribute name="bootstrap" value="/WEB-INF/views/common/bootStrap.jsp" />
 		<put-attribute name="navDoc" value="/WEB-INF/views/template/nav_docpage.jsp"/>
@@ -18,13 +17,13 @@
 		<put-attribute name="title" value="My페이지" />
 		<put-attribute name="body" value="/WEB-INF/views/doctor/docView.jsp" />
 	</definition>
-	<definition name="docInfo" extends="ychdoctor">
-		<put-attribute name="title" value="의사정보" />
-		<put-attribute name="body" value="/WEB-INF/views/mypage/docInfo.jsp" />
+	<definition name="doctorModify" extends="ychdoctor">
+		<put-attribute name="title" value="회원정보수정(의사)"/>
+		<put-attribute name="body" value="/WEB-INF/views/doctor/doctorModify.jsp"/>
 	</definition>
-	<definition name="docSche" extends="ychdoctor">
-		<put-attribute name="title" value="스케줄 관리" />
-		<put-attribute name="body" value="/WEB-INF/views/mypage/docSche.jsp" />
+	<definition name="doctorChangePasswd" extends="ychdoctor">
+		<put-attribute name="title" value="비밀번호 변경(의사)"/>
+		<put-attribute name="body" value="/WEB-INF/views/doctor/doctorChangePasswd.jsp"/>
 	</definition>
 	<definition name="docReservationList" extends="ychdoctor">
 		<put-attribute name="title" value="예약내역" />
@@ -38,9 +37,13 @@
       <put-attribute name="title" value="스케줄 관리"/>
       <put-attribute name="body" value="/WEB-INF/views/schedule/scheduleList.jsp"/>
    </definition>
-	 <definition name="docReservationList" extends="ychdoctor">
+   <definition name="docReservationList" extends="ychdoctor">
       <put-attribute name="title" value="나의 진료 내역"/>
       <put-attribute name="body" value="/WEB-INF/views/reservation/docReservationList.jsp"/>
+   </definition>
+   <definition name="docCompletedList" extends="ychdoctor">
+      <put-attribute name="title" value="진료기록"/>
+      <put-attribute name="body" value="/WEB-INF/views/reservation/docCompletedList.jsp"/>
    </definition>
 	
 </tiles-definitions>
