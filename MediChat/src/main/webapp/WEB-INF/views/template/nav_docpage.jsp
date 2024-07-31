@@ -52,11 +52,8 @@
 		         <li>
 					<h5 style="margin-top:30px;">나의 활동</h5>
 				</li>
-		         <li style="margin-bottom:10px; font-size:15px;">
-		            <a href="${pageContext.request.contextPath}/schedule/list" class="detail-btn">후기</a>
-		        </li>
-		        <li style="margin-bottom:50px; font-size:15px;">
-		            <a href="${pageContext.request.contextPath}/schedule/list" class="detail-btn">댓글</a>
+		         <li style="margin-bottom:50px; font-size:15px;">
+		            <a href="${pageContext.request.contextPath}/doctor/healthyMydoc" class="detail-btn">내가 쓴 글</a>
 		        </li>
 				<li style="margin-bottom:10px; font-size:15px;">
 		            <a href="${pageContext.request.contextPath}/doctor/modifyDoctor" class="detail-btn">회원정보 수정</a>
