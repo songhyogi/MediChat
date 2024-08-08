@@ -73,7 +73,6 @@ document.addEventListener('DOMContentLoaded', function() {
 <input type="hidden" id="user_mem_num" value="${user.mem_num}" />
 <div class="confirm-container" style="display:none;">
 	<div class="reservation-header">
-		<!-- <h4 id="confirm-resType"></h4> -->
         <b>예약 정보를 다시 한 번 확인해 주세요</b>
 	</div>
 	<div class="reservation-details">
