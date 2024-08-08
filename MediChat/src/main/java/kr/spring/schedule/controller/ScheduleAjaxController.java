@@ -80,7 +80,7 @@ public class ScheduleAjaxController {
         } else {
             try {
                 for (HolidayVO holiday : modifiedTimes) {
-                    holiday.setDoc_num(user.getMem_num());  // 세션에서 사용자 ID 설정
+                    holiday.setDoc_num(user.getMem_num());
                     int count = scheduleService.countHoliday(holiday);
                     if (count == 0) {
                         scheduleService.insertHoliday(holiday);

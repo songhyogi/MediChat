@@ -8,13 +8,13 @@
      position: relative;
     display: flex;
     margin-left: auto;
-    margin-right: 100px; /* 아이콘을 약간 오른쪽으로 이동 */
+    margin-right: 100px;
     align-items: center;
 }
 
 .info-icon {
-    font-size: 18px; /* 아이콘 크기 조정 */
-    padding: 5px; /* 아이콘 주위의 여백 */
+    font-size: 18px;
+    padding: 5px;
     display: inline-block;
 }
 
@@ -23,7 +23,7 @@
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    display: none; /* 기본적으로 숨김 */
+    display: none;
     z-index: 1;
     background-color: white;
     padding: 5px;
@@ -32,7 +32,6 @@
     min-width: 200px;
 }
 
-/* 아이콘에만 호버했을 때 툴팁 표시 */
 .info-icon:hover + .tooltip-content {
     display: block; 
 }
@@ -111,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // FullCalendar 초기화
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        selectable: true, // 사용자가 날짜를 선택할 수 있게 설정
+        selectable: true,
         height: 'auto',
         width: 'auto',
         headerToolbar: {
@@ -175,7 +174,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // 선택한 날짜의 근무/휴무 시간을 표시하는 함수
     function displayTimes(date) {
     $('#time-buttons').empty();
-    // 초기화된 modifiedTimes
     modifiedTimes = {};
     // AJAX 요청을 통해 근무 시간 정보를 가져옴
     $.ajax({
@@ -308,10 +306,10 @@ document.addEventListener('DOMContentLoaded', function() {
             modifiedTimes[time] = 1; // 수정된 상태를 저장
         } else if ($(this).hasClass('time-off')) {
             $(this).removeClass('time-off').addClass('working-time');
-            modifiedTimes[time] = 2; // 수정된 상태를 저장
+            modifiedTimes[time] = 2;
         } else if ($(this).hasClass('working-time-red')) {
             $(this).removeClass('working-time-red').addClass('time-off');
-            modifiedTimes[time] = 1; // 수정된 상태를 저장
+            modifiedTimes[time] = 1;
         }
     });
 
@@ -333,7 +331,6 @@ document.addEventListener('DOMContentLoaded', function() {
             success: function(response) {
                 if (response.result == 'success') {
                     alert('근무 시간이 성공적으로 업데이트되었습니다.');
-                    // 서버에서 업데이트된 데이터를 다시 받아와야 합니다.
                     $.ajax({
                         url: '/schedule/holidays',
                         method: 'get',
@@ -350,12 +347,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                 } else {
                     alert('근무 시간 업데이트에 실패했습니다.');
-                    console.error(response.message);
                 }
             },
             error: function(xhr, status, error) {
                 alert('근무 시간 업데이트 중 오류가 발생했습니다.');
-                console.error(error);
             }
         });
     });

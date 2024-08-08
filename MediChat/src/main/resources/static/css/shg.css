@@ -1,8 +1,6 @@
 @charset "UTF-8";
 .time-header {
     margin-left: 10px;
-    /* font-weight: bold; */
-    /* color: #757575; */
 }
 #time-buttons {
     display: flex;
@@ -20,14 +18,14 @@
     border-radius: 4px;
     transition: background-color 0.3s ease, color 0.3s ease;
     font-size: 16px;
-    width: 185px; /* 버튼의 너비를 통일 */
-    height: 45px; /* 버튼의 높이를 통일 */
+    width: 185px;
+    height: 45px;
 }
 .time-button.disabled {
     background-color: transparent;
     color: gray;
     border: 1px solid #d6d6d6;
-    cursor: default; /* 기본 커서로 설정 */
+    cursor: default;
     opacity: 1;
 }
 .time-button:hover {
@@ -110,8 +108,6 @@
 }
 .reservation-userInfo {
     margin-top: 20px;
-    /* border: 1px solid #ddd;
-    border-radius: 5px; */
     padding: 15px;
     background-color: #fff;
 }
@@ -146,51 +142,51 @@
     margin-right: 8px;
 }
 .btn {
-    width: 100px; /* 버튼의 너비 조정 */
-    height: 50px; /* 버튼의 높이 조정 */
-    font-size: 15px; /* 폰트 크기 조정 */
-    border-radius: 10px; /* 모서리 반경 조정 */
+    width: 100px;
+    height: 50px;
+    font-size: 15px;
+    border-radius: 10px;
     margin-right: 5px;
 }
 .agree-btn{
-	background-color: #74c69d; /* 활성화 상태 색상 */
+	background-color: #74c69d;
     border-color: #74c69d;
     color: #fff;
 }
 .btn-primary{
     background-color: #d8f3dc;
     border-color: #d8f3dc;
-    color: white; /* 텍스트 색상 변경 */
+    color: white;
 }
 .btn-primary:hover, .agree-btn:hover {
     background-color: #b7e4c7;
     border-color: #b7e4c7;
-    color: white; /* 텍스트 색상 변경 */
+    color: white;
 }
 .btn-primary.active{
-    background-color: #74c69d; /* 활성화 상태 색상 */
+    background-color: #74c69d;
     border-color: #74c69d;
     color: #fff;
 }
 .btn-primary:disabled{
-    background-color: #b7e4c7; /* 비활성화 상태 색상 */
+    background-color: #b7e4c7;
     border-color: #b7e4c7;
     color: #fff;
-    opacity: 0.6; /* 비활성화 상태 불투명도 */
-    cursor: not-allowed; /* 비활성화 상태 커서 */
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 .btn-secondary, .prev-btn {
     background-color: #bdbdbd;
     border-color: #bdbdbd;
-    color: white; /* 텍스트 색상 변경 */
+    color: white;
 }
 .btn-secondary:hover, .prev-btn:hover {
     background-color: #e0e0e0;
     border-color: #e0e0e0;
-    color: white; /* 텍스트 색상 변경 */
+    color: white;
 }
 .btn-secondary.active, .prev-btn:active {
-    background-color: #bdbdbd; /* 활성화 상태 색상 */
+    background-color: #bdbdbd;
     border-color: #bdbdbd;
     color: #fff;
 }
@@ -199,12 +195,6 @@
     border-color: #e0e0e0;
     color: #fff;
 }
-/* .next-button-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-} */
 .next-button-container {
     display: flex;
     justify-content: flex-end;
@@ -216,16 +206,16 @@
     margin: 5px 0 5px 52px;
 }
 .no-time {
-    padding: 100px 308px; /* 패딩 값 설정 */
-    margin: 20px 0; /* 위아래 여백 설정 */
-    text-align: center; /* 텍스트 중앙 정렬 */
-    border-radius: 10px; /* 모서리를 둥글게 설정 */
-    background-color: #f8f9fa; /* 배경색 설정 */
+    padding: 100px 308px;
+    margin: 20px 0;
+    text-align: center;
+    border-radius: 10px;
+    background-color: #f8f9fa;
 }
 #confirm-name, #confirm-phone, #confirm-symptoms {
     border: 1px solid #000;
-    border-radius: 10px; /* 테두리를 둥글게 설정 */
-    padding: 10px; /* 패딩 값 설정 */
+    border-radius: 10px;
+    padding: 10px;
 }
 .hide {
     display: none;
@@ -241,8 +231,7 @@
 }
 
 .collapsible-content {
-   /* margin: 10px 0;  내용 부분의 마진 조정 */
-    padding-left: 5px;  /*들여쓰기 추가 */
+    padding-left: 5px;
     padding-right: 5px;
 }
 
@@ -251,14 +240,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px; /* 패딩 추가 */
-    /*border: 1px solid #ddd;  테두리 추가 */
-    border-radius: 4px; /* 모서리 둥글게 */
-    background-color: #f9f9f9; /* 배경색 추가 */
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #f9f9f9;
 }
 
 .privacy-info-sub {
-    margin-top: 5px; /* 간격 추가 */
+    margin-top: 5px;
 }
 
 .privacy-info-title {
@@ -266,19 +254,19 @@
     
 }
 .privacy-collection {
-    background-color: #f2f2f2; /* 개인정보 수집 동의 배경색 설정 */
+    background-color: #f2f2f2;
 }
 
 .privacy-provision {
-    background-color: #f2f2f2; /* 개인정보 제공 동의 배경색 설정 */
+    background-color: #f2f2f2;
 }
 #privacy_collect, #privacy_provide{
 	background: #f2f2f2;
 	margin-bottom: 5px;
 	border-radius: 4px;
-    height: 200px; /* 표시하고 싶은 높이 설정 */
-    overflow-y: scroll; /* 스크롤 가능하게 설정 */
-    white-space: pre-line; /* 줄바꿈을 반영하게 설정 */
+    height: 200px;
+    overflow-y: scroll;
+    white-space: pre-line;
 }
 .outer-line{
 	background: #f7f9fa;
@@ -289,14 +277,12 @@
 .reservation-container {
     width: 100%;
     margin: 0 auto;
-    /* padding-top: 10px; */
-    /* padding-bottom: 10px; */
     padding: 0 5px 10px 5px;
 }
 .reservation-header {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* 요소들을 양쪽 끝으로 정렬 */
+    justify-content: space-between;
     margin-bottom: 10px;
 }
 .reservation-header img {
@@ -308,10 +294,10 @@
 }
 .reservation-header h4 {
     margin: 0;
-    flex-grow: 1; /* 남은 공간을 차지하도록 설정 */
+    flex-grow: 1;
 }
 .reservation-actions {
-    margin-left: 10px; /* 병원 이름과 버튼 사이에 간격 추가 */
+    margin-left: 10px;
 }
 .cancel-button, .review-button {
     padding: 5px 10px;
@@ -335,7 +321,6 @@
 	color: white;
 }
 .reservation-body {
-	/* background-color: #f9f9f9; */
 	border-radius: 10px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	margin-bottom: 25px;
@@ -429,14 +414,14 @@ p{
     margin: 7px;
     border-radius: 4px;
     font-size: 16px;
-    width: 162px; /* 버튼의 너비를 통일 */
-    height: 43px; /* 버튼의 높이를 통일 */
+    width: 162px;
+    height: 43px;
 }
 
 #schedule_mobtn.disabled, #schedule_afbtn.disabled {
     color: gray;
     border: 1px solid #d6d6d6;
-    cursor: default; /* 기본 커서로 설정 */
+    cursor: default;
     opacity: 1;
 }
 #schedule_mobtn:hover, #schedule_afbtn:hover {
@@ -448,10 +433,10 @@ p{
     margin-top: 10px;
 }
 .modify-btn, .cancel-btn, .complete-modify-btn {
-    width: 100px; /* 버튼의 너비 조정 */
-    height: 50px; /* 버튼의 높이 조정 */
-    font-size: 15px; /* 폰트 크기 조정 */
-    border-radius: 10px; /* 모서리 반경 조정 */
+    width: 100px;
+    height: 50px;
+    font-size: 15px;
+    border-radius: 10px;
     margin-right: 5px;
 	border: 1px solid #ccc;
 }
@@ -459,16 +444,14 @@ p{
 	background-color: #52b788;
 	color: white;
 	border: none;
-	/* margin-left: 600px; */
-	/* margin-bottom: 20px; */
 }
 .modify-btn:hover {
 	background-color: #b7e4c7;
 }
 .complete-modify-btn {
-    background-color: #74c69d; /* 활성화 상태 색상 */
+    background-color: #74c69d;
     border-color: #74c69d;
-    color: white; /* 텍스트 색상 변경 */
+    color: white;
 }
 .complete-modify-btn:hover {
 	background-color: #b7e4c7;
@@ -477,12 +460,12 @@ p{
 .cancel-btn {
 	background-color: #bdbdbd;
     border-color: #bdbdbd;
-    color: white; /* 텍스트 색상 변경 */
+    color: white;
 }
 .cancel-btn:hover {
 	background-color: #e0e0e0;
     border-color: #e0e0e0;
-    color: white; /* 텍스트 색상 변경 */
+    color: white;
 }
 .active {
     pointer-events: auto;
@@ -501,7 +484,7 @@ p{
     color: white;
 }
 .reject-button {
-    background-color: #bdbdbd;/* #d6d6d6; */
+    background-color: #bdbdbd;
     color: white;
 }
 .complete-button {
@@ -524,7 +507,6 @@ p{
     color: white;
 }
 .docreservation-body {
-	/* background-color: #f9f9f9; */
 	border-radius: 10px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	margin-bottom: 25px;
@@ -562,7 +544,6 @@ p{
     display: flex;
     align-items: center;
     margin-bottom: 5px;
-    /* padding-left:350px; */
 }
 
 .legend-item span {

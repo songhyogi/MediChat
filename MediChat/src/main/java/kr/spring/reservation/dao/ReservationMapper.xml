@@ -2,7 +2,7 @@
 <!DOCTYPE mapper   
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
-<mapper namespace="kr.spring.reservation.dao.ReservationMapper"><!-- namespace가 인터페이스명과 같아야 한다. -->
+<mapper namespace="kr.spring.reservation.dao.ReservationMapper">
 	<!-- 병원진료시간 가져오기 -->
 	<select id="getHosHours" parameterType="long" resultType="hospitalVO">
 		SELECT 

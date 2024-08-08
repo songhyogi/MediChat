@@ -41,7 +41,6 @@ public class ReservationAjaxController {
 	@GetMapping("/reservation/reservation")
 	@ResponseBody
 	public Map<String, String> reservation(Long hos_num, Model model, HttpSession session) {
-        log.debug("<<ajax 컨트롤러 진입>>");
         Map<String, String> map = new HashMap<>();
         Object user = session.getAttribute("user");
 
@@ -95,10 +94,6 @@ public class ReservationAjaxController {
         if (user == null) {
             map.put("result", "logout");
         } else {
-        	log.debug("Received hos_num: " + hos_num);
-        	log.debug("Received date: " + date);
-        	log.debug("Received time: " + time);
-        	log.debug("Received dayOfWeek: " + dayOfWeek);
             Map<String, Object> params = new HashMap<>();
             params.put("hos_num", hos_num);
             params.put("date", date);
@@ -107,7 +102,6 @@ public class ReservationAjaxController {
             List<DoctorVO> doctors = reservationService.getAvailableDoctors(params);
             map.put("result", "success");
             map.put("doctors", doctors);
-            log.debug("Doctors: " + doctors); // 추가한 로그
         }
         return map;
     }
@@ -121,9 +115,6 @@ public class ReservationAjaxController {
 	    if (user == null) {
 	        map.put("result", "logout");
 	    } else {
-	        // 로그 추가
-	        System.out.println("Received Reservation Data: " + reservationData);
-
 	        ReservationVO reservationVO = new ReservationVO();
 	        reservationVO.setMem_num(user.getMem_num());
 	        reservationVO.setDoc_num(Long.parseLong(reservationData.get("doc_num").toString()));
@@ -131,9 +122,6 @@ public class ReservationAjaxController {
 	        reservationVO.setRes_date(reservationData.get("res_date").toString());
 	        reservationVO.setRes_time(reservationData.get("res_time").toString());
 	        reservationVO.setRes_content(reservationData.get("res_content").toString());
-
-	        // 로그 추가
-	        System.out.println("Mapped Reservation Data: " + reservationVO);
 
 	        try {
 	            reservationService.insertReservation(reservationVO);
@@ -156,7 +144,6 @@ public class ReservationAjaxController {
 	            doctorNotification.setNoti_priority(1);
 
 	            notificationService.insertNotification(doctorNotification);
-
 	            
 	            map.put("result", "success");
 	        } catch (Exception e) {
@@ -164,7 +151,6 @@ public class ReservationAjaxController {
 	            map.put("result", "error");
 	        }
 	    }
-
 	    return map;
 	}
 
@@ -210,7 +196,6 @@ public class ReservationAjaxController {
 		if(user == null) {
 			map.put("result", "logout");
 		}else {
-
 			long res_type = chatService.selectResType(res_num);
 			long mem_num = chatService.selectMem_num(res_num);
 			
@@ -226,7 +211,6 @@ public class ReservationAjaxController {
 			reservationService.updateReservation(res_num,res_status);
 			// 회원에게 알림 보내기
             NotificationVO memberNotification = new NotificationVO();
-            //ReservationVO reservationVO = reservationService.getReservationById(res_num);
             memberNotification.setMem_num(mem_num);
             memberNotification.setNoti_category(1L); // 진료 관련
             memberNotification.setNoti_message("예약정보가 업데이트 되었습니다.");
@@ -240,7 +224,7 @@ public class ReservationAjaxController {
             doctorNotification.setMem_num(user.getMem_num());
             doctorNotification.setNoti_category(1L); // 진료 관련
             doctorNotification.setNoti_message("예약 정보가 업데이트 되었습니다.");
-            doctorNotification.setNoti_link("<a href='/reservation/docResList'>나의 예약 내역<a>"); // 링크를 직접 설정
+            doctorNotification.setNoti_link("<a href='/reservation/docResList'>나의 예약 내역<a>");
 
             notificationService.insertNotification(doctorNotification);
 			
